@@ -1,0 +1,652 @@
+[
+    {
+        "title": "Basmati Rice India Gate Feast Rozzana",
+        "slug": "buy-basmati-rice-india-gate-feastrozzana-5kg-at-sartajfoods",
+        "moreLove": true,
+        "id": "1",
+        "price": 2099,
+        "oldPrice": 2500,
+        "desc": "India Gate Feast Rozzana is a medium length grain broken basmati rice. It is ideal for eating with curries and making a variety of daily delicacies as well.",
+        "images": [
+            {
+                "img": "/assets/imgs/shop/Basmati-Rice-01.jpg"
+            },
+            {
+                "img": "/assets/imgs/shop/Basmati-Rice-02.jpg"
+            }
+        ],
+        "totalSell": 27,
+        "gallery": [
+            {
+                "thumb": "/assets/imgs/shop/Basmati-Rice-01.jpg"
+            },
+            {
+                "thumb": "/assets/imgs/shop/Basmati-Rice-02.jpg"
+            }
+        ],
+        "condition": "new",
+        "vendor": "India Gate",
+        "color": "blue",
+        "brand": "India Gate",
+        "category": "clothing",
+        "featured": false,
+        "trending": true,
+        "discount": {
+            "banner": "/assets/imgs/shop/Rice-banner.jpeg",
+            "percentage": 14,
+            "expireDate": null,
+            "isActive": true
+        },
+        "variations": [
+            "red",
+            "yellow",
+            "white",
+            "orange",
+            "cyan",
+            "green",
+            "purple"
+        ],
+        "weight": 5,
+        "tags": "Basmati Rice",
+        "sizes": "s",
+        "stock": 0,
+        "review": 10,
+        "rating": 3,
+        "ratingScore": 90,
+        "created": ""
+    },
+    {
+        "title": "Amul Cow Ghee",
+        "slug": "buy-amul-cow-ghee-905gm-at-sartajfoods",
+        "moreLove": true,
+        "id": "2",
+        "price": 3833,
+        "desc": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam rem officia, corrupti reiciendis minima nisi modi, quasi, odio minus dolore impedit fuga eum eligendi? Officia doloremque facere quia. Voluptatum, accusantium!",
+        "images": [
+            {
+                "img": "/assets/imgs/shop/amul-cow-ghee-01.jpg"
+            },
+            {
+                "img": "/assets/imgs/shop/amul-cow-ghee-02.jpg"
+            }
+        ],
+        "totalSell": 27,
+        "gallery": [
+            {
+                "thumb": "/assets/imgs/shop/amul-cow-ghee-01.jpg"
+            },
+            {
+                "thumb": "/assets/imgs/shop/amul-cow-ghee-02.jpg"
+            }
+        ],
+        "condition": "refurbished",
+        "vendor": "Amul",
+        "color": "blue",
+        "brand": "Amul",
+        "category": "jeans",
+        "featured": true,
+        "trending": false,
+        "discount": {
+            "banner": "/assets/imgs/shop/Rice-banner.jpeg",
+            "percentage": 4,
+            "expireDate": null,
+            "isActive": false
+        },
+        "variations": [
+            "red",
+            "yellow",
+            "white",
+            "orange",
+            "cyan",
+            "green",
+            "purple"
+        ],
+        "weight": 150,
+        "tags": "broccoli",
+        "sizes": "s",
+        "review": 10,
+        "rating": 4,
+        "ratingScore": 90,
+        "created": "2021-02-03T06:48:07"
+    },
+    {
+        "title": "Aashirvaad Atta",
+        "slug": "aashirvaad-atta-1kg",
+        "moreLove": true,
+        "id": "3",
+        "price": 2200,
+        "desc": "Aashirvaad Whole Wheat Atta helps to retain its natural dietary fibers and nutrients. The dough made from Aashirvaad Whole Wheat Atta absorbs more water making the Rotis soft, fluffy and delicious which helps you power through the day. Buy aashirvaad whole wheat atta 1KG online from sartaj foods.",
+        "images": [
+            {
+                "img": "/assets/imgs/shop/Atta-5kg-01.jpg"
+            },
+            {
+                "img": "/assets/imgs/shop/Atta-5kg-02.jpg"
+            }
+        ],
+        "totalSell": 27,
+        "gallery": [
+            {
+                "thumb": "/assets/imgs/shop/Atta-5kg-01.jpg"
+            },
+            {
+                "thumb": "/assets/imgs/shop/Atta-5kg-02.jpg"
+            }
+        ],
+        "condition": "new",
+        "vendor": "Aashirvaad",
+        "color": "blue",
+        "brand": "Aashirvaad",
+        "category": "accessories",
+        "featured": true,
+        "trending": true,
+        "discount": {
+            "banner": "/assets/imgs/shop/Rice-banner.jpeg",
+            "percentage": 4,
+            "expireDate": null,
+            "isActive": false
+        },
+        "variations": [
+            "red",
+            "yellow",
+            "white",
+            "orange",
+            "cyan",
+            "green",
+            "purple"
+        ],
+        "weight": 150,
+        "tags": "fruit",
+        "sizes": "s",
+        "review": 10,
+        "rating": 5,
+        "ratingScore": 90,
+        "created": ""
+    },
+    {
+        "title": "Britannia Bourbon Biscuit",
+        "slug": "buy-bourbon-biscuits-britannia-100gm-at-sartajfoods",
+        "moreLove": true,
+        "id": "4",
+        "price": 180,
+        "desc": "Britannia bourbon biscuit consist of Rich chocolate cream flavor. It is Crispy and delicious chocolaty biscuit. Made from natural ingredients. It is 100% vegetarian. Britannia Bourbon fuels every BFF's ever-growing hunger for fun and fulfilling moments. Buy britannia bourbon biscuits pack of 100G online from sartaj foods.",
+        "images": [
+            {
+                "img": "/assets/imgs/shop/Britannia-biscuits-01.jpg"
+            },
+            {
+                "img": "/assets/imgs/shop/Britannia-biscuits-02.jpg"
+            }
+        ],
+        "totalSell": 27,
+        "gallery": [
+            {
+                "thumb": "/assets/imgs/shop/Britannia-biscuits-01.jpg"
+            },
+            {
+                "thumb": "/assets/imgs/shop/Britannia-biscuits-02.jpg"
+            }
+        ],
+        "condition": "used",
+        "vendor": "Britannia",
+        "color": "blue",
+        "brand": "Britannia",
+        "category": "trousers",
+        "featured": true,
+        "trending": false,
+        "discount": {
+            "banner": "/assets/imgs/shop/bourbon-banner.jpg",
+            "percentage": 4,
+            "expireDate": null,
+            "isActive": true
+        },
+        "variations": [
+            "red",
+            "yellow",
+            "white",
+            "orange",
+            "cyan",
+            "green",
+            "purple"
+        ],
+        "weight": 150,
+        "tags": "salad",
+        "sizes": "s",
+        "review": 10,
+        "rating": 4,
+        "ratingScore": 90,
+        "created": ""
+    },
+    {
+        "title": "Dabur Amla Aloevera Hair Oil 100ml",
+        "slug": "buy-dabur-amla-aloevera-hair-oil-100ml-at-sartajfoods",
+        "moreLove": true,
+        "id": "5",
+        "price": 110,
+        "desc": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam rem officia, corrupti reiciendis minima nisi modi, quasi, odio minus dolore impedit fuga eum eligendi? Officia doloremque facere quia. Voluptatum, accusantium!",
+        "images": [
+            {
+                "img": "/assets/imgs/shop/Dabur-Amla-Aloevera-01.jpg"
+            },
+            {
+                "img": "/assets/imgs/shop/Dabur-Amla-Aloevera-02.jpg"
+            }
+        ],
+        "totalSell": 27,
+        "gallery": [
+            {
+                "thumb": "/assets/imgs/shop/Dabur-Amla-Aloevera-01.jpg"
+            },
+            {
+                "thumb": "/assets/imgs/shop/Dabur-Amla-Aloevera-02.jpg"
+            }
+        ],
+        "condition": "refurbished",
+        "vendor": "Dabur",
+        "color": "red",
+        "brand": "Dabur",
+        "category": "shoe",
+        "featured": true,
+        "trending": false,
+        "discount": {
+            "banner": "/assets/imgs/banner/banner-5.png",
+            "percentage": 4,
+            "expireDate": null,
+            "isActive": false
+        },
+        "variations": [
+            "red",
+            "yellow",
+            "white",
+            "orange",
+            "cyan",
+            "green",
+            "purple"
+        ],
+        "weight": 150,
+        "tags": "fruit",
+        "sizes": "s",
+        "review": 10,
+        "rating": 5,
+        "ratingScore": 90,
+        "created": ""
+    },
+    {
+        "title": "Denver Deo Caliber",
+        "slug": "buy-denver-deo-caliber-165ml-at-sartajfoods",
+        "moreLove": true,
+        "id": "6",
+        "price": 2000,
+        "desc": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam rem officia, corrupti reiciendis minima nisi modi, quasi, odio minus dolore impedit fuga eum eligendi? Officia doloremque facere quia. Voluptatum, accusantium!",
+        "images": [
+            {
+                "img": "/assets/imgs/shop/Denver-Deo-01.jpg"
+            },
+            {
+                "img": "/assets/imgs/shop/Denver-Deo-02.jpg"
+            }
+        ],
+        "totalSell": 27,
+        "gallery": [
+            {
+                "thumb": "/assets/imgs/shop/Denver-Deo-02.jpg"
+            },
+            {
+                "thumb": "/assets/imgs/shop/Denver-Deo-01.jpg"
+            }
+        ],
+        "condition": "refurbished",
+        "vendor": "Denver",
+        "color": "green",
+        "brand": "Denver",
+        "category": "jeans",
+        "featured": true,
+        "trending": false,
+        "discount": {
+            "banner": "/assets/imgs/banner/banner-5.png",
+            "percentage": 4,
+            "expireDate": null,
+            "isActive": false
+        },
+        "variations": [
+            "red",
+            "yellow",
+            "white",
+            "orange",
+            "cyan",
+            "green",
+            "purple"
+        ],
+        "weight": 150,
+        "tags": "salad",
+        "sizes": "s",
+        "review": 10,
+        "rating": 3,
+        "ratingScore": 90,
+        "created": ""
+    },
+    {
+        "title": "Fogg Body Spray Fantastic-Absolute",
+        "slug": "buy-fogg-body-spray-fantastic-absolute-120ml-at-sartajfoods",
+        "moreLove": true,
+        "id": "7",
+        "price": 899,
+        "desc": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam rem officia, corrupti reiciendis minima nisi modi, quasi, odio minus dolore impedit fuga eum eligendi? Officia doloremque facere quia. Voluptatum, accusantium!",
+        "images": [
+            {
+                "img": "/assets/imgs/shop/Fogg-Body-Spray-01.jpg"
+            },
+            {
+                "img": "/assets/imgs/shop/Fogg-Body-Spray-02.jpg"
+            }
+        ],
+        "totalSell": 27,
+        "gallery": [
+            {
+                "thumb": "/assets/imgs/shop/Fogg-Body-Spray-01.jpg"
+            },
+            {
+                "thumb": "/assets/imgs/shop/Fogg-Body-Spray-02.jpg"
+            }
+        ],
+        "condition": "new",
+        "vendor": "Fogg",
+        "color": "blue",
+        "brand": "Fogg",
+        "category": "trousers",
+        "featured": false,
+        "trending": true,
+        "discount": {
+            "banner": "/assets/imgs/banner/banner-5.png",
+            "percentage": 4,
+            "expireDate": null,
+            "isActive": false
+        },
+        "variations": [
+            "red",
+            "yellow",
+            "white",
+            "orange",
+            "cyan",
+            "green",
+            "purple"
+        ],
+        "weight": 150,
+        "tags": "fruit",
+        "sizes": "s",
+        "review": 10,
+        "rating": 2,
+        "ratingScore": 90,
+        "created": ""
+    },
+    {
+        "title": "GITS Gulab Jamun Mix",
+        "slug": "buy-gits-gulab-jamun-mix-100g-at-sartajfoods",
+        "moreLove": true,
+        "id": "8",
+        "price": 368,
+        "desc": "Gulab Jamun is one of the very delicious, popular and loved dessert. Gits Gulab Jamun is the bestseller product among all instant mix desserts. Gits Gulab Jamun is the most preferred and served dessert on all special occasion. Gits Gulab Jamun Instant Mix offers an unmatched authentic traditional taste. Buy gits gulab jamun 100G online from sartaj foods.",
+        "images": [
+            {
+                "img": "/assets/imgs/shop/Gulab-Jamun-01.jpg"
+            },
+            {
+                "img": "/assets/imgs/shop/Gulab-Jamun-02.jpg"
+            }
+        ],
+        "totalSell": 27,
+        "gallery": [
+            {
+                "thumb": "/assets/imgs/shop/Gulab-Jamun-01.jpg"
+            },
+            {
+                "thumb": "/assets/imgs/shop/Gulab-Jamun-02.jpg"
+            }
+        ],
+        "condition": "refurbished",
+        "vendor": "GITS",
+        "color": "blue",
+        "brand": "GITS",
+        "category": "shoe",
+        "featured": true,
+        "trending": true,
+        "discount": {
+            "banner": "/assets/imgs/banner/banner-5.png",
+            "percentage": 4,
+            "expireDate": null,
+            "isActive": false
+        },
+        "variations": [
+            "red",
+            "yellow",
+            "white",
+            "orange",
+            "cyan",
+            "green",
+            "purple"
+        ],
+        "weight": 150,
+        "tags": "milk",
+        "sizes": "s",
+        "review": 10,
+        "rating": 1,
+        "ratingScore": 90,
+        "created": ""
+    },
+    {
+        "title": "Haldiram Moong Dal",
+        "slug": "buy-haldiram-moong-dal-200gm-at-sartajfoods",
+        "moreLove": true,
+        "id": "9",
+        "price": 290,
+        "desc": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam rem officia, corrupti reiciendis minima nisi modi, quasi, odio minus dolore impedit fuga eum eligendi? Officia doloremque facere quia. Voluptatum, accusantium!",
+        "images": [
+            {
+                "img": "/assets/imgs/shop/haldiram-moong-dal-01.jpg"
+            },
+            {
+                "img": "/assets/imgs/shop/haldiram-moong-dal-02.jpg"
+            }
+        ],
+        "totalSell": 27,
+        "gallery": [
+            {
+                "thumb": "/assets/imgs/shop/haldiram-moong-dal-01.jpg"
+            },
+            {
+                "thumb": "/assets/imgs/shop/haldiram-moong-dal-02.jpg"
+            }
+        ],
+        "condition": "new",
+        "vendor": "Haldiram",
+        "color": "blue",
+        "brand": "Haldiram",
+        "category": "accessories",
+        "featured": false,
+        "trending": true,
+        "discount": {
+            "banner": "/assets/imgs/banner/banner-5.png",
+            "percentage": 4,
+            "expireDate": null,
+            "isActive": false
+        },
+        "variations": [
+            "red",
+            "yellow",
+            "white",
+            "orange",
+            "cyan",
+            "green",
+            "purple"
+        ],
+        "weight": 150,
+        "tags": "milk",
+        "sizes": "s",
+        "review": 10,
+        "rating": 4,
+        "ratingScore": 90,
+        "created": ""
+    },
+    {
+        "title": "MDH Chana Masala",
+        "slug": "buy-mdh-chana-masala-500gm-at-sartajfoods",
+        "moreLove": true,
+        "id": "10",
+        "price": 998,
+        "desc": "MDH Chana Masala is the perfect masala to enjoy your bhature.It is the best ingredient to cook peppery, flavorsome and tasty chana masala. It is a blend of numerous aromatic spices that gives your chole a delicious flavor. You can buy MDH chana Mmsala of 500G at Sartaj Foods. ",
+        "images": [
+            {
+                "img": "/assets/imgs/shop/mdh-chana-masala-01.jpg"
+            },
+            {
+                "img": "/assets/imgs/shop/mdh-chana-masala-02.jpg"
+            }
+        ],
+        "totalSell": 27,
+        "gallery": [
+            {
+                "thumb": "/assets/imgs/shop/mdh-chana-masala-01.jpg"
+            },
+            {
+                "thumb": "/assets/imgs/shop/mdh-chana-masala-02.jpg"
+            }
+        ],
+        "condition": "used",
+        "vendor": "MDH",
+        "color": "blue",
+        "brand": "MDH",
+        "category": "jacket",
+        "featured": true,
+        "trending": false,
+        "discount": {
+            "banner": "/assets/imgs/shop/Rice-banner.jpeg",
+            "percentage": 4,
+            "expireDate": null,
+            "isActive": true
+        },
+        "variations": [
+            "red",
+            "yellow",
+            "white",
+            "orange",
+            "cyan",
+            "green",
+            "purple"
+        ],
+        "weight": 150,
+        "tags": "appetizer",
+        "sizes": "s",
+        "review": 10,
+        "rating": 4,
+        "ratingScore": 90,
+        "created": ""
+    },
+    {
+        "title": "Patanjali Dant Kanti Toothpaste",
+        "slug": "buy-patanjali-dant-kanti-toothpaste-200gm-at-sartajfoods",
+        "moreLove": true,
+        "id": "11",
+        "price": 893,
+        "desc": "Patanjali dant kanti natural toothpaste is herbal toothpaste containing herbs and ayurvedic ingredients and essential oil. It can also help to prevent and reduce pain in the gums and teeth. It provides a refreshing smell and can help people get rid of bad breath. From offering dental protection to dental beauty, it works to guard and beautify your teeth. Packed with the goodness of nature. Akarkara and babul protect the gums, neem, timbaru, turmeric and cloves remove and offer protection from bacteria, pudhina and pipli refresh the gums, peelu and maju phal make gums stronger. Dental problems such as pyria, gingivitis, and bad odour begin to diminish when used every day.",
+        "images": [
+            {
+                "img": "/assets/imgs/shop/dant-kanti-toothpaste-01.jpg"
+            },
+            {
+                "img": "/assets/imgs/shop/dant-kanti-toothpaste-02.jpg"
+            }
+        ],
+        "totalSell": 27,
+        "gallery": [
+            {
+                "thumb": "/assets/imgs/shop/dant-kanti-toothpaste-01.jpg"
+            },
+            {
+                "thumb": "/assets/imgs/shop/dant-kanti-toothpaste-02.jpg"
+            }
+        ],
+        "condition": "refurbished",
+        "vendor": "Patanjali",
+        "color": "red",
+        "brand": "Patanjali",
+        "category": "jacket",
+        "featured": true,
+        "trending": false,
+        "discount": {
+            "banner": "/assets/imgs/shop/dant-kanti-banner.jpg",
+            "percentage": 4,
+            "expireDate": null,
+            "isActive": true
+        },
+        "variations": [
+            "red",
+            "yellow",
+            "white",
+            "orange",
+            "cyan",
+            "green",
+            "purple"
+        ],
+        "weight": 150,
+        "tags": "milk",
+        "sizes": "s",
+        "review": 10,
+        "rating": 4,
+        "ratingScore": 90,
+        "created": ""
+    },
+    {
+        "title": "Vadilal Alphonso Mango Ice-Cream",
+        "slug": "buy-vadilal-alphonso-mango-icecream-1000ml-at-sartajfoods",
+        "moreLove": true,
+        "id": "12",
+        "price": 2100,
+        "desc": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam rem officia, corrupti reiciendis minima nisi modi, quasi, odio minus dolore impedit fuga eum eligendi? Officia doloremque facere quia. Voluptatum, accusantium!",
+        "images": [
+            {
+                "img": "/assets/imgs/shop/vadilal-alphonso-mango-icecream-01.jpg"
+            },
+            {
+                "img": "/assets/imgs/shop/vadilal-alphonso-mango-icecream-02.jpg"
+            }
+        ],
+        "totalSell": 1227,
+        "gallery": [
+            {
+                "thumb": "/assets/imgs/shop/vadilal-alphonso-mango-icecream-01.jpg"
+            },
+            {
+                "thumb": "/assets/imgs/shop/vadilal-alphonso-mango-icecream-02.jpg"
+            }
+        ],
+        "condition": "refurbished",
+        "vendor": "Vadilal",
+        "color": "green",
+        "brand": "Vadilal",
+        "category": "jeans",
+        "featured": true,
+        "trending": false,
+        "discount": {
+            "banner": "/assets/imgs/banner/banner-5.png",
+            "percentage": 4,
+            "expireDate": null,
+            "isActive": true
+        },
+        "variations": [
+            "red",
+            "yellow",
+            "white",
+            "orange",
+            "cyan",
+            "green",
+            "purple"
+        ],
+        "weight": 150,
+        "tags": "milk",
+        "sizes": "s",
+        "review": 10,
+        "rating": 4,
+        "ratingScore": 90,
+        "created": ""
+    }
+]
