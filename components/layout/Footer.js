@@ -18,7 +18,7 @@ const Footer = () => {
                                         <p className="mb-45">
                                             Start You'r Daily Shopping with{" "}
                                             <span className="text-brand">
-                                                Nest Mart
+                                                Sartaj
                                             </span>
                                         </p>
                                         <form className="form-subcriber d-flex">
@@ -176,7 +176,7 @@ const Footer = () => {
                                             />
                                         </Link>
                                         <p className="font-lg text-heading">
-                                        Sartaj offer you a wide variety of Indian grocery foods with best quality and outstanding service.
+                                            Sartaj offer you a wide variety of Indian grocery foods with best quality and outstanding service.
                                         </p>
                                     </div>
                                     <ul className="contact-infor">
@@ -276,7 +276,7 @@ const Footer = () => {
                                         <a href="#">Compare products</a>
                                     </li>
                                 </ul>
-                            </div>  
+                            </div>
                             <div
                                 className="footer-link-widget widget-install-app col  wow animate__animated animate__fadeInUp"
                                 data-wow-delay=".5s"

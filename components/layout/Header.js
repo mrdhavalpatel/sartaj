@@ -35,7 +35,7 @@ const Header = ({ totalCartItems, totalCompareItems, toggleClick, totalWishlistI
                                 <div className="header-info">
                                     <ul>
                                         <li>
-                                            <Link href="/">About Us</Link>
+                                            <Link href="/page-about">About Us</Link>
                                         </li>
                                         <li>
                                             <Link href="/">My Account</Link>
@@ -250,13 +250,13 @@ const Header = ({ totalCartItems, totalCompareItems, toggleClick, totalWishlistI
                                                 <Link href="/" className="active">Home</Link>
                                             </li>
                                             <li>
-                                                <Link href="/">About</Link>
+                                                <Link href="/page-about">About</Link>
                                             </li>
                                             <li>
                                                 <Link href="/">Shop</Link>
                                             </li>
                                             <li>
-                                                <Link href="/">Contact</Link>
+                                                <Link href="/page-contact">Contact</Link>
                                             </li>
                                             <li>
                                                 <Link href="/">Delivery Information</Link>
