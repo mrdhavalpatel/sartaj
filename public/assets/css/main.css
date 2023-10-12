@@ -2970,6 +2970,7 @@ label {
     background-color: #fff;
     border-bottom: 1px solid #ececec;
     font-family: "Poppins", sans-serif;
+    display: none;
 }
 
 .breadcrumb {

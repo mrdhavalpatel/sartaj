@@ -35,16 +35,13 @@ const Header = ({ totalCartItems, totalCompareItems, toggleClick, totalWishlistI
                                 <div className="header-info">
                                     <ul>
                                         <li>
-                                            <Link href="/page-about">About Us</Link>
+                                            <Link href="/page-account">My Account</Link>
                                         </li>
                                         <li>
-                                            <Link href="/">My Account</Link>
+                                            <Link href="/shop-wishlist">Wishlist</Link>
                                         </li>
                                         <li>
-                                            <Link href="/">Wishlist</Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/">Order Tracking</Link>
+                                            <Link href="/page-account">Order Tracking</Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -103,29 +100,29 @@ const Header = ({ totalCartItems, totalCompareItems, toggleClick, totalWishlistI
                                 <div className="header-action-right">
                                     <div className="header-action-2">
                                         <div className="header-action-icon-2">
-                                            <Link href="/">
+                                            <Link href="/shop-compare">
                                                 <img className="svgInject" alt="Evara" src="/assets/imgs/theme/icons/icon-compare.svg" />
                                                 <span className="pro-count blue">{totalCompareItems}</span>
                                             </Link>
-                                            <Link href="/">
+                                            <Link href="/shop-compare">
                                                 <span className="lable ml-0">Compare</span>
                                             </Link>
                                         </div>
                                         <div className="header-action-icon-2">
-                                            <Link href="/">
+                                            <Link href="/shop-wishlist">
                                                 <img className="svgInject" alt="Evara" src="/assets/imgs/theme/icons/icon-heart.svg" />
                                                 <span className="pro-count blue">{totalWishlistItems}</span>
                                             </Link>
-                                            <Link href="/">
+                                            <Link href="/shop-wishlist">
                                                 <span className="lable">Wishlist</span>
                                             </Link>
                                         </div>
                                         <div className="header-action-icon-2">
-                                            <Link href="/" className="mini-cart-icon">
+                                            <Link href="/shop-cart" className="mini-cart-icon">
                                                 <img alt="Evara" src="/assets/imgs/theme/icons/icon-cart.svg" />
                                                 <span className="pro-count blue">{totalCartItems}</span>
                                             </Link>
-                                            <Link href="/">
+                                            <Link href="/shop-cart">
                                                 <span className="lable">Cart</span>
                                             </Link>
                                         </div>
@@ -140,37 +137,37 @@ const Header = ({ totalCartItems, totalCompareItems, toggleClick, totalWishlistI
                                             <div className="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                                 <ul>
                                                     <li>
-                                                        <Link href="/">
+                                                        <Link href="/page-account">
                                                             <i className="fi fi-rs-user mr-10"></i>
                                                             My Account
                                                         </Link>
                                                     </li>
                                                     <li>
-                                                        <Link href="/">
+                                                        <Link href="/page-account">
                                                             <i className="fi fi-rs-location-alt mr-10"></i>
                                                             Order Tracking
                                                         </Link>
                                                     </li>
                                                     <li>
-                                                        <Link href="/">
+                                                        <Link href="/page-account">
                                                             <i className="fi fi-rs-label mr-10"></i>
                                                             My Voucher
                                                         </Link>
                                                     </li>
                                                     <li>
-                                                        <Link href="/">
+                                                        <Link href="/page-account">
                                                             <i className="fi fi-rs-heart mr-10"></i>
                                                             My Wishlist
                                                         </Link>
                                                     </li>
                                                     <li>
-                                                        <Link href="/">
+                                                        <Link href="/page-account">
                                                             <i className="fi fi-rs-settings-sliders mr-10"></i>
                                                             Setting
                                                         </Link>
                                                     </li>
                                                     <li>
-                                                        <Link href="/">
+                                                        <Link href="/page-login">
                                                             <i className="fi fi-rs-sign-out mr-10"></i>
                                                             Sign out
                                                         </Link>
@@ -253,16 +250,16 @@ const Header = ({ totalCartItems, totalCompareItems, toggleClick, totalWishlistI
                                                 <Link href="/page-about">About</Link>
                                             </li>
                                             <li>
-                                                <Link href="/">Shop</Link>
+                                                <Link href="/shop-fullwidth">Shop</Link>
                                             </li>
                                             <li>
                                                 <Link href="/page-contact">Contact</Link>
                                             </li>
                                             <li>
-                                                <Link href="/">Delivery Information</Link>
+                                                <Link href="/page-purchase-guide">Delivery Information</Link>
                                             </li>
                                             <li>
-                                                <Link href="/">FAQs</Link>
+                                                <Link href="/page-faqs">FAQs</Link>
                                             </li>
                                         </ul>
                                     </nav>

@@ -10,20 +10,11 @@ function Guide() {
                     <div className="row">
                         <div className="col-xl-10 col-lg-12 m-auto">
                             <div className="row">
-                                <div className="col-lg-9">
+                                <div className="col-lg-12">
                                     <div className="single-page pr-30 mb-lg-0 mb-sm-5">
                                         <div className="single-header style-2">
-                                            <h2>Purchase Guide</h2>
-                                            <div className="entry-meta meta-1 meta-3 font-xs mt-15 mb-15">
-                                                <span className="post-by">By <a href="#">Jonh</a></span>
-                                                <span className="post-on has-dot">9 April 2020</span>
-                                                <span className="time-reading has-dot">8 mins read</span>
-                                                <span className="hit-count has-dot">29k Views</span>
-                                            </div>
+                                            <h2>Delivery Information</h2>
                                         </div>
-                                        <figure className="border-radius-15 mb-30">
-                                            <img className="border-radius-15" src="assets/imgs/page/guide-1.png" alt="nest" />
-                                        </figure>
                                         <div className="single-content mb-50">
                                             <h3>1. Account Registering</h3>
                                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla modi dolores neque omnis ipsa? Quia, nam voluptas! Aut, magnam molestias:</p>
@@ -61,9 +52,6 @@ function Guide() {
                                             </ul>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="col-lg-3 primary-sidebar sticky-sidebar">
-                                    <BlogSidebar/>
                                 </div>
                             </div>
                         </div>
