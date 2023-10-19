@@ -5,7 +5,6 @@ SwiperCore.use([Navigation]);
 
 const NewArrivalTab = ({ products }) => {
   const showItem = 10;
-  console.log(products);
   return (
     <>
       {products &&

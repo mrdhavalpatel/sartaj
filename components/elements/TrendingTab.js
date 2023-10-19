@@ -5,7 +5,6 @@ SwiperCore.use([Navigation]);
 
 const TrendingTab = ({ products }) => {
   const showItem = 10;
-  console.log(products);
   return (
     <>
       {products &&
