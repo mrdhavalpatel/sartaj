@@ -1,97 +1,231 @@
 import Link from "next/link";
 import Layout from "../components/layout/Layout";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { useRouter } from "next/router";
+import { auth } from "../lib/auth/auth";
+import { toast } from "react-toastify";
+import DateInput from "../components/customDatePicker/DateInput";
 
 function Privacy() {
-    return (
-        <>
-            <Layout parent="Home" sub="Pages" subChild="Privacy">
-            <div className="page-content pt-150 pb-150">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-xl-8 col-lg-10 col-md-12 m-auto">
-                            <div className="row">
-                                <div className="col-lg-6 col-md-8">
-                                    <div className="login_wrap widget-taber-content background-white">
-                                        <div className="padding_eight_all bg-white">
-                                            <div className="heading_s1 mb-50">
-                                                <h1 className="mb-5">Create an Account</h1>
-                                                <p>Already have an account? <Link href="/page-login">Log in instead!</Link></p>
-                                            </div>
-                                            <form method="post">
-                                                <div className="form-group">
-                                                    <input type="text" required="" name="username" placeholder="Username" />
-                                                </div>
-                                                <div className="form-group">
-                                                    <input type="text" required="" name="email" placeholder="Email" />
-                                                </div>
-                                                <div className="form-group">
-                                                    <input required="" type="password" name="password" placeholder="Password" />
-                                                </div>
-                                                <div className="form-group">
-                                                    <input required="" type="password" name="password" placeholder="Confirm password" />
-                                                </div>
-                                                <div className="login_footer form-group">
-                                                    <div className="chek-form">
-                                                        <input type="text" required="" name="email" placeholder="Security code *" />
-                                                    </div>
-                                                    <span className="security-code">
-                                                        <b className="text-new">8</b>
-                                                        <b className="text-hot">6</b>
-                                                        <b className="text-sale">7</b>
-                                                        <b className="text-best">5</b>
-                                                    </span>
-                                                </div>
-                                                <div className="payment_option mb-50">
-                                                    <div className="custome-radio">
-                                                        <input className="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios3" defaultChecked="" />
-                                                        <label className="form-check-label" htmlFor="exampleRadios3" data-bs-toggle="collapse" data-target="#bankTranfer" aria-controls="bankTranfer">I am a customer</label>
-                                                    </div>
-                                                    <div className="custome-radio">
-                                                        <input className="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios4" defaultChecked="" />
-                                                        <label className="form-check-label" htmlFor="exampleRadios4" data-bs-toggle="collapse" data-target="#checkPayment" aria-controls="checkPayment">I am a vendor</label>
-                                                    </div>
-                                                </div>
-                                                <div className="login_footer form-group mb-50">
-                                                    <div className="chek-form">
-                                                        <div className="custome-checkbox">
-                                                            <input className="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox12" value="" />
-                                                            <label className="form-check-label" htmlFor="exampleCheckbox12"><span>I agree to terms &amp; Policy.</span></label>
-                                                        </div>
-                                                    </div>
-                                                    <Link href="/page-privacy-policy"><i className="fi-rs-book-alt mr-5 text-muted"></i>Lean more</Link>
-                                                </div>
-                                                <div className="form-group mb-30">
-                                                    <button type="submit" className="btn btn-fill-out btn-block hover-up font-weight-bold" name="login">Submit &amp; Register</button>
-                                                </div>
-                                                <p className="font-xs text-muted"><strong>Note:</strong>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy</p>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-6 pr-30 d-none d-lg-block">
-                                    <div className="card-login mt-115">
-                                        <a href="#" className="social-login facebook-login">
-                                            <img src="/assets/imgs/theme/icons/logo-facebook.svg" alt="nest" />
-                                            <span>Continue with Facebook</span>
-                                        </a>
-                                        <a href="#" className="social-login google-login">
-                                            <img src="/assets/imgs/theme/icons/logo-google.svg" alt="nest" />
-                                            <span>Continue with Google</span>
-                                        </a>
-                                        <a href="#" className="social-login apple-login">
-                                            <img src="/assets/imgs/theme/icons/logo-apple.svg" alt="nest" />
-                                            <span>Continue with Apple</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+  const router = useRouter();
+
+  const validationSchema = Yup.object().shape({
+    f_name: Yup.string().required("First name is required"),
+    l_name: Yup.string().required("Last name is required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    termsConditions: Yup.boolean()
+      .oneOf([true], "Terms & Conditions are required")
+      .required("Terms & Conditions are required"),
+    phone: Yup.string()
+      .required("Phone number is required")
+      .min(3, "Mobile must be between 3 and 32 characters!")
+      .max(32, "Mobile must be between 3 and 32 characters!"),
+    password: Yup.string()
+      .min(8, "Password must be at least 8 characters")
+      .required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Confirm Password is required"),
+    dob: Yup.date().nullable().required("Date of Birth is required"),
+  });
+  const handleSubmit = (values) => {
+    const payload = {
+      f_name: values.f_name,
+      l_name: values.l_name,
+      email: values.email,
+      phone: values.phone,
+      password: values.confirmPassword,
+      dob: values?.dob,
+    };
+    auth("post", "/auth/register", payload).then((res) => {
+      if (res?.response?.data?.errors) {
+        toast.error(res?.response?.data?.errors?.[0]?.message);
+      } else {
+        router.push("/page-login");
+      }
+    });
+  };
+
+  return (
+    <>
+      <Layout parent="Home" sub="Pages" subChild="Privacy">
+        <div className="page-content pt-150 pb-150">
+          <div className="container">
+            <div className="row">
+              <div className="col-xl-8 col-lg-10 col-md-12 m-auto">
+                <div className="row">
+                  <div className="col-lg-6 col-md-8">
+                    <div className="login_wrap widget-taber-content background-white">
+                      <div className="padding_eight_all bg-white">
+                        <div className="heading_s1 mb-50">
+                          <h1 className="mb-5">Create an Account</h1>
+                          <p>
+                            Already have an account?{" "}
+                            <Link href="/page-login">Log in instead!</Link>
+                          </p>
                         </div>
+
+                        <Formik
+                          initialValues={{
+                            f_name: "",
+                            l_name: "",
+                            email: "",
+                            password: "",
+                            confirmPassword: "",
+                            termsConditions: "",
+                            dob: "",
+                          }}
+                          validationSchema={validationSchema}
+                          onSubmit={(values, { setSubmitting }) => {
+                            // Handle form submission here
+                            handleSubmit(values);
+                            setSubmitting(false);
+                          }}
+                        >
+                          <Form>
+                            <div className="form-group">
+                              <Field
+                                type="text"
+                                name="f_name"
+                                placeholder="First Name"
+                                className="form-control"
+                              />
+                              <ErrorMessage
+                                name="f_name"
+                                component="div"
+                                style={{ color: "red" }}
+                              />
+                            </div>
+                            <div className="form-group">
+                              <Field
+                                type="text"
+                                name="l_name"
+                                placeholder="Last Name"
+                                className="form-control"
+                              />
+                              <ErrorMessage
+                                name="l_name"
+                                component="div"
+                                style={{ color: "red" }}
+                              />
+                            </div>
+                            <div className="form-group">
+                              <Field
+                                type="text"
+                                name="email"
+                                placeholder="Email"
+                                className="form-control"
+                              />
+                              <ErrorMessage
+                                name="email"
+                                component="div"
+                                style={{ color: "red" }}
+                              />
+                            </div>
+                            <div className="form-group">
+                              <Field
+                                type="text"
+                                name="phone"
+                                placeholder="phone no."
+                                className="form-control"
+                              />
+                              <ErrorMessage
+                                name="phone"
+                                component="div"
+                                style={{ color: "red" }}
+                              />
+                            </div>
+                            <Field
+                              name="dob"
+                              label="Date of Birth"
+                              placeholder="Select Date of Birth"
+                              component={DateInput}
+                            />
+                            <div className="form-group">
+                              <Field
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                className="form-control"
+                              />
+                              <ErrorMessage
+                                name="password"
+                                component="div"
+                                style={{ color: "red" }}
+                              />
+                            </div>
+                            <div className="form-group">
+                              <Field
+                                type="password"
+                                name="confirmPassword"
+                                placeholder="Confirm password"
+                                className="form-control"
+                              />
+                              <ErrorMessage
+                                name="confirmPassword"
+                                component="div"
+                                style={{ color: "red" }}
+                              />
+                            </div>
+
+                            <div className="login_footer form-group mb-50">
+                              <div className="chek-form">
+                                <div className="custome-checkbox">
+                                  <Field
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    name="termsConditions"
+                                    id="exampleCheckbox12"
+                                    // value=""
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="exampleCheckbox12"
+                                  >
+                                    <span>I agree to terms &amp; Policy.</span>
+                                  </label>
+                                </div>
+                                <ErrorMessage
+                                  name="termsConditions"
+                                  component="div"
+                                  style={{ color: "red" }}
+                                />
+                              </div>
+                              <Link href="/page-privacy-policy">
+                                <i className="fi-rs-book-alt mr-5 text-muted"></i>
+                                Lean more
+                              </Link>
+                            </div>
+
+                            <p className="font-xs text-muted">
+                              <strong>Note:</strong>Your personal data will be
+                              used to support your experience throughout this
+                              website, to manage access to your account, and for
+                              other purposes described in our privacy policy
+                            </p>
+                            <button
+                              type="submit"
+                              className="btn btn-fill-out btn-block hover-up font-weight-bold"
+                              name="login"
+                            >
+                              Submit & Register
+                            </button>
+                          </Form>
+                        </Formik>
+                      </div>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
-            </Layout>
-        </>
-    );
+          </div>
+        </div>
+      </Layout>
+    </>
+  );
 }
 
 export default Privacy;
