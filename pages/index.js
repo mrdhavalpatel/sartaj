@@ -10,40 +10,40 @@ import IntroPopup from "./../components/elements/IntroPopup";
 import CategorySlider2 from "./../components/sliders/Category2";
 
 function Index2() {
-    return (
-        <>
-            <IntroPopup />
-            <Layout noBreadcrumb="d-none" headerStyle="header-style-1">
-                <section className="home-slider style-2 position-relative mb-50">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-xl-8 col-lg-12">
-                                <div className="home-slide-cover">
-                                    <Intro2 />
-                                </div>
-                            </div>
+  return (
+    <>
+      <IntroPopup />
+      <Layout noBreadcrumb="d-none" headerStyle="header-style-1">
+        <section className="home-slider style-2 position-relative mb-50">
+          <div className="container">
+            <div className="row">
+              <div className="col-xl-8 col-lg-12">
+                <div className="home-slide-cover">
+                  <Intro2 />
+                </div>
+              </div>
 
-                            <div className="col-lg-4 d-none d-xl-block">
-                                <div className="banner-img style-3 animated animated">
-                                    <div className="banner-text mt-50">
-                                        <h2 className="mb-30">
-                                            Enjoy easy money transfers at&nbsp;
-                                            <span className="text-brand">
-                                                Sartaj Foods
-                                            </span>
-                                        </h2>
-                                        <h5 className="mb-30 fw-300">Send to your loved ones around the world</h5>
-                                        <Link href="/" className="btn btn-xs">
-                                            Learn more <i className="fi-rs-arrow-small-right"></i>
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+              <div className="col-lg-4 d-none d-xl-block">
+                <div className="banner-img style-3 animated animated">
+                  <div className="banner-text mt-50">
+                    <h2 className="mb-30">
+                      Enjoy easy money transfers at&nbsp;
+                      <span className="text-brand">Sartaj Foods</span>
+                    </h2>
+                    <h5 className="mb-30 fw-300">
+                      Send to your loved ones around the world
+                    </h5>
+                    <Link href="/" className="btn btn-xs">
+                      Learn more <i className="fi-rs-arrow-small-right"></i>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-                {/* <section className="banners mb-15">
+        {/* <section className="banners mb-15">
                     <div className="container">
                         <div className="row">
                             <Banner5 />
@@ -51,58 +51,61 @@ function Index2() {
                     </div>
                 </section> */}
 
-                <section className="product-tabs section-padding position-relative">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-lg-12">
-                                <CategoryTab />
-                            </div>
-                        </div>
-                    </div>
-                </section>
+        <section className="product-tabs section-padding position-relative">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12">
+                <CategoryTab />
+              </div>
+            </div>
+          </div>
+        </section>
 
-                <section className="section-padding pb-5">
-                    <div className="container">
-                        <FetchTabSlider />
-                    </div>
-                </section>
+        <section className="section-padding pb-5">
+          <div className="container">
+            <FetchTabSlider />
+          </div>
+        </section>
 
-                <section className="section-padding pb-5">
-                    <div className="container">
-                        <div className="section-title wow animate__animated animate__fadeIn" data-wow-delay="0">
-                            <h3 className="">Deals Of The Day</h3>
-                            <Link href="/shop-grid-right" className="show-all">
-                                All Deals
-                                <i className="fi-rs-angle-right"></i>
-                            </Link>
-                        </div>
-                        <FeatchDeals />
-                    </div>
-                </section>
+        <section className="section-padding pb-5">
+          <div className="container">
+            <div
+              className="section-title wow animate__animated animate__fadeIn"
+              data-wow-delay="0"
+            >
+              <h3 className="">Deals Of The Day</h3>
+              <Link href="/shop-grid-right" className="show-all">
+                All Deals
+                <i className="fi-rs-angle-right"></i>
+              </Link>
+            </div>
+            <FeatchDeals />
+          </div>
+        </section>
 
-                <section className="popular-categories section-padding">
-                    <div className="container">
-                        <div className="section-title">
-                            <div className="title">
-                                <h3>Shop by Categories</h3>
-                                <Link href="/shop-grid-right" className="show-all">
-                                    All Categories
-                                    <i className="fi-rs-angle-right"></i>
-                                </Link>
-                            </div>
-                        </div>
-                        <div className="carausel-8-columns-cover position-relative">
-                            <div className="carausel-8-columns" id="carausel-8-columns">
-                                <CategorySlider2 />
-                            </div>
-                        </div>
-                    </div>
-                </section>
+        <section className="popular-categories section-padding">
+          <div className="container">
+            <div className="section-title">
+              <div className="title">
+                <h3>Shop by Categories</h3>
+                <Link href="/shop-grid-right" className="show-all">
+                  All Categories
+                  <i className="fi-rs-angle-right"></i>
+                </Link>
+              </div>
+            </div>
+            <div className="carausel-8-columns-cover position-relative">
+              <div className="carausel-8-columns" id="carausel-8-columns">
+                <CategorySlider2 />
+              </div>
+            </div>
+          </div>
+        </section>
 
-                <Bottom />
-            </Layout>
-        </>
-    );
+        <Bottom />
+      </Layout>
+    </>
+  );
 }
 
 export default Index2;
