@@ -7,7 +7,6 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
     addToCart(product);
     toast("Product added to Cart !");
   };
-  console.log("data, features,", data, features);
   return (
     <table className="table text-center">
       <tbody>

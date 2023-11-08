@@ -23,7 +23,6 @@ const BestSellerSlider = () => {
           <figure className="col-md-4 mb-0">
             <Link href="/products/[slug]" as={`/products/${product?.name}`}>
               <img src={product?.image?.[0]} alt="nest" />
-              {console.log("product?.image?.[0]", product?.image?.[0])}
             </Link>
           </figure>
           <div className="col-md-8 mb-0">

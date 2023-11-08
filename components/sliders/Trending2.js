@@ -14,7 +14,6 @@ const TrendingSlider = () => {
   const fetchProducts = async () => {
     const request = await ApiCall("get", "/products/trending-three-products");
     const trendingItem = await request?.data?.products;
-    console.log("trendingItem", trendingItem);
     setTrending(trendingItem);
   };
 

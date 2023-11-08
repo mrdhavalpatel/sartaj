@@ -19,7 +19,6 @@ const CategorySlider2 = () => {
   useEffect(() => {
     getAllCategories();
   }, []);
-  console.log("categories", categories);
   return (
     <>
       <Swiper

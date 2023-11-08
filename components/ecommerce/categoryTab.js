@@ -17,14 +17,12 @@ function CategoryTab() {
     const request = await ApiCall("get", "products/all");
     const allProducts = await request?.data?.products;
     setCatAll(allProducts);
-    console.log("allProducts", allProducts);
     setActive("1");
   };
   const catP1 = async () => {
     const request = await ApiCall("get", "products/featured");
     const allProducts = await request?.data?.products;
     setCat1(allProducts);
-    console.log("catP1", allProducts);
 
     setActive("2");
   };
@@ -33,7 +31,6 @@ function CategoryTab() {
     const request = await ApiCall("get", "products/popular");
     const allProducts = await request?.data?.products;
     setCat2(allProducts);
-    console.log("catP2", allProducts);
 
     setActive("3");
   };
@@ -41,7 +38,6 @@ function CategoryTab() {
     const request = await ApiCall("get", "products/latest");
     const allProducts = await request?.data?.products;
     setCat3(allProducts);
-    console.log("catP3", allProducts);
 
     setActive("4");
   };
@@ -49,7 +45,6 @@ function CategoryTab() {
   useEffect(() => {
     catPAll();
   }, []);
-  console.log("catAll", catAll);
   return (
     <>
       <div className="section-title style-2 wow animate__animated animate__fadeIn">

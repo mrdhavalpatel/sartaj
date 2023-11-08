@@ -9,8 +9,6 @@ SwiperCore.use([Navigation]);
 const TopRatedSlider = () => {
   const [discount, setDiscount] = useState([]);
 
-  // console.log(discount);
-
   useEffect(() => {
     fetchProducts();
   }, []);
