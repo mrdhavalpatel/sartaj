@@ -14,7 +14,6 @@ function Login() {
     password: Yup.string().required("Password is required"),
   });
   const handleSubmit = (values) => {
-    console.log(values);
     const payload = {
       email_or_phone: values?.usernameOrEmail,
       password: values?.password,

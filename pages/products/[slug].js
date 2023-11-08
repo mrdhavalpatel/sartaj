@@ -32,7 +32,6 @@ ProductId.getInitialProps = async (params) => {
   const data = await request.json();
 
   const index = findProductIndex(data, params.query.slug);
-  // console.log(params);
 
   return { product: data[index] };
 };

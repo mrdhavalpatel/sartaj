@@ -5,6 +5,7 @@ import { server } from "../../config/index";
 import FeaturedSlider from "../sliders/Featured";
 import NewArrivalTabSlider from "../sliders/NewArrivalTab";
 import TrendingSlider from "../sliders/Trending";
+import { ApiCall } from "../../lib/other/other";
 
 function FeatchTabSlider() {
   const [active, setActive] = useState("1");
@@ -13,29 +14,29 @@ function FeatchTabSlider() {
   const [newArrival, setNewArrival] = useState([]);
 
   const featuredProduct = async () => {
-    const request = await fetch(`${server}/static/product.json`);
-    const allProducts = await request.json();
-    const featuedItem = allProducts.filter((item) => item.featured);
-    setFeatured(featuedItem);
+    const request = await ApiCall("get", "products/trending");
+    const allProducts = await request;
+
+    setFeatured(allProducts?.data?.products);
     setActive("1");
   };
 
-  const trendingProduct = async () => {
-    const request = await fetch(`${server}/static/product.json`);
-    const allProducts = await request.json();
-    const trendingItem = allProducts.filter((item) => item.trending);
-    setTrending(trendingItem);
-    setActive("2");
-  };
-  const newArrivalProduct = async () => {
-    const request = await fetch(`${server}/static/product.json`);
-    const allProducts = await request.json();
-    const newArrivalItem = allProducts.sort(function (a, b) {
-      return a.created > b.created ? -1 : 1;
-    });
-    setNewArrival(newArrivalItem);
-    setActive("3");
-  };
+  // const trendingProduct = async () => {
+  //   const request = await fetch(`${server}/static/product.json`);
+  //   const allProducts = await request.json();
+  //   const trendingItem = allProducts.filter((item) => item.trending);
+  //   setTrending(trendingItem);
+  //   setActive("2");
+  // };
+  // const newArrivalProduct = async () => {
+  //   const request = await fetch(`${server}/static/product.json`);
+  //   const allProducts = await request.json();
+  //   const newArrivalItem = allProducts.sort(function (a, b) {
+  //     return a.created > b.created ? -1 : 1;
+  //   });
+  //   setNewArrival(newArrivalItem);
+  //   setActive("3");
+  // };
 
   useEffect(() => {
     featuredProduct();
@@ -46,7 +47,7 @@ function FeatchTabSlider() {
       <div className="section-title wow animate__animated animate__fadeIn">
         <h3 className="">Daily Best Sells</h3>
 
-        <ul className="nav nav-tabs links" id="myTab-1" role="tablist">
+        {/* <ul className="nav nav-tabs links" id="myTab-1" role="tablist">
           <li className="nav-item" role="presentation">
             <button
               className={active === "1" ? "nav-link active" : "nav-link"}
@@ -71,7 +72,7 @@ function FeatchTabSlider() {
               New added
             </button>
           </li>
-        </ul>
+        </ul> */}
       </div>
 
       <div className="row">
@@ -98,7 +99,7 @@ function FeatchTabSlider() {
               </div>
             </div>
 
-            <div
+            {/* <div
               className={
                 active === "2" ? "tab-pane fade show active" : "tab-pane fade"
               }
@@ -115,7 +116,7 @@ function FeatchTabSlider() {
               <div className="carausel-4-columns-cover card-product-small arrow-center position-relative">
                 <NewArrivalTabSlider products={newArrival} />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

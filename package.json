@@ -14,7 +14,6 @@
     "formik": "^2.4.5",
     "leaflet": "^1.9.4",
     "next": "^13.4.7",
-    "next-i18next": "^14.0.3",
     "rc-slider": "^10.2.1",
     "react": "18.2.0",
     "react-bootstrap": "^2.8.0",

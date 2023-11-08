@@ -16,8 +16,6 @@ import { fetchProduct } from "../../redux/action/product";
 import data from "../../util/storeData";
 
 const Products = ({ products, productFilters, fetchProduct }) => {
-  console.log(products);
-
   let Router = useRouter(),
     searchTerm = Router.query.search,
     showLimit = 12,
