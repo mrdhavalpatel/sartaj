@@ -34,7 +34,7 @@ const SingleProduct = ({
         <div className="product-img-action-wrap">
           <div className="product-img product-img-zoom">
             <Link href="/products/[slug]" as={`/products/${product?.id}`}>
-              {product?.images?.map((itm) => {
+              {product?.image?.map((itm) => {
                 return <img className="default-img" src={itm} alt="nest" />;
               })}
             </Link>
@@ -65,18 +65,21 @@ const SingleProduct = ({
           </div>
 
           <div className="product-badges product-badges-position product-badges-mrg">
-            {product.trending && <span className="hot">Hot</span>}
+            {product?.badges?.map(() => {
+              //
+            })}
+            {/* {product.trending && <span className="hot">Hot</span>}
             {product.created && <span className="new">New</span>}
             {product.totalSell > 100 && <span className="best">Best Sell</span>}
             {product.discount.isActive && <span className="sale">Sale</span>}
             {product.discount.percentage >= 5 && (
               <span className="hot">{product.discount.percentage}%</span>
-            )}
+            )} */}
           </div>
         </div>
         <div className="product-content-wrap">
           <div className="product-category">
-            <Link href="/products">{product?.brand}</Link>
+            <Link href="/products">{product?.manufacturer?.name}</Link>
           </div>
           <h2>
             <Link href="/products/[slug]" as={`/products/${product?.id}`}>
@@ -96,7 +99,7 @@ const SingleProduct = ({
 
           <div>
             <span className="font-small text-muted">
-              By <Link href="/vendor/1">{product.brand}</Link>
+              By <Link href="/vendor/1">{product?.manufacturer?.name}</Link>
             </span>
           </div>
 

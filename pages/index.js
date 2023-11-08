@@ -17,7 +17,7 @@ function Index2() {
         <section className="home-slider style-2 position-relative mb-50">
           <div className="container">
             <div className="row">
-              <div className="col-xl-8 col-lg-12">
+              <div className="col-xl-8 col-lg-8">
                 <div className="home-slide-cover">
                   <Intro2 />
                 </div>
@@ -42,14 +42,6 @@ function Index2() {
             </div>
           </div>
         </section>
-
-        {/* <section className="banners mb-15">
-                    <div className="container">
-                        <div className="row">
-                            <Banner5 />
-                        </div>
-                    </div>
-                </section> */}
 
         <section className="product-tabs section-padding position-relative">
           <div className="container">

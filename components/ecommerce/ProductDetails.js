@@ -11,6 +11,8 @@ import { addToWishlist } from "../../redux/action/wishlistAction";
 import ProductTab from "../elements/ProductTab";
 import RelatedSlider from "../sliders/Related";
 import ThumbSlider from "../sliders/Thumb";
+import { Button } from "react-bootstrap";
+import Link from "next/link";
 
 const ProductDetails = ({
   product,
@@ -39,7 +41,7 @@ const ProductDetails = ({
     toast("Added to Wishlist !");
   };
 
-  const inCart = cartItems.find((cartItem) => cartItem.id === product.id);
+  const inCart = cartItems.find((cartItem) => cartItem?.id === product?.id);
 
   return (
     <>
@@ -99,38 +101,8 @@ const ProductDetails = ({
                           )}
                         </div>
                       </div>
-
                       <div className="short-desc mb-30">
                         <p className="font-lg">{product?.desc}</p>
-                      </div>
-                      <div className="attr-detail attr-color mb-15">
-                        <strong className="mr-10">Color</strong>
-                        <ul className="list-filter color-filter">
-                          {product?.variations?.map((clr, i) => (
-                            <li key={i}>
-                              <a href="#">
-                                <span className={`product-color-${clr}`}></span>
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div className="attr-detail attr-size">
-                        <strong className="mr-10">Size</strong>
-                        <ul className="list-filter size-filter font-small">
-                          <li className="active">
-                            <a>M</a>
-                          </li>
-                          <li>
-                            <a>L</a>
-                          </li>
-                          <li>
-                            <a>XL</a>
-                          </li>
-                          <li>
-                            <a>XXL</a>
-                          </li>
-                        </ul>
                       </div>
                       <div className="bt-1 border-color-1 mt-30 mb-30"></div>
                       <div className="detail-extralink">
@@ -211,7 +183,10 @@ const ProductDetails = ({
 
                 {quickView ? null : (
                   <>
-                    <ProductTab />
+                    <ProductTab
+                      description={product?.description}
+                      review={product?.active_reviews}
+                    />
                     <div className="row mt-60">
                       <div className="col-12">
                         <h3 className="section-title style-1 mb-30">
