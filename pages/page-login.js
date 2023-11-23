@@ -5,9 +5,11 @@ import * as Yup from "yup";
 import { auth } from "../lib/auth/auth";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import { useAuth } from "../components/context/AuthContext";
 
 function Login() {
   const router = useRouter();
+  const { login } = useAuth();
 
   const validationSchema = Yup.object().shape({
     usernameOrEmail: Yup.string().required("Username or Email is required"),
@@ -23,6 +25,7 @@ function Login() {
         toast.error(res?.response?.data?.errors?.[0]?.message);
       } else {
         localStorage.setItem("token", res.token);
+        login(res.token);
         router.push("/");
       }
     });

@@ -10,7 +10,6 @@ function FeatchDeals() {
     const request = await ApiCall("get", "products/sale-products");
     const allProducts = await request;
     // Discount
-    console.log("allProducts?.data---------->", allProducts?.data?.products);
     setDeals(allProducts?.data?.products);
   };
 

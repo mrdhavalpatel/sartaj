@@ -32,7 +32,7 @@ const FeaturedSlider = ({ products }) => {
           },
         }}
       >
-        {products.map((product, i) => (
+        {products?.map((product, i) => (
           <SwiperSlide key={i}>
             <SingleProduct2 product={product} />
           </SwiperSlide>

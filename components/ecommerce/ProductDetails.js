@@ -162,12 +162,12 @@ const ProductDetails = ({
                       <ul className="product-meta font-xs color-grey mt-50">
                         <li className="mb-5">
                           SKU:
-                          <a href="#">FWM15VKT</a>
+                          <a href="#">{product?.sku ? product?.sku : "--"}</a>
                         </li>
                         <li className="mb-5">
                           Tags:
                           <a href="#" rel="tag" className="me-1">
-                            Cloth,
+                            {product?.product_tag ? product.product_tag : "--"}
                           </a>
                         </li>
                         <li>
@@ -184,6 +184,7 @@ const ProductDetails = ({
                 {quickView ? null : (
                   <>
                     <ProductTab
+                      id={product.id}
                       description={product?.description}
                       review={product?.active_reviews}
                     />

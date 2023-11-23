@@ -1,12 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { api } from "../../lib/api";
 
-const ProductTab = ({ description, review }) => {
+const ProductTab = ({ description, review, id }) => {
   const [activeIndex, setActiveIndex] = useState(1);
+  const [productRating, setProductRating] = useState([]);
 
   const handleOnClick = (index) => {
     setActiveIndex(index);
   };
 
+  const getProductRatingDetails = async (encodedToken) => {
+    try {
+      const response = await api.get(`customer/reviews/rating/${id}`, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${encodedToken}`,
+        },
+      });
+      setProductRating(response?.data);
+    } catch (error) {
+      console.error("API Error:", error);
+    }
+  };
+  console.log("productRating", productRating);
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    getProductRatingDetails(token);
+  }, []);
   return (
     <div className="product-info">
       <div className="tab-style3">
@@ -339,11 +360,11 @@ const ProductTab = ({ description, review }) => {
                       <div
                         className="product-rating"
                         style={{
-                          width: "90%",
+                          width: `${productRating?.overall_rating}`,
                         }}
                       ></div>
                     </div>
-                    <h6>4.8 out of 5</h6>
+                    <h6>{productRating?.overall_rating} of 5</h6>
                   </div>
                   <div className="progress">
                     <span>5 star</span>
@@ -351,13 +372,13 @@ const ProductTab = ({ description, review }) => {
                       className="progress-bar"
                       role="progressbar"
                       style={{
-                        width: " 50%",
+                        width: `${productRating.ratings_details?.["5"]}`,
                       }}
-                      aria-valuenow="50"
+                      aria-valuenow={productRating.ratings_details?.["5"]}
                       aria-valuemin="0"
                       aria-valuemax="100"
                     >
-                      50%
+                      {productRating.ratings_details?.["5"] + "%"}
                     </div>
                   </div>
                   <div className="progress">
@@ -366,13 +387,13 @@ const ProductTab = ({ description, review }) => {
                       className="progress-bar"
                       role="progressbar"
                       style={{
-                        width: " 25%",
+                        width: `${productRating?.ratings_details?.["4"]}`,
                       }}
-                      aria-valuenow="25"
+                      aria-valuenow={productRating?.ratings_details?.["4"]}
                       aria-valuemin="0"
                       aria-valuemax="100"
                     >
-                      25%
+                      {productRating?.ratings_details?.["4"] + "%"}
                     </div>
                   </div>
                   <div className="progress">
@@ -381,13 +402,13 @@ const ProductTab = ({ description, review }) => {
                       className="progress-bar"
                       role="progressbar"
                       style={{
-                        width: " 45%",
+                        width: `${productRating?.ratings_details?.["3"]}`,
                       }}
-                      aria-valuenow="45"
+                      aria-valuenow={productRating?.ratings_details?.["3"]}
                       aria-valuemin="0"
                       aria-valuemax="100"
                     >
-                      45%
+                      {productRating?.ratings_details?.["3"] + "%"}
                     </div>
                   </div>
                   <div className="progress">
@@ -396,13 +417,13 @@ const ProductTab = ({ description, review }) => {
                       className="progress-bar"
                       role="progressbar"
                       style={{
-                        width: " 65%",
+                        width: `${productRating?.ratings_details?.["2"]}`,
                       }}
-                      aria-valuenow="65"
+                      aria-valuenow={productRating?.ratings_details?.["2"]}
                       aria-valuemin="0"
                       aria-valuemax="100"
                     >
-                      65%
+                      {productRating?.ratings_details?.["2"] + "%"}
                     </div>
                   </div>
                   <div className="progress mb-30">
@@ -411,13 +432,13 @@ const ProductTab = ({ description, review }) => {
                       className="progress-bar"
                       role="progressbar"
                       style={{
-                        width: " 85%",
+                        width: `${productRating?.ratings_details?.["1"]}`,
                       }}
-                      aria-valuenow="85"
+                      aria-valuenow={productRating?.ratings_details?.["1"]}
                       aria-valuemin="0"
                       aria-valuemax="100"
                     >
-                      85%
+                      {productRating?.ratings_details?.["1"] + "%"}
                     </div>
                   </div>
                   <a href="#" className="font-xs text-muted">

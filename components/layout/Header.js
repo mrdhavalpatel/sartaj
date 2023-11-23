@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import CategoryProduct2 from "../ecommerce/Filter/CategoryProduct2";
 import CategoryProduct3 from "../ecommerce/Filter/CategoryProduct3";
 import Search from "../ecommerce/Search";
+import { useAuth } from "../context/AuthContext";
+import { ApiCall } from "../../lib/other/other";
 
 const Header = ({
   totalCartItems,
@@ -13,7 +15,23 @@ const Header = ({
 }) => {
   const [isToggled, setToggled] = useState(false);
   const [scroll, setScroll] = useState(0);
+  const { logout } = useAuth();
+  const [categories, setCategories] = useState([]);
 
+  const getAllCategories = async () => {
+    const request = await ApiCall("get", "categories");
+    const allCategories = await request;
+
+    setCategories(allCategories?.data);
+  };
+  function splitArray(arr) {
+    const midpoint = Math.floor(categories?.length / 2);
+    const firstHalf = arr.slice(0, midpoint);
+    const secondHalf = arr.slice(midpoint);
+
+    return [firstHalf, secondHalf];
+  }
+  const [firstPart, secondPart] = splitArray(categories);
   useEffect(() => {
     document.addEventListener("scroll", () => {
       const scrollCheck = window.scrollY >= 100;
@@ -22,9 +40,10 @@ const Header = ({
       }
     });
   });
-
+  useEffect(() => {
+    getAllCategories();
+  }, []);
   const handleToggle = () => setToggled(!isToggled);
-
   return (
     <>
       <header className="header-area header-style-1 header-height-2">
@@ -179,26 +198,32 @@ const Header = ({
                               Order Tracking
                             </Link>
                           </li>
-                          <li>
+                          {/* <li>
                             <Link href="/page-account">
                               <i className="fi fi-rs-label mr-10"></i>
                               My Voucher
                             </Link>
-                          </li>
+                          </li> */}
                           <li>
                             <Link href="/page-account">
                               <i className="fi fi-rs-heart mr-10"></i>
                               My Wishlist
                             </Link>
                           </li>
-                          <li>
+                          {/* <li>
                             <Link href="/page-account">
                               <i className="fi fi-rs-settings-sliders mr-10"></i>
                               Setting
                             </Link>
-                          </li>
+                          </li> */}
                           <li>
-                            <Link href="/page-login">
+                            <Link
+                              href="/page-login"
+                              onClick={() => {
+                                localStorage.removeItem("token");
+                                logout();
+                              }}
+                            >
                               <i className="fi fi-rs-sign-out mr-10"></i>
                               Sign out
                             </Link>
@@ -245,55 +270,8 @@ const Header = ({
                     }
                   >
                     <div className="d-flex categori-dropdown-inner">
-                      <CategoryProduct2 />
-                      <CategoryProduct3 />
-                    </div>
-                    <div
-                      className="more_slide_open"
-                      style={{ display: "none" }}
-                    >
-                      <div className="d-flex categori-dropdown-inner">
-                        <ul>
-                          <li>
-                            <Link href="/products">
-                              <img
-                                src="/assets/imgs/theme/icons/icon-1.svg"
-                                alt="nest"
-                              />
-                              Milks and Dairies
-                            </Link>
-                          </li>
-                          <li>
-                            <Link href="/products">
-                              <img
-                                src="/assets/imgs/theme/icons/icon-2.svg"
-                                alt="nest"
-                              />
-                              Clothing & beauty
-                            </Link>
-                          </li>
-                        </ul>
-                        <ul className="end">
-                          <li>
-                            <Link href="/products">
-                              <img
-                                src="/assets/imgs/theme/icons/icon-3.svg"
-                                alt="nest"
-                              />
-                              Wines & Drinks
-                            </Link>
-                          </li>
-                          <li>
-                            <Link href="/products">
-                              <img
-                                src="/assets/imgs/theme/icons/icon-4.svg"
-                                alt="nest"
-                              />
-                              Fresh Seafood
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
+                      <CategoryProduct2 data={secondPart} />
+                      <CategoryProduct3 data={firstPart} />
                     </div>
                   </div>
                 </div>

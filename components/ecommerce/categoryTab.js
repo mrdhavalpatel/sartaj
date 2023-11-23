@@ -31,14 +31,12 @@ function CategoryTab() {
     const request = await ApiCall("get", "products/popular");
     const allProducts = await request?.data?.products;
     setCat2(allProducts);
-
     setActive("3");
   };
   const catP3 = async () => {
     const request = await ApiCall("get", "products/latest");
     const allProducts = await request?.data?.products;
     setCat3(allProducts);
-
     setActive("4");
   };
 

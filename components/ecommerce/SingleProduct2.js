@@ -34,9 +34,9 @@ const SingleProduct2 = ({
       <div className="product-cart-wrap mb-30">
         <div className="product-img-action-wrap">
           <div className="product-img product-img-zoom">
-            <Link href="/products/[slug]" as={`/products/${product.slug}`}>
-              <img className="default-img" src={product.image} alt="nest" />
-              <img className="hover-img" src={product.image} alt="nest" />
+            <Link href="/products/[slug]" as={`/products/${product?.slug}`}>
+              <img className="default-img" src={product?.image} alt="nest" />
+              <img className="hover-img" src={product?.image} alt="nest" />
             </Link>
           </div>
           <div className="product-action-1">
@@ -81,7 +81,7 @@ const SingleProduct2 = ({
           </div>
           <h2>
             <Link href="/products/[slug]" as={`/products/${product?.id}`}>
-              {product.name}
+              {product?.name}
             </Link>
           </h2>
 
@@ -90,9 +90,9 @@ const SingleProduct2 = ({
           </div>
 
           <div className="product-price mt-10">
-            <span>¥{product.price} </span>
+            <span>¥{product?.price} </span>
             <span className="old-price">
-              {product.oldPrice && `¥ ${product.oldPrice}`}
+              {product?.oldPrice && `¥ ${product?.oldPrice}`}
             </span>
           </div>
           <div className="sold mt-15 mb-15">
