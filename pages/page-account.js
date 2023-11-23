@@ -269,8 +269,10 @@ function Account() {
                                           </td>
                                           <td>
                                             <a
-                                              href="#"
+                                              href={Item?.invoice_link}
                                               className="btn-small d-block"
+                                              target="_blank" // Add this attribute
+                                              rel="noopener noreferrer" // For security reasons, also include rel="noopener noreferrer"
                                             >
                                               View
                                             </a>
