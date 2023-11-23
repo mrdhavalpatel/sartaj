@@ -264,7 +264,7 @@ function Account() {
                                           </td>
                                           <td>{Item?.order_status}</td>
                                           <td>
-                                            ${Item?.order_amount} for{" "}
+                                            ¥{Item?.order_amount} for{" "}
                                             {Item?.details_count} item
                                           </td>
                                           <td>
