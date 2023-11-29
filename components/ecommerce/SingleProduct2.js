@@ -34,7 +34,7 @@ const SingleProduct2 = ({
       <div className="product-cart-wrap mb-30">
         <div className="product-img-action-wrap">
           <div className="product-img product-img-zoom">
-            <Link href="/products/[slug]" as={`/products/${product?.slug}`}>
+            <Link href="/products/[slug]" as={`/products/${product?.id}`}>
               <img className="default-img" src={product?.image} alt="nest" />
               <img className="hover-img" src={product?.image} alt="nest" />
             </Link>
@@ -76,9 +76,9 @@ const SingleProduct2 = ({
           </div> */}
         </div>
         <div className="product-content-wrap">
-          <div className="product-category">
+          {/* <div className="product-category">
             <Link href="/products">{product?.brand}</Link>
-          </div>
+          </div> */}
           <h2>
             <Link href="/products/[slug]" as={`/products/${product?.id}`}>
               {product?.name}
@@ -86,9 +86,23 @@ const SingleProduct2 = ({
           </h2>
 
           <div className="product-rate d-inline-block">
-            <div className="product-rating" style={{ width: "90%" }}></div>
+            <div
+              className="product-rating"
+              style={{
+                width: `${
+                  product?.overall_rating ? product.overall_rating : 0
+                }%`,
+              }}
+            ></div>
+            <span className="font-small ml-5 text-muted">
+              {`(${product?.total_reviews ? product?.total_reviews : 0})`}
+            </span>
           </div>
-
+          <div>
+            <span className="font-small text-muted">
+              By <Link href="/vendor/1">{product?.manufacturer?.name}</Link>
+            </span>
+          </div>
           <div className="product-price mt-10">
             <span>¥{product?.price} </span>
             <span className="old-price">
@@ -100,10 +114,22 @@ const SingleProduct2 = ({
               <div
                 className="progress-bar"
                 role="progressbar"
-                style={{ width: "50%" }}
+                style={{
+                  width: `${
+                    ((product?.sold_products || 0) /
+                      (product?.total_product_count === 0
+                        ? 1
+                        : product?.total_product_count || 1)) *
+                    100
+                  }%`,
+                }}
               ></div>
             </div>
-            <span className="font-xs text-heading"> Sold: 90/120</span>
+            <span className="font-xs text-heading">
+              {" "}
+              Sold:{" "}
+              {`${product?.sold_products}/${product?.total_product_count}`}
+            </span>
           </div>
 
           <a

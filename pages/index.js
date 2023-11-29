@@ -4,12 +4,21 @@ import FeatchDeals from "../components/ecommerce/fetchDeals";
 import Layout from "../components/layout/Layout";
 import Intro2 from "../components/sliders/Intro2";
 import FetchTabSlider from "./../components/ecommerce/fetchTabSlider";
-import Banner5 from "./../components/elements/Banner5";
 import Bottom from "./../components/elements/Bottom";
 import IntroPopup from "./../components/elements/IntroPopup";
 import CategorySlider2 from "./../components/sliders/Category2";
+import { useEffect, useState } from "react";
+import { ApiCall } from "../lib/other/other";
 
 function Index2() {
+  const [adBanner, setAdBanner] = useState([]);
+  const getBanners = async () => {
+    const res = await ApiCall("get", "banners/get-other-banners");
+    setAdBanner(res?.data);
+  };
+  useEffect(() => {
+    getBanners();
+  }, []);
   return (
     <>
       <IntroPopup />
@@ -23,7 +32,7 @@ function Index2() {
                 </div>
               </div>
 
-              <div className="col-lg-4 d-none d-xl-block">
+              {/* <div className="col-lg-4 d-none d-xl-block">
                 <div className="banner-img style-3 animated animated">
                   <div className="banner-text mt-50">
                     <h2 className="mb-30">
@@ -36,6 +45,19 @@ function Index2() {
                     <Link href="/" className="btn btn-xs">
                       Learn more <i className="fi-rs-arrow-small-right"></i>
                     </Link>
+                  </div>
+                </div>
+              </div> */}
+              <div className="col-lg-4 d-none d-xl-block">
+                <div className="banner-img style-3 animated animated">
+                  <div className="banner-text mt-50">
+                    <h2 className="mb-30">{adBanner?.[0]?.title}</h2>
+                    <h5 className="mb-30 fw-300">
+                      {adBanner?.[0]?.description}
+                    </h5>
+                    {/* <Link href="/" className="btn btn-xs">
+                      Learn more <i className="fi-rs-arrow-small-right"></i>
+                    </Link> */}
                   </div>
                 </div>
               </div>
@@ -55,7 +77,7 @@ function Index2() {
 
         <section className="section-padding pb-5">
           <div className="container">
-            <FetchTabSlider />
+            <FetchTabSlider banners={adBanner} />
           </div>
         </section>
 

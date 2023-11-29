@@ -13,36 +13,33 @@ import QuickView from "./../components/ecommerce/QuickView";
 import SingleProduct from "./../components/ecommerce/SingleProduct";
 import Layout from "./../components/layout/Layout";
 import { fetchProduct } from "./../redux/action/product";
+import { ApiCall } from "../lib/other/other";
 
-const Products = ({ products, productFilters, fetchProduct }) => {
+const Products = ({ productFilters }) => {
+  const [products, setProducts] = useState([]);
   let Router = useRouter(),
     searchTerm = Router.query.search,
     showLimit = 12,
     showPagination = 4;
-
+  console.log("Router.query.search", Router.query.catId, productFilters);
   let [pagination, setPagination] = useState([]);
   let [limit, setLimit] = useState(showLimit);
-  let [pages, setPages] = useState(Math.ceil(products.items.length / limit));
+  let [pages, setPages] = useState(Math.ceil(products?.items?.length / limit));
   let [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    fetchProduct(searchTerm, "/static/product.json", productFilters);
-    cratePagination();
-  }, [productFilters, limit, pages, products.items.length]);
 
   const cratePagination = () => {
     // set pagination
-    let arr = new Array(Math.ceil(products.items.length / limit))
+    let arr = new Array(Math.ceil(products?.length / limit))
       .fill()
       .map((_, idx) => idx + 1);
 
     setPagination(arr);
-    setPages(Math.ceil(products.items.length / limit));
+    setPages(Math.ceil(products?.length / limit));
   };
 
   const startIndex = currentPage * limit - limit;
   const endIndex = startIndex + limit;
-  const getPaginatedProducts = products.items.slice(startIndex, endIndex);
+  const getPaginatedProducts = products?.slice(startIndex, endIndex);
 
   let start = Math.floor((currentPage - 1) / showPagination) * showPagination;
   let end = start + showPagination;
@@ -63,8 +60,24 @@ const Products = ({ products, productFilters, fetchProduct }) => {
   const selectChange = (e) => {
     setLimit(Number(e.target.value));
     setCurrentPage(1);
-    setPages(Math.ceil(products.items.length / Number(e.target.value)));
+    // setPages(Math.ceil(products.items.length / Number(e.target.value)));
   };
+  const getFilteredProduct = async (catId) => {
+    let payload = {
+      limit: 20,
+      category_id: catId,
+      sort_by: productFilters?.featured,
+    };
+    let res = await ApiCall("post", "products/all", payload);
+    setProducts(res?.data?.products);
+    return res;
+  };
+  useEffect(() => {
+    getFilteredProduct(Router.query?.catId);
+  }, [Router.query?.catId, productFilters?.featured]);
+  // useEffect(() => {
+  //   cratePagination();
+  // }, [productFilters, limit, pages, products.items?.length]);
   return (
     <>
       <Layout noBreadcrumb="d-none">
@@ -77,9 +90,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                   <div className="totall-product">
                     <p>
                       We found
-                      <strong className="text-brand">
-                        {products.items.length}
-                      </strong>
+                      <strong className="text-brand">{products?.length}</strong>
                       items for you!
                     </p>
                   </div>
@@ -96,11 +107,11 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                   </div>
                 </div>
                 <div className="row product-grid">
-                  {getPaginatedProducts.length === 0 && (
+                  {getPaginatedProducts?.length === 0 && (
                     <h3>No Products Found </h3>
                   )}
 
-                  {getPaginatedProducts.map((item, i) => (
+                  {getPaginatedProducts?.map((item, i) => (
                     <div
                       className="col-lg-1-5 col-md-4 col-12 col-sm-6"
                       key={i}
@@ -142,7 +153,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                     </div>
                   </div>
 
-                  <div className="list-group">
+                  {/* <div className="list-group">
                     <div className="list-group-item mb-10 mt-10">
                       <label className="fw-900">Color</label>
                       <VendorFilter />
@@ -150,7 +161,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                       <SizeFilter />
                     </div>
                   </div>
-                  <br />
+                  <br /> */}
                 </div>
 
                 <div className="sidebar-widget product-sidebar  mb-30 p-30 bg-grey border-radius-10">
@@ -207,7 +218,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                     </div>
                   </div>
                 </div>
-                <div className="banner-img wow fadeIn mb-lg-0 animated d-lg-block d-none">
+                {/* <div className="banner-img wow fadeIn mb-lg-0 animated d-lg-block d-none">
                   <img src="/assets/imgs/banner/banner-11.png" alt="nest" />
                   <div className="banner-text">
                     <span>Oganic</span>
@@ -218,7 +229,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                       Juice
                     </h4>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

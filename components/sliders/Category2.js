@@ -56,7 +56,8 @@ const CategorySlider2 = () => {
               <h6>
                 <Link href="/shop-grid-right">{item?.name}</Link>
               </h6>
-              <span>{"26 item"}</span>
+              <span className="count">{`(${item?.total_produts} items)`}</span>
+              {/* <span>{"26 item"}</span> */}
             </div>
           </SwiperSlide>
         ))}

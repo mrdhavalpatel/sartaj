@@ -21,7 +21,7 @@ const BestSellerSlider = () => {
       {bestSeller?.map((product, i) => (
         <article className="row align-items-center hover-up" key={i}>
           <figure className="col-md-4 mb-0">
-            <Link href="/products/[slug]" as={`/products/${product?.name}`}>
+            <Link href="/products/[slug]" as={`/products/${product?.id}`}>
               <img src={product?.image?.[0]} alt="nest" />
             </Link>
           </figure>
@@ -33,11 +33,17 @@ const BestSellerSlider = () => {
             </h6>
             <div className="product-rate-cover">
               <div className="product-rate d-inline-block">
-                <div className="product-rating" style={{ width: "90%" }}></div>
+                <div
+                  className="product-rating"
+                  style={{
+                    width: `${
+                      product?.overall_rating ? product?.overall_rating : 0
+                    }%`,
+                  }}
+                ></div>
               </div>
               <span className="font-small ml-5 text-muted">
-                {" "}
-                ({product?.rating})
+                {`(${product?.total_reviews ? product?.total_reviews : 0})`}
               </span>
             </div>
             <div className="product-price">

@@ -27,13 +27,4 @@ const ProductId = () => {
   );
 };
 
-ProductId.getInitialProps = async (params) => {
-  const request = await fetch(`${server}/static/product.json`);
-  const data = await request.json();
-
-  const index = findProductIndex(data, params.query.slug);
-
-  return { product: data[index] };
-};
-
 export default ProductId;

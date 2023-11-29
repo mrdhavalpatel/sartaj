@@ -6,6 +6,9 @@ import { addToCart } from "../../redux/action/cart";
 import { addToCompare } from "../../redux/action/compareAction";
 import { openQuickView } from "../../redux/action/quickViewAction";
 import { addToWishlist } from "../../redux/action/wishlistAction";
+import storage from "../../util/localStorage";
+import axios from "axios";
+import { API_BASE_URL } from "../../lib/api";
 
 const SingleProduct = ({
   product,
@@ -14,7 +17,25 @@ const SingleProduct = ({
   addToWishlist,
   openQuickView,
 }) => {
-  const handleCart = (product) => {
+  const handleCart = async (product) => {
+    let token = localStorage.getItem("token");
+    let payload = {
+      product_id: product?.id,
+      quantity: product?.quantity,
+    };
+    if (token) {
+      const response = await axios
+        .post(`${API_BASE_URL}customer/cart/add-to-cart`, payload, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .catch((error) => {
+          console.log("error", error?.code === "ERR_NETWORK");
+        });
+    }
     addToCart(product);
     toast("Product added to Cart !");
   };
@@ -89,11 +110,18 @@ const SingleProduct = ({
 
           <div className="product-rate-cover">
             <div className="product-rate d-inline-block">
-              <div className="product-rating" style={{ width: "90%" }}></div>
+              <div
+                className="product-rating"
+                style={{
+                  width: `${
+                    product?.overall_rating ? product.overall_rating : 0
+                  }%`,
+                }}
+              ></div>
             </div>
             <span className="font-small ml-5 text-muted">
               {" "}
-              ({product?.rating})
+              {/* {product?.rating} */}
             </span>
           </div>
 

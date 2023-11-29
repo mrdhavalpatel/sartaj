@@ -14,8 +14,9 @@ function CategoryTab() {
   const [cat3, setCat3] = useState([]);
 
   const catPAll = async () => {
-    const request = await ApiCall("get", "products/all");
+    const request = await ApiCall("post", "products/all");
     const allProducts = await request?.data?.products;
+    console.log("allProducts", allProducts);
     setCatAll(allProducts);
     setActive("1");
   };

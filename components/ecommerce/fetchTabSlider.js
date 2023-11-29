@@ -7,7 +7,7 @@ import NewArrivalTabSlider from "../sliders/NewArrivalTab";
 import TrendingSlider from "../sliders/Trending";
 import { ApiCall } from "../../lib/other/other";
 
-function FeatchTabSlider() {
+function FeatchTabSlider({ banners }) {
   const [active, setActive] = useState("1");
   const [featured, setFeatured] = useState([]);
   const [trending, setTrending] = useState([]);
@@ -79,7 +79,7 @@ function FeatchTabSlider() {
         <div className="col-lg-3 d-none d-lg-flex wow animate__animated animate__fadeIn">
           <div className="banner-img style-2">
             <div className="banner-text">
-              <h2 className="mb-100">Bring nature into your home</h2>
+              <h2 className="mb-100">{banners?.[0]?.title}</h2>
 
               <Link href="/products" className="btn btn-xs">
                 Shop Now <i className="fi-rs-arrow-small-right"></i>

@@ -1,13 +1,11 @@
-
 class storage {
+  static set(key, cartItems) {
+    localStorage.setItem(key, JSON.stringify(cartItems));
+  }
 
-    static set(key, cartItems) {
-        localStorage.setItem(key, JSON.stringify(cartItems))
-    }
-
-    static get(key) {
-        return JSON.parse(localStorage.getItem(key))
-    }
+  static get(key) {
+    return JSON.parse(localStorage.getItem(key));
+  }
 }
 
-export default storage
+export default storage;

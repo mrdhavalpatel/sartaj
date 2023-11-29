@@ -36,13 +36,23 @@ const Deals1 = ({ product, addToCart }) => {
             </h2>
             <div className="product-rate-cover">
               <div className="product-rate d-inline-block">
-                <div className="product-rating" style={{ width: "90%" }}></div>
+                <div
+                  className="product-rating"
+                  style={{
+                    width: `${
+                      product?.overall_rating ? product.overall_rating : 0
+                    }%`,
+                  }}
+                ></div>
               </div>
-              <span className="font-small ml-5 text-muted"> (4.0)</span>
+              <span className="font-small ml-5 text-muted">
+                {" "}
+                {`(${product?.total_reviews ? product?.total_reviews : 0})`}
+              </span>
             </div>
             <div>
               <span className="font-small text-muted">
-                By <Link href="/vendor/1">{product?.brand}</Link>
+                By <Link href="/vendor/1">{product?.manufacturer?.name}</Link>
               </span>
             </div>
             <div className="product-card-bottom">
