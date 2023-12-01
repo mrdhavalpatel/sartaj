@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../lib/api";
 
-const ProductTab = ({ description, review, id }) => {
+const ProductTab = ({ description, review, id, total_reviews }) => {
   const [activeIndex, setActiveIndex] = useState(1);
   const [productRating, setProductRating] = useState([]);
 
@@ -59,7 +59,7 @@ const ProductTab = ({ description, review, id }) => {
               data-bs-toggle="tab"
               onClick={() => handleOnClick(4)}
             >
-              Reviews (3)
+              Reviews {`(${total_reviews ? total_reviews : 0})`}
             </a>
           </li>
         </ul>
@@ -372,13 +372,19 @@ const ProductTab = ({ description, review, id }) => {
                       className="progress-bar"
                       role="progressbar"
                       style={{
-                        width: `${productRating.ratings_details?.["5"]}`,
+                        width: `${
+                          productRating.ratings_details?.["5"]
+                            ? productRating.ratings_details?.["5"]
+                            : 0
+                        }`,
                       }}
                       aria-valuenow={productRating.ratings_details?.["5"]}
                       aria-valuemin="0"
                       aria-valuemax="100"
                     >
-                      {productRating.ratings_details?.["5"] + "%"}
+                      {(productRating.ratings_details?.["5"]
+                        ? productRating.ratings_details?.["5"]
+                        : 0) + "%"}
                     </div>
                   </div>
                   <div className="progress">
@@ -387,13 +393,19 @@ const ProductTab = ({ description, review, id }) => {
                       className="progress-bar"
                       role="progressbar"
                       style={{
-                        width: `${productRating?.ratings_details?.["4"]}`,
+                        width: `${
+                          productRating?.ratings_details?.["4"]
+                            ? productRating?.ratings_details?.["4"]
+                            : 0
+                        }`,
                       }}
                       aria-valuenow={productRating?.ratings_details?.["4"]}
                       aria-valuemin="0"
                       aria-valuemax="100"
                     >
-                      {productRating?.ratings_details?.["4"] + "%"}
+                      {(productRating?.ratings_details?.["4"]
+                        ? productRating?.ratings_details?.["4"]
+                        : 0) + "%"}
                     </div>
                   </div>
                   <div className="progress">
@@ -402,13 +414,19 @@ const ProductTab = ({ description, review, id }) => {
                       className="progress-bar"
                       role="progressbar"
                       style={{
-                        width: `${productRating?.ratings_details?.["3"]}`,
+                        width: `${
+                          productRating?.ratings_details?.["3"]
+                            ? productRating?.ratings_details?.["3"]
+                            : 0
+                        }`,
                       }}
                       aria-valuenow={productRating?.ratings_details?.["3"]}
                       aria-valuemin="0"
                       aria-valuemax="100"
                     >
-                      {productRating?.ratings_details?.["3"] + "%"}
+                      {(productRating?.ratings_details?.["3"]
+                        ? productRating?.ratings_details?.["3"]
+                        : 0) + "%"}
                     </div>
                   </div>
                   <div className="progress">
@@ -417,13 +435,19 @@ const ProductTab = ({ description, review, id }) => {
                       className="progress-bar"
                       role="progressbar"
                       style={{
-                        width: `${productRating?.ratings_details?.["2"]}`,
+                        width: `${
+                          productRating?.ratings_details?.["2"]
+                            ? productRating?.ratings_details?.["2"]
+                            : 0
+                        }`,
                       }}
                       aria-valuenow={productRating?.ratings_details?.["2"]}
                       aria-valuemin="0"
                       aria-valuemax="100"
                     >
-                      {productRating?.ratings_details?.["2"] + "%"}
+                      {(productRating?.ratings_details?.["2"]
+                        ? productRating?.ratings_details?.["2"]
+                        : 0) + "%"}
                     </div>
                   </div>
                   <div className="progress mb-30">
@@ -438,7 +462,9 @@ const ProductTab = ({ description, review, id }) => {
                       aria-valuemin="0"
                       aria-valuemax="100"
                     >
-                      {productRating?.ratings_details?.["1"] + "%"}
+                      {(productRating?.ratings_details?.["1"]
+                        ? productRating?.ratings_details?.["2"]
+                        : 0) + "%"}
                     </div>
                   </div>
                   <a href="#" className="font-xs text-muted">

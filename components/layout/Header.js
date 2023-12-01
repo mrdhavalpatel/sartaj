@@ -6,6 +6,8 @@ import CategoryProduct3 from "../ecommerce/Filter/CategoryProduct3";
 import Search from "../ecommerce/Search";
 import { useAuth } from "../context/AuthContext";
 import { ApiCall } from "../../lib/other/other";
+import axios from "axios";
+import { API_BASE_URL } from "../../lib/api";
 
 const Header = ({
   totalCartItems,
@@ -17,21 +19,43 @@ const Header = ({
   const [scroll, setScroll] = useState(0);
   const { logout } = useAuth();
   const [categories, setCategories] = useState([]);
-
+  const [cartItemsCount, setCartItemsCount] = useState(0);
   const getAllCategories = async () => {
     const request = await ApiCall("get", "categories");
     const allCategories = await request;
-
     setCategories(allCategories?.data);
   };
   function splitArray(arr) {
     const midpoint = Math.floor(categories?.length / 2);
     const firstHalf = arr.slice(0, midpoint);
     const secondHalf = arr.slice(midpoint);
-
     return [firstHalf, secondHalf];
   }
   const [firstPart, secondPart] = splitArray(categories);
+  const getCartsItem = async (token) => {
+    const response = await axios
+      .get(`${API_BASE_URL}customer/cart`, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setCartItemsCount(response?.data?.cartProducts?.length);
+      })
+      .catch((error) => {
+        console.log("error", error?.code === "ERR_NETWORK");
+      });
+  };
+  const getCartItemsCount = (flag, data) => {
+    if (flag === "login") {
+      getCartsItem(data);
+    } else {
+      setCartItemsCount(JSON.parse(data).length);
+    }
+  };
+
   useEffect(() => {
     document.addEventListener("scroll", () => {
       const scrollCheck = window.scrollY >= 100;
@@ -41,6 +65,13 @@ const Header = ({
     });
   });
   useEffect(() => {
+    let token = localStorage.getItem("token");
+    if (token) {
+      getCartItemsCount("login", token);
+    } else {
+      let Cart = localStorage.getItem("dokani_cart");
+      getCartItemsCount("notLogin", Cart);
+    }
     getAllCategories();
   }, []);
   const handleToggle = () => setToggled(!isToggled);
@@ -65,9 +96,9 @@ const Header = ({
                     <li>
                       <Link href="/shop-wishlist">Wishlist</Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link href="/page-account">Order Tracking</Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>
@@ -192,12 +223,12 @@ const Header = ({
                               My Account
                             </Link>
                           </li>
-                          <li>
+                          {/* <li>
                             <Link href="/page-account">
                               <i className="fi fi-rs-location-alt mr-10"></i>
                               Order Tracking
                             </Link>
-                          </li>
+                          </li> */}
                           {/* <li>
                             <Link href="/page-account">
                               <i className="fi fi-rs-label mr-10"></i>
@@ -355,7 +386,8 @@ const Header = ({
                         alt="Evara"
                         src="/assets/imgs/theme/icons/icon-cart.svg"
                       />
-                      <span className="pro-count white">{totalCartItems}</span>
+                      {/* <span className="pro-count white">{totalCartItems}</span> */}
+                      <span className="pro-count white">{cartItemsCount}</span>
                     </Link>
                     <div className="cart-dropdown-wrap cart-dropdown-hm2">
                       <ul>

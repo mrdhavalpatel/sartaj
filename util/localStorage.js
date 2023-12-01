@@ -1,11 +1,22 @@
-class storage {
+// localstorage.js
+
+class Storage {
   static set(key, cartItems) {
-    localStorage.setItem(key, JSON.stringify(cartItems));
+    if (typeof window !== "undefined") {
+      localStorage.setItem(key, JSON.stringify(cartItems));
+    }
   }
 
   static get(key) {
-    return JSON.parse(localStorage.getItem(key));
+    if (typeof window !== "undefined") {
+      if (key === "token") {
+        return localStorage.getItem("token");
+      } else {
+        return JSON.parse(localStorage.getItem(key));
+      }
+    }
+    return null; // or handle appropriately if localStorage is not available
   }
 }
 
-export default storage;
+export default Storage;

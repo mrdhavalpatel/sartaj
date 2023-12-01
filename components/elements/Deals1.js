@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { addToCart } from "../../redux/action/cart";
 import Timer from "./Timer";
+import QuickView from "../ecommerce/QuickView";
 
 const Deals1 = ({ product, addToCart }) => {
   const handleCart = (product) => {

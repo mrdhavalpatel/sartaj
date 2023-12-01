@@ -6,6 +6,7 @@ import { addToCart } from "../../redux/action/cart";
 import { addToCompare } from "../../redux/action/compareAction";
 import { openQuickView } from "../../redux/action/quickViewAction";
 import { addToWishlist } from "../../redux/action/wishlistAction";
+import QuickView from "./QuickView";
 
 const SingleProduct2 = ({
   product,
@@ -140,6 +141,7 @@ const SingleProduct2 = ({
           </a>
         </div>
       </div>
+      <QuickView />
     </>
   );
 };

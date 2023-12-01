@@ -27,15 +27,15 @@ const Wishlist = ({
       console.log(Item?.product_id);
     });
   };
-  useEffect(() => {
-    let encodedToken = localStorage.getItem("token");
-    if (encodedToken) {
-      let wishlist = JSON.parse(localStorage.getItem("dokani_wishlist"));
-      addLocalWishlistToCart(wishlist);
-    } else {
-      router.push("/page-login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   let encodedToken = localStorage.getItem("token");
+  //   if (encodedToken) {
+  //     let wishlist = JSON.parse(localStorage.getItem("dokani_wishlist"));
+  //     addLocalWishlistToCart(wishlist);
+  //   } else {
+  //     router.push("/page-login");
+  //   }
+  // }, []);
   return (
     <>
       <Layout parent="Home" sub="Shop" subChild="Wishlist">

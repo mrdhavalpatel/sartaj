@@ -9,6 +9,7 @@ import { addToWishlist } from "../../redux/action/wishlistAction";
 import storage from "../../util/localStorage";
 import axios from "axios";
 import { API_BASE_URL } from "../../lib/api";
+import QuickView from "./QuickView";
 
 const SingleProduct = ({
   product,
@@ -18,24 +19,6 @@ const SingleProduct = ({
   openQuickView,
 }) => {
   const handleCart = async (product) => {
-    let token = localStorage.getItem("token");
-    let payload = {
-      product_id: product?.id,
-      quantity: product?.quantity,
-    };
-    if (token) {
-      const response = await axios
-        .post(`${API_BASE_URL}customer/cart/add-to-cart`, payload, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .catch((error) => {
-          console.log("error", error?.code === "ERR_NETWORK");
-        });
-    }
     addToCart(product);
     toast("Product added to Cart !");
   };
@@ -86,7 +69,18 @@ const SingleProduct = ({
           </div>
 
           <div className="product-badges product-badges-position product-badges-mrg">
-            {product?.badges?.map(() => {
+            {product?.badges?.map((Itm) => {
+              // if (Itm == "new") {
+              //   return <span className="new">New</span>;
+              // }
+              return (
+                <>
+                  {Itm == "new" && <span className="new">New</span>}
+                  {Itm == "hot" && <span className="hot">Hot</span>}
+                  {Itm == "sale" && <span className="sale">Sale</span>}
+                </>
+              );
+
               //
             })}
             {/* {product.trending && <span className="hot">Hot</span>}
@@ -145,6 +139,7 @@ const SingleProduct = ({
             </div>
           </div>
         </div>
+        <QuickView />
       </div>
     </>
   );

@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { ApiCall } from "../../lib/other/other";
 
 const Footer = () => {
+  const [footerData, setFooterData] = useState([]);
+  const fetchFooterData = async () => {
+    const request = await ApiCall("get", "config");
+    const newArrivals = await request?.data;
+    setFooterData(newArrivals);
+    console.log("----------------->", newArrivals);
+  };
+  useEffect(() => {
+    fetchFooterData();
+  }, []);
   return (
     <>
       <footer className="main">
@@ -139,8 +150,7 @@ const Footer = () => {
                       <img src="/assets/imgs/theme/logo.svg" alt="logo" />
                     </Link>
                     <p className="font-lg text-heading">
-                      Sartaj offer you a wide variety of Indian grocery foods
-                      with best quality and outstanding service.
+                      {footerData?.business_description}
                     </p>
                   </div>
                   <ul className="contact-infor">
@@ -150,7 +160,7 @@ const Footer = () => {
                         alt="nest"
                       />
                       <strong>Address: </strong>{" "}
-                      <span>osaka-fu, ikeda-shi, koda 2-10-23</span>
+                      <span>{footerData?.ecommerce_address}</span>
                     </li>
                     <li>
                       <img
@@ -158,7 +168,7 @@ const Footer = () => {
                         alt="nest"
                       />
                       <strong>Call Us:</strong>
-                      <span> 072-751-1975</span>
+                      <span>{footerData?.ecommerce_phone}</span>
                     </li>
                     <li>
                       <img
@@ -166,7 +176,7 @@ const Footer = () => {
                         alt="nest"
                       />
                       <strong>Email:</strong>
-                      <span> info@sartajfoods.jp</span>
+                      <span> {footerData?.ecommerce_email}</span>
                     </li>
                     <li>
                       <img
@@ -174,10 +184,7 @@ const Footer = () => {
                         alt="nest"
                       />
                       <strong>Hours:</strong>
-                      <span>
-                        Monday to Saturday from 09:00AM-18:00PM (except national
-                        holiday)
-                      </span>
+                      <span>{footerData?.business_hours}</span>
                     </li>
                   </ul>
                 </div>
@@ -189,10 +196,10 @@ const Footer = () => {
                 <h4 className="widget-title">Company</h4>
                 <ul className="footer-list  mb-sm-5 mb-md-0">
                   <li>
-                    <a href="#">About Us</a>
+                    <a href="/page-about">About Us</a>
                   </li>
                   <li>
-                    <a href="#">Delivery Information</a>
+                    <a href="/page-purchase-guide">Delivery Information</a>
                   </li>
                   <li>
                     <a href="/page-privacy-policy">Privacy Policy</a>
@@ -201,14 +208,14 @@ const Footer = () => {
                     <a href="/page-terms">Terms &amp; Conditions</a>
                   </li>
                   <li>
-                    <a href="#">Contact Us</a>
+                    <a href="/page-contact">Contact Us</a>
                   </li>
-                  <li>
+                  {/* <li>
                     <a href="#">Support Center</a>
-                  </li>
+                  </li> 
                   <li>
                     <a href="#">Careers</a>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
               <div
@@ -218,22 +225,22 @@ const Footer = () => {
                 <h4 className="widget-title ">Account</h4>
                 <ul className="footer-list  mb-sm-5 mb-md-0">
                   <li>
-                    <a href="#">Sign In</a>
+                    <a href="/page-login">Sign In</a>
                   </li>
                   <li>
-                    <a href="#">View Cart</a>
+                    <a href="/shop-cart">View Cart</a>
                   </li>
                   <li>
-                    <a href="#">My Wishlist</a>
+                    <a href="/shop-wishlist">My Wishlist</a>
                   </li>
-                  <li>
+                  {/* <li>
                     <a href="#">Track My Order</a>
                   </li>
                   <li>
                     <a href="#">Help Ticket</a>
-                  </li>
+                  </li> */}
                   <li>
-                    <a href="#">Shipping Details</a>
+                    <a href="/page-account">Shipping Details</a>
                   </li>
                   <li>
                     <a href="/shop-compare">Compare products</a>

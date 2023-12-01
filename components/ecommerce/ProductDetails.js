@@ -42,7 +42,7 @@ const ProductDetails = ({
   };
 
   const inCart = cartItems.find((cartItem) => cartItem?.id === product?.id);
-  console.log("product", product);
+
   return (
     <>
       <section className="mt-50 mb-50">
@@ -64,19 +64,30 @@ const ProductDetails = ({
                   </div>
                   <div className="col-md-6 col-sm-12 col-xs-12">
                     <div className="detail-info  pr-30 pl-30">
-                      <span className="stock-status out-stock"> Sale Off </span>
+                      <span className="stock-status out-stock">
+                        {" "}
+                        {product?.sale_start_date !== null
+                          ? ""
+                          : "Sale Off"}{" "}
+                      </span>
                       <h2 className="title-detail">{product?.name}</h2>
                       <div className="product-detail-rating">
                         <div className="product-rate-cover text-end">
                           <div className="product-rate d-inline-block">
                             <div
                               className="product-rating"
-                              style={{ width: "90%" }}
+                              style={{
+                                width: `${
+                                  product?.overall_rating
+                                    ? product?.overall_rating
+                                    : 0
+                                }`,
+                              }}
                             ></div>
                           </div>
                           <span className="font-small ml-5 text-muted">
                             {" "}
-                            (32 reviews)
+                            {`(${product?.total_reviews})`}
                           </span>
                         </div>
                       </div>
@@ -185,6 +196,7 @@ const ProductDetails = ({
                   <>
                     <ProductTab
                       id={product?.id}
+                      total_reviews={product?.total_reviews}
                       description={product?.description}
                       review={product?.active_reviews}
                     />
@@ -196,7 +208,7 @@ const ProductDetails = ({
                       </div>
                       <div className="col-12">
                         <div className="row related-products position-relative">
-                          <RelatedSlider />
+                          <RelatedSlider id={product?.id} />
                         </div>
                       </div>
                     </div>

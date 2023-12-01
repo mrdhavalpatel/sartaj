@@ -44,7 +44,7 @@ const Products = ({ productFilters }) => {
   let start = Math.floor((currentPage - 1) / showPagination) * showPagination;
   let end = start + showPagination;
   const getPaginationGroup = pagination.slice(start, end);
-
+  const [newProducts, setNewProducts] = useState([]);
   const next = () => {
     setCurrentPage((page) => page + 1);
   };
@@ -75,6 +75,15 @@ const Products = ({ productFilters }) => {
   useEffect(() => {
     getFilteredProduct(Router.query?.catId);
   }, [Router.query?.catId, productFilters?.featured]);
+
+  const fetchProducts = async () => {
+    const request = await ApiCall("get", "products/latest-three-products");
+    const newArrivals = await request?.data?.products;
+    setNewProducts(newArrivals);
+  };
+  useEffect(() => {
+    fetchProducts();
+  }, []);
   // useEffect(() => {
   //   cratePagination();
   // }, [productFilters, limit, pages, products.items?.length]);
@@ -163,60 +172,49 @@ const Products = ({ productFilters }) => {
                   </div>
                   <br /> */}
                 </div>
-
                 <div className="sidebar-widget product-sidebar  mb-30 p-30 bg-grey border-radius-10">
                   <h5 className="section-title style-1 mb-30">New products</h5>
-                  <div className="single-post clearfix">
-                    <div className="image">
-                      <img src="/assets/imgs/shop/thumbnail-3.jpg" alt="#" />
-                    </div>
-                    <div className="content pt-10">
-                      <h5>
-                        <a>Chen Cardigan</a>
-                      </h5>
-                      <p className="price mb-0 mt-5">$99.50</p>
-                      <div className="product-rate">
-                        <div
-                          className="product-rating"
-                          style={{ width: "90%" }}
-                        ></div>
+                  {newProducts?.map((newProducts) => {
+                    return (
+                      <div className="single-post clearfix">
+                        <div className="image">
+                          <img src={newProducts?.image?.[0]} alt="#" />
+                        </div>
+                        <div className="content pt-10">
+                          <h5>
+                            <a
+                              href="/products/[slug]"
+                              as={`/products/${newProducts?.id}`}
+                            >
+                              {newProducts?.name}
+                            </a>
+                          </h5>
+                          <p className="price mb-0 mt-5">
+                            ¥{newProducts?.price}
+                          </p>
+                          <div className="product-rate">
+                            <div
+                              className="product-rating"
+                              style={{
+                                width: `${
+                                  newProducts?.overall_rating
+                                    ? newProducts?.overall_rating
+                                    : 0
+                                }%`,
+                              }}
+                            ></div>
+                          </div>
+                          <span className="font-small ml-5 text-muted">
+                            {`(${
+                              newProducts?.total_reviews
+                                ? newProducts?.total_reviews
+                                : 0
+                            })`}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className="single-post clearfix">
-                    <div className="image">
-                      <img src="/assets/imgs/shop/thumbnail-4.jpg" alt="#" />
-                    </div>
-                    <div className="content pt-10">
-                      <h6>
-                        <a>Chen Sweater</a>
-                      </h6>
-                      <p className="price mb-0 mt-5">$89.50</p>
-                      <div className="product-rate">
-                        <div
-                          className="product-rating"
-                          style={{ width: "80%" }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="single-post clearfix">
-                    <div className="image">
-                      <img src="/assets/imgs/shop/thumbnail-5.jpg" alt="#" />
-                    </div>
-                    <div className="content pt-10">
-                      <h6>
-                        <a>Colorful Jacket</a>
-                      </h6>
-                      <p className="price mb-0 mt-5">$25</p>
-                      <div className="product-rate">
-                        <div
-                          className="product-rating"
-                          style={{ width: "60%" }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
+                    );
+                  })}
                 </div>
                 {/* <div className="banner-img wow fadeIn mb-lg-0 animated d-lg-block d-none">
                   <img src="/assets/imgs/banner/banner-11.png" alt="nest" />
