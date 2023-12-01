@@ -1,8 +1,11 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { ApiCall } from "../../lib/other/other";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [categories, setCategories] = useState([]);
+
   const router = useRouter();
 
   const handleSearch = () => {
@@ -14,28 +17,28 @@ const Search = () => {
     });
     setSearchTerm("");
   };
-
+  const getAllCategories = async () => {
+    const request = await ApiCall("get", "categories");
+    const allCategories = await request;
+    setCategories(allCategories?.data);
+  };
   const handleInput = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
       handleSearch();
     }
   };
+  useEffect(() => {
+    getAllCategories();
+  }, []);
   return (
     <>
       <form>
         <select className="select-active">
           <option>All Categories</option>
-          <option>Women's</option>
-          <option>Men's</option>
-          <option>Cellphones</option>
-          <option>Computer</option>
-          <option>Electronics</option>
-          <option> Accessories</option>
-          <option>Home & Garden</option>
-          <option>Luggage</option>
-          <option>Shoes</option>
-          <option>Mother & Kids</option>
+          {categories?.map((itm) => {
+            return <option>{itm?.name}</option>;
+          })}
         </select>
         <input
           value={searchTerm}
