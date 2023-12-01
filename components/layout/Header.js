@@ -48,11 +48,19 @@ const Header = ({
         console.log("error", error?.code === "ERR_NETWORK");
       });
   };
+  const Jsonhandler = (data) => {
+    try {
+      JSON.parse(data);
+    } catch (e) {
+      console.log("JSON parse error");
+    }
+    return JSON.parse(data);
+  };
   const getCartItemsCount = (flag, data) => {
     if (flag === "login") {
       getCartsItem(data);
     } else {
-      setCartItemsCount(JSON.parse(data).length);
+      setCartItemsCount(Jsonhandler(data)?.length);
     }
   };
 
