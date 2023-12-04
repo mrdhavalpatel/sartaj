@@ -16,24 +16,29 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
     contact_person_name: Yup.string(),
     contact_person_number: Yup.string(),
   });
-  console.log("address", address);
   // Initial form values
   const initialValues = {
     address: address?.billing_address?.[0]?.address,
     road: address?.billing_address?.[0]?.road,
     house: address?.billing_address?.[0]?.house,
     floor: address?.billing_address?.[0]?.floor,
+    city: address?.billing_address?.[0]?.city,
+    state: address?.billing_address?.[0]?.state,
+    post_code: address?.billing_address?.[0]?.post_code,
     contact_person_name: address?.billing_address?.[0]?.contact_person_name,
     contact_person_number: address?.billing_address?.[0]?.contact_person_number,
   };
 
   const handleFormSubmit = async (values) => {
     let payload = {
-      id: 1,
+      id: address?.billing_address?.[0]?.id,
       address: values?.address,
       road: values?.road,
       house: values?.house,
       floor: values?.floor,
+      city: values?.city,
+      state: values?.state,
+      post_code: values?.post_code,
       contact_person_name: values?.contact_person_name,
       contact_person_number: values?.contact_person_number,
     };
@@ -71,6 +76,7 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
               <label htmlFor="address" className="form-label">
                 Address<span className="text-danger">*</span>
               </label>
+
               <Field
                 type="text"
                 className="form-control"
@@ -114,6 +120,40 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
                 className="form-control"
                 id="floor"
                 name="floor"
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="contact_person_name" className="form-label">
+                City
+              </label>
+              <Field
+                type="text"
+                className="form-control"
+                id="city"
+                name="city"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="contact_person_name" className="form-label">
+                State
+              </label>
+              <Field
+                type="text"
+                className="form-control"
+                id="state"
+                name="state"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="contact_person_name" className="form-label">
+                Post Code
+              </label>
+              <Field
+                type="text"
+                className="form-control"
+                id="state"
+                name="post_code"
               />
             </div>
             <div className="mb-3">

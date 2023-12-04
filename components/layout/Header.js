@@ -27,8 +27,8 @@ const Header = ({
   };
   function splitArray(arr) {
     const midpoint = Math.floor(categories?.length / 2);
-    const firstHalf = arr.slice(0, midpoint);
-    const secondHalf = arr.slice(midpoint);
+    const firstHalf = arr?.slice(0, midpoint);
+    const secondHalf = arr?.slice(midpoint);
     return [firstHalf, secondHalf];
   }
   const [firstPart, secondPart] = splitArray(categories);

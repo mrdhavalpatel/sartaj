@@ -97,7 +97,6 @@ const Cart = ({
                           <td className="image product-thumbnail">
                             <img src={item?.image?.[0]} />
                           </td>
-                          {console.log("itemitem", item)}
                           <td className="product-des product-name">
                             <h6 className="product-name">
                               <Link href="/products">{item?.name}</Link>
@@ -124,7 +123,7 @@ const Cart = ({
                             </div>
                           </td>
                           <td className="price" data-title="Price">
-                            <h4 className="text-brand">${item?.price}</h4>
+                            <h4 className="text-brand">¥{item?.price}</h4>
                           </td>
                           <td
                             className="text-center detail-info"
@@ -161,7 +160,7 @@ const Cart = ({
                           </td>
                           <td className="text-right" data-title="Cart">
                             <h4 className="text-body">
-                              $
+                              ¥
                               {(item?.quantity ? item?.quantity : 1) *
                                 item?.price}
                             </h4>
@@ -190,7 +189,7 @@ const Cart = ({
                   </table>
                 </div>
                 <div className="cart-action text-end">
-                  <a className="btn ">
+                  <a className="btn " href="/shop-checkout">
                     <i className="fi-rs-shopping-bag mr-10"></i>
                     Continue Shopping
                   </a>
@@ -213,7 +212,7 @@ const Cart = ({
                               </td>
                               <td className="cart_total_amount">
                                 <span className="font-lg fw-900 text-brand">
-                                  $ {price()}
+                                  ¥ {price()}
                                 </span>
                               </td>
                             </tr>
@@ -221,7 +220,7 @@ const Cart = ({
                               <td className="cart_total_label">Shipping</td>
                               <td className="cart_total_amount">
                                 <i className="ti-gift mr-5"></i>
-                                Free Shipping
+                                ¥600
                               </td>
                             </tr>
                             <tr>
@@ -229,7 +228,7 @@ const Cart = ({
                               <td className="cart_total_amount">
                                 <strong>
                                   <span className="font-xl fw-900 text-brand">
-                                    ${price()}
+                                    ¥{price() + 600}
                                   </span>
                                 </strong>
                               </td>
@@ -310,18 +309,18 @@ const Cart = ({
                                   <div
                                     className="product-rating"
                                     style={{
-                                      width: `${item?.product?.overall_rating}%`,
+                                      width: `¥{item?.product?.overall_rating}%`,
                                     }}
                                   ></div>
                                 </div>
                                 <span className="font-small ml-5 text-muted">
                                   {" "}
-                                  {`(${item?.product?.total_reviews})`}
+                                  {`(¥{item?.product?.total_reviews})`}
                                 </span>
                               </div>
                             </td>
                             <td className="price" data-title="Price">
-                              <h4 className="text-brand">${item.price}</h4>
+                              <h4 className="text-brand">¥{item.price}</h4>
                             </td>
 
                             <td
@@ -363,7 +362,7 @@ const Cart = ({
                             </td>
                             <td className="text-right" data-title="Cart">
                               <h4 className="text-body">
-                                ${item.quantity * item.price}
+                                ¥{item.quantity * item.price}
                               </h4>
                             </td>
                             <td className="action" data-title="Remove">
@@ -416,7 +415,7 @@ const Cart = ({
                                 </td>
                                 <td className="cart_total_amount">
                                   <span className="font-lg fw-900 text-brand">
-                                    $ {price()}
+                                    ¥ {price()}
                                   </span>
                                 </td>
                               </tr>
@@ -432,7 +431,7 @@ const Cart = ({
                                 <td className="cart_total_amount">
                                   <strong>
                                     <span className="font-xl fw-900 text-brand">
-                                      ${price()}
+                                      ¥{price()}
                                     </span>
                                   </strong>
                                 </td>
