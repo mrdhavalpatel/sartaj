@@ -19,8 +19,7 @@ const RelatedSlider = ({ id }) => {
       "get",
       `${"products/related-products"}/${id}`
     );
-    const allProducts = await request?.data?.products;
-
+    const allProducts = await request?.data;
     setRelated(allProducts);
   };
 

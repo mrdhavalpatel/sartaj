@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { API_BASE_URL, api } from "../lib/api";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 const Cart = ({
   openCart,
@@ -65,6 +66,7 @@ const Cart = ({
     // coupenCode(response);
     if (response?.status === 200) {
       setCoupenCodeDis(response?.data?.discount);
+      toast.success("Coupen code is applied");
     }
   };
 
@@ -79,103 +81,6 @@ const Cart = ({
       coupon_discount_amount: coupenCodeDis,
       cart: [cartItemsData],
     };
-    // let payload = {
-    //   order_amount: 1461,
-    //   payment_method: "cash_on_delivery",
-    //   delivery_address_id: "1",
-    //   order_type: "delivery",
-    //   distance: "3",
-    //   coupon_discount_amount: 10,
-    //   cart: [
-    //     {
-    //       product_id: 24,
-    //       quantity: 1,
-    //       special_price: "0.00",
-    //       sub_total: "861.00",
-    //       updated_at: "2023-12-01T11:54:27.000000Z",
-    //       user_id: 2,
-    //       created_at: "2023-12-01T11:54:27.000000Z",
-    //       discount: "0.00",
-    //       discount_type: "amount",
-    //       id: 55,
-    //       price: "861.00",
-    //       product: {
-    //         attributes: "[]",
-    //         capacity: 1,
-    //         category_ids: [
-    //           { id: "62", position: 1 },
-    //           { id: "64", position: 2 },
-    //         ],
-    //         choice_options: "[]",
-    //         created_at: "2023-12-01T09:54:09.000000Z",
-    //         d_height: null,
-    //         d_length: null,
-    //         d_width: null,
-    //         daily_needs: 0,
-    //         date_available: null,
-    //         description:
-    //           "Amchur (Dry Mango Powder) SARTAJ | आमचूर पाउडर - 500gm\r\n\r\nDried mango powder, or commonly known as Amchur, is a common household spice in India and neighboring middle eastern countries. It is mainly used to add a strong flavor to the curries, chutneys, soups, and marinades. It is rich in antioxidants, amchur not only boosts metabolism but also aids in weight loss and skin conditions. It is a fruity spice powder made from dried unripe green mangoes and is used as a citrusy seasoning. It is mostly produced in India and is used to flavor foods and add the nutritional benefits of mangoes when the fresh fruit is out of season.\r\n\r\nHow To Store: Store in a tightly sealed container in a cool and dry place away from any direct heat.\r\nCountry of Origin: India\r\nManufacturer: Sartaj Co. Ltd\r\nItem Weight: 500 gm",
-    //         discount: 0,
-    //         discount_type: "percent",
-    //         downloads: "[]",
-    //         ena: null,
-    //         filters: "[]",
-    //         id: 24,
-    //         image: [
-    //           "https://phplaravel-941212-4027573.cloudwaysapps.com/storage/product/2023-12-01-6569ad73d9f52.png",
-    //         ],
-    //         is_featured: 0,
-    //         isbn: null,
-    //         jan: null,
-    //         length_class: "Centimeter",
-    //         location: null,
-    //         manufacturer: null,
-    //         manufacturer_id: 37,
-    //         maximum_order_quantity: 1,
-    //         meta_tag_description:
-    //           "AMCHUR POWDER (आमचूर पाउडर) SARTAJ\r\nIt is a fruity spice powder made from dried unripe green mangoes and is used as a citrusy seasoning. It is mostly produced in India and is used to flavor foods and add the nutritional benefits of mangoes.",
-    //         meta_tag_keywords:
-    //           "ドライマンゴーパウダー（アムチュール）500g, Dried mango powder, Amchur powder, amchur, mango powder, Indian spices in japan",
-    //         meta_title: "AMCHUR POWDER (आमचूर पाउडर) SARTAJ",
-    //         model: "2002",
-    //         mpn: null,
-    //         name: "Amchur (Dry Mango Powder) SARTAJ | आमचूर पाउडर - 500gm",
-    //         out_of_stock_status: "2-3 days",
-    //         overall_rating: 0,
-    //         popularity_count: 1,
-    //         price: 861,
-    //         product_mark: "Veg",
-    //         product_tag: null,
-    //         product_type: null,
-    //         rating: [],
-    //         releted_product: null,
-    //         requires_shipping: "yes",
-    //         sale_end_date: null,
-    //         sale_price: null,
-    //         sale_start_date: null,
-    //         seo_en: "eng/buy-amchur-powder-sartaj-500g-at-sartajfoods.jp",
-    //         seo_ja: "jp/buy-amchur-powder-sartaj-500g-at-sartajfoods.jp",
-    //         sku: null,
-    //         sort_order: null,
-    //         status: 1,
-    //         stores: null,
-    //         substrack_stock: "yes",
-    //         tax: 8,
-    //         tax_type: "percent",
-    //         total_reviews: 0,
-    //         total_stock: 58,
-    //         translations: [],
-    //         unit: "kg",
-    //         upc: null,
-    //         updated_at: "2023-12-01T11:46:20.000000Z",
-    //         variations: "[]",
-    //         view_count: 1,
-    //         weight: "500.000000",
-    //         weight_class: "Gram",
-    //       },
-    //     },
-    //   ],
-    // };
 
     const response = await axios.post(
       `${API_BASE_URL}customer/order/place`,
@@ -188,7 +93,6 @@ const Cart = ({
         },
       }
     );
-    console.log("responseresponseresponseresponse", response?.status);
     if (response?.status == 200) {
       router.push("/OrderReceived");
     }
@@ -247,22 +151,6 @@ const Cart = ({
               <div className="col-lg-7">
                 <div className="row mb-50">
                   <div className="col-lg-6 mb-sm-15 mb-lg-0 mb-md-3">
-                    {/* <div className="toggle_info">
-                      <span>
-                        <i className="fi-rs-user mr-10"></i>
-                        <span className="text-muted font-lg">
-                          Already have an account?
-                        </span>{" "}
-                        <a
-                          href="#loginform"
-                          data-bs-toggle="collapse"
-                          className="collapsed font-lg"
-                          aria-expanded="false"
-                        >
-                          Click here to login
-                        </a>
-                      </span>
-                    </div> */}
                     <div className="">
                       <form method="post" className="apply-coupon">
                         <input
@@ -275,6 +163,11 @@ const Cart = ({
                         />
                         <button
                           className="btn  btn-md"
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
                           onClick={(e) => {
                             e.preventDefault();
                             handleCoupencode();
@@ -347,7 +240,6 @@ const Cart = ({
                   initialValues={{
                     fname: userDetails?.f_name,
                     lname: userDetails?.l_name,
-                    // cname: "",
                     billing_address: address?.billing_address?.[0]?.address,
                     billing_address2: address?.billing_address?.[0]?.road,
                     city: address?.billing_address?.[0]?.city,
@@ -355,7 +247,6 @@ const Cart = ({
                     zipcode: address?.billing_address?.[0]?.post_code,
                     phone: userDetails?.phone,
                     email: userDetails?.email,
-                    // password: "",
                   }}
                   onSubmit={(values) => {
                     console.log(values);

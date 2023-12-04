@@ -42,7 +42,7 @@ const Intro2 = () => {
               <div
                 className="single-hero-slider single-animation-wrap"
                 style={{
-                  backgroundImage: `url(${banner?.image})`,
+                  backgroundImage: `url(${banner && banner?.image})`,
                 }}
               >
                 <div className="slider-content">

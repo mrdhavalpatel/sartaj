@@ -145,10 +145,14 @@ const Cart = ({
                                 <a
                                   onClick={(e) => {
                                     if (
-                                      item?.quantity <=
+                                      item?.quantity <
                                       item?.maximum_order_quantity
                                     ) {
                                       increaseQuantity(item?.id);
+                                    } else {
+                                      toast.error(
+                                        `Maximum order quantity is${item?.maximum_order_quantity}`
+                                      );
                                     }
                                   }}
                                   className="qty-up"
@@ -189,7 +193,7 @@ const Cart = ({
                   </table>
                 </div>
                 <div className="cart-action text-end">
-                  <a className="btn " href="/shop-checkout">
+                  <a className="btn " href="/shop-fullwidth">
                     <i className="fi-rs-shopping-bag mr-10"></i>
                     Continue Shopping
                   </a>
@@ -236,7 +240,7 @@ const Cart = ({
                           </tbody>
                         </table>
                       </div>
-                      <a href="#" className="btn ">
+                      <a href="/shop-checkout" className="btn ">
                         <i className="fi-rs-box-alt mr-10"></i>
                         Proceed To CheckOut
                       </a>
