@@ -49,12 +49,12 @@ const CategorySlider2 = () => {
           <SwiperSlide key={i}>
             <div className="card-1">
               <figure className=" img-hover-scale overflow-hidden">
-                <Link href="/shop-grid-right">
+                <Link href="/shop-fullwidth">
                   <img src={item?.image} alt={item?.name} />
                 </Link>
               </figure>
               <h6>
-                <Link href="/shop-grid-right">{item?.name}</Link>
+                <Link href="/shop-fullwidth">{item?.name}</Link>
               </h6>
               <span className="count">{`(${item?.total_produts} items)`}</span>
               {/* <span>{"26 item"}</span> */}

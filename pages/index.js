@@ -88,7 +88,7 @@ function Index2() {
               data-wow-delay="0"
             >
               <h3 className="">Deals Of The Day</h3>
-              <Link href="/shop-grid-right" className="show-all">
+              <Link href="/shop-fullwidth" className="show-all">
                 All Deals
                 <i className="fi-rs-angle-right"></i>
               </Link>
@@ -102,7 +102,7 @@ function Index2() {
             <div className="section-title">
               <div className="title">
                 <h3>Shop by Categories</h3>
-                <Link href="/shop-grid-right" className="show-all">
+                <Link href="/shop-fullwidth" className="show-all">
                   All Categories
                   <i className="fi-rs-angle-right"></i>
                 </Link>

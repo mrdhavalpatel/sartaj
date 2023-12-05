@@ -116,7 +116,7 @@ const Header = ({
                                         <ul>
                                             <li>
                                                 Get great devices up to 50% off
-                                                <Link href="/shop-grid-right">View details</Link>
+                                                <Link href="/shop-fullwidth">View details</Link>
                                             </li>
                                         </ul>
                                     </div>
@@ -397,11 +397,11 @@ const Header = ({
                       {/* <span className="pro-count white">{totalCartItems}</span> */}
                       <span className="pro-count white">{cartItemsCount}</span>
                     </Link>
-                    <div className="cart-dropdown-wrap cart-dropdown-hm2">
+                    {/* <div className="cart-dropdown-wrap cart-dropdown-hm2">
                       <ul>
                         <li>
                           <div className="shopping-cart-img">
-                            <Link href="/shop-grid-right">
+                            <Link href="/shop-fullwidth">
                               <img
                                 alt="Evara"
                                 src="/assets/imgs/shop/thumbnail-3.jpg"
@@ -410,7 +410,7 @@ const Header = ({
                           </div>
                           <div className="shopping-cart-title">
                             <h4>
-                              <Link href="/shop-grid-right">
+                              <Link href="/shop-fullwidth">
                                 Plain Striola Shirts
                               </Link>
                             </h4>
@@ -427,7 +427,7 @@ const Header = ({
                         </li>
                         <li>
                           <div className="shopping-cart-img">
-                            <Link href="/shop-grid-right">
+                            <Link href="/shop-fullwidth">
                               <img
                                 alt="Evara"
                                 src="/assets/imgs/shop/thumbnail-4.jpg"
@@ -436,7 +436,7 @@ const Header = ({
                           </div>
                           <div className="shopping-cart-title">
                             <h4>
-                              <Link href="/shop-grid-right">
+                              <Link href="/shop-fullwidth">
                                 Macbook Pro 2024
                               </Link>
                             </h4>
@@ -464,7 +464,7 @@ const Header = ({
                           <Link href="/shop-checkout">Checkout</Link>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

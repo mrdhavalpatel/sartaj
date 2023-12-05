@@ -21,7 +21,7 @@ const Products = ({ productFilters }) => {
     searchTerm = Router.query.search,
     showLimit = 12,
     showPagination = 4;
-  console.log("Router.query.search", Router.query.catId, productFilters);
+  console.log("Router.query.search", Router.query);
   let [pagination, setPagination] = useState([]);
   let [limit, setLimit] = useState(showLimit);
   let [pages, setPages] = useState(Math.ceil(products?.items?.length / limit));

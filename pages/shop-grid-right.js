@@ -14,6 +14,7 @@ import SingleProduct from "../components/ecommerce/SingleProduct";
 import Breadcrumb2 from "../components/layout/Breadcrumb2";
 import Layout from "../components/layout/Layout";
 import { fetchProduct } from "../redux/action/product";
+import { ApiCall } from "../lib/other/other";
 
 const Products = ({ products, productFilters, fetchProduct }) => {
   let Router = useRouter(),
@@ -25,11 +26,12 @@ const Products = ({ products, productFilters, fetchProduct }) => {
   let [limit, setLimit] = useState(showLimit);
   let [pages, setPages] = useState(Math.ceil(products.items.length / limit));
   let [currentPage, setCurrentPage] = useState(1);
+  const [allProducts, setAllproducts] = useState([]);
 
-  useEffect(() => {
-    fetchProduct(searchTerm, "/static/product.json", productFilters);
-    cratePagination();
-  }, [productFilters, limit, pages, products.items.length]);
+  // useEffect(() => {
+  //   fetchProduct(searchTerm, "/static/product.json", productFilters);
+  //   cratePagination();
+  // }, [productFilters, limit, pages, products.items.length]);
 
   const cratePagination = () => {
     // set pagination
@@ -66,6 +68,22 @@ const Products = ({ products, productFilters, fetchProduct }) => {
     setCurrentPage(1);
     setPages(Math.ceil(products.items.length / Number(e.target.value)));
   };
+  const getAllProduct = async () => {
+    let payload = {
+      limit: limit,
+      sort_by: productFilters?.featured,
+      search: searchTerm ? searchTerm : "",
+    };
+
+    const request = await ApiCall("post", "products/all", payload);
+    const allProducts = await request?.data?.products;
+    setAllproducts(allProducts);
+  };
+  useEffect(() => {
+    getAllProduct();
+    cratePagination();
+  }, [productFilters?.featured, limit, searchTerm]);
+
   return (
     <>
       <Layout noBreadcrumb="d-none">
@@ -105,7 +123,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                   <br />
                 </div>
 
-                <div className="sidebar-widget product-sidebar  mb-30 p-30 bg-grey border-radius-10">
+                {/* <div className="sidebar-widget product-sidebar  mb-30 p-30 bg-grey border-radius-10">
                   <h5 className="section-title style-1 mb-30">New products</h5>
                   <div className="bt-1 border-color-1"></div>
 
@@ -172,7 +190,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                       Juice
                     </h4>
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className="col-lg-4-5">
                 <div className="shop-product-fillter">
@@ -180,7 +198,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                     <p>
                       We found
                       <strong className="text-brand">
-                        {products.items.length}
+                        {allProducts?.length}
                       </strong>
                       items for you!
                     </p>
@@ -198,11 +216,9 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                   </div>
                 </div>
                 <div className="row product-grid-3">
-                  {getPaginatedProducts.length === 0 && (
-                    <h3>No Products Found </h3>
-                  )}
+                  {allProducts?.length === 0 && <h3>No Products Found </h3>}
 
-                  {getPaginatedProducts.map((item, i) => (
+                  {allProducts?.map((item, i) => (
                     <div
                       className="col-lg-1-5 col-md-4 col-12 col-sm-6"
                       key={i}
@@ -213,7 +229,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                   ))}
                 </div>
 
-                <div className="pagination-area mt-15 mb-sm-5 mb-lg-0">
+                {/* <div className="pagination-area mt-15 mb-sm-5 mb-lg-0">
                   <nav aria-label="Page navigation example">
                     <Pagination
                       getPaginationGroup={getPaginationGroup}
@@ -224,7 +240,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                       handleActive={handleActive}
                     />
                   </nav>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

@@ -47,7 +47,6 @@ const OrderReceived = ({ cartItems }) => {
     });
     setAddress(response?.data);
   };
-  console.log("userDetails", userDetails);
   useEffect(() => {
     let encodedToken = localStorage.getItem("token");
     console.log("token", encodedToken);

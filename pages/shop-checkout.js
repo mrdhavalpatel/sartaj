@@ -533,6 +533,10 @@ const Cart = ({
                         ))}
                       </tbody>
                     </table>
+                    <div className="divider-2 mb-30"></div>
+                    <h6 className="text-muted">Total</h6>
+                    <br />
+                    <h6 className="text-muted">Discount</h6>
                   </div>
 
                   <div className="bt-1 border-color-1 mt-30 mb-30"></div>
