@@ -127,9 +127,9 @@ const Cart = ({
   useEffect(() => {
     let encodedToken = localStorage.getItem("token");
     if (encodedToken) {
+      getCartData(encodedToken);
       getUserDetails(encodedToken);
       getAddress(encodedToken);
-      getCartData(encodedToken);
     }
   }, []);
   return (

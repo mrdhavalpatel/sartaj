@@ -154,6 +154,7 @@ const ProductDetails = ({
                           >
                             Add to cart
                           </button>
+
                           <a
                             aria-label="Add To Wishlist"
                             className="action-btn hover-up"
