@@ -18,7 +18,7 @@ const BestSellerSlider = () => {
 
   return (
     <>
-      {bestSeller?.map((product, i) => (
+      {bestSeller?.slice(0, 3)?.map((product, i) => (
         <article className="row align-items-center hover-up" key={i}>
           <figure className="col-md-4 mb-0">
             <Link href="/products/[slug]" as={`/products/${product?.id}`}>

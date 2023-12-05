@@ -32,12 +32,17 @@ const Bottom = () => {
                 <TrendingSlider2 />
               </div>
             </div>
-            {/* <div className="col-xl-3 col-lg-4 col-md-6 mb-sm-5 mb-md-0 d-none d-lg-block wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
-                            <h4 className="section-title style-1 mb-30  animated animated">Restock Products</h4>
-                            <div className="product-list-small  animated animated">
-                                <NewArrival2/>
-                            </div>
-                        </div> */}
+            <div
+              className="col-xl-3 col-lg-4 col-md-6 mb-sm-5 mb-md-0 d-none d-lg-block wow animate__animated animate__fadeInUp"
+              data-wow-delay=".2s"
+            >
+              <h4 className="section-title style-1 mb-30  animated animated">
+                Restock Products
+              </h4>
+              <div className="product-list-small  animated animated">
+                <NewArrival2 />
+              </div>
+            </div>
             <div
               className="col-xl-3 col-lg-4 col-md-6 mb-sm-5 mb-md-0 d-none d-xl-block wow animate__animated animate__fadeInUp"
               data-wow-delay=".3s"

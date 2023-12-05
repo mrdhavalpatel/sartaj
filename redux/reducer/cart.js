@@ -159,6 +159,19 @@ export default (state = [], action) => {
       return [...state];
 
     case Types.CLEAR_CART:
+      if (token) {
+        const response = axios
+          .delete(`${API_BASE_URL}customer/cart/clear-cart`, {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .catch((error) => {
+            console.log("error", error?.code === "ERR_NETWORK");
+          });
+      }
       storage.set("dokani_cart", []);
       return [];
 
