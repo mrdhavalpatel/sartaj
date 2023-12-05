@@ -99,7 +99,7 @@ const Cart = ({
                     Carefully check the information before checkout
                   </h6>
                   <h6 className="text-body">
-                    <a href="#" className="text-muted">
+                    <a className="text-muted" onClick={clearCart}>
                       <i className="fi-rs-trash mr-5"></i>
                       Clear Cart
                     </a>
