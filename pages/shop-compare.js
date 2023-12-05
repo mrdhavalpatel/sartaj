@@ -27,7 +27,7 @@ const Compare = ({ compare, clearCompare, deleteFromCompare }) => {
                           "price",
                           "rating",
                           "description",
-                          "color",
+                          // "color",
                           // "sizes",
                           "stock",
                           "weight",
@@ -38,7 +38,13 @@ const Compare = ({ compare, clearCompare, deleteFromCompare }) => {
                         deleteFromCompare={deleteFromCompare}
                       />
                       <div className="text-right">
-                        <span className="clear-btn" onClick={clearCompare}>
+                        <span
+                          className="clear-btn"
+                          style={{
+                            cursor: "pointer",
+                          }}
+                          onClick={clearCompare}
+                        >
                           Clear All
                         </span>
                       </div>

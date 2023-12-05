@@ -81,7 +81,7 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                       Add to cart
                     </button>
                   ) : (
-                    <Link href="/contact">
+                    <Link href="/page-contact">
                       <button className="btn  btn-sm btn-secondary">
                         <i className="fi-rs-headset mr-5"></i>
                         Contact Us
