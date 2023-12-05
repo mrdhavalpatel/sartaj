@@ -65,9 +65,10 @@ const Wishlist = ({
                       <tbody>
                         {wishlist?.items?.map((product, i) => (
                           <tr className="pt-30" key={i}>
+                            {console.log("product---->", product)}
                             <td className="image product-thumbnail pt-40">
                               <img
-                                src={product?.images?.[0]?.img}
+                                src={product?.image?.[0]}
                                 alt="nest"
                                 className="img-fluid"
                               />
@@ -75,20 +76,28 @@ const Wishlist = ({
 
                             <td className="product-des product-name">
                               <h6 className="product-name  mb-10">
-                                <a>{product.title}</a>
+                                <a>{product.name}</a>
                               </h6>
                               <div className="product-rate-cover">
                                 <div className="product-rate d-inline-block">
                                   <div
                                     className="product-rating"
                                     style={{
-                                      width: "90%",
+                                      width: `${
+                                        product?.overall_rating
+                                          ? product?.overall_rating
+                                          : 0
+                                      }%`,
                                     }}
                                   ></div>
                                 </div>
                                 <span className="font-small ml-5 text-muted">
                                   {" "}
-                                  (4.0)
+                                  {`(${
+                                    product?.total_reviews
+                                      ? product.total_reviews
+                                      : 0
+                                  })`}
                                 </span>
                               </div>
                             </td>
@@ -99,13 +108,24 @@ const Wishlist = ({
                               className="text-center detail-info"
                               data-title="Stock"
                             >
-                              {product.stock === 0 ? (
+                              {product.out_of_stock_status ===
+                              "out of stock" ? (
                                 <span className="stock-status out-stock mb-0">
                                   Out of stock
                                 </span>
+                              ) : product?.out_of_stock_status ===
+                                "2-3 days" ? (
+                                <span className="stock-status in-stock mb-0">
+                                  2-3 days
+                                </span>
+                              ) : product?.out_of_stock_status ===
+                                "pre order" ? (
+                                <span className="stock-status in-stock mb-0">
+                                  Pre Order
+                                </span>
                               ) : (
                                 <span className="stock-status in-stock mb-0">
-                                  In Stock
+                                  In stock
                                 </span>
                               )}
                             </td>
