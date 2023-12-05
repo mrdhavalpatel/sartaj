@@ -174,7 +174,7 @@ const Products = ({ productFilters }) => {
                 </div>
                 <div className="sidebar-widget product-sidebar  mb-30 p-30 bg-grey border-radius-10">
                   <h5 className="section-title style-1 mb-30">New products</h5>
-                  {newProducts?.map((newProducts) => {
+                  {newProducts?.slice(0, 5)?.map((newProducts) => {
                     return (
                       <div className="single-post clearfix">
                         <div className="image">
