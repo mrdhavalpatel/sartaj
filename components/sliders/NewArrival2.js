@@ -15,10 +15,7 @@ const NewArrival2 = () => {
   const fetchProducts = async () => {
     const request = await ApiCall("get", "products/restored-products");
     const allProducts = await await request?.data;
-    console.log(
-      "allProductsallProductsallProductsallProductsallProductsallProducts",
-      allProducts
-    );
+
     setNewArrival(allProducts);
   };
 
@@ -27,13 +24,13 @@ const NewArrival2 = () => {
       {newArrival?.slice(0, 3).map((product, i) => (
         <article className="row align-items-center hover-up" key={i}>
           <figure className="col-md-4 mb-0">
-            <Link href="/products/[slug]" as={`/products/${product.slug}`}>
+            <Link href="/products/[slug]" as={`/products/${product?.id}`}>
               <img src={product?.image?.[0]} alt="nest" />
             </Link>
           </figure>
           <div className="col-md-8 mb-0">
             <h6>
-              <Link href="/products/[slug]" as={`/products/${product.slug}`}>
+              <Link href="/products/[slug]" as={`/products/${product?.id}`}>
                 {product?.name}
               </Link>
             </h6>

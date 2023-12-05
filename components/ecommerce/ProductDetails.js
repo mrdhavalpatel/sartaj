@@ -64,12 +64,9 @@ const ProductDetails = ({
                   </div>
                   <div className="col-md-6 col-sm-12 col-xs-12">
                     <div className="detail-info  pr-30 pl-30">
-                      <span className="stock-status out-stock">
-                        {" "}
-                        {product?.sale_start_date !== null
-                          ? ""
-                          : "Sale Off"}{" "}
-                      </span>
+                      {product?.sale_start_date !== null ? null : (
+                        <span className="stock-status out-stock">Sale Off</span>
+                      )}
                       <h2 className="title-detail">{product?.name}</h2>
                       <div className="product-detail-rating">
                         <div className="product-rate-cover text-end">
