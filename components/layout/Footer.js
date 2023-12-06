@@ -1,18 +1,42 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ApiCall } from "../../lib/other/other";
+import { Formik, Field, Form } from "formik";
+import { toast } from "react-toastify";
 
 const Footer = () => {
   const [footerData, setFooterData] = useState([]);
+
+  const initialValues = {
+    email: "",
+  };
   const fetchFooterData = async () => {
     const request = await ApiCall("get", "config");
     const newArrivals = await request?.data;
     setFooterData(newArrivals);
-    console.log("----------------->", newArrivals);
   };
   useEffect(() => {
     fetchFooterData();
   }, []);
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    try {
+      let payload = values;
+      const response = await ApiCall("post", "subscribe-newsletter", payload);
+
+      if (response?.status === 200) {
+        toast.success(response?.data?.message);
+      } else {
+        toast.error(response?.data?.message);
+      }
+
+      resetForm();
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      console.error(error);
+    }
+
+    setSubmitting(false);
+  };
   return (
     <>
       <footer className="main">
@@ -31,12 +55,32 @@ const Footer = () => {
                       Start You'r Daily Shopping with{" "}
                       <span className="text-brand">Sartaj</span>
                     </p>
-                    <form className="form-subcriber d-flex">
+                    {/* <form className="form-subcriber d-flex">
                       <input type="email" placeholder="Your emaill address" />
                       <button className="btn" type="submit">
                         Subscribe
                       </button>
-                    </form>
+                    </form> */}
+                    <Formik
+                      initialValues={initialValues}
+                      onSubmit={(values, { setSubmitting, resetForm }) => {
+                        handleSubmit(values, { setSubmitting, resetForm });
+                      }}
+                    >
+                      <Form className="form-subscriber d-flex">
+                        <Field
+                          required
+                          type="email"
+                          name="email"
+                          placeholder="Your email address"
+                          className="form-control"
+                        />
+
+                        <button className="btn" type="submit">
+                          Subscribe
+                        </button>
+                      </Form>
+                    </Formik>
                   </div>
                   <img
                     src="/assets/imgs/banner/banner-9.png"

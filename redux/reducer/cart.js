@@ -61,7 +61,6 @@ export default (state = [], action) => {
       } else {
         if (!action?.payload?.product?.quantity) {
           action.payload.product.quantity = 1;
-          console.log("action.payload", action.payload);
           if (token) {
             let payload = {
               product_id: action?.payload?.product?.id,

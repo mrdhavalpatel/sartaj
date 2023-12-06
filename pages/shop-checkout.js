@@ -118,7 +118,8 @@ const Cart = ({
         },
       })
       .then((res) => {
-        setCartItemsData(res?.data?.cartProducts?.[0]);
+        setCartItemsData(res?.data?.cartProducts);
+        console.log("res?.data?.cartProducts?.[0]", res?.data?.cartProducts);
       })
       .catch((error) => {
         console.log("error", error?.code === "ERR_NETWORK");
@@ -476,30 +477,34 @@ const Cart = ({
                   </div>
                   <div className="divider-2 mb-30"></div>
                   <div className="table-responsive order_table">
-                    {cartItems.length <= 0 && "No Products"}
+                    {cartItemsData.length <= 0 && "No Products"}
                     <table
                       className={
-                        cartItems.length > 0 ? "table no-border" : "d-none"
+                        cartItemsData.length > 0 ? "table no-border" : "d-none"
                       }
                     >
+                      {console.log(
+                        "cartItemsDatacartItemsDatacartItemsData",
+                        cartItemsData
+                      )}
                       <tbody>
-                        {cartItems.map((item, i) => (
+                        {cartItemsData?.map((item, i) => (
                           <tr key={i}>
                             <td className="image product-thumbnail">
-                              <img src={item?.image?.[0]} alt="#" />
+                              <img src={item?.product?.image?.[0]} alt="#" />
                             </td>
+                            {console.log("itemitemitem", item)}
                             <td>
-                              {console.log("item", item)}
                               <h6 className="w-160 mb-5">
-                                <a>{item?.name}</a>
+                                <a>{item?.product?.name}</a>
                                 <div className="product-rate-cover">
                                   <div className="product-rate d-inline-block">
                                     <div
                                       className="product-rating"
                                       style={{
                                         width: `${
-                                          item?.overall_rating
-                                            ? item?.overall_rating
+                                          item?.product?.overall_rating
+                                            ? item?.product?.overall_rating
                                             : 0
                                         }%`,
                                       }}
@@ -508,8 +513,8 @@ const Cart = ({
                                   <span className="font-small ml-5 text-muted">
                                     {`(
                                     ${
-                                      item?.total_reviews
-                                        ? item.total_reviews
+                                      item?.product?.total_reviews
+                                        ? item?.product?.total_reviews
                                         : 0
                                     }
                                     )`}

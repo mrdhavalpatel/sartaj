@@ -32,33 +32,35 @@ function Index2() {
                 </div>
               </div>
 
-              {/* <div className="col-lg-4 d-none d-xl-block">
-                <div className="banner-img style-3 animated animated">
-                  <div className="banner-text mt-50">
-                    <h2 className="mb-30">
-                      Enjoy easy money transfers at&nbsp;
-                      <span className="text-brand">Sartaj Foods</span>
-                    </h2>
-                    <h5 className="mb-30 fw-300">
-                      Send to your loved ones around the world
-                    </h5>
-                    <Link href="/" className="btn btn-xs">
-                      Learn more <i className="fi-rs-arrow-small-right"></i>
-                    </Link>
-                  </div>
-                </div>
-              </div> */}
               <div className="col-lg-4 d-none d-xl-block">
-                <div className="banner-img style-3 animated animated">
+                <div
+                  className="banner-img style-3 animated animated"
+                  style={{
+                    background: `url(${adBanner?.[0]?.image}) no-repeat center bottom / cover`,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-end",
+                  }}
+                >
                   <div className="banner-text mt-50">
                     <h2 className="mb-30">{adBanner?.[0]?.title}</h2>
                     <h5 className="mb-30 fw-300">
                       {adBanner?.[0]?.description}
                     </h5>
-                    {/* <Link href="/" className="btn btn-xs">
+
+                    {/* <Link
+                      href={`${adBanner?.[0]?.link}`}
+                      className="btn btn-xs"
+                    >
                       Learn more <i className="fi-rs-arrow-small-right"></i>
                     </Link> */}
                   </div>
+
+                  <a
+                    href={`${adBanner?.[0]?.link ? adBanner?.[0]?.link : "#"}`}
+                  >
+                    <img src={`${adBanner?.[0]?.banner_logo}`} />
+                  </a>
                 </div>
               </div>
             </div>

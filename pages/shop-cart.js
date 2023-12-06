@@ -36,14 +36,16 @@ const Cart = ({
   clearCart,
 }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [cartItem, setCartItem] = useState([]);
+  const [cartDataUpdated, setCartDataUpdated] = useState(false);
+
+  const [cartProducts, setCartProducts] = useState([]);
   const price = () => {
     let price = 0;
     cartItems.forEach((item) => (price += item?.price * item?.quantity));
     return price;
   };
   const proceedToCheckout = () => {
-    if (cartItems?.length > 0) {
+    if (cartProducts?.length > 0) {
       return (
         <a href="/shop-checkout" className="btn" aria-disabled>
           <i className="fi-rs-box-alt mr-10"></i>
@@ -57,9 +59,43 @@ const Cart = ({
       </a>;
     }
   };
+  const addCurrenItems = (token) => {
+    let FCart = cartProducts.map((item) => ({
+      product_id: item?.id,
+      qty: item?.quantity,
+    }));
 
-  const { login } = useAuth();
-
+    let payload = {
+      cart: FCart,
+    };
+    const response = axios
+      .post(`${API_BASE_URL}customer/cart/add-items`, payload, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((error) => {
+        console.log("error", error?.code === "ERR_NETWORK");
+      });
+  };
+  const getCartData = (token) => {
+    const response = axios
+      .get(`${API_BASE_URL}customer/cart`, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setCartProducts(res?.data?.cartProducts);
+      })
+      .catch((error) => {
+        console.log("error", error?.code === "ERR_NETWORK");
+      });
+  };
   const validationSchema = Yup.object().shape({
     usernameOrEmail: Yup.string().required("Username or Email is required"),
     currentpassword: Yup.string().required("Password is required"),
@@ -74,17 +110,25 @@ const Cart = ({
         toast.error(res?.response?.data?.errors?.[0]?.message);
       } else {
         localStorage.setItem("token", res.token);
+        addCurrenItems(res.token);
         setIsLoggedIn(true);
         // router.push("/");
       }
     });
   };
+  const handleClearCart = () => {
+    setCartDataUpdated(!cartDataUpdated);
+    setCartProducts([]);
+  };
   useEffect(() => {
     let Token = storage.get("token");
     if (Token) {
-      setIsLoggedIn(true);
+      getCartData(Token);
+      setIsLoggedIn(Token);
+    } else {
+      setCartProducts(cartItems);
     }
-  }, []);
+  }, [isLoggedIn, cartDataUpdated]);
   return (
     <>
       <Layout parent="Home" sub="Shop" subChild="Cart">
@@ -99,7 +143,13 @@ const Cart = ({
                     Carefully check the information before checkout
                   </h6>
                   <h6 className="text-body">
-                    <a className="text-muted" onClick={clearCart}>
+                    <a
+                      className="text-muted"
+                      onClick={() => {
+                        clearCart();
+                        handleClearCart();
+                      }}
+                    >
                       <i className="fi-rs-trash mr-5"></i>
                       Clear Cart
                     </a>
@@ -110,10 +160,12 @@ const Cart = ({
             <div className="row">
               <div className="col-lg-8">
                 <div className="table-responsive shopping-summery">
-                  {cartItems.length <= 0 && "No Products"}
+                  {cartProducts.length <= 0 && "No Products"}
                   <table
                     className={
-                      cartItems.length > 0 ? "table table-wishlist" : "d-none"
+                      cartProducts.length > 0
+                        ? "table table-wishlist"
+                        : "d-none"
                     }
                   >
                     <thead>
@@ -133,14 +185,22 @@ const Cart = ({
                       </tr>
                     </thead>
                     <tbody>
-                      {cartItems.map((item, i) => (
+                      {cartProducts?.map((item, i) => (
                         <tr key={i}>
                           <td className="image product-thumbnail">
-                            <img src={item?.image?.[0]} />
+                            <img
+                              src={
+                                item?.image?.[0]
+                                  ? item?.image?.[0]
+                                  : item?.product?.image?.[0]
+                              }
+                            />
                           </td>
                           <td className="product-des product-name">
                             <h6 className="product-name">
-                              <Link href="/products">{item?.name}</Link>
+                              <Link href="/products">
+                                {item?.name ? item?.name : item?.product?.name}
+                              </Link>
                             </h6>
                             <div className="product-rate-cover">
                               <div className="product-rate d-inline-block">
@@ -150,6 +210,8 @@ const Cart = ({
                                     width: `${
                                       item?.overall_rating
                                         ? item?.overall_rating
+                                        : item?.product?.overall_rating
+                                        ? item?.product?.overall_rating
                                         : 0
                                     }%`,
                                   }}
@@ -220,16 +282,22 @@ const Cart = ({
                           </td>
                         </tr>
                       ))}
-                      <tr>
+                      {/* <tr>
                         <td colSpan="6" className="text-end">
-                          {cartItems.length > 0 && (
-                            <a onClick={clearCart} className="text-muted">
+                          {cartProducts.length > 0 && (
+                            <a
+                              onClick={() => {
+                                clearCart();
+                                handleClearCart();
+                              }}
+                              className="text-muted"
+                            >
                               <i className="fi-rs-cross-small"></i>
                               Clear Cart
                             </a>
                           )}
                         </td>
-                      </tr>
+                      </tr> */}
                     </tbody>
                   </table>
                 </div>

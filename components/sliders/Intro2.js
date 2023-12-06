@@ -21,7 +21,7 @@ const Intro2 = () => {
     <>
       <Swiper
         slidesPerView={1}
-        loop={true}
+        // loop={true}
         spaceBetween={0}
         effect={"fade"}
         fadeEffect={{

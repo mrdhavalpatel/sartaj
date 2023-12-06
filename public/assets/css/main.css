@@ -3584,8 +3584,8 @@ table .product-thumbnail img {
   border-radius: 15px;
   overflow: hidden;
   height: 538px;
-  background: url(../imgs/banner/banner-11.png) no-repeat center bottom;
-  background-size: cover;
+  /* background: url(../imgs/banner/banner-11.png) no-repeat center bottom; */
+  /* background-size: cover; */
   width: 100%;
 }
 

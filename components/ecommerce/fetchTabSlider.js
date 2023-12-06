@@ -77,16 +77,26 @@ function FeatchTabSlider({ banners }) {
 
       <div className="row">
         <div className="col-lg-3 d-none d-lg-flex wow animate__animated animate__fadeIn">
-          <div className="banner-img style-2">
+          <div
+            className="banner-img style-2"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+            }}
+          >
             <div className="banner-text">
-              <h2 className="mb-100">{banners?.[0]?.title}</h2>
-
+              <h2 className="mb-100">{banners?.[1]?.title}</h2>
               <Link href="/products" className="btn btn-xs">
                 Shop Now <i className="fi-rs-arrow-small-right"></i>
               </Link>
             </div>
+            <a href={`${banners?.[1]?.link ? adBanner?.[0]?.link : "#"}`}>
+              <img src={`${banners?.[1]?.banner_logo}`} />
+            </a>
           </div>
         </div>
+        {console.log("banners?.[1]?.banner_logo", banners?.[1]?.banner_logo)}
         <div className="col-lg-9 col-md-12">
           <div className="tab-content wow fadeIn animated" id="myTabContent">
             <div

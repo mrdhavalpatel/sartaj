@@ -6,11 +6,36 @@ import { auth } from "../lib/auth/auth";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useAuth } from "../components/context/AuthContext";
+import { connect } from "react-redux";
+import { API_BASE_URL } from "../lib/api";
+import axios from "axios";
 
-function Login() {
+function Login({ cartItems }) {
   const router = useRouter();
   const { login } = useAuth();
+  const addCurrenItems = (token) => {
+    if (cartItems?.length > 0) {
+      let FCart = cartItems?.map((item) => ({
+        product_id: item?.id,
+        qty: item?.quantity,
+      }));
 
+      let payload = {
+        cart: FCart,
+      };
+      const response = axios
+        .post(`${API_BASE_URL}customer/cart/add-items`, payload, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .catch((error) => {
+          console.log("error", error?.code === "ERR_NETWORK");
+        });
+    }
+  };
   const validationSchema = Yup.object().shape({
     usernameOrEmail: Yup.string().required("Username or Email is required"),
     password: Yup.string().required("Password is required"),
@@ -25,6 +50,8 @@ function Login() {
         toast.error(res?.response?.data?.errors?.[0]?.message);
       } else {
         localStorage.setItem("token", res.token);
+        addCurrenItems(res.token);
+
         login(res.token);
         router.push("/");
       }
@@ -118,5 +145,18 @@ function Login() {
     </>
   );
 }
-
-export default Login;
+const mapStateToProps = (state) => ({
+  cartItems: state.cart,
+  activeCart: state.counter,
+});
+// const mapDispatchToProps = {
+//   closeCart,
+//   increaseQuantity,
+//   getCartItems,
+//   decreaseQuantity,
+//   deleteFromCart,
+//   openCart,
+//   clearCart,
+// };
+// export default Login;
+export default connect(mapStateToProps)(Login);

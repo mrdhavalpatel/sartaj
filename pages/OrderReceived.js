@@ -12,10 +12,11 @@ import { connect } from "react-redux";
 import Link from "next/link";
 import { api } from "../lib/api";
 import Layout from "../components/layout/Layout";
+import axios from "axios";
 const OrderReceived = ({ cartItems }) => {
   const [userDetails, setUserDetails] = useState([]);
   const [address, setAddress] = useState("");
-
+  const [cartItemsData, setCartItemsData] = useState([]);
   const price = () => {
     let price = 0;
     cartItems.forEach((item) => (price += item?.price * item?.quantity));
@@ -47,9 +48,25 @@ const OrderReceived = ({ cartItems }) => {
     });
     setAddress(response?.data);
   };
+  const getCartsItem = async (token) => {
+    const response = await axios
+      .get(`${API_BASE_URL}customer/cart`, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setCartItemsData(response?.data);
+      })
+      .catch((error) => {
+        console.log("error", error?.code === "ERR_NETWORK");
+      });
+  };
   useEffect(() => {
     let encodedToken = localStorage.getItem("token");
-    console.log("token", encodedToken);
+    getCartsItem(encodedToken);
     getUserDetails(encodedToken);
     getAddress(encodedToken);
   }, []);
@@ -104,7 +121,7 @@ const OrderReceived = ({ cartItems }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {cartItems.map((item, i) => (
+                  {cartItemsData?.cartProducts?.map((item, i) => (
                     <tr>
                       <td class="text-left">
                         <Link href="/products">{item?.name}</Link>
@@ -129,7 +146,7 @@ const OrderReceived = ({ cartItems }) => {
                     <td colspan="4" class="text-right">
                       Total
                     </td>
-                    <td class="text-right">¥{price() + 600}</td>
+                    <td class="text-right">¥{cartItemsData?.total_amt}</td>
                   </tr>
                 </tbody>
               </table>
