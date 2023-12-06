@@ -37,7 +37,7 @@ const Cart = ({
 }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartDataUpdated, setCartDataUpdated] = useState(false);
-
+  const [cartTotal, setCartTotal] = useState([]);
   const [cartProducts, setCartProducts] = useState([]);
   const price = () => {
     let price = 0;
@@ -91,6 +91,8 @@ const Cart = ({
       })
       .then((res) => {
         setCartProducts(res?.data?.cartProducts);
+        setCartTotal(res?.data);
+        console.log("res?.data?.cartProducts---->", res?.data);
       })
       .catch((error) => {
         console.log("error", error?.code === "ERR_NETWORK");
@@ -220,13 +222,25 @@ const Cart = ({
                               <span className="font-small ml-5 text-muted">
                                 {" "}
                                 {`(${
-                                  item?.total_reviews ? item.total_reviews : 0
+                                  item?.total_reviews
+                                    ? item.total_reviews
+                                    : item?.product?.total_reviews
+                                    ? item?.product?.total_reviews
+                                    : 0
                                 })`}
                               </span>
                             </div>
                           </td>
                           <td className="price" data-title="Price">
-                            <h4 className="text-brand">¥{item?.price}</h4>
+                            {console.log("item--->", item)}
+                            <h4 className="text-brand">
+                              ¥
+                              {item?.price
+                                ? item?.price
+                                : item?.product?.price
+                                ? item?.product?.price
+                                : 0}
+                            </h4>
                           </td>
                           <td
                             className="text-center detail-info"
@@ -326,15 +340,15 @@ const Cart = ({
                                 </td>
                                 <td className="cart_total_amount">
                                   <span className="font-lg fw-900 text-brand">
-                                    ¥ {price()}
+                                    ¥ {cartTotal?.total_sub_amt}
                                   </span>
                                 </td>
                               </tr>
                               <tr>
                                 <td className="cart_total_label">Shipping</td>
                                 <td className="cart_total_amount">
-                                  <i className="ti-gift mr-5"></i>
-                                  ¥600
+                                  <i className="ti-gift mr-5"></i>¥
+                                  {cartTotal?.delivery_charge}
                                 </td>
                               </tr>
                               <tr>
@@ -342,7 +356,7 @@ const Cart = ({
                                 <td className="cart_total_amount">
                                   <strong>
                                     <span className="font-xl fw-900 text-brand">
-                                      ¥{price() + 600}
+                                      ¥{cartTotal?.total_amt}
                                     </span>
                                   </strong>
                                 </td>
@@ -438,7 +452,6 @@ const Cart = ({
                                     </Form>
                                   )}
                                 </Formik>
-                                ;
                               </div>
                             </div>
                           </div>

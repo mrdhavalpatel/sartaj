@@ -10,7 +10,7 @@ import {
 } from "../redux/action/cart";
 import { connect } from "react-redux";
 import Link from "next/link";
-import { api } from "../lib/api";
+import { API_BASE_URL, api } from "../lib/api";
 import Layout from "../components/layout/Layout";
 import axios from "axios";
 const OrderReceived = ({ cartItems }) => {
@@ -114,7 +114,7 @@ const OrderReceived = ({ cartItems }) => {
                 <thead>
                   <tr>
                     <td className="text-left">Product</td>
-                    {/* <td className="text-left">Model</td> */}
+                    <td className="text-left">Model</td>
                     <td className="text-right">Quantity</td>
                     <td className="text-right">Unit Price</td>
                     <td className="text-right">Total</td>
@@ -124,9 +124,9 @@ const OrderReceived = ({ cartItems }) => {
                   {cartItemsData?.cartProducts?.map((item, i) => (
                     <tr>
                       <td class="text-left">
-                        <Link href="/products">{item?.name}</Link>
+                        <Link href="/products">{item?.product?.name}</Link>
                       </td>
-                      {/* <td class="text-left">4005</td> */}
+                      <td class="text-left">{item?.product?.model}</td>
                       <td class="text-right"> {item?.quantity}</td>
                       <td class="text-right">¥{item?.price}</td>
                       <td class="text-right">
@@ -142,6 +142,65 @@ const OrderReceived = ({ cartItems }) => {
               </td>
               <td class="text-right">¥967</td>
             </tr> */}
+                  <tr>
+                    <td colspan="4" class="text-right">
+                      Sub Total
+                    </td>
+                    <td class="text-right">¥{cartItemsData?.total_sub_amt}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="4" class="text-right">
+                      All Item in Dry Shipping:{" "}
+                    </td>
+                    <td class="text-right">
+                      {" "}
+                      ¥{cartItemsData?.delivery_charge}
+                    </td>
+                  </tr>
+                  {cartItemsData?.eight_percent != 0 ? (
+                    <tr>
+                      <td colspan="4" class="text-right">
+                        Consumption Tax{" "}
+                        {cartItemsData?.eight_percent != 0
+                          ? 8
+                          : cartItemsData?.ten_percent != 0
+                          ? 10
+                          : 0}
+                        %
+                      </td>
+                      <td class="text-right">
+                        {" "}
+                        ¥
+                        {cartItemsData?.eight_percent != 0
+                          ? cartItemsData?.eight_percent
+                          : cartItemsData?.ten_percent != 0
+                          ? cartItemsData?.ten_percent
+                          : 0}
+                      </td>
+                    </tr>
+                  ) : null}
+                  {cartItemsData?.ten_percent != 0 ? (
+                    <tr>
+                      <td colspan="4" class="text-right">
+                        Consumption Tax{" "}
+                        {cartItemsData?.eight_percent != 0
+                          ? 8
+                          : cartItemsData?.ten_percent != 0
+                          ? 10
+                          : 0}
+                        %
+                      </td>
+                      <td class="text-right">
+                        {" "}
+                        ¥
+                        {cartItemsData?.eight_percent != 0
+                          ? cartItemsData?.eight_percent
+                          : cartItemsData?.ten_percent != 0
+                          ? cartItemsData?.ten_percent
+                          : 0}
+                      </td>
+                    </tr>
+                  ) : null}
                   <tr>
                     <td colspan="4" class="text-right">
                       Total

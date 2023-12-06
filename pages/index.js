@@ -59,7 +59,13 @@ function Index2() {
                   <a
                     href={`${adBanner?.[0]?.link ? adBanner?.[0]?.link : "#"}`}
                   >
-                    <img src={`${adBanner?.[0]?.banner_logo}`} />
+                    <img
+                      src={`${
+                        adBanner?.[0]?.banner_logo
+                          ? adBanner?.[0]?.banner_logo
+                          : "#"
+                      }`}
+                    />
                   </a>
                 </div>
               </div>

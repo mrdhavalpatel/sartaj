@@ -135,7 +135,13 @@ const SingleProduct2 = ({
 
           <a
             className="btn w-100 hover-up"
-            onClick={(e) => handleCart(product)}
+            onClick={(e) => {
+              if (product?.out_of_stock_status == "in stock") {
+                handleCart(product);
+              } else {
+                toast.error("product is out of stock");
+              }
+            }}
           >
             <i className="fi-rs-shopping-cart mr-5"></i> Add To Cart
           </a>

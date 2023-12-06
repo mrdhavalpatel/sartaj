@@ -4,16 +4,24 @@ import moment from "moment/moment";
 import StarRating from "./StarRating";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import Link from "next/link";
+import { auth } from "../../lib/auth/auth";
 
 const ProductTab = ({ description, review, id, total_reviews }) => {
   const [activeIndex, setActiveIndex] = useState(1);
+  const [isLoggedIn, setIsloggedIn] = useState(false);
   const [productRating, setProductRating] = useState([]);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const handleRatingChange = (newRating) => {
     setRating(newRating);
   };
-
+  const validationSchema = Yup.object().shape({
+    usernameOrEmail: Yup.string().required("Username or Email is required"),
+    currentpassword: Yup.string().required("Password is required"),
+  });
   const handleOnClick = (index) => {
     setActiveIndex(index);
   };
@@ -41,6 +49,21 @@ const ProductTab = ({ description, review, id, total_reviews }) => {
       setRating(0);
     }
   };
+  const handleSubmit = (values) => {
+    const payload = {
+      email_or_phone: values?.usernameOrEmail,
+      password: values?.currentpassword,
+    };
+    auth("post", "auth/login", payload).then((res) => {
+      if (res?.response?.data?.errors) {
+        toast.error(res?.response?.data?.errors?.[0]?.message);
+      } else {
+        localStorage.setItem("token", res.token);
+        setIsloggedIn(true);
+        // router.push("/");
+      }
+    });
+  };
   const getProductRatingDetails = async (encodedToken) => {
     try {
       const response = await api.get(`customer/reviews/rating/${id}`, {
@@ -55,10 +78,12 @@ const ProductTab = ({ description, review, id, total_reviews }) => {
       console.error("API Error:", error);
     }
   };
-  console.log("productRating", productRating);
   useEffect(() => {
     let token = localStorage.getItem("token");
-    getProductRatingDetails(token);
+    if (token) {
+      setIsloggedIn(true);
+      getProductRatingDetails(token);
+    }
   }, []);
   return (
     <div className="product-info">
@@ -74,16 +99,7 @@ const ProductTab = ({ description, review, id, total_reviews }) => {
               Description
             </a>
           </li>
-          {/* <li className="nav-item">
-                        <a className={activeIndex === 2 ? "nav-link active" : "nav-link"} id="Additional-info-tab" data-bs-toggle="tab" onClick={() => handleOnClick(2)}>
-                            Additional info
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a className={activeIndex === 3 ? "nav-link active" : "nav-link"} id="Reviews-tab" data-bs-toggle="tab" onClick={() => handleOnClick(3)}>
-                            Vendor
-                        </a>
-                    </li> */}
+
           <li className="nav-item">
             <a
               className={activeIndex === 4 ? "nav-link active" : "nav-link"}
@@ -284,55 +300,145 @@ const ProductTab = ({ description, review, id, total_reviews }) => {
               </div>
             </div>
 
-            <div className="comment-form">
-              <h4 className="mb-15">Add a review</h4>
-              <div className="mb-3">
-                <StarRating
-                  initialRating={rating}
-                  onRatingChange={handleRatingChange}
-                />
-              </div>
+            {isLoggedIn ? (
+              <div className="comment-form">
+                <h4 className="mb-15">Add a review</h4>
+                <div className="mb-3">
+                  <StarRating
+                    initialRating={rating}
+                    onRatingChange={handleRatingChange}
+                  />
+                </div>
 
+                <div className="row">
+                  <div className="col-lg-8 col-md-12">
+                    <form
+                      className="form-contact comment_form"
+                      action="#"
+                      id="commentForm"
+                    >
+                      <div className="row">
+                        <div className="col-12">
+                          <div className="form-group">
+                            <textarea
+                              className="form-control w-100"
+                              name="comment"
+                              id="comment"
+                              cols="30"
+                              rows="9"
+                              value={reviewText}
+                              onChange={(e) => {
+                                setReviewText(e?.target?.value);
+                              }}
+                              placeholder="Write Comment"
+                            ></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="form-group">
+                        <button
+                          className="button button-contactForm"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleReviewSubmit();
+                          }}
+                        >
+                          Submit Review
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            ) : (
               <div className="row">
-                <div className="col-lg-8 col-md-12">
-                  <form
-                    className="form-contact comment_form"
-                    action="#"
-                    id="commentForm"
-                  >
-                    <div className="row">
-                      <div className="col-12">
-                        <div className="form-group">
-                          <textarea
-                            className="form-control w-100"
-                            name="comment"
-                            id="comment"
-                            cols="30"
-                            rows="9"
-                            value={reviewText}
-                            onChange={(e) => {
-                              setReviewText(e?.target?.value);
+                <div className="col-xl-8 col-lg-10 col-md-12 m-auto">
+                  <div className="row">
+                    {/* <div className="col-lg-6 pr-30 d-none d-lg-block">
+                      <img
+                        className="border-radius-15"
+                        src="assets/imgs/page/login-1.png"
+                        alt="nest"
+                      />
+                    </div> */}
+                    <div className="col-lg-6 col-md-8">
+                      <div className="login_wrap widget-taber-content background-white">
+                        <div className="padding_eight_all bg-white">
+                          <div className="heading_s1">
+                            <h3 className="mb-5">
+                              To add a review login first{" "}
+                            </h3>
+                            <p className="mb-30">
+                              Don't have an account?{" "}
+                              <Link href="/page-register">Create here</Link>
+                            </p>
+                          </div>
+                          <Formik
+                            initialValues={{
+                              usernameOrEmail: "",
+                              currentpassword: "",
                             }}
-                            placeholder="Write Comment"
-                          ></textarea>
+                            validationSchema={validationSchema}
+                            onSubmit={async (values, { setSubmitting }) => {
+                              // Prevent default form submission behavior
+                              setSubmitting(false);
+
+                              // Your custom submission logic goes here
+                              await handleSubmit(values);
+
+                              // Optionally reset the form
+                              // resetForm();
+                            }}
+                          >
+                            {({ isSubmitting, handleSubmit }) => (
+                              <Form onSubmit={handleSubmit}>
+                                <div className="form-group">
+                                  <Field
+                                    type="text"
+                                    name="usernameOrEmail"
+                                    placeholder="Username or Email *"
+                                    className="form-control"
+                                  />
+                                  <ErrorMessage
+                                    name="usernameOrEmail"
+                                    component="div"
+                                    style={{ color: "red" }}
+                                  />
+                                </div>
+                                <div className="form-group">
+                                  <Field
+                                    type="password"
+                                    name="currentpassword"
+                                    placeholder="Your password *"
+                                    className="form-control"
+                                  />
+                                  <ErrorMessage
+                                    name="currentpassword"
+                                    component="div"
+                                    style={{ color: "red" }}
+                                  />
+                                </div>
+
+                                <div className="form-group">
+                                  <button
+                                    type="submit"
+                                    className="btn btn-heading btn-block hover-up"
+                                    name="login"
+                                    disabled={isSubmitting} // Disable the button while submitting
+                                  >
+                                    Log in
+                                  </button>
+                                </div>
+                              </Form>
+                            )}
+                          </Formik>
                         </div>
                       </div>
                     </div>
-                    <div className="form-group">
-                      <button
-                        className="button button-contactForm"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleReviewSubmit();
-                        }}
-                      >
-                        Submit Review
-                      </button>
-                    </div>
-                  </form>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

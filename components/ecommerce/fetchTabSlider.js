@@ -91,7 +91,7 @@ function FeatchTabSlider({ banners }) {
                 Shop Now <i className="fi-rs-arrow-small-right"></i>
               </Link>
             </div>
-            <a href={`${banners?.[1]?.link ? adBanner?.[0]?.link : "#"}`}>
+            <a href={`${banners?.[1]?.link ? banners?.[0]?.link : "#"}`}>
               <img src={`${banners?.[1]?.banner_logo}`} />
             </a>
           </div>

@@ -70,9 +70,6 @@ const SingleProduct = ({
 
           <div className="product-badges product-badges-position product-badges-mrg">
             {product?.badges?.map((Itm) => {
-              // if (Itm == "new") {
-              //   return <span className="new">New</span>;
-              // }
               return (
                 <>
                   {Itm == "new" && <span className="new">New</span>}
@@ -80,16 +77,7 @@ const SingleProduct = ({
                   {Itm == "sale" && <span className="sale">Sale</span>}
                 </>
               );
-
-              //
             })}
-            {/* {product.trending && <span className="hot">Hot</span>}
-            {product.created && <span className="new">New</span>}
-            {product.totalSell > 100 && <span className="best">Best Sell</span>}
-            {product.discount.isActive && <span className="sale">Sale</span>}
-            {product.discount.percentage >= 5 && (
-              <span className="hot">{product.discount.percentage}%</span>
-            )} */}
           </div>
         </div>
         <div className="product-content-wrap">
@@ -133,7 +121,17 @@ const SingleProduct = ({
               </span>
             </div>
             <div className="add-cart">
-              <a className="add" onClick={(e) => handleCart(product)}>
+              <a
+                className="add"
+                onClick={(e) => {
+                  //maximum_order_quantity
+                  if (product?.out_of_stock_status == "in stock") {
+                    handleCart(product);
+                  } else {
+                    toast.error("product is out of stock");
+                  }
+                }}
+              >
                 <i className="fi-rs-shopping-cart mr-5"></i> Add
               </a>
             </div>

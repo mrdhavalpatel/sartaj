@@ -64,7 +64,16 @@ const Deals1 = ({ product, addToCart }) => {
                 </span>
               </div>
               <div className="add-cart">
-                <a className="add" onClick={(e) => handleCart(product)}>
+                <a
+                  className="add"
+                  onClick={(e) => {
+                    if (product?.out_of_stock_status == "in stock") {
+                      handleCart(product);
+                    } else {
+                      toast.error("product is out of stock");
+                    }
+                  }}
+                >
                   <i className="fi-rs-shopping-cart mr-5"></i>Add{" "}
                 </a>
               </div>

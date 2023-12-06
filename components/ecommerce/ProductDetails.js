@@ -116,11 +116,17 @@ const ProductDetails = ({
                       <div className="detail-extralink">
                         <div className="detail-qty border radius">
                           <a
-                            onClick={(e) =>
-                              !inCart
-                                ? setQuantity(quantity > 1 ? quantity - 1 : 1)
-                                : decreaseQuantity(product?.id)
-                            }
+                            onClick={(e) => {
+                              if (quantity < product?.maximum_order_quantity) {
+                                !inCart
+                                  ? setQuantity(quantity > 1 ? quantity - 1 : 1)
+                                  : decreaseQuantity(product?.id);
+                              } else {
+                                toast.error(
+                                  `You can only add ${product?.maximum_order_quantity}`
+                                );
+                              }
+                            }}
                             className="qty-down"
                           >
                             <i className="fi-rs-angle-small-down"></i>

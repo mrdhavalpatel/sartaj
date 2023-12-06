@@ -102,7 +102,7 @@ const Wishlist = ({
                               </div>
                             </td>
                             <td className="price" data-title="Price">
-                              <h3 className="text-brand">${product.price}</h3>
+                              <h3 className="text-brand">¥{product.price}</h3>
                             </td>
                             <td
                               className="text-center detail-info"

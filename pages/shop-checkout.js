@@ -29,14 +29,10 @@ const Cart = ({
   const [address, setAddress] = useState([]);
   const [coupenCode, setCoupenCode] = useState("");
   const [coupenCodeDis, setCoupenCodeDis] = useState("");
+  const [cartTotal, setCartTotal] = useState([]);
   const router = useRouter();
   const [cartItemsData, setCartItemsData] = useState([]);
-  const price = () => {
-    let price = 0;
-    cartItems.forEach((item) => (price += item.price * item.quantity));
 
-    return price;
-  };
   const getUserDetails = async (encodedToken) => {
     try {
       const response = await api.get("customer/info", {
@@ -74,12 +70,12 @@ const Cart = ({
     let token = localStorage.getItem("token");
 
     let payload = {
-      order_amount: price() + 600,
+      order_amount: cartTotal?.total_amt,
       payment_method: "cash_on_delivery",
       delivery_address_id: address?.billing_address?.[0]?.id,
       order_type: "delivery",
       coupon_discount_amount: coupenCodeDis,
-      cart: [cartItemsData],
+      cart: cartItemsData,
     };
 
     const response = await axios.post(
@@ -119,7 +115,8 @@ const Cart = ({
       })
       .then((res) => {
         setCartItemsData(res?.data?.cartProducts);
-        console.log("res?.data?.cartProducts?.[0]", res?.data?.cartProducts);
+        setCartTotal(res?.data);
+        console.log("res?.data?.cartProducts?.[0]", res?.data);
       })
       .catch((error) => {
         console.log("error", error?.code === "ERR_NETWORK");
@@ -493,7 +490,6 @@ const Cart = ({
                             <td className="image product-thumbnail">
                               <img src={item?.product?.image?.[0]} alt="#" />
                             </td>
-                            {console.log("itemitemitem", item)}
                             <td>
                               <h6 className="w-160 mb-5">
                                 <a>{item?.product?.name}</a>
@@ -539,9 +535,134 @@ const Cart = ({
                       </tbody>
                     </table>
                     <div className="divider-2 mb-30"></div>
-                    <h6 className="text-muted">Total</h6>
-                    <br />
-                    <h6 className="text-muted">Discount</h6>
+                    <table
+                      style={{
+                        border: "1px solid #bababa",
+                        width: "100%",
+                        borderCollapse: "collapse",
+                      }}
+                    >
+                      <tr>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px",
+                          }}
+                        >
+                          <strong>Sub-Total:</strong>
+                        </td>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px",
+                          }}
+                        >
+                          ¥{cartTotal?.total_sub_amt}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px",
+                          }}
+                        >
+                          <strong>All Item in Dry Shipping:</strong>
+                        </td>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px",
+                          }}
+                        >
+                          ¥{cartTotal?.delivery_charge}
+                        </td>
+                      </tr>
+                      {cartTotal?.eight_percent != 0 ? (
+                        <tr>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px",
+                            }}
+                          >
+                            <strong>
+                              Consumption Tax{" "}
+                              {cartTotal?.eight_percent != 0
+                                ? 8
+                                : cartTotal?.ten_percent != 0
+                                ? 10
+                                : 0}
+                              %
+                            </strong>
+                          </td>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px",
+                            }}
+                          >
+                            ¥
+                            {cartTotal?.eight_percent != 0
+                              ? cartTotal?.eight_percent
+                              : cartTotal?.ten_percent != 0
+                              ? cartTotal?.ten_percent
+                              : 0}
+                          </td>
+                        </tr>
+                      ) : null}
+                      {cartTotal?.ten_percent != 0 ? (
+                        <tr>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px",
+                            }}
+                          >
+                            <strong>
+                              Consumption Tax{" "}
+                              {cartTotal?.eight_percent != 0
+                                ? 8
+                                : cartTotal?.ten_percent != 0
+                                ? 10
+                                : 0}
+                              %
+                            </strong>
+                          </td>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px",
+                            }}
+                          >
+                            ¥
+                            {cartTotal?.eight_percent != 0
+                              ? cartTotal?.eight_percent
+                              : cartTotal?.ten_percent != 0
+                              ? cartTotal?.ten_percent
+                              : 0}
+                          </td>
+                        </tr>
+                      ) : null}
+                      <tr>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px",
+                          }}
+                        >
+                          <strong>Total:</strong>
+                        </td>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px",
+                          }}
+                        >
+                          ¥{cartTotal?.total_amt}
+                        </td>
+                      </tr>
+                    </table>
                   </div>
 
                   <div className="bt-1 border-color-1 mt-30 mb-30"></div>

@@ -5,48 +5,103 @@ import { ApiCall } from "../../lib/other/other";
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categories, setCategories] = useState([]);
-
+  const [categoriesValue, setCategoriesValue] = useState("");
+  const [productsSuggestions, setProductsSuggestions] = useState([]);
   const router = useRouter();
 
-  const handleSearch = () => {
-    router.push({
-      pathname: "/products",
-      query: {
-        search: searchTerm,
-      },
-    });
-    setSearchTerm("");
-  };
   const getAllCategories = async () => {
     const request = await ApiCall("get", "categories");
     const allCategories = await request;
     setCategories(allCategories?.data);
   };
-  const handleInput = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSearch();
-    }
+
+  const handleInput = async () => {
+    let payload = {
+      category_id: categoriesValue,
+      sort_by: searchTerm,
+    };
+    let res = await ApiCall("post", "products/all", payload);
+    setProductsSuggestions(res?.data?.products);
+    return res;
   };
+
+  useEffect(() => {
+    if (searchTerm.length > 0) {
+      handleInput();
+    }
+  }, [categoriesValue, searchTerm]);
+
   useEffect(() => {
     getAllCategories();
   }, []);
+
   return (
     <>
-      <form>
-        <select className="select-active">
-          <option>All Categories</option>
-          {categories?.map((itm) => {
-            return <option>{itm?.name}</option>;
-          })}
+      <form
+        style={{
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <select
+          className="select-active"
+          value={categoriesValue}
+          onChange={(e) => {
+            setCategoriesValue(e.target.value);
+          }}
+          style={{
+            marginRight: "10px",
+            padding: "8px",
+            borderRadius: "4px",
+          }}
+        >
+          <option value="">All Categories</option>
+          {categories?.map((itm) => (
+            <option key={itm.id} value={itm.id}>
+              {itm.name}
+            </option>
+          ))}
         </select>
         <input
           value={searchTerm}
-          onKeyDown={handleInput}
           onChange={(e) => setSearchTerm(e.target.value)}
           type="text"
           placeholder="Search"
+          style={{
+            padding: "8px",
+            borderRadius: "4px",
+          }}
         />
+        {searchTerm?.length > 0 && (
+          <ul
+            style={{
+              position: "absolute",
+              listStyle: "none",
+              padding: "0",
+              margin: "0",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              borderRadius: "4px",
+              backgroundColor: "rgba(255, 255, 255, 1)", // Set to white with full opacity
+              width: "100%",
+              top: "52px",
+              zIndex: 999,
+            }}
+          >
+            {productsSuggestions?.map((result, index) => (
+              <li
+                key={index}
+                style={{
+                  padding: "8px",
+                  borderBottom: "1px solid #ddd",
+                  cursor: "pointer",
+                }}
+              >
+                <a href={`/products/${result?.id}}`}>{result?.name}</a>
+              </li>
+            ))}
+          </ul>
+        )}
       </form>
     </>
   );

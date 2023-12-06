@@ -21,7 +21,6 @@ const Products = ({ productFilters }) => {
     searchTerm = Router.query.search,
     showLimit = 12,
     showPagination = 4;
-  console.log("Router.query.search", Router.query);
   let [pagination, setPagination] = useState([]);
   let [limit, setLimit] = useState(showLimit);
   let [pages, setPages] = useState(Math.ceil(products?.items?.length / limit));
@@ -67,6 +66,7 @@ const Products = ({ productFilters }) => {
       limit: 20,
       category_id: catId,
       sort_by: productFilters?.featured,
+      // searchTerm: searchTerm ? searchTerm : "",
     };
     let res = await ApiCall("post", "products/all", payload);
     setProducts(res?.data?.products);
