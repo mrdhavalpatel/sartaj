@@ -34,10 +34,10 @@ const Cart = ({
   const router = useRouter();
   const [cartItemsData, setCartItemsData] = useState([]);
   const [timeSlot, setTimeSlot] = useState([]);
-  const [selectedRadioId, setSelectedRadioId] = useState(null);
+  const [selectedRadioId, setSelectedRadioId] = useState(timeSlot?.[0]?.id);
   const [orderNotes, setorderNotes] = useState("");
-  const handleRadioChange = (event) => {
-    setSelectedRadioId(event.target.id);
+  const handleRadioChange = (id) => {
+    setSelectedRadioId(id);
   };
   const getUserDetails = async (encodedToken) => {
     try {
@@ -508,72 +508,47 @@ const Cart = ({
                           ¥{cartTotal?.delivery_charge}
                         </td>
                       </tr>
-                      {cartTotal?.eight_percent != 0 ? (
-                        <tr>
-                          <td
-                            style={{
-                              border: "1px solid #bababa",
-                              padding: "5px",
-                            }}
-                          >
-                            <strong>
-                              Consumption Tax{" "}
-                              {cartTotal?.eight_percent != 0
-                                ? 8
-                                : cartTotal?.ten_percent != 0
-                                ? 10
-                                : 0}
-                              %
-                            </strong>
-                          </td>
-                          <td
-                            style={{
-                              border: "1px solid #bababa",
-                              padding: "5px",
-                            }}
-                          >
-                            ¥
-                            {cartTotal?.eight_percent != 0
-                              ? cartTotal?.eight_percent
-                              : cartTotal?.ten_percent != 0
-                              ? cartTotal?.ten_percent
-                              : 0}
-                          </td>
-                        </tr>
-                      ) : null}
-                      {cartTotal?.ten_percent != 0 ? (
-                        <tr>
-                          <td
-                            style={{
-                              border: "1px solid #bababa",
-                              padding: "5px",
-                            }}
-                          >
-                            <strong>
-                              Consumption Tax{" "}
-                              {cartTotal?.eight_percent != 0
-                                ? 8
-                                : cartTotal?.ten_percent != 0
-                                ? 10
-                                : 0}
-                              %
-                            </strong>
-                          </td>
-                          <td
-                            style={{
-                              border: "1px solid #bababa",
-                              padding: "5px",
-                            }}
-                          >
-                            ¥
-                            {cartTotal?.eight_percent != 0
-                              ? cartTotal?.eight_percent
-                              : cartTotal?.ten_percent != 0
-                              ? cartTotal?.ten_percent
-                              : 0}
-                          </td>
-                        </tr>
-                      ) : null}
+                      <tr>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px",
+                          }}
+                        >
+                          <strong>
+                            Consumption Tax {cartTotal?.eight_percent ? 8 : 0}%
+                          </strong>
+                        </td>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px",
+                          }}
+                        >
+                          ¥{cartTotal?.eight_percent}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px",
+                          }}
+                        >
+                          <strong>
+                            Consumption Tax {cartTotal?.ten_percent ? 10 : 0}%
+                          </strong>
+                        </td>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px",
+                          }}
+                        >
+                          ¥{cartTotal?.ten_percent ? cartTotal?.ten_percent : 0}
+                        </td>
+                      </tr>
+
                       <tr>
                         <td
                           style={{
@@ -595,7 +570,7 @@ const Cart = ({
                     </table>
                   </div>
                   {timeSlot.map((Item, index) => {
-                    const radioId = `exampleRadios${Item?.id}`;
+                    const radioId = Item?.id;
 
                     return (
                       <div key={radioId} className="custom-radio">
@@ -609,7 +584,7 @@ const Cart = ({
                             radioId === selectedRadioId ||
                             (index === 0 && selectedRadioId === null)
                           }
-                          onChange={handleRadioChange}
+                          onChange={(e) => handleRadioChange(radioId)}
                         />
                         <label
                           className="form-check-label"

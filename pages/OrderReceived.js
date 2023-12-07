@@ -77,7 +77,7 @@ const OrderReceived = ({ cartItems }) => {
           <div style={{ margin: "0 auto", fontFamily: "Montserrat" }}>
             <div style={{ pageBreakAfter: "always" }}>
               <h1>Order Received - Thank You!</h1>
-              <h3>Order id #10760</h3>
+              {/* <h3>Order id #{}</h3> */}
               <p>
                 Your order has been successfully received. Thank you for your
                 purchase!
@@ -157,50 +157,31 @@ const OrderReceived = ({ cartItems }) => {
                       ¥{cartItemsData?.delivery_charge}
                     </td>
                   </tr>
-                  {cartItemsData?.eight_percent != 0 ? (
-                    <tr>
-                      <td colspan="4" class="text-right">
-                        Consumption Tax{" "}
-                        {cartItemsData?.eight_percent != 0
-                          ? 8
-                          : cartItemsData?.ten_percent != 0
-                          ? 10
-                          : 0}
-                        %
-                      </td>
-                      <td class="text-right">
-                        {" "}
-                        ¥
-                        {cartItemsData?.eight_percent != 0
-                          ? cartItemsData?.eight_percent
-                          : cartItemsData?.ten_percent != 0
-                          ? cartItemsData?.ten_percent
-                          : 0}
-                      </td>
-                    </tr>
-                  ) : null}
-                  {cartItemsData?.ten_percent != 0 ? (
-                    <tr>
-                      <td colspan="4" class="text-right">
-                        Consumption Tax{" "}
-                        {cartItemsData?.eight_percent != 0
-                          ? 8
-                          : cartItemsData?.ten_percent != 0
-                          ? 10
-                          : 0}
-                        %
-                      </td>
-                      <td class="text-right">
-                        {" "}
-                        ¥
-                        {cartItemsData?.eight_percent != 0
-                          ? cartItemsData?.eight_percent
-                          : cartItemsData?.ten_percent != 0
-                          ? cartItemsData?.ten_percent
-                          : 0}
-                      </td>
-                    </tr>
-                  ) : null}
+                  <tr>
+                    <td colspan="4" class="text-right">
+                      Consumption Tax {cartItemsData?.eight_percent ? 8 : 0}%
+                    </td>
+                    <td class="text-right">
+                      {" "}
+                      ¥
+                      {cartItemsData?.eight_percent
+                        ? cartItemsData?.eight_percent
+                        : 0}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="4" class="text-right">
+                      Consumption Tax {cartItemsData?.ten_percent ? 10 : 0}%
+                    </td>
+                    <td class="text-right">
+                      {" "}
+                      ¥
+                      {cartItemsData?.ten_percent
+                        ? cartItemsData?.ten_percent
+                        : 0}
+                    </td>
+                  </tr>
+
                   <tr>
                     <td colspan="4" class="text-right">
                       Total
