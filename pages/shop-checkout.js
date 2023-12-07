@@ -116,7 +116,6 @@ const Cart = ({
       .then((res) => {
         setCartItemsData(res?.data?.cartProducts);
         setCartTotal(res?.data);
-        console.log("res?.data?.cartProducts?.[0]", res?.data);
       })
       .catch((error) => {
         console.log("error", error?.code === "ERR_NETWORK");
@@ -245,9 +244,6 @@ const Cart = ({
                     zipcode: address?.billing_address?.[0]?.post_code,
                     phone: userDetails?.phone,
                     email: userDetails?.email,
-                  }}
-                  onSubmit={(values) => {
-                    console.log(values);
                   }}
                 >
                   <Form method="post">
@@ -480,10 +476,6 @@ const Cart = ({
                         cartItemsData.length > 0 ? "table no-border" : "d-none"
                       }
                     >
-                      {console.log(
-                        "cartItemsDatacartItemsDatacartItemsData",
-                        cartItemsData
-                      )}
                       <tbody>
                         {cartItemsData?.map((item, i) => (
                           <tr key={i}>

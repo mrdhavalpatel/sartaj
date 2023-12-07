@@ -17,25 +17,11 @@ const Wishlist = ({
   deleteFromWishlist,
   addToCart,
 }) => {
-  const router = useRouter();
   const handleCart = (product) => {
     addToCart(product);
     toast("Product added to Cart !");
   };
-  const addLocalWishlistToCart = (wishlist) => {
-    wishlist.map((Item) => {
-      console.log(Item?.product_id);
-    });
-  };
-  // useEffect(() => {
-  //   let encodedToken = localStorage.getItem("token");
-  //   if (encodedToken) {
-  //     let wishlist = JSON.parse(localStorage.getItem("dokani_wishlist"));
-  //     addLocalWishlistToCart(wishlist);
-  //   } else {
-  //     router.push("/page-login");
-  //   }
-  // }, []);
+
   return (
     <>
       <Layout parent="Home" sub="Shop" subChild="Wishlist">
@@ -65,7 +51,6 @@ const Wishlist = ({
                       <tbody>
                         {wishlist?.items?.map((product, i) => (
                           <tr className="pt-30" key={i}>
-                            {console.log("product---->", product)}
                             <td className="image product-thumbnail pt-40">
                               <img
                                 src={product?.image?.[0]}

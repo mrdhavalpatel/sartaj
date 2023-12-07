@@ -53,7 +53,6 @@ function Account() {
   });
 
   const handleChangePassword = async (values) => {
-    console.log("Changing password with values:", values);
     let payload = {
       old_password: values?.current_password,
       new_password: values?.new_password,

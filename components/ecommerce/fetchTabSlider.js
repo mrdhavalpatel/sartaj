@@ -102,7 +102,6 @@ function FeatchTabSlider({ banners }) {
             />
           </div>
         </div>
-        {console.log("banners?.[1]?.banner_logo", banners?.[1]?.banner_logo)}
         <div className="col-lg-9 col-md-12">
           <div className="tab-content wow fadeIn animated" id="myTabContent">
             <div

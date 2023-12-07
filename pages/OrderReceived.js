@@ -32,7 +32,6 @@ const OrderReceived = ({ cartItems }) => {
         },
       });
       setUserDetails(response?.data);
-      console.log(response);
     } catch (error) {
       console.error("API Error:", error);
     }

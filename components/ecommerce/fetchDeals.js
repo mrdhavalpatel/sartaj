@@ -11,7 +11,6 @@ function FeatchDeals() {
     const allProducts = await request;
     // Discount
     setDeals(allProducts?.data?.products);
-    console.log("allProducts?.data?.products", allProducts?.data?.products);
   };
 
   useEffect(() => {

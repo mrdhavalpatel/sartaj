@@ -92,7 +92,6 @@ const Cart = ({
       .then((res) => {
         setCartProducts(res?.data?.cartProducts);
         setCartTotal(res?.data);
-        console.log("res?.data?.cartProducts---->", res?.data);
       })
       .catch((error) => {
         console.log("error", error?.code === "ERR_NETWORK");
@@ -232,7 +231,6 @@ const Cart = ({
                             </div>
                           </td>
                           <td className="price" data-title="Price">
-                            {console.log("item--->", item)}
                             <h4 className="text-brand">
                               ¥
                               {item?.price
