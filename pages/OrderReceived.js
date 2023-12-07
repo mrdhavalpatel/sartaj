@@ -69,6 +69,7 @@ const OrderReceived = ({ cartItems }) => {
     getCartsItem(encodedToken);
     getUserDetails(encodedToken);
     getAddress(encodedToken);
+    clearCart();
   }, []);
   return (
     <Layout parent="Home" sub="Shop" subChild="Checkout">

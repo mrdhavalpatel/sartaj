@@ -91,9 +91,15 @@ function FeatchTabSlider({ banners }) {
                 Shop Now <i className="fi-rs-arrow-small-right"></i>
               </Link>
             </div>
-            <a href={`${banners?.[1]?.link ? banners?.[0]?.link : "#"}`}>
-              <img src={`${banners?.[1]?.banner_logo}`} />
-            </a>
+
+            <img
+              src={`${banners?.[1]?.banner_logo}`}
+              onClick={() => {
+                window.location.replace(
+                  `${banners?.[1]?.link ? banners?.[1]?.link : "#"}`
+                );
+              }}
+            />
           </div>
         </div>
         {console.log("banners?.[1]?.banner_logo", banners?.[1]?.banner_logo)}

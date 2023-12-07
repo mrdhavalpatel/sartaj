@@ -47,7 +47,7 @@ const WishlistModal = ({
                   </td>
                 </tr>
 
-                {wishlist.items.map((product) => (
+                {wishlist?.items.map((product) => (
                   <tr>
                     <td>
                       <img

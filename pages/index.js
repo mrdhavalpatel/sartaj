@@ -19,6 +19,7 @@ function Index2() {
   useEffect(() => {
     getBanners();
   }, []);
+
   return (
     <>
       <IntroPopup />
@@ -41,6 +42,7 @@ function Index2() {
                     flexDirection: "column",
                     justifyContent: "flex-end",
                   }}
+                  onClick={() => {}}
                 >
                   <div className="banner-text mt-50">
                     <h2 className="mb-30">{adBanner?.[0]?.title}</h2>
@@ -56,17 +58,18 @@ function Index2() {
                     </Link> */}
                   </div>
 
-                  <a
-                    href={`${adBanner?.[0]?.link ? adBanner?.[0]?.link : "#"}`}
-                  >
-                    <img
-                      src={`${
-                        adBanner?.[0]?.banner_logo
-                          ? adBanner?.[0]?.banner_logo
-                          : "#"
-                      }`}
-                    />
-                  </a>
+                  <img
+                    src={`${
+                      adBanner?.[0]?.banner_logo
+                        ? adBanner?.[0]?.banner_logo
+                        : "#"
+                    }`}
+                    onClick={() => {
+                      window.location.replace(
+                        `${adBanner?.[0]?.link ? adBanner?.[0]?.link : "#"}`
+                      );
+                    }}
+                  />
                 </div>
               </div>
             </div>
