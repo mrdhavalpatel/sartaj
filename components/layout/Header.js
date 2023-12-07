@@ -104,24 +104,10 @@ const Header = ({
                     <li>
                       <Link href="/shop-wishlist">Wishlist</Link>
                     </li>
-                    {/* <li>
-                      <Link href="/page-account">Order Tracking</Link>
-                    </li> */}
                   </ul>
                 </div>
               </div>
-              {/* <div className="col-xl-6 col-lg-4">
-                                <div className="text-center">
-                                    <div id="news-flash" className="d-inline-block">
-                                        <ul>
-                                            <li>
-                                                Get great devices up to 50% off
-                                                <Link href="/shop-fullwidth">View details</Link>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div> */}
+
               <div className="col-xl-6 col-lg-6">
                 <div className="header-info header-info-right">
                   <ul>
@@ -231,30 +217,14 @@ const Header = ({
                               My Account
                             </Link>
                           </li>
-                          {/* <li>
-                            <Link href="/page-account">
-                              <i className="fi fi-rs-location-alt mr-10"></i>
-                              Order Tracking
-                            </Link>
-                          </li> */}
-                          {/* <li>
-                            <Link href="/page-account">
-                              <i className="fi fi-rs-label mr-10"></i>
-                              My Voucher
-                            </Link>
-                          </li> */}
+
                           <li>
                             <Link href="/page-account">
                               <i className="fi fi-rs-heart mr-10"></i>
                               My Wishlist
                             </Link>
                           </li>
-                          {/* <li>
-                            <Link href="/page-account">
-                              <i className="fi fi-rs-settings-sliders mr-10"></i>
-                              Setting
-                            </Link>
-                          </li> */}
+
                           <li>
                             <Link
                               href="/page-login"
@@ -317,13 +287,6 @@ const Header = ({
                 <div className="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block  font-heading">
                   <nav>
                     <ul>
-                      <li className="hot-deals">
-                        <img
-                          src="/assets/imgs/theme/icons/icon-hot.svg"
-                          alt="hot deals"
-                        />
-                        <Link href="/">Hot Deals</Link>
-                      </li>
                       <li>
                         <Link href="/" className="active">
                           Home
@@ -394,77 +357,8 @@ const Header = ({
                         alt="Evara"
                         src="/assets/imgs/theme/icons/icon-cart.svg"
                       />
-                      {/* <span className="pro-count white">{totalCartItems}</span> */}
                       <span className="pro-count white">{cartItemsCount}</span>
                     </Link>
-                    {/* <div className="cart-dropdown-wrap cart-dropdown-hm2">
-                      <ul>
-                        <li>
-                          <div className="shopping-cart-img">
-                            <Link href="/shop-fullwidth">
-                              <img
-                                alt="Evara"
-                                src="/assets/imgs/shop/thumbnail-3.jpg"
-                              />
-                            </Link>
-                          </div>
-                          <div className="shopping-cart-title">
-                            <h4>
-                              <Link href="/shop-fullwidth">
-                                Plain Striola Shirts
-                              </Link>
-                            </h4>
-                            <h3>
-                              <span>1 × </span>
-                              $800.00
-                            </h3>
-                          </div>
-                          <div className="shopping-cart-delete">
-                            <Link href="/#">
-                              <i className="fi-rs-cross-small"></i>
-                            </Link>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="shopping-cart-img">
-                            <Link href="/shop-fullwidth">
-                              <img
-                                alt="Evara"
-                                src="/assets/imgs/shop/thumbnail-4.jpg"
-                              />
-                            </Link>
-                          </div>
-                          <div className="shopping-cart-title">
-                            <h4>
-                              <Link href="/shop-fullwidth">
-                                Macbook Pro 2024
-                              </Link>
-                            </h4>
-                            <h3>
-                              <span>1 × </span>
-                              $3500.00
-                            </h3>
-                          </div>
-                          <div className="shopping-cart-delete">
-                            <Link href="/#">
-                              <i className="fi-rs-cross-small"></i>
-                            </Link>
-                          </div>
-                        </li>
-                      </ul>
-                      <div className="shopping-cart-footer">
-                        <div className="shopping-cart-total">
-                          <h4>
-                            Total
-                            <span>$383.00</span>
-                          </h4>
-                        </div>
-                        <div className="shopping-cart-button">
-                          <Link href="/shop-cart">View cart</Link>
-                          <Link href="/shop-checkout">Checkout</Link>
-                        </div>
-                      </div>
-                    </div> */}
                   </div>
                 </div>
               </div>

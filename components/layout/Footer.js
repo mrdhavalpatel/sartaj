@@ -26,9 +26,9 @@ const Footer = () => {
       if (response?.status === 200) {
         toast.success(response?.data?.message);
       } else {
-        toast.error(response?.data?.message);
+        console.log("response", response);
+        toast.error(response?.response?.data?.message);
       }
-
       resetForm();
     } catch (error) {
       toast.error(error?.response?.data?.message);

@@ -14,6 +14,7 @@ const CategoryProduct2 = ({ updateProductCategory, data }) => {
   const selectCategory = (e, category, catId) => {
     e.preventDefault();
     // removeSearchTerm();
+    console.log("category, catId", category, catId);
     updateProductCategory(category);
     router.push({
       pathname: "/products",

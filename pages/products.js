@@ -6,44 +6,42 @@ import SortSelect from "../components/ecommerce/Filter/SortSelect";
 import Breadcrumb2 from "../components/layout/Breadcrumb2";
 import CategoryProduct from "./../components/ecommerce/Filter/CategoryProduct";
 import PriceRangeSlider from "./../components/ecommerce/Filter/PriceRangeSlider";
-import SizeFilter from "./../components/ecommerce/Filter/SizeFilter";
-import VendorFilter from "./../components/ecommerce/Filter/VendorFilter";
 import Pagination from "./../components/ecommerce/Pagination";
-import QuickView from "./../components/ecommerce/QuickView";
 import SingleProduct from "./../components/ecommerce/SingleProduct";
 import Layout from "./../components/layout/Layout";
 import { fetchProduct } from "./../redux/action/product";
 import { ApiCall } from "../lib/other/other";
+import QuickView from "../components/ecommerce/QuickView";
 
 const Products = ({ productFilters }) => {
   const [products, setProducts] = useState([]);
-  let Router = useRouter(),
-    searchTerm = Router.query.search,
-    showLimit = 12,
-    showPagination = 4;
-  let [pagination, setPagination] = useState([]);
-  let [limit, setLimit] = useState(showLimit);
-  let [pages, setPages] = useState(Math.ceil(products?.items?.length / limit));
-  let [currentPage, setCurrentPage] = useState(1);
+  const [newProducts, setNewProducts] = useState([]);
+  const [pagination, setPagination] = useState([]);
+  const [limit, setLimit] = useState(12);
+  const [productTotal, setProductTotal] = useState([]);
+  const [pages, setPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const Router = useRouter();
 
   const cratePagination = () => {
     // set pagination
-    let arr = new Array(Math.ceil(products?.length / limit))
+    let arr = new Array(Math.ceil(productTotal / limit))
       .fill()
       .map((_, idx) => idx + 1);
 
     setPagination(arr);
-    setPages(Math.ceil(products?.length / limit));
+    setPages(Math.ceil(productTotal / limit));
   };
 
-  const startIndex = currentPage * limit - limit;
+  const startIndex = (currentPage - 1) * limit;
   const endIndex = startIndex + limit;
-  const getPaginatedProducts = products?.slice(startIndex, endIndex);
+  const getPaginatedProducts = products.slice(startIndex, endIndex);
 
-  let start = Math.floor((currentPage - 1) / showPagination) * showPagination;
-  let end = start + showPagination;
+  const start = Math.floor((currentPage - 1) / 4) * 4;
+  const end = start + 4;
   const getPaginationGroup = pagination.slice(start, end);
-  const [newProducts, setNewProducts] = useState([]);
+
   const next = () => {
     setCurrentPage((page) => page + 1);
   };
@@ -59,34 +57,45 @@ const Products = ({ productFilters }) => {
   const selectChange = (e) => {
     setLimit(Number(e.target.value));
     setCurrentPage(1);
-    // setPages(Math.ceil(products.items.length / Number(e.target.value)));
   };
+
   const getFilteredProduct = async (catId) => {
     let payload = {
-      limit: 20,
+      limit: limit,
       category_id: catId,
       sort_by: productFilters?.featured,
-      // searchTerm: searchTerm ? searchTerm : "",
     };
     let res = await ApiCall("post", "products/all", payload);
     setProducts(res?.data?.products);
+    setProductTotal(res?.data?.total_size);
+    // setLimit(res?.data?.limit);
     return res;
   };
+
   useEffect(() => {
     getFilteredProduct(Router.query?.catId);
-  }, [Router.query?.catId, productFilters?.featured]);
+  }, [
+    Router.query?.catId,
+    currentPage,
+    pages,
+    limit,
+    productFilters?.featured,
+  ]);
 
   const fetchProducts = async () => {
     const request = await ApiCall("get", "products/latest-three-products");
     const newArrivals = await request?.data?.products;
     setNewProducts(newArrivals);
   };
+
   useEffect(() => {
     fetchProducts();
   }, []);
-  // useEffect(() => {
-  //   cratePagination();
-  // }, [productFilters, limit, pages, products.items?.length]);
+
+  useEffect(() => {
+    cratePagination();
+  }, [products, limit, currentPage]);
+
   return (
     <>
       <Layout noBreadcrumb="d-none">
@@ -105,10 +114,7 @@ const Products = ({ productFilters }) => {
                   </div>
                   <div className="sort-by-product-area">
                     <div className="sort-by-cover mr-10">
-                      <ShowSelect
-                        selectChange={selectChange}
-                        showLimit={showLimit}
-                      />
+                      <ShowSelect selectChange={selectChange} showLimit={12} />
                     </div>
                     <div className="sort-by-cover">
                       <SortSelect />
@@ -126,7 +132,6 @@ const Products = ({ productFilters }) => {
                       key={i}
                     >
                       <SingleProduct product={item} />
-                      {/* <SingleProductList product={item}/> */}
                     </div>
                   ))}
                 </div>
@@ -149,7 +154,6 @@ const Products = ({ productFilters }) => {
                   <h5 className="section-title style-1 mb-30">Category</h5>
                   <CategoryProduct />
                 </div>
-
                 <div className="sidebar-widget price_range range mb-30">
                   <h5 className="section-title style-1 mb-30">Fill by price</h5>
 
@@ -157,20 +161,9 @@ const Products = ({ productFilters }) => {
                     <div className="price-filter-inner">
                       <br />
                       <PriceRangeSlider />
-
                       <br />
                     </div>
                   </div>
-
-                  {/* <div className="list-group">
-                    <div className="list-group-item mb-10 mt-10">
-                      <label className="fw-900">Color</label>
-                      <VendorFilter />
-                      <label className="fw-900 mt-15">Item Condition</label>
-                      <SizeFilter />
-                    </div>
-                  </div>
-                  <br /> */}
                 </div>
                 <div className="sidebar-widget product-sidebar  mb-30 p-30 bg-grey border-radius-10">
                   <h5 className="section-title style-1 mb-30">New products</h5>
@@ -216,53 +209,12 @@ const Products = ({ productFilters }) => {
                     );
                   })}
                 </div>
-                {/* <div className="banner-img wow fadeIn mb-lg-0 animated d-lg-block d-none">
-                  <img src="/assets/imgs/banner/banner-11.png" alt="nest" />
-                  <div className="banner-text">
-                    <span>Oganic</span>
-                    <h4>
-                      Save 17% <br />
-                      on <span className="text-brand">Oganic</span>
-                      <br />
-                      Juice
-                    </h4>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>
         </section>
-        {/* <WishlistModal /> */}
-        {/* <CompareModal /> */}
-        {/* <CartSidebar /> */}
+
         <QuickView />
-        {/* <div className="container">
-                    <div className="row">
-                        <div className="col-xl-6">
-                            <Search />
-                        </div>
-                        <div className="col-xl-6">
-                            <SideBarIcons />
-                        </div>
-                    </div>
-                    <div className="row justify-content-center text-center">
-                        <div className="col-xl-6">
-                            <CategoryProduct />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-xl-3">
-
-                        </div>
-                        <div className="col-md-9">
-
-
-
-
-
-                        </div>
-                    </div>
-                </div> */}
       </Layout>
     </>
   );

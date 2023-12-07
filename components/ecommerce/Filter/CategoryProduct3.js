@@ -11,23 +11,25 @@ const CategoryProduct3 = ({ updateProductCategory, data }) => {
   //     });
   // };
 
-  const selectCategory = (e, category) => {
+  const selectCategory = (e, category, catId) => {
     e.preventDefault();
     // removeSearchTerm();
     updateProductCategory(category);
     router.push({
       pathname: "/products",
       query: {
-        cat: category, //
+        cat: category,
+        catId: catId,
       },
     });
   };
+
   return (
     <>
       <ul className="end">
         {data?.map((Item) => {
           return (
-            <li onClick={(e) => selectCategory(e, Item?.name)}>
+            <li onClick={(e) => selectCategory(e, Item?.name, Item?.id)}>
               <a>
                 <img src={Item?.image} alt="nest" />
                 {Item?.name}
