@@ -13,25 +13,28 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
     road: Yup.string(),
     house: Yup.string(),
     floor: Yup.string(),
-    contact_person_name: Yup.string(),
-    contact_person_number: Yup.string(),
+    contact_person_name: Yup.string().required(
+      "Contact person name is required"
+    ),
+    contact_person_number: Yup.string().required(
+      "Contact person number is required"
+    ),
   });
   // Initial form values
   const initialValues = {
-    address: address?.billing_address?.[0]?.address,
-    road: address?.billing_address?.[0]?.road,
-    house: address?.billing_address?.[0]?.house,
-    floor: address?.billing_address?.[0]?.floor,
-    city: address?.billing_address?.[0]?.city,
-    state: address?.billing_address?.[0]?.state,
-    post_code: address?.billing_address?.[0]?.post_code,
-    contact_person_name: address?.billing_address?.[0]?.contact_person_name,
-    contact_person_number: address?.billing_address?.[0]?.contact_person_number,
+    address: address?.address,
+    road: address?.road,
+    house: address?.house,
+    floor: address?.floor,
+    city: address?.city,
+    state: address?.state,
+    post_code: address?.post_code,
+    contact_person_name: address?.contact_person_name,
+    contact_person_number: address?.contact_person_number,
   };
 
   const handleFormSubmit = async (values) => {
     let payload = {
-      id: address?.billing_address?.[0]?.id,
       address: values?.address,
       road: values?.road,
       house: values?.house,
@@ -42,32 +45,61 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
       contact_person_name: values?.contact_person_name,
       contact_person_number: values?.contact_person_number,
     };
-    const response = await axios.put(
-      `${API_BASE_URL}customer/address/update/${1}`,
-      payload,
-      {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    if (!isEmptyObject(address)) {
+      payload.id = address?.id;
+    }
+    const response = isEmptyObject(address)
+      ? await axios.post(`${API_BASE_URL}customer/address/add`, payload, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+      : await axios.put(
+          `${API_BASE_URL}customer/address/update/${payload?.id}}`,
+          payload,
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
     handleClose();
     if (response?.status === 200) {
       toast.success("Address updated successfully");
     }
   };
-
+  function isEmptyObject(obj) {
+    return Object.keys(obj).length === 0;
+  }
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Update Address</Modal.Title>
+        <Modal.Title>
+          {isEmptyObject(address) ? "Add Address" : "Update Address"}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Formik
           enableReinitialize
-          initialValues={initialValues}
+          initialValues={
+            isEmptyObject(address)
+              ? {
+                  address: "",
+                  road: "",
+                  house: "",
+                  floor: "",
+                  city: "",
+                  state: "",
+                  post_code: "",
+                  contact_person_name: "",
+                  contact_person_number: "",
+                }
+              : initialValues
+          }
           validationSchema={validationSchema}
           onSubmit={handleFormSubmit}
         >
@@ -166,6 +198,11 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
                 id="contact_person_name"
                 name="contact_person_name"
               />
+              <ErrorMessage
+                name="contact_person_name"
+                component="div"
+                className="text-danger"
+              />
             </div>
             <div className="mb-3">
               <label htmlFor="contact_person_number" className="form-label">
@@ -176,6 +213,11 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
                 className="form-control"
                 id="contact_person_number"
                 name="contact_person_number"
+              />
+              <ErrorMessage
+                name="contact_person_number"
+                component="div"
+                className="text-danger"
               />
             </div>
 

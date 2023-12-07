@@ -14,6 +14,7 @@ import { API_BASE_URL, api } from "../lib/api";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import { ApiCall } from "../lib/other/other";
 
 const Cart = ({
   openCart,
@@ -32,7 +33,12 @@ const Cart = ({
   const [cartTotal, setCartTotal] = useState([]);
   const router = useRouter();
   const [cartItemsData, setCartItemsData] = useState([]);
-
+  const [timeSlot, setTimeSlot] = useState([]);
+  const [selectedRadioId, setSelectedRadioId] = useState(null);
+  const [orderNotes, setorderNotes] = useState("");
+  const handleRadioChange = (event) => {
+    setSelectedRadioId(event.target.id);
+  };
   const getUserDetails = async (encodedToken) => {
     try {
       const response = await api.get("customer/info", {
@@ -76,6 +82,8 @@ const Cart = ({
       order_type: "delivery",
       coupon_discount_amount: coupenCodeDis,
       cart: cartItemsData,
+      time_slot_id: selectedRadioId,
+      order_note: orderNotes,
     };
 
     const response = await axios.post(
@@ -121,12 +129,47 @@ const Cart = ({
         console.log("error", error?.code === "ERR_NETWORK");
       });
   };
+
+  const getTimeSlot = async () => {
+    //timeSlot
+    const res = await ApiCall("get", "timeSlot");
+    const data = res.data;
+    setTimeSlot(data);
+  };
+  const handleAddressSubmit = async (values) => {
+    let token = localStorage.getItem("token");
+    let payload = {
+      address: values?.address,
+      road: values?.road,
+      house: values?.house,
+      floor: values?.floor,
+      city: values?.city,
+      state: values?.state,
+      post_code: values?.post_code,
+      contact_person_name: values?.contact_person_name,
+      contact_person_number: values?.contact_person_number,
+    };
+    const response = await axios.post(
+      `${API_BASE_URL}customer/address/update/${
+        values.selectedAddress ? values.selectedAddress : 1
+      }`,
+      payload,
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  };
   useEffect(() => {
     let encodedToken = localStorage.getItem("token");
     if (encodedToken) {
       getCartData(encodedToken);
       getUserDetails(encodedToken);
       getAddress(encodedToken);
+      getTimeSlot();
     }
   }, []);
   return (
@@ -244,7 +287,9 @@ const Cart = ({
                     zipcode: address?.billing_address?.[0]?.post_code,
                     phone: userDetails?.phone,
                     email: userDetails?.email,
+                    //address dropdown and contacted person name and number
                   }}
+                  onSubmit={(values) => handleAddressSubmit(values)}
                 >
                   <Form method="post">
                     <div className="form-group">
@@ -339,126 +384,19 @@ const Cart = ({
                         name="password"
                       />
                     </div>
-                    {/* <div className="form-group">
-                    <div className="checkbox">
-                      <div className="custome-checkbox">
-                        <Field
-                          className="form-check-input"
-                          type="checkbox"
-                          name="checkbox"
-                          id="createaccount"
-                        />
-                        <label
-                          className="form-check-label label_info"
-                          data-bs-toggle="collapse"
-                          href="#collapsePassword"
-                          data-target="#collapsePassword"
-                          aria-controls="collapsePassword"
-                          htmlFor="createaccount"
-                        >
-                          <span>Create an account?</span>
-                        </label>
-                      </div>
-                    </div>
-                  </div> */}
-
-                    {/* <div className="ship_detail">
                     <div className="form-group">
-                      <div className="chek-form">
-                        <div className="custome-checkbox">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            name="checkbox"
-                            id="differentaddress"
-                          />
-                          <label
-                            className="form-check-label label_info"
-                            data-bs-toggle="collapse"
-                            data-target="#collapseAddress"
-                            href="#collapseAddress"
-                            aria-controls="collapseAddress"
-                            htmlFor="differentaddress"
-                          >
-                            <span>Ship to a different address?</span>
-                          </label>
-                        </div>
-                      </div>
+                      <textarea
+                        name="orderNotes"
+                        as="textarea"
+                        rows="5"
+                        value={orderNotes}
+                        onChange={(e) => setorderNotes(e.target.value)}
+                        placeholder="Order notes"
+                      />
                     </div>
-                    <div
-                      id="collapseAddress"
-                      className="different_address collapse in"
-                    >
-                      <div className="form-group">
-                        <input
-                          type="text"
-                          required=""
-                          name="fname"
-                          placeholder="First name *"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <input
-                          type="text"
-                          required=""
-                          name="lname"
-                          placeholder="Last name *"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <input
-                          required=""
-                          type="text"
-                          name="cname"
-                          placeholder="Company Name"
-                        />
-                      </div>
-
-                      <div className="form-group">
-                        <input
-                          type="text"
-                          name="billing_address"
-                          required=""
-                          placeholder="Address *"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <input
-                          type="text"
-                          name="billing_address2"
-                          required=""
-                          placeholder="Address line2"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <input
-                          required=""
-                          type="text"
-                          name="city"
-                          placeholder="City / Town *"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <input
-                          required=""
-                          type="text"
-                          name="state"
-                          placeholder="State / County *"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <input
-                          required=""
-                          type="text"
-                          name="zipcode"
-                          placeholder="Postcode / ZIP *"
-                        />
-                      </div>
+                    <div>
+                      <button type="submit">Save Changes</button>
                     </div>
-                  </div> */}
-                    {/* <div className="form-group mb-30">
-                      <textarea rows="5" placeholder="Order notes"></textarea>
-                    </div> */}
                   </Form>
                 </Formik>
               </div>
@@ -656,8 +594,35 @@ const Cart = ({
                       </tr>
                     </table>
                   </div>
+                  {timeSlot.map((Item, index) => {
+                    const radioId = `exampleRadios${Item?.id}`;
 
-                  <div className="bt-1 border-color-1 mt-30 mb-30"></div>
+                    return (
+                      <div key={radioId} className="custom-radio">
+                        <input
+                          className="form-check-input"
+                          required=""
+                          type="radio"
+                          name="timeslot"
+                          id={radioId}
+                          checked={
+                            radioId === selectedRadioId ||
+                            (index === 0 && selectedRadioId === null)
+                          }
+                          onChange={handleRadioChange}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor={radioId}
+                          data-bs-toggle="collapse"
+                          data-target="#timeslot"
+                          aria-controls="timeslot"
+                        >
+                          {Item?.start_time} - {Item?.end_time}
+                        </label>
+                      </div>
+                    );
+                  })}
                   <div className="payment_method">
                     <div className="mb-25">
                       <h5>Payment</h5>

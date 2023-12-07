@@ -16,6 +16,7 @@ function Account() {
   const [userDetails, setUserDetails] = useState("");
   const [orderList, setOrderList] = useState([]);
   const [orderID, setOrderId] = useState("");
+  const [editData, setEditData] = useState({});
   const [address, setAddress] = useState("");
   const [token, setToken] = useState("");
   const router = useRouter();
@@ -135,20 +136,7 @@ function Account() {
     });
     setAddress(response?.data);
   };
-  // customer/address/list
-  const handleOrderTrackSubmit = async () => {
-    const response = await axios.post(
-      `${API_BASE_URL}customer/order/track`,
-      { order_id: orderID },
-      {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-  };
+
   const handleLogout = () => {
     localStorage.removeItem("token");
   };
@@ -439,25 +427,42 @@ function Account() {
                                 <h3 className="mb-0">Billing Address</h3>
                               </div>
                               <div className="card-body">
-                                <address>
-                                  {address?.billing_address?.[0]?.house},
-                                  <br />
-                                  {address?.billing_address?.[0]?.floor},
-                                  <br />
-                                  {address?.billing_address?.[0]?.road}, <br />
-                                  {address?.billing_address?.[0]?.address}
-                                </address>
-                                <Button
-                                  style={{
-                                    backgroundColor: "#3e4493",
-                                  }}
-                                  variant="primary"
-                                  onClick={handleShow}
-                                >
-                                  Edit
-                                </Button>
+                                {address?.billing_address?.map((address) => (
+                                  <>
+                                    <address>
+                                      {address?.house},{address?.floor},
+                                      {/* <br /> */}
+                                      <br />
+                                      {address?.road}, <br />
+                                      {address?.address}
+                                    </address>
+                                    <Button
+                                      style={{
+                                        backgroundColor: "#3e4493",
+                                      }}
+                                      variant="primary"
+                                      onClick={() => {
+                                        setEditData(address);
+                                        handleShow();
+                                      }}
+                                    >
+                                      Edit
+                                    </Button>{" "}
+                                  </>
+                                ))}
                               </div>
                             </div>
+                            <Button
+                              style={{
+                                backgroundColor: "#3e4493",
+                              }}
+                              onClick={() => {
+                                handleShow();
+                                setEditData({});
+                              }}
+                            >
+                              Add New Address
+                            </Button>
                           </div>
                           {/* <div className="col-lg-6">
                               <div className="card">
@@ -621,7 +626,7 @@ function Account() {
         </div>
 
         <AddressDialog
-          address={address}
+          address={editData}
           token={token}
           show={show}
           handleClose={handleClose}

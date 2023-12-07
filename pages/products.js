@@ -62,6 +62,7 @@ const Products = ({ productFilters }) => {
   const getFilteredProduct = async (catId) => {
     let payload = {
       limit: limit,
+      offset: currentPage,
       category_id: catId,
       sort_by: productFilters?.featured,
     };

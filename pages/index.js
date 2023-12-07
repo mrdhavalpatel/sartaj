@@ -42,7 +42,6 @@ function Index2() {
                     flexDirection: "column",
                     justifyContent: "flex-end",
                   }}
-                  onClick={() => {}}
                 >
                   <div className="banner-text mt-50">
                     <h2 className="mb-30">{adBanner?.[0]?.title}</h2>
