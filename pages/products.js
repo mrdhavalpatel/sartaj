@@ -36,11 +36,9 @@ const Products = ({ productFilters }) => {
 
   const startIndex = (currentPage - 1) * limit;
   const endIndex = startIndex + limit;
-  const getPaginatedProducts = products.slice(startIndex, endIndex);
+  const getPaginatedProducts = products;
 
-  const start = Math.floor((currentPage - 1) / 4) * 4;
-  const end = start + 4;
-  const getPaginationGroup = pagination.slice(start, end);
+  const getPaginationGroup = pagination;
 
   const next = () => {
     setCurrentPage((page) => page + 1);
@@ -67,9 +65,9 @@ const Products = ({ productFilters }) => {
       sort_by: productFilters?.featured,
     };
     let res = await ApiCall("post", "products/all", payload);
+    console.log(res); // Log the response
     setProducts(res?.data?.products);
     setProductTotal(res?.data?.total_size);
-    // setLimit(res?.data?.limit);
     return res;
   };
 
