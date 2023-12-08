@@ -357,7 +357,7 @@ const Header = ({
                         alt="Evara"
                         src="/assets/imgs/theme/icons/icon-cart.svg"
                       />
-                      <span className="pro-count white">{cartItemsCount}</span>
+                      <span className="pro-count white">{totalCartItems}</span>
                     </Link>
                   </div>
                 </div>

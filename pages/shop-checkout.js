@@ -35,6 +35,12 @@ const Cart = ({
   const [cartItemsData, setCartItemsData] = useState([]);
   const [timeSlot, setTimeSlot] = useState([]);
   const [selectedRadioId, setSelectedRadioId] = useState(timeSlot?.[0]?.id);
+  const [selectedAddressPrefillData, setSelectedAddressPrefillData] = useState(
+    []
+  );
+  const [selectedAddressData, setSelectedAddressData] = useState({});
+
+  const [selectedAddressDropdown, setSelectedAddressDropdown] = useState("");
   const [orderNotes, setorderNotes] = useState("");
   const handleRadioChange = (id) => {
     setSelectedRadioId(id);
@@ -98,6 +104,8 @@ const Cart = ({
       }
     );
     if (response?.status == 200) {
+      clearCart();
+
       router.push("/OrderReceived");
     }
   };
@@ -139,30 +147,58 @@ const Cart = ({
   const handleAddressSubmit = async (values) => {
     let token = localStorage.getItem("token");
     let payload = {
-      address: values?.address,
-      road: values?.road,
-      house: values?.house,
-      floor: values?.floor,
-      city: values?.city,
-      state: values?.state,
-      post_code: values?.post_code,
-      contact_person_name: values?.contact_person_name,
-      contact_person_number: values?.contact_person_number,
+      address: values?.billing_address,
+      road:
+        values?.road != undefined || values?.road != null
+          ? values?.road
+          : selectedAddressData?.road,
+      house:
+        values?.house != undefined || values?.house != null
+          ? values?.house
+          : selectedAddressData?.house,
+      floor:
+        values?.floor != undefined || values?.floor != null
+          ? values?.floor
+          : selectedAddressData?.floor,
+      city:
+        values?.city != undefined || values?.city != null
+          ? values?.city
+          : selectedAddressData?.city,
+      state:
+        values?.state != undefined || values?.state != null
+          ? values?.state
+          : selectedAddressData?.state,
+      post_code: values?.post_code
+        ? values?.post_code
+        : selectedAddressData?.post_code,
+      contact_person_name: values?.contact_person_name
+        ? values?.contact_person_name
+        : selectedAddressData?.contact_person_name,
+      contact_person_number: values?.contact_person_number
+        ? values?.contact_person_number
+        : selectedAddressData?.contact_person_number,
     };
-    const response = await axios.post(
-      `${API_BASE_URL}customer/address/update/${
-        values.selectedAddress ? values.selectedAddress : 1
-      }`,
-      payload,
-      {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    console.log("payloadpayloadpayloadpayloadpayloadpayload", payload);
+    const response = await axios
+      .put(
+        `${API_BASE_URL}customer/address/update/${selectedAddressData?.id}`,
+        payload,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log("response", response);
+        if (response.status == 200) {
+          toast.success("address updated successfully");
+        }
+      });
   };
+
   useEffect(() => {
     let encodedToken = localStorage.getItem("token");
     if (encodedToken) {
@@ -172,6 +208,139 @@ const Cart = ({
       getTimeSlot();
     }
   }, []);
+  const findElementById = async (id) => {
+    const selectedData = await address?.billing_address?.map((element) => {
+      if (element.id == id) {
+        setSelectedAddressData(element || {});
+      }
+    });
+    return selectedData;
+  };
+  useEffect(() => {
+    formikFormData(selectedAddressData);
+  }, [selectedAddressData, setSelectedAddressData]);
+
+  const formikFormData = (selectedAddressData) => {
+    return (
+      <Formik
+        enableReinitialize
+        initialValues={{
+          fname: userDetails?.f_name,
+          lname: userDetails?.l_name,
+          billing_address: selectedAddressData && selectedAddressData?.address,
+          billing_address2: selectedAddressData && selectedAddressData?.road,
+          city: selectedAddressData && selectedAddressData?.city,
+          state: selectedAddressData && selectedAddressData?.state,
+          zipcode: selectedAddressData && selectedAddressData?.post_code,
+          phone: selectedAddressData?.contact_person_number,
+          email: selectedAddressData?.contact_person_number,
+        }}
+        onSubmit={(values) => handleAddressSubmit(values)}
+      >
+        {({ setFieldValue, values, handleChange }) => (
+          <Form method="post">
+            <div className="form-group">
+              <Field
+                type="text"
+                required=""
+                name="fname"
+                placeholder="First name *"
+              />
+            </div>
+            <div className="form-group">
+              <Field
+                type="text"
+                required=""
+                name="lname"
+                placeholder="Last name *"
+              />
+            </div>
+
+            <div className="form-group">
+              <Field
+                type="text"
+                name="billing_address"
+                required=""
+                placeholder="Address *"
+              />
+            </div>
+            <div className="form-group">
+              <Field
+                type="text"
+                name="billing_address2"
+                required=""
+                placeholder="Address line2"
+              />
+            </div>
+            <div className="form-group">
+              <Field
+                required=""
+                type="text"
+                name="city"
+                placeholder="City / Town *"
+              />
+            </div>
+            <div className="form-group">
+              <Field
+                required=""
+                type="text"
+                name="state"
+                placeholder="State / County *"
+              />
+            </div>
+            <div className="form-group">
+              <Field
+                required=""
+                type="text"
+                name="zipcode"
+                placeholder="Postcode / ZIP *"
+              />
+            </div>
+            <div className="form-group">
+              <Field
+                required=""
+                type="text"
+                name="phone"
+                placeholder="Phone *"
+              />
+            </div>
+            <div className="form-group">
+              <Field
+                required=""
+                type="text"
+                name="email"
+                placeholder="Email address *"
+              />
+            </div>
+            <div
+              id="collapsePassword"
+              className="form-group create-account collapse in"
+            >
+              <Field
+                required=""
+                type="password"
+                placeholder="Password"
+                name="password"
+              />
+            </div>
+            <div className="form-group">
+              <textarea
+                name="orderNotes"
+                as="textarea"
+                rows="5"
+                value={orderNotes}
+                onChange={(e) => setorderNotes(e.target.value)}
+                placeholder="Order notes"
+              />
+            </div>
+            <div>
+              <button type="submit">Save Changes</button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    );
+  };
   return (
     <>
       <Layout parent="Home" sub="Shop" subChild="Checkout">
@@ -275,130 +444,25 @@ const Cart = ({
                 <div className="mb-25">
                   <h4>Billing Details</h4>
                 </div>
-                <Formik
-                  enableReinitialize
-                  initialValues={{
-                    fname: userDetails?.f_name,
-                    lname: userDetails?.l_name,
-                    billing_address: address?.billing_address?.[0]?.address,
-                    billing_address2: address?.billing_address?.[0]?.road,
-                    city: address?.billing_address?.[0]?.city,
-                    state: address?.billing_address?.[0]?.state,
-                    zipcode: address?.billing_address?.[0]?.post_code,
-                    phone: userDetails?.phone,
-                    email: userDetails?.email,
-                    //address dropdown and contacted person name and number
-                  }}
-                  onSubmit={(values) => handleAddressSubmit(values)}
-                >
-                  <Form method="post">
-                    <div className="form-group">
-                      <Field
-                        type="text"
-                        required=""
-                        name="fname"
-                        placeholder="First name *"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <Field
-                        type="text"
-                        required=""
-                        name="lname"
-                        placeholder="Last name *"
-                      />
-                    </div>
-                    {/* <div className="form-group">
-                      <Field
-                        required=""
-                        type="text"
-                        name="cname"
-                        placeholder="Company Name"
-                      />
-                    </div> */}
-
-                    <div className="form-group">
-                      <Field
-                        type="text"
-                        name="billing_address"
-                        required=""
-                        placeholder="Address *"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <Field
-                        type="text"
-                        name="billing_address2"
-                        required=""
-                        placeholder="Address line2"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <Field
-                        required=""
-                        type="text"
-                        name="city"
-                        placeholder="City / Town *"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <Field
-                        required=""
-                        type="text"
-                        name="state"
-                        placeholder="State / County *"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <Field
-                        required=""
-                        type="text"
-                        name="zipcode"
-                        placeholder="Postcode / ZIP *"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <Field
-                        required=""
-                        type="text"
-                        name="phone"
-                        placeholder="Phone *"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <Field
-                        required=""
-                        type="text"
-                        name="email"
-                        placeholder="Email address *"
-                      />
-                    </div>
-                    <div
-                      id="collapsePassword"
-                      className="form-group create-account collapse in"
-                    >
-                      <Field
-                        required=""
-                        type="password"
-                        placeholder="Password"
-                        name="password"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <textarea
-                        name="orderNotes"
-                        as="textarea"
-                        rows="5"
-                        value={orderNotes}
-                        onChange={(e) => setorderNotes(e.target.value)}
-                        placeholder="Order notes"
-                      />
-                    </div>
-                    <div>
-                      <button type="submit">Save Changes</button>
-                    </div>
-                  </Form>
-                </Formik>
+                <div className="form-group">
+                  <label htmlFor="selectedDropdownOption">Select Address</label>
+                  <select
+                    as="select"
+                    name="selectedAddress"
+                    value={selectedAddressDropdown}
+                    onChange={(e) => {
+                      setSelectedAddressDropdown(e.target.value);
+                      findElementById(e.target.value);
+                    }}
+                  >
+                    {address?.billing_address?.map((option) => (
+                      <option key={option.id} value={option.id}>
+                        {`${option?.floor}, ${option?.house},${option?.road},${option?.post_code}`}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {formikFormData(selectedAddressData)}
               </div>
               <div className="col-lg-5">
                 <div className="border p-40 cart-totals ml-30 mb-50">
