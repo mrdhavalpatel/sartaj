@@ -35,7 +35,6 @@ const Products = ({ productFilters }) => {
   };
 
   const startIndex = (currentPage - 1) * limit;
-  const endIndex = startIndex + limit;
   const getPaginatedProducts = products;
 
   const getPaginationGroup = pagination;

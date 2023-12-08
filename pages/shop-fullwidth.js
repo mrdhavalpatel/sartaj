@@ -13,38 +13,25 @@ import { fetchProduct } from "./../redux/action/product";
 import { ApiCall } from "../lib/other/other";
 
 const ProductsFullWidth = ({ products, productFilters }) => {
-  let Router = useRouter(),
-    searchTerm = Router.query.search,
-    showLimit = 12,
-    showPagination = 4;
-
-  let [pagination, setPagination] = useState([]);
-  let [limit, setLimit] = useState(showLimit);
-  let [pages, setPages] = useState(Math.ceil(products.items.length / limit));
-  let [currentPage, setCurrentPage] = useState(1);
-  const [allProducts, setAllproducts] = useState([]);
-  // useEffect(() => {
-  //   fetchProduct(searchTerm, "/static/product.json", productFilters);
-  //   cratePagination();
-  // }, [productFilters, limit, pages, products.items.length]);
+  const [productsData, setProductsData] = useState([]);
+  const [pagination, setPagination] = useState([]);
+  const [limit, setLimit] = useState(12);
+  const [productTotal, setProductTotal] = useState([]);
+  const [pages, setPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const cratePagination = () => {
-    // set pagination
-    let arr = new Array(Math.ceil(allProducts?.length / limit))
+    let arr = new Array(Math.ceil(productTotal / limit))
       .fill()
       .map((_, idx) => idx + 1);
 
     setPagination(arr);
-    setPages(Math.ceil(allProducts?.length / limit));
+    setPages(Math.ceil(productTotal / limit));
   };
 
-  const startIndex = currentPage * limit - limit;
-  const endIndex = startIndex + limit;
-  const getPaginatedProducts = allProducts?.slice(startIndex, endIndex);
+  const getPaginatedProducts = productsData;
 
-  let start = Math.floor((currentPage - 1) / showPagination) * showPagination;
-  let end = start + showPagination;
-  const getPaginationGroup = pagination.slice(start, end);
+  const getPaginationGroup = pagination;
 
   const next = () => {
     setCurrentPage((page) => page + 1);
@@ -61,23 +48,24 @@ const ProductsFullWidth = ({ products, productFilters }) => {
   const selectChange = (e) => {
     setLimit(Number(e.target.value));
     setCurrentPage(1);
-    setPages(Math.ceil(allProducts?.length / Number(e.target.value)));
   };
   const getAllProduct = async () => {
     let payload = {
       limit: limit,
+      offset: currentPage,
       sort_by: productFilters?.featured,
-      search: searchTerm ? searchTerm : "",
+      // search: searchTerm ? searchTerm : "",
     };
 
     const request = await ApiCall("post", "products/all", payload);
-    const allProducts = await request?.data?.products;
-    setAllproducts(allProducts);
+    const allProducts = await request?.data;
+    setProductTotal(allProducts?.total_size);
+    setProductsData(allProducts?.products);
   };
   useEffect(() => {
     getAllProduct();
     cratePagination();
-  }, [productFilters?.featured, limit, searchTerm]);
+  }, [productFilters?.featured, limit, currentPage]);
 
   return (
     <>
@@ -91,17 +79,14 @@ const ProductsFullWidth = ({ products, productFilters }) => {
                     <p>
                       We found
                       <strong className="text-brand">
-                        {allProducts?.length}
+                        {productsData?.length}
                       </strong>
                       items for you!
                     </p>
                   </div>
                   <div className="sort-by-product-area">
                     <div className="sort-by-cover mr-10">
-                      <ShowSelect
-                        selectChange={selectChange}
-                        showLimit={showLimit}
-                      />
+                      <ShowSelect selectChange={selectChange} showLimit={12} />
                     </div>
                     <div className="sort-by-cover">
                       <SortSelect />
@@ -124,7 +109,7 @@ const ProductsFullWidth = ({ products, productFilters }) => {
                   ))}
                 </div>
 
-                {/* <div className="pagination-area mt-15 mb-sm-5 mb-lg-0">
+                <div className="pagination-area mt-15 mb-sm-5 mb-lg-0">
                   <nav aria-label="Page navigation example">
                     <Pagination
                       getPaginationGroup={getPaginationGroup}
@@ -135,7 +120,7 @@ const ProductsFullWidth = ({ products, productFilters }) => {
                       handleActive={handleActive}
                     />
                   </nav>
-                </div> */}
+                </div>
               </div>
             </div>
           </div>
