@@ -296,7 +296,14 @@ const Cart = ({
                           </td>
                           <td className="action" data-title="Remove">
                             <a
-                              onClick={(e) => deleteFromCart(item?.id)}
+                              onClick={(e) => {
+                                deleteFromCart(
+                                  item?.product?.maximum_order_quantity
+                                    ? item?.product?.id
+                                    : item?.id
+                                );
+                                setCartDataUpdated(!cartDataUpdated);
+                              }}
                               className="text-muted"
                             >
                               <i className="fi-rs-trash"></i>
