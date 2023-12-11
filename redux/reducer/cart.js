@@ -53,22 +53,16 @@ export default (state = [], action) => {
               },
             })
             .then((res) => {
-              console.log(
-                "resresresresresresresresresresresresresresresresresres",
-                res
-              );
               if (res?.data?.status == 200) {
                 toast("Product added to Cart !");
               } else {
                 toast.error(res?.data?.error);
               }
             })
-
             .catch((error) => {
               console.log("error", error?.code === "ERR_NETWORK");
             });
         }
-
         storage.set("dokani_cart", [...state]);
 
         return [...state];
@@ -88,6 +82,13 @@ export default (state = [], action) => {
                   "Content-Type": "application/json",
                   Authorization: `Bearer ${token}`,
                 },
+              })
+              .then((res) => {
+                if (res?.data?.status == 200) {
+                  toast("Product added to Cart !");
+                } else {
+                  toast.error(res?.data?.error);
+                }
               })
               .catch((error) => {
                 console.log("error", error?.code === "ERR_NETWORK");
