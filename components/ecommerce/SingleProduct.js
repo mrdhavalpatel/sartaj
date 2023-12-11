@@ -22,7 +22,7 @@ const SingleProduct = ({
 
   const handleCompare = (product) => {
     addToCompare(product);
-    toast("Added to Compare list !");
+    // toast("Added to Compare list !");
   };
 
   const handleWishlist = (product) => {

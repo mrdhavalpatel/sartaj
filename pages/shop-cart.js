@@ -301,7 +301,9 @@ const Cart = ({
                                     ? item?.product?.id
                                     : item?.id
                                 );
-                                setCartDataUpdated(!cartDataUpdated);
+                                setTimeout(() => {
+                                  setCartDataUpdated(!cartDataUpdated);
+                                }, 600);
                               }}
                               className="text-muted"
                             >

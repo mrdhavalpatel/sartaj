@@ -35,7 +35,6 @@ export default (state = [], action) => {
       }
     case Types.ADD_TO_CART:
       index = findProductIndexById(state, action?.payload?.product?.id);
-      console.log("locho------------------------------------------>", index);
 
       if (index !== -1) {
         state[index].quantity += 1;
