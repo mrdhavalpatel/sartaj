@@ -9,7 +9,7 @@ import QuickView from "../ecommerce/QuickView";
 const Deals1 = ({ product, addToCart }) => {
   const handleCart = (product) => {
     addToCart(product);
-    toast("Product added to Cart !");
+    // toast("Product added to Cart !");
   };
   return (
     <>
