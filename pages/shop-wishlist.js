@@ -19,7 +19,7 @@ const Wishlist = ({
 }) => {
   const handleCart = (product) => {
     addToCart(product);
-    toast("Product added to Cart !");
+    // toast("Product added to Cart !");
   };
 
   return (
