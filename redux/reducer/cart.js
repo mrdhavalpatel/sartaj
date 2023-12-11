@@ -50,9 +50,7 @@ export default (state = [], action) => {
                 Authorization: `Bearer ${token}`,
               },
             })
-            .then((res) => {
-              console.log("error", res?.data?.status);
-            })
+
             .catch((error) => {
               console.log("error", error?.code === "ERR_NETWORK");
             });

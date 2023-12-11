@@ -145,12 +145,18 @@ const ProductDetails = ({
                         <div className="product-extra-link2">
                           <button
                             onClick={(e) => {
-                              let p = {
-                                ...product,
-                                quantity: quantity || 1,
-                              };
-                              addToCart(p);
-                              handleCart();
+                              if (quantity < product?.maximum_order_quantity) {
+                                let p = {
+                                  ...product,
+                                  quantity: quantity || 1,
+                                };
+                                addToCart(p);
+                                handleCart();
+                              } else {
+                                toast.error(
+                                  `Maximum order quantity ${product?.maximum_order_quantity}`
+                                );
+                              }
                             }}
                             className="button button-add-to-cart"
                           >
