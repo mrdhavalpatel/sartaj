@@ -64,8 +64,15 @@ const Deals1 = ({ product, addToCart }) => {
                 </span>
               </div>
               <div className="add-cart">
-                <a
+                <button
                   className="add"
+                  style={{
+                    border: "none",
+                    backgroundColor: `${
+                      product?.out_of_stock_status !== "in stock" ? "grey" : ""
+                    }`,
+                  }}
+                  disabled={product?.out_of_stock_status !== "in stock"}
                   onClick={(e) => {
                     if (product?.out_of_stock_status == "in stock") {
                       handleCart(product);
@@ -74,8 +81,11 @@ const Deals1 = ({ product, addToCart }) => {
                     }
                   }}
                 >
-                  <i className="fi-rs-shopping-cart mr-5"></i>Add{" "}
-                </a>
+                  <i className="fi-rs-shopping-cart mr-5"></i>{" "}
+                  {product?.out_of_stock_status !== "in stock"
+                    ? "Out of stock"
+                    : "Add"}
+                </button>
               </div>
             </div>
           </div>

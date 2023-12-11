@@ -17,7 +17,7 @@ const SingleProduct2 = ({
 }) => {
   const handleCart = (product) => {
     addToCart(product);
-    toast("Product added to Cart !");
+    // toast("Product added to Cart !");
   };
 
   const handleCompare = (product) => {
@@ -133,8 +133,15 @@ const SingleProduct2 = ({
             </span>
           </div>
 
-          <a
+          <button
             className="btn w-100 hover-up"
+            style={{
+              border: "none",
+              backgroundColor: `${
+                product?.out_of_stock_status !== "in stock" ? "grey" : ""
+              }`,
+            }}
+            disabled={product?.out_of_stock_status !== "in stock"}
             onClick={(e) => {
               if (product?.out_of_stock_status == "in stock") {
                 handleCart(product);
@@ -143,8 +150,11 @@ const SingleProduct2 = ({
               }
             }}
           >
-            <i className="fi-rs-shopping-cart mr-5"></i> Add To Cart
-          </a>
+            <i className="fi-rs-shopping-cart mr-5"></i>{" "}
+            {product?.out_of_stock_status !== "in stock"
+              ? "Out of stock"
+              : "Add To Cart"}{" "}
+          </button>
         </div>
       </div>
       <QuickView />

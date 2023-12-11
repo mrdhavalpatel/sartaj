@@ -5,7 +5,7 @@ import { addToCart } from "../../redux/action/cart";
 const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
   const handleCart = (product) => {
     addToCart(product);
-    toast("Product added to Cart !");
+    // toast("Product added to Cart !");
   };
   return (
     <table className="table text-center">
@@ -74,11 +74,21 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                 <td className="row_btn">
                   {product.stock >= 0 ? (
                     <button
+                      disabled={product?.out_of_stock_status !== "in stock"}
                       className="btn  btn-sm"
+                      style={{
+                        backgroundColor: `${
+                          product?.out_of_stock_status !== "in stock"
+                            ? "grey"
+                            : ""
+                        }`,
+                      }}
                       onClick={(e) => handleCart(product)}
                     >
                       <i className="fi-rs-shopping-bag mr-5"></i>
-                      Add to cart
+                      {product?.out_of_stock_status !== "in stock"
+                        ? "Out of stock"
+                        : "Add to cart"}
                     </button>
                   ) : (
                     <Link href="/page-contact">

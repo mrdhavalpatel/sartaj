@@ -11,8 +11,8 @@ const PriceRangeSlider = ({ updateProductFilters }) => {
   const Router = useRouter();
   const searchTerm = Router.query.search;
 
-  const [maxPrice, setMaxPrice] = useState(500);
-  const [price, setPrice] = useState({ value: { min: 0, max: maxPrice } });
+  const [maxPrice, setMaxPrice] = useState(1000);
+  const [price, setPrice] = useState({ value: { min: 0, max: 1000 } });
   useEffect(() => {
     const filters = {
       price: price.value,
@@ -45,7 +45,7 @@ const PriceRangeSlider = ({ updateProductFilters }) => {
       <Slider
         range
         allowCross={false}
-        defaultValue={[0, 100]}
+        defaultValue={[0, maxPrice]}
         min={0}
         max={maxPrice}
         onChange={(value) =>

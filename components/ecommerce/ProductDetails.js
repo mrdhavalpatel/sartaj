@@ -142,15 +142,18 @@ const ProductDetails = ({
                             <i className="fi-rs-angle-small-up"></i>
                           </a>
                         </div>
+
                         <div className="product-extra-link2">
                           <button
+                            disabled={
+                              product?.out_of_stock_status !== "in stock"
+                            }
                             onClick={(e) => {
                               if (quantity <= product?.maximum_order_quantity) {
                                 let p = {
                                   ...product,
                                   quantity: quantity || 1,
                                 };
-                                console.log("s12d1s1d2s1d-->");
                                 addToCart(p);
                                 // handleCart();
                               } else {
@@ -159,9 +162,18 @@ const ProductDetails = ({
                                 );
                               }
                             }}
+                            style={{
+                              backgroundColor: `${
+                                product?.out_of_stock_status !== "in stock"
+                                  ? "grey"
+                                  : ""
+                              }`,
+                            }}
                             className="button button-add-to-cart"
                           >
-                            Add to cart
+                            {product?.out_of_stock_status !== "in stock"
+                              ? "Out of stock"
+                              : "Add to cart"}
                           </button>
 
                           <a

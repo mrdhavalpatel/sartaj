@@ -118,8 +118,15 @@ const SingleProduct = ({
               </span>
             </div>
             <div className="add-cart">
-              <a
+              <button
                 className="add"
+                style={{
+                  border: "none",
+                  backgroundColor: `${
+                    product?.out_of_stock_status !== "in stock" ? "grey" : ""
+                  }`,
+                }}
+                disabled={product?.out_of_stock_status !== "in stock"}
                 onClick={(e) => {
                   //maximum_order_quantity
                   if (product?.out_of_stock_status == "in stock") {
@@ -129,8 +136,11 @@ const SingleProduct = ({
                   }
                 }}
               >
-                <i className="fi-rs-shopping-cart mr-5"></i> Add
-              </a>
+                <i className="fi-rs-shopping-cart mr-5"></i>{" "}
+                {product?.out_of_stock_status !== "in stock"
+                  ? "Out of stock"
+                  : "Add"}
+              </button>
             </div>
           </div>
         </div>

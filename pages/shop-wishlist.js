@@ -121,10 +121,23 @@ const Wishlist = ({
                                 </button>
                               ) : (
                                 <button
+                                  disabled={
+                                    product?.out_of_stock_status !== "in stock"
+                                  }
+                                  style={{
+                                    backgroundColor: `${
+                                      product?.out_of_stock_status !==
+                                      "in stock"
+                                        ? "grey"
+                                        : ""
+                                    }`,
+                                  }}
                                   className="btn btn-sm"
                                   onClick={(e) => handleCart(product)}
                                 >
-                                  Add to cart
+                                  {product?.out_of_stock_status !== "in stock"
+                                    ? "Out of stock"
+                                    : "Add to cart"}
                                 </button>
                               )}
                             </td>
