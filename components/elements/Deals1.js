@@ -31,7 +31,7 @@ const Deals1 = ({ product, addToCart }) => {
           </div>
           <div className="deals-content">
             <h2>
-              <Link href="/products/[slug]" as={`/products/${product.slug}`}>
+              <Link href="/products/[slug]" as={`/products/${product.id}`}>
                 {product.name}
               </Link>
             </h2>
