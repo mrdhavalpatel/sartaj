@@ -3,6 +3,7 @@ import storage from "../../util/localStorage";
 import { deleteProduct, findProductIndexById } from "../../util/util";
 import * as Types from "../constants/actionTypes";
 import { API_BASE_URL } from "../../lib/api";
+import { toast } from "react-toastify";
 
 export default (state = [], action) => {
   let index = null;
@@ -36,10 +37,11 @@ export default (state = [], action) => {
       index = findProductIndexById(state, action?.payload?.product?.id);
 
       if (index !== -1) {
+        state[index].quantity += 1;
         if (token) {
           let payload = {
             product_id: action?.payload?.product?.id,
-            quantity: (state[index].quantity += 1),
+            quantity: state[index].quantity,
           };
 
           const response = axios
@@ -50,12 +52,23 @@ export default (state = [], action) => {
                 Authorization: `Bearer ${token}`,
               },
             })
+            .then((res) => {
+              console.log(
+                "resresresresresresresresresresresresresresresresresres",
+                res
+              );
+              if (res?.data?.status == 200) {
+                toast("Product added to Cart !");
+              } else {
+                toast.error(res?.data?.error);
+              }
+            })
 
             .catch((error) => {
               console.log("error", error?.code === "ERR_NETWORK");
             });
         }
-        state[index].quantity += 1;
+
         storage.set("dokani_cart", [...state]);
 
         return [...state];

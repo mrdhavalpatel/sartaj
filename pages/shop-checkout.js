@@ -170,11 +170,11 @@ const Cart = ({
       post_code: values?.post_code
         ? values?.post_code
         : selectedAddressData?.post_code,
-      contact_person_name: values?.contact_person_name
-        ? values?.contact_person_name
+      contact_person_name: values?.email
+        ? values?.email
         : selectedAddressData?.contact_person_name,
-      contact_person_number: values?.contact_person_number
-        ? values?.contact_person_number
+      contact_person_number: values?.phone
+        ? values?.phone
         : selectedAddressData?.contact_person_number,
     };
     const response = await axios

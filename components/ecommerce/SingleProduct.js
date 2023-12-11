@@ -17,7 +17,7 @@ const SingleProduct = ({
 }) => {
   const handleCart = async (product) => {
     addToCart(product);
-    toast("Product added to Cart !");
+    // toast("Product added to Cart !");
   };
 
   const handleCompare = (product) => {

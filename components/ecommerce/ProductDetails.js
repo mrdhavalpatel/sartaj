@@ -145,7 +145,7 @@ const ProductDetails = ({
                         <div className="product-extra-link2">
                           <button
                             onClick={(e) => {
-                              if (quantity < product?.maximum_order_quantity) {
+                              if (quantity <= product?.maximum_order_quantity) {
                                 let p = {
                                   ...product,
                                   quantity: quantity || 1,
