@@ -35,10 +35,13 @@ export default (state = [], action) => {
       }
     case Types.ADD_TO_CART:
       index = findProductIndexById(state, action?.payload?.product?.id);
+      console.log("locho------------------------------------------>", index);
 
       if (index !== -1) {
         state[index].quantity += 1;
         if (token) {
+          console.log("if");
+
           let payload = {
             product_id: action?.payload?.product?.id,
             quantity: state[index].quantity,
@@ -69,6 +72,32 @@ export default (state = [], action) => {
       } else {
         if (!action?.payload?.product?.quantity) {
           action.payload.product.quantity = 1;
+          if (token) {
+            let payload = {
+              product_id: action?.payload?.product?.id,
+              quantity: 1,
+            };
+            console.log("elese");
+            const response = axios
+              .post(`${API_BASE_URL}customer/cart/add-to-cart`, payload, {
+                headers: {
+                  "Access-Control-Allow-Origin": "*",
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              })
+              .then((res) => {
+                if (res?.data?.status == 200) {
+                  toast("Product added to Cart !");
+                } else {
+                  toast.error(res?.data?.error);
+                }
+              })
+              .catch((error) => {
+                console.log("error", error?.code === "ERR_NETWORK");
+              });
+          }
+        } else {
           if (token) {
             let payload = {
               product_id: action?.payload?.product?.id,

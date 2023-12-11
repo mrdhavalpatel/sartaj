@@ -150,8 +150,9 @@ const ProductDetails = ({
                                   ...product,
                                   quantity: quantity || 1,
                                 };
+                                console.log("s12d1s1d2s1d-->");
                                 addToCart(p);
-                                handleCart();
+                                // handleCart();
                               } else {
                                 toast.error(
                                   `Maximum order quantity ${product?.maximum_order_quantity}`
