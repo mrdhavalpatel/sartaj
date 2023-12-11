@@ -3,12 +3,15 @@ import { useEffect, useState } from "react";
 import SwiperCore, { Autoplay, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ApiCall } from "../../lib/other/other";
+import { useRouter } from "next/router";
+import { updateProductCategory } from "../../redux/action/productFiltersAction";
+import { connect } from "react-redux";
 
 SwiperCore.use([Navigation, Autoplay]);
 
-const CategorySlider2 = () => {
+const CategorySlider2 = ({ updateProductCategory }) => {
   const [categories, setCategories] = useState([]);
-
+  const router = useRouter();
   const getAllCategories = async () => {
     const request = await ApiCall("get", "categories");
     const allCategories = await request;
@@ -19,6 +22,17 @@ const CategorySlider2 = () => {
   useEffect(() => {
     getAllCategories();
   }, []);
+  const selectCategory = (e, category, catId) => {
+    e.preventDefault();
+    updateProductCategory(category);
+    router.push({
+      pathname: "/products",
+      query: {
+        cat: category,
+        catId: catId,
+      },
+    });
+  };
   return (
     <>
       <Swiper
@@ -47,7 +61,10 @@ const CategorySlider2 = () => {
       >
         {categories?.map((item, i) => (
           <SwiperSlide key={i}>
-            <div className="card-1">
+            <div
+              className="card-1"
+              onClick={(e) => selectCategory(e, item?.name, item?.id)}
+            >
               <figure className=" img-hover-scale overflow-hidden">
                 <Link href="/shop-fullwidth">
                   <img src={item?.image} alt={item?.name} />
@@ -78,4 +95,5 @@ const CategorySlider2 = () => {
   );
 };
 
-export default CategorySlider2;
+// export default CategorySlider2;
+export default connect(null, { updateProductCategory })(CategorySlider2);
