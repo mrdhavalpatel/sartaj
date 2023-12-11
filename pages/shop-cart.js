@@ -118,7 +118,7 @@ const Cart = ({
     });
   };
   const handleClearCart = () => {
-    // setCartDataUpdated(!cartDataUpdated);
+    setCartDataUpdated(!cartDataUpdated);
     clearCart();
     setCartProducts([]);
   };
