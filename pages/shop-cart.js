@@ -257,7 +257,6 @@ const Cart = ({
                                 <span className="qty-val">
                                   {item?.quantity}
                                 </span>
-                                {console.log("item0-0-0-0-0-0-0->", item)}
                                 <a
                                   onClick={(e) => {
                                     if (
@@ -339,142 +338,146 @@ const Cart = ({
                 <div className="divider center_icon mt-50 mb-50">
                   <i className="fi-rs-fingerprint"></i>
                 </div>
-                <div className="row mb-50">
-                  {isLoggedIn ? (
-                    <div className="col-lg-6 col-md-12">
-                      <div className="border p-md-4 p-30 border-radius cart-totals">
-                        <div className="heading_s1 mb-3">
-                          <h4>Cart Totals</h4>
-                        </div>
-                        <div className="table-responsive">
-                          <table className="table">
-                            <tbody>
-                              <tr>
-                                <td className="cart_total_label">
-                                  Cart Subtotal
-                                </td>
-                                <td className="cart_total_amount">
-                                  <span className="font-lg fw-900 text-brand">
-                                    ¥ {cartTotal?.total_sub_amt}
-                                  </span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td className="cart_total_label">Shipping</td>
-                                <td className="cart_total_amount">
-                                  <i className="ti-gift mr-5"></i>¥
-                                  {cartTotal?.delivery_charge}
-                                </td>
-                              </tr>
-                              <tr>
-                                <td className="cart_total_label">Total</td>
-                                <td className="cart_total_amount">
-                                  <strong>
-                                    <span className="font-xl fw-900 text-brand">
-                                      ¥{cartTotal?.total_amt}
-                                    </span>
-                                  </strong>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        {proceedToCheckout()}
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="row">
-                      <div className="col-xl-8 col-lg-10 col-md-12 m-auto">
-                        <div className="row">
-                          <div className="col-lg-6 pr-30 d-none d-lg-block">
-                            <img
-                              className="border-radius-15"
-                              src="assets/imgs/page/login-1.png"
-                              alt="nest"
-                            />
+                {cartProducts.length > 0 ? (
+                  <div className="row mb-50">
+                    {isLoggedIn ? (
+                      <div className="col-lg-6 col-md-12">
+                        <div className="border p-md-4 p-30 border-radius cart-totals">
+                          <div className="heading_s1 mb-3">
+                            <h4>Cart Totals</h4>
                           </div>
-                          <div className="col-lg-6 col-md-8">
-                            <div className="login_wrap widget-taber-content background-white">
-                              <div className="padding_eight_all bg-white">
-                                <div className="heading_s1">
-                                  <h1 className="mb-5">Login for Checkout </h1>
-                                  <p className="mb-30">
-                                    Don't have an account?{" "}
-                                    <Link href="/page-register">
-                                      Create here
-                                    </Link>
-                                  </p>
+                          <div className="table-responsive">
+                            <table className="table">
+                              <tbody>
+                                <tr>
+                                  <td className="cart_total_label">
+                                    Cart Subtotal
+                                  </td>
+                                  <td className="cart_total_amount">
+                                    <span className="font-lg fw-900 text-brand">
+                                      ¥ {cartTotal?.total_sub_amt}
+                                    </span>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td className="cart_total_label">Shipping</td>
+                                  <td className="cart_total_amount">
+                                    <i className="ti-gift mr-5"></i>¥
+                                    {cartTotal?.delivery_charge}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td className="cart_total_label">Total</td>
+                                  <td className="cart_total_amount">
+                                    <strong>
+                                      <span className="font-xl fw-900 text-brand">
+                                        ¥{cartTotal?.total_amt}
+                                      </span>
+                                    </strong>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          {proceedToCheckout()}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="row">
+                        <div className="col-xl-8 col-lg-10 col-md-12 m-auto">
+                          <div className="row">
+                            <div className="col-lg-6 pr-30 d-none d-lg-block">
+                              <img
+                                className="border-radius-15"
+                                src="assets/imgs/page/login-1.png"
+                                alt="nest"
+                              />
+                            </div>
+                            <div className="col-lg-6 col-md-8">
+                              <div className="login_wrap widget-taber-content background-white">
+                                <div className="padding_eight_all bg-white">
+                                  <div className="heading_s1">
+                                    <h1 className="mb-5">
+                                      Login for Checkout{" "}
+                                    </h1>
+                                    <p className="mb-30">
+                                      Don't have an account?{" "}
+                                      <Link href="/page-register">
+                                        Create here
+                                      </Link>
+                                    </p>
+                                  </div>
+                                  <Formik
+                                    initialValues={{
+                                      usernameOrEmail: "",
+                                      currentpassword: "",
+                                    }}
+                                    validationSchema={validationSchema}
+                                    onSubmit={async (
+                                      values,
+                                      { setSubmitting }
+                                    ) => {
+                                      // Prevent default form submission behavior
+                                      setSubmitting(false);
+
+                                      // Your custom submission logic goes here
+                                      await handleSubmit(values);
+
+                                      // Optionally reset the form
+                                      // resetForm();
+                                    }}
+                                  >
+                                    {({ isSubmitting, handleSubmit }) => (
+                                      <Form onSubmit={handleSubmit}>
+                                        <div className="form-group">
+                                          <Field
+                                            type="text"
+                                            name="usernameOrEmail"
+                                            placeholder="Username or Email *"
+                                            className="form-control"
+                                          />
+                                          <ErrorMessage
+                                            name="usernameOrEmail"
+                                            component="div"
+                                            style={{ color: "red" }}
+                                          />
+                                        </div>
+                                        <div className="form-group">
+                                          <Field
+                                            type="password"
+                                            name="currentpassword"
+                                            placeholder="Your password *"
+                                            className="form-control"
+                                          />
+                                          <ErrorMessage
+                                            name="currentpassword"
+                                            component="div"
+                                            style={{ color: "red" }}
+                                          />
+                                        </div>
+
+                                        <div className="form-group">
+                                          <button
+                                            type="submit"
+                                            className="btn btn-heading btn-block hover-up"
+                                            name="login"
+                                            disabled={isSubmitting} // Disable the button while submitting
+                                          >
+                                            Log in
+                                          </button>
+                                        </div>
+                                      </Form>
+                                    )}
+                                  </Formik>
                                 </div>
-                                <Formik
-                                  initialValues={{
-                                    usernameOrEmail: "",
-                                    currentpassword: "",
-                                  }}
-                                  validationSchema={validationSchema}
-                                  onSubmit={async (
-                                    values,
-                                    { setSubmitting }
-                                  ) => {
-                                    // Prevent default form submission behavior
-                                    setSubmitting(false);
-
-                                    // Your custom submission logic goes here
-                                    await handleSubmit(values);
-
-                                    // Optionally reset the form
-                                    // resetForm();
-                                  }}
-                                >
-                                  {({ isSubmitting, handleSubmit }) => (
-                                    <Form onSubmit={handleSubmit}>
-                                      <div className="form-group">
-                                        <Field
-                                          type="text"
-                                          name="usernameOrEmail"
-                                          placeholder="Username or Email *"
-                                          className="form-control"
-                                        />
-                                        <ErrorMessage
-                                          name="usernameOrEmail"
-                                          component="div"
-                                          style={{ color: "red" }}
-                                        />
-                                      </div>
-                                      <div className="form-group">
-                                        <Field
-                                          type="password"
-                                          name="currentpassword"
-                                          placeholder="Your password *"
-                                          className="form-control"
-                                        />
-                                        <ErrorMessage
-                                          name="currentpassword"
-                                          component="div"
-                                          style={{ color: "red" }}
-                                        />
-                                      </div>
-
-                                      <div className="form-group">
-                                        <button
-                                          type="submit"
-                                          className="btn btn-heading btn-block hover-up"
-                                          name="login"
-                                          disabled={isSubmitting} // Disable the button while submitting
-                                        >
-                                          Log in
-                                        </button>
-                                      </div>
-                                    </Form>
-                                  )}
-                                </Formik>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </div>
+                    )}
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
