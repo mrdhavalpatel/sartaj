@@ -92,14 +92,14 @@ function FeatchTabSlider({ banners }) {
               </Link>
             </div>
 
-            <img
+            {/* <img
               src={`${banners?.[1]?.banner_logo}`}
               onClick={() => {
                 window.location.replace(
                   `${banners?.[1]?.link ? banners?.[1]?.link : "#"}`
                 );
               }}
-            />
+            /> */}
           </div>
         </div>
         <div className="col-lg-9 col-md-12">
