@@ -105,7 +105,6 @@ const Cart = ({
     );
     if (response?.status == 200) {
       clearCart();
-
       router.push("/OrderReceived");
     }
   };
@@ -178,7 +177,6 @@ const Cart = ({
         ? values?.contact_person_number
         : selectedAddressData?.contact_person_number,
     };
-    console.log("payloadpayloadpayloadpayloadpayloadpayload", payload);
     const response = await axios
       .put(
         `${API_BASE_URL}customer/address/update/${selectedAddressData?.id}`,

@@ -5,13 +5,14 @@ import { updateProductFilters } from "../../../redux/action/productFiltersAction
 
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { ApiCall } from "../../../lib/other/other";
 
 const PriceRangeSlider = ({ updateProductFilters }) => {
   const Router = useRouter();
   const searchTerm = Router.query.search;
 
-  const [price, setPrice] = useState({ value: { min: 0, max: 500 } });
-
+  const [maxPrice, setMaxPrice] = useState(500);
+  const [price, setPrice] = useState({ value: { min: 0, max: maxPrice } });
   useEffect(() => {
     const filters = {
       price: price.value,
@@ -24,7 +25,13 @@ const PriceRangeSlider = ({ updateProductFilters }) => {
   const handleActive = (index) => {
     setActive(index);
   };
-
+  const getmaxPrice = async () => {
+    let res = await ApiCall("get", "products/max-price");
+    setMaxPrice(res?.data?.max_price);
+  };
+  useEffect(() => {
+    getmaxPrice();
+  }, []);
   return (
     <>
       {/* <InputRange
@@ -40,7 +47,7 @@ const PriceRangeSlider = ({ updateProductFilters }) => {
         allowCross={false}
         defaultValue={[0, 100]}
         min={0}
-        max={500}
+        max={maxPrice}
         onChange={(value) =>
           setPrice({ value: { min: value[0], max: value[1] } })
         }

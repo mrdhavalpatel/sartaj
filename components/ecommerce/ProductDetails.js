@@ -11,8 +11,6 @@ import { addToWishlist } from "../../redux/action/wishlistAction";
 import ProductTab from "../elements/ProductTab";
 import RelatedSlider from "../sliders/Related";
 import ThumbSlider from "../sliders/Thumb";
-import { Button } from "react-bootstrap";
-import Link from "next/link";
 
 const ProductDetails = ({
   product,
@@ -26,14 +24,13 @@ const ProductDetails = ({
 }) => {
   const [quantity, setQuantity] = useState(1);
 
-  const handleCart = (product) => {
-    addToCart(product);
+  const handleCart = () => {
     toast("Product added to Cart !");
   };
 
   const handleCompare = (product) => {
     addToCompare(product);
-    toast("Added to Compare list !");
+    +toast("Added to Compare list !");
   };
 
   const handleWishlist = (product) => {
@@ -117,15 +114,9 @@ const ProductDetails = ({
                         <div className="detail-qty border radius">
                           <a
                             onClick={(e) => {
-                              if (quantity < product?.maximum_order_quantity) {
-                                !inCart
-                                  ? setQuantity(quantity > 1 ? quantity - 1 : 1)
-                                  : decreaseQuantity(product?.id);
-                              } else {
-                                toast.error(
-                                  `You can only add ${product?.maximum_order_quantity}`
-                                );
-                              }
+                              !inCart
+                                ? setQuantity(quantity > 1 ? quantity - 1 : 1)
+                                : decreaseQuantity(product?.id);
                             }}
                             className="qty-down"
                           >
@@ -135,11 +126,17 @@ const ProductDetails = ({
                             {inCart?.quantity || quantity}
                           </span>
                           <a
-                            onClick={() =>
-                              !inCart
-                                ? setQuantity(quantity + 1)
-                                : increaseQuantity(product?.id)
-                            }
+                            onClick={() => {
+                              if (quantity < product?.maximum_order_quantity) {
+                                !inCart
+                                  ? setQuantity(quantity + 1)
+                                  : increaseQuantity(product?.id);
+                              } else {
+                                toast.error(
+                                  `Maximum order quantity is${product?.maximum_order_quantity}`
+                                );
+                              }
+                            }}
                             className="qty-up"
                           >
                             <i className="fi-rs-angle-small-up"></i>
@@ -147,12 +144,14 @@ const ProductDetails = ({
                         </div>
                         <div className="product-extra-link2">
                           <button
-                            onClick={(e) =>
-                              handleCart({
+                            onClick={(e) => {
+                              let p = {
                                 ...product,
                                 quantity: quantity || 1,
-                              })
-                            }
+                              };
+                              addToCart(p);
+                              handleCart();
+                            }}
                             className="button button-add-to-cart"
                           >
                             Add to cart

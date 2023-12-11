@@ -118,7 +118,8 @@ const Cart = ({
     });
   };
   const handleClearCart = () => {
-    setCartDataUpdated(!cartDataUpdated);
+    // setCartDataUpdated(!cartDataUpdated);
+    clearCart();
     setCartProducts([]);
   };
   useEffect(() => {
@@ -147,7 +148,6 @@ const Cart = ({
                     <a
                       className="text-muted"
                       onClick={() => {
-                        clearCart();
                         handleClearCart();
                       }}
                     >
@@ -257,16 +257,26 @@ const Cart = ({
                                 <span className="qty-val">
                                   {item?.quantity}
                                 </span>
+                                {console.log("item0-0-0-0-0-0-0->", item)}
                                 <a
                                   onClick={(e) => {
                                     if (
-                                      item?.quantity <
-                                      item?.maximum_order_quantity
+                                      (item?.quantity
+                                        ? item?.quantity
+                                        : item?.product?.product?.quantity) <
+                                      (item?.maximum_order_quantity
+                                        ? item?.maximum_order_quantity
+                                        : item?.product?.maximum_order_quantity)
                                     ) {
                                       increaseQuantity(item?.id);
                                     } else {
                                       toast.error(
-                                        `Maximum order quantity is${item?.maximum_order_quantity}`
+                                        `Maximum order quantity is${
+                                          item?.maximum_order_quantity
+                                            ? item?.maximum_order_quantity
+                                            : item?.product
+                                                ?.maximum_order_quantity
+                                        }`
                                       );
                                     }
                                   }}

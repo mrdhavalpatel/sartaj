@@ -12,6 +12,7 @@ import Layout from "./../components/layout/Layout";
 import { fetchProduct } from "./../redux/action/product";
 import { ApiCall } from "../lib/other/other";
 import QuickView from "../components/ecommerce/QuickView";
+import Link from "next/link";
 
 const Products = ({ productFilters }) => {
   const [products, setProducts] = useState([]);
@@ -26,7 +27,9 @@ const Products = ({ productFilters }) => {
 
   const cratePagination = () => {
     // set pagination
-    let arr = new Array(Math.ceil(productTotal / limit))
+    let arr = new Array(
+      Math.ceil((productTotal ? productTotal : []) / (limit ? limit : 12))
+    )
       .fill()
       .map((_, idx) => idx + 1);
 
@@ -61,6 +64,8 @@ const Products = ({ productFilters }) => {
       limit: limit,
       offset: currentPage,
       category_id: catId,
+      min: productFilters?.price?.min ? productFilters?.price?.min : 0,
+      max: productFilters?.price?.max ? productFilters?.price?.max : 500,
       sort_by: productFilters?.featured,
     };
     let res = await ApiCall("post", "products/all", payload);
@@ -78,8 +83,10 @@ const Products = ({ productFilters }) => {
     pages,
     limit,
     productFilters?.featured,
+    productFilters?.price?.min,
+    productFilters?.price?.max,
   ]);
-
+  console.log("productFilters", productFilters?.price);
   const fetchProducts = async () => {
     const request = await ApiCall("get", "products/latest-three-products");
     const newArrivals = await request?.data?.products;
@@ -173,12 +180,12 @@ const Products = ({ productFilters }) => {
                         </div>
                         <div className="content pt-10">
                           <h5>
-                            <a
+                            <Link
                               href="/products/[slug]"
                               as={`/products/${newProducts?.id}`}
                             >
                               {newProducts?.name}
-                            </a>
+                            </Link>
                           </h5>
                           <p className="price mb-0 mt-5">
                             ¥{newProducts?.price}

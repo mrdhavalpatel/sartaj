@@ -6,9 +6,6 @@ import { addToCart } from "../../redux/action/cart";
 import { addToCompare } from "../../redux/action/compareAction";
 import { openQuickView } from "../../redux/action/quickViewAction";
 import { addToWishlist } from "../../redux/action/wishlistAction";
-import storage from "../../util/localStorage";
-import axios from "axios";
-import { API_BASE_URL } from "../../lib/api";
 import QuickView from "./QuickView";
 
 const SingleProduct = ({
