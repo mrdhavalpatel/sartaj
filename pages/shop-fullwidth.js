@@ -56,6 +56,7 @@ const ProductsFullWidth = ({ products, productFilters }) => {
       sort_by: productFilters?.featured,
       // search: searchTerm ? searchTerm : "",
     };
+    //initial commit
 
     const request = await ApiCall("post", "products/all", payload);
     const allProducts = await request?.data;

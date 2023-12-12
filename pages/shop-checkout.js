@@ -466,7 +466,7 @@ const Cart = ({
                   >
                     {address?.billing_address?.map((option) => (
                       <option key={option.id} value={option.id}>
-                        {`${option?.floor}, ${option?.house},${option?.road},${option?.post_code}`}
+                        {`${option?.floor}, ${option?.house},${option?.road},${option?.post_code},${option?.city},${option?.state}`}
                       </option>
                     ))}
                   </select>
