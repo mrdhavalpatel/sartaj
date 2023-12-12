@@ -150,7 +150,7 @@ function Account() {
     } else {
       router.push("/page-login");
     }
-  }, []);
+  }, [show]);
 
   return (
     <>
