@@ -210,19 +210,7 @@ export default (state = [], action) => {
               Authorization: `Bearer ${token}`,
             },
           })
-          .then((res) => {
-            const response = axios
-              .get(`${API_BASE_URL}customer/cart`, {
-                headers: {
-                  "Access-Control-Allow-Origin": "*",
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-                },
-              })
-              .catch((error) => {
-                console.log("error", error?.code === "ERR_NETWORK");
-              });
-          })
+
           .catch((error) => {
             console.log("error", error?.code === "ERR_NETWORK");
           });

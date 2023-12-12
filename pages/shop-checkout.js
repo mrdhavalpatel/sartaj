@@ -104,7 +104,7 @@ const Cart = ({
       }
     );
     if (response?.status == 200) {
-      clearCart();
+      // clearCart();
       router.push("/OrderReceived");
     }
   };
@@ -218,6 +218,17 @@ const Cart = ({
     formikFormData(selectedAddressData);
   }, [selectedAddressData, setSelectedAddressData]);
 
+  const handlePrefillAddress = async () => {
+    if (address?.billing_address?.length > 0) {
+      const defaultAddress = address.billing_address[0];
+      setSelectedAddressDropdown(defaultAddress.id);
+      findElementById(defaultAddress.id);
+    }
+  };
+  useEffect(() => {
+    handlePrefillAddress();
+  }, [address]);
+
   const formikFormData = (selectedAddressData) => {
     return (
       <Formik
@@ -225,11 +236,11 @@ const Cart = ({
         initialValues={{
           fname: userDetails?.f_name,
           lname: userDetails?.l_name,
-          billing_address: selectedAddressData && selectedAddressData?.address,
-          billing_address2: selectedAddressData && selectedAddressData?.road,
-          city: selectedAddressData && selectedAddressData?.city,
-          state: selectedAddressData && selectedAddressData?.state,
-          zipcode: selectedAddressData && selectedAddressData?.post_code,
+          billing_address: selectedAddressData?.address,
+          billing_address2: selectedAddressData?.road,
+          city: selectedAddressData?.city,
+          state: selectedAddressData?.state,
+          zipcode: selectedAddressData?.post_code,
           phone: selectedAddressData?.contact_person_number,
           email: selectedAddressData?.contact_person_number,
         }}
@@ -471,165 +482,171 @@ const Cart = ({
                   <div className="divider-2 mb-30"></div>
                   <div className="table-responsive order_table">
                     {cartItemsData.length <= 0 && "No Products"}
-                    <table
-                      className={
-                        cartItemsData.length > 0 ? "table no-border" : "d-none"
-                      }
-                    >
-                      <tbody>
-                        {cartItemsData?.map((item, i) => (
-                          <tr key={i}>
-                            <td className="image product-thumbnail">
-                              <img src={item?.product?.image?.[0]} alt="#" />
-                            </td>
-                            <td>
-                              <h6 className="w-160 mb-5">
-                                <a>{item?.product?.name}</a>
-                                <div className="product-rate-cover">
-                                  <div className="product-rate d-inline-block">
-                                    <div
-                                      className="product-rating"
-                                      style={{
-                                        width: `${
-                                          item?.product?.overall_rating
-                                            ? item?.product?.overall_rating
-                                            : 0
-                                        }%`,
-                                      }}
-                                    ></div>
-                                  </div>
-                                  <span className="font-small ml-5 text-muted">
-                                    {`(
+                    {cartItemsData.length > 0 ? (
+                      <table className="table no-border">
+                        <tbody>
+                          {cartItemsData?.map((item, i) => (
+                            <tr key={i}>
+                              <td className="image product-thumbnail">
+                                <img src={item?.product?.image?.[0]} alt="#" />
+                              </td>
+                              <td>
+                                <h6 className="w-160 mb-5">
+                                  <a>{item?.product?.name}</a>
+                                  <div className="product-rate-cover">
+                                    <div className="product-rate d-inline-block">
+                                      <div
+                                        className="product-rating"
+                                        style={{
+                                          width: `${
+                                            item?.product?.overall_rating
+                                              ? item?.product?.overall_rating
+                                              : 0
+                                          }%`,
+                                        }}
+                                      ></div>
+                                    </div>
+                                    <span className="font-small ml-5 text-muted">
+                                      {`(
                                     ${
                                       item?.product?.total_reviews
                                         ? item?.product?.total_reviews
                                         : 0
                                     }
                                     )`}
-                                  </span>
-                                </div>
-                              </h6>{" "}
-                            </td>
-                            <td>
-                              <h6 className="text-muted pl-20 pr-20">
-                                x {item.quantity}
-                              </h6>
-                            </td>
-                            <td>
-                              <h4 className="text-brand">
-                                ¥
-                                {(item.quantity ? item.quantity : 1) *
-                                  item.price}
-                              </h4>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                                    </span>
+                                  </div>
+                                </h6>{" "}
+                              </td>
+                              <td>
+                                <h6 className="text-muted pl-20 pr-20">
+                                  x {item.quantity}
+                                </h6>
+                              </td>
+                              <td>
+                                <h4 className="text-brand">
+                                  ¥
+                                  {(item.quantity ? item.quantity : 1) *
+                                    item.price}
+                                </h4>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    ) : (
+                      "No Products"
+                    )}
                     <div className="divider-2 mb-30"></div>
-                    <table
-                      style={{
-                        border: "1px solid #bababa",
-                        width: "100%",
-                        borderCollapse: "collapse",
-                      }}
-                    >
-                      <tr>
-                        <td
-                          style={{
-                            border: "1px solid #bababa",
-                            padding: "5px",
-                          }}
-                        >
-                          <strong>Sub-Total:</strong>
-                        </td>
-                        <td
-                          style={{
-                            border: "1px solid #bababa",
-                            padding: "5px",
-                          }}
-                        >
-                          ¥{cartTotal?.total_sub_amt}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td
-                          style={{
-                            border: "1px solid #bababa",
-                            padding: "5px",
-                          }}
-                        >
-                          <strong>All Item in Dry Shipping:</strong>
-                        </td>
-                        <td
-                          style={{
-                            border: "1px solid #bababa",
-                            padding: "5px",
-                          }}
-                        >
-                          ¥{cartTotal?.delivery_charge}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td
-                          style={{
-                            border: "1px solid #bababa",
-                            padding: "5px",
-                          }}
-                        >
-                          <strong>
-                            Consumption Tax {cartTotal?.eight_percent ? 8 : 0}%
-                          </strong>
-                        </td>
-                        <td
-                          style={{
-                            border: "1px solid #bababa",
-                            padding: "5px",
-                          }}
-                        >
-                          ¥{cartTotal?.eight_percent}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td
-                          style={{
-                            border: "1px solid #bababa",
-                            padding: "5px",
-                          }}
-                        >
-                          <strong>
-                            Consumption Tax {cartTotal?.ten_percent ? 10 : 0}%
-                          </strong>
-                        </td>
-                        <td
-                          style={{
-                            border: "1px solid #bababa",
-                            padding: "5px",
-                          }}
-                        >
-                          ¥{cartTotal?.ten_percent ? cartTotal?.ten_percent : 0}
-                        </td>
-                      </tr>
+                    {cartTotal?.length > 0 ? (
+                      <table
+                        style={{
+                          border: "1px solid #bababa",
+                          width: "100%",
+                          borderCollapse: "collapse",
+                        }}
+                      >
+                        <tr>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px",
+                            }}
+                          >
+                            <strong>Sub-Total:</strong>
+                          </td>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px",
+                            }}
+                          >
+                            ¥{cartTotal?.total_sub_amt}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px",
+                            }}
+                          >
+                            <strong>All Item in Dry Shipping:</strong>
+                          </td>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px",
+                            }}
+                          >
+                            ¥{cartTotal?.delivery_charge}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px",
+                            }}
+                          >
+                            <strong>
+                              Consumption Tax {cartTotal?.eight_percent ? 8 : 0}
+                              %
+                            </strong>
+                          </td>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px",
+                            }}
+                          >
+                            ¥{cartTotal?.eight_percent}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px",
+                            }}
+                          >
+                            <strong>
+                              Consumption Tax {cartTotal?.ten_percent ? 10 : 0}%
+                            </strong>
+                          </td>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px",
+                            }}
+                          >
+                            ¥
+                            {cartTotal?.ten_percent
+                              ? cartTotal?.ten_percent
+                              : 0}
+                          </td>
+                        </tr>
 
-                      <tr>
-                        <td
-                          style={{
-                            border: "1px solid #bababa",
-                            padding: "5px",
-                          }}
-                        >
-                          <strong>Total:</strong>
-                        </td>
-                        <td
-                          style={{
-                            border: "1px solid #bababa",
-                            padding: "5px",
-                          }}
-                        >
-                          ¥{cartTotal?.total_amt}
-                        </td>
-                      </tr>
-                    </table>
+                        <tr>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px",
+                            }}
+                          >
+                            <strong>Total:</strong>
+                          </td>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px",
+                            }}
+                          >
+                            ¥{cartTotal?.total_amt}
+                          </td>
+                        </tr>
+                      </table>
+                    ) : null}
                   </div>
                   {timeSlot.map((Item, index) => {
                     const radioId = Item?.id;

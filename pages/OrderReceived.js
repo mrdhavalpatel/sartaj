@@ -22,43 +22,43 @@ const OrderReceived = ({ cartItems }) => {
   const [showConfirmation, setShowConfirmation] = useState(false); // State to manage popup visibility
 
   const router = useRouter();
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      if (showConfirmation) {
-        const confirmationMessage = "Are you sure you want to leave?";
-        event.returnValue = confirmationMessage;
-        return confirmationMessage;
-      }
-    };
+  // useEffect(() => {
+  //   const handleBeforeUnload = (event) => {
+  //     if (showConfirmation) {
+  //       const confirmationMessage = "Are you sure you want to leave?";
+  //       event.returnValue = confirmationMessage;
+  //       return confirmationMessage;
+  //     }
+  //   };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
 
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [router.pathname, showConfirmation]);
+  //   return () => {
+  //     window.removeEventListener("beforeunload", handleBeforeUnload);
+  //   };
+  // }, [router.pathname, showConfirmation]);
 
-  useEffect(() => {
-    setShowConfirmation(true);
-    let token = localStorage.getItem("token");
-    const confirmationTimeout = setTimeout(() => {
-      setShowConfirmation(false);
+  // useEffect(() => {
+  //   setShowConfirmation(true);
+  //   let token = localStorage.getItem("token");
+  //   const confirmationTimeout = setTimeout(() => {
+  //     setShowConfirmation(false);
 
-      const res = axios
-        .delete(`${API_BASE_URL}customer/cart/clear-cart`, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then(() => {
-          localStorage.setItem("dokani_cart", "[]");
-        });
-    });
+  //     const res = axios
+  //       .delete(`${API_BASE_URL}customer/cart/clear-cart`, {
+  //         headers: {
+  //           "Access-Control-Allow-Origin": "*",
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       })
+  //       .then(() => {
+  //         localStorage.setItem("dokani_cart", "[]");
+  //       });
+  //   });
 
-    return () => clearTimeout(confirmationTimeout);
-  }, [router.pathname]);
+  //   return () => clearTimeout(confirmationTimeout);
+  // }, [router.pathname]);
 
   const getUserDetails = async (encodedToken) => {
     try {
