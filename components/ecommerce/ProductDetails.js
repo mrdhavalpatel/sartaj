@@ -127,15 +127,15 @@ const ProductDetails = ({
                           </span>
                           <a
                             onClick={() => {
-                              if (quantity < product?.maximum_order_quantity) {
-                                !inCart
-                                  ? setQuantity(quantity + 1)
-                                  : increaseQuantity(product?.id);
-                              } else {
-                                toast.error(
-                                  `Maximum order quantity is${product?.maximum_order_quantity}`
-                                );
-                              }
+                              // if (quantity < product?.maximum_order_quantity) {
+                              !inCart
+                                ? setQuantity(quantity + 1)
+                                : increaseQuantity(product?.id);
+                              // } else {
+                              //   toast.error(
+                              //     `Maximum order quantity is${product?.maximum_order_quantity}`
+                              //   );
+                              // }
                             }}
                             className="qty-up"
                           >
@@ -149,18 +149,18 @@ const ProductDetails = ({
                               product?.out_of_stock_status !== "in stock"
                             }
                             onClick={(e) => {
-                              if (quantity <= product?.maximum_order_quantity) {
-                                let p = {
-                                  ...product,
-                                  quantity: quantity || 1,
-                                };
-                                addToCart(p);
-                                // handleCart();
-                              } else {
-                                toast.error(
-                                  `Maximum order quantity ${product?.maximum_order_quantity}`
-                                );
-                              }
+                              // if (quantity <= product?.maximum_order_quantity) {
+                              let p = {
+                                ...product,
+                                quantity: quantity || 1,
+                              };
+                              addToCart(p);
+                              // handleCart();
+                              // } else {
+                              //   toast.error(
+                              //     `Maximum order quantity ${product?.maximum_order_quantity}`
+                              //   );
+                              // }
                             }}
                             style={{
                               backgroundColor: `${

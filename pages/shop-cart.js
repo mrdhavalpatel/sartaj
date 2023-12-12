@@ -130,6 +130,24 @@ const Cart = ({
     } else {
       setCartProducts(cartItems);
     }
+  }, [isLoggedIn]);
+  useEffect(() => {
+    let Token = storage.get("token");
+
+    const fetchData = () => {
+      if (Token) {
+        getCartData(Token);
+        setIsLoggedIn(Token);
+      } else {
+        setCartProducts(cartItems);
+      }
+    };
+
+    // Adding a timeout of 1000 milliseconds (1 second), you can adjust this value
+    const timeoutId = setTimeout(fetchData, 700);
+
+    // Cleanup function to clear the timeout in case the component unmounts
+    return () => clearTimeout(timeoutId);
   }, [isLoggedIn, cartDataUpdated]);
   return (
     <>
@@ -248,7 +266,15 @@ const Cart = ({
                               <div className="detail-qty border radius ">
                                 <a
                                   onClick={(e) => {
-                                    decreaseQuantity(item?.id);
+                                    if (item?.quantity >= 1) {
+                                      if (isLoggedIn) {
+                                        decreaseQuantity(item?.product?.id);
+                                        setCartDataUpdated(!cartDataUpdated);
+                                      } else {
+                                        decreaseQuantity(item?.id);
+                                        setCartDataUpdated(!cartDataUpdated);
+                                      }
+                                    }
                                   }}
                                   className="qty-down"
                                 >
@@ -259,25 +285,32 @@ const Cart = ({
                                 </span>
                                 <a
                                   onClick={(e) => {
-                                    if (
-                                      (item?.quantity
-                                        ? item?.quantity
-                                        : item?.product?.product?.quantity) <
-                                      (item?.maximum_order_quantity
-                                        ? item?.maximum_order_quantity
-                                        : item?.product?.maximum_order_quantity)
-                                    ) {
-                                      increaseQuantity(item?.id);
+                                    // if (
+                                    //   (item?.quantity
+                                    //     ? item?.quantity
+                                    //     : item?.product?.product?.quantity) <
+                                    //   (item?.maximum_order_quantity
+                                    //     ? item?.maximum_order_quantity
+                                    //     : item?.product?.maximum_order_quantity)
+                                    // ) {
+
+                                    if (isLoggedIn) {
+                                      increaseQuantity(item?.product?.id);
+                                      setCartDataUpdated(!cartDataUpdated);
                                     } else {
-                                      toast.error(
-                                        `Maximum order quantity is${
-                                          item?.maximum_order_quantity
-                                            ? item?.maximum_order_quantity
-                                            : item?.product
-                                                ?.maximum_order_quantity
-                                        }`
-                                      );
+                                      increaseQuantity(item?.id);
+                                      setCartDataUpdated(!cartDataUpdated);
                                     }
+                                    // } else {
+                                    //   toast.error(
+                                    //     `Maximum order quantity is${
+                                    //       item?.maximum_order_quantity
+                                    //         ? item?.maximum_order_quantity
+                                    //         : item?.product
+                                    //             ?.maximum_order_quantity
+                                    //     }`
+                                    //   );
+                                    // }
                                   }}
                                   className="qty-up"
                                 >

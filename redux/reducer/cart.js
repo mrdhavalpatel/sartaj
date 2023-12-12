@@ -176,13 +176,14 @@ export default (state = [], action) => {
 
     case Types.DECREASE_QUANTITY:
       index = findProductIndexById(state, action.payload.productId);
+      console.log("index", index);
       if (index === -1) return state;
       const quantity = state[index].quantity;
       if (quantity > 1) state[index].quantity -= 1;
       if (token) {
         let payload = {
           product_id: action.payload.productId,
-          quantity: quantity > 1 ? state[index].quantity : quantity,
+          quantity: quantity > 1 ? state[index].quantity : 1,
         };
         const response = axios
           .put(`${API_BASE_URL}customer/cart/update-cart`, payload, {
