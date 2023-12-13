@@ -8,7 +8,7 @@ import { useAuth } from "../context/AuthContext";
 import { ApiCall } from "../../lib/other/other";
 import axios from "axios";
 import { API_BASE_URL } from "../../lib/api";
-
+import { useLanguage } from "../context/LanguageContext";
 const Header = ({
   totalCartItems,
   totalCompareItems,
@@ -20,6 +20,10 @@ const Header = ({
   const { logout } = useAuth();
   const [categories, setCategories] = useState([]);
   const [cartItemsCount, setCartItemsCount] = useState(0);
+  const { language, switchLanguage } = useLanguage();
+  const handleLanguageSwitch = (newLanguage) => {
+    switchLanguage(newLanguage);
+  };
   const getAllCategories = async () => {
     const request = await ApiCall("get", "categories");
     const allCategories = await request;
@@ -63,7 +67,6 @@ const Header = ({
       setCartItemsCount(Jsonhandler(data)?.length);
     }
   };
-
   useEffect(() => {
     document.addEventListener("scroll", () => {
       const scrollCheck = window.scrollY >= 100;
@@ -83,6 +86,7 @@ const Header = ({
     getAllCategories();
   }, []);
   const handleToggle = () => setToggled(!isToggled);
+
   return (
     <>
       <header className="header-area header-style-1 header-height-2">
@@ -118,23 +122,36 @@ const Header = ({
                       </a>
                     </li>
                     <li>
-                      <Link href="/#" className="language-dropdown-active">
+                      <Link
+                        href="/en"
+                        onClick={() => handleLanguageSwitch("en")}
+                        className="language-dropdown-active"
+                      >
                         <i className="fi-rs-world"></i>
                         English
                         <i className="fi-rs-angle-small-down"></i>
                       </Link>
                       <ul className="language-dropdown">
-                        <li>
-                          <Link href="/#">
-                            <img
-                              src="/assets/imgs/theme/flag-jp.png"
-                              alt="japan"
-                            />
-                            日本語
-                          </Link>
-                        </li>
+                        <Link
+                          href="/fr"
+                          onClick={() => handleLanguageSwitch("fr")}
+                        >
+                          <img
+                            src="/assets/imgs/theme/flag-jp.png"
+                            alt="japan"
+                          />
+                          日本語
+                        </Link>
                       </ul>
                     </li>
+                    {/* <div>
+                      <button >
+                        English
+                      </button>
+                      <button onClick={() => handleLanguageSwitch("fr")}>
+                        French
+                      </button>
+                    </div> */}
                   </ul>
                 </div>
               </div>

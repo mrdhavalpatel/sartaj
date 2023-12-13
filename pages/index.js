@@ -9,9 +9,19 @@ import IntroPopup from "./../components/elements/IntroPopup";
 import CategorySlider2 from "./../components/sliders/Category2";
 import { useEffect, useState } from "react";
 import { ApiCall } from "../lib/other/other";
+import { useRouter } from "next/router";
+import { FormattedMessage, useIntl } from "react-intl";
 
 function Index2() {
   const [adBanner, setAdBanner] = useState([]);
+  const { locales } = useRouter();
+
+  const intl = useIntl();
+
+  const title = intl.formatMessage({ id: "page.home.head.title" });
+  const description = intl.formatMessage({
+    id: "page.home.head.meta.description",
+  });
   const getBanners = async () => {
     const res = await ApiCall("get", "banners/get-other-banners");
     setAdBanner(res?.data);

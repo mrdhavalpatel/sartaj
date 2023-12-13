@@ -39,8 +39,6 @@ export default (state = [], action) => {
       if (index !== -1) {
         state[index].quantity += 1;
         if (token) {
-          console.log("if");
-
           let payload = {
             product_id: action?.payload?.product?.id,
             quantity: state[index].quantity,
@@ -76,7 +74,6 @@ export default (state = [], action) => {
               product_id: action?.payload?.product?.id,
               quantity: 1,
             };
-            console.log("elese");
             const response = axios
               .post(`${API_BASE_URL}customer/cart/add-to-cart`, payload, {
                 headers: {
@@ -176,7 +173,6 @@ export default (state = [], action) => {
 
     case Types.DECREASE_QUANTITY:
       index = findProductIndexById(state, action.payload.productId);
-      console.log("index", index);
       if (index === -1) return state;
       const quantity = state[index].quantity;
       if (quantity > 1) state[index].quantity -= 1;

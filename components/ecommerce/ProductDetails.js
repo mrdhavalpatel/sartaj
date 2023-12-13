@@ -38,7 +38,7 @@ const ProductDetails = ({
     toast("Added to Wishlist !");
   };
 
-  const inCart = cartItems.find((cartItem) => cartItem?.id === product?.id);
+  const inCart = cartItems?.find((cartItem) => cartItem?.id === product?.id);
 
   return (
     <>
@@ -95,11 +95,11 @@ const ProductDetails = ({
                           ) : (
                             <span>
                               <span className="save-price font-md color3 ml-15">
-                                {product.discount.percentage}% Off
+                                {product?.discount?.percentage}% Off
                               </span>
                               <span className="old-price font-md ml-15">
                                 {product.oldPrice
-                                  ? `¥ ${product.oldPrice}`
+                                  ? `¥ ${product?.oldPrice}`
                                   : null}
                               </span>
                             </span>
@@ -200,7 +200,7 @@ const ProductDetails = ({
                         <li className="mb-5">
                           Tags:
                           <a href="#" rel="tag" className="me-1">
-                            {product?.product_tag ? product.product_tag : "--"}
+                            {product?.product_tag ? product?.product_tag : "--"}
                           </a>
                         </li>
                         <li>

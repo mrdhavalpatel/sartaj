@@ -26,7 +26,12 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
               ) : feature == "name" ? (
                 <td className="product_name">
                   <h5>
-                    <a href="#">{product?.name}</a>
+                    <Link
+                      href="/products/[slug]"
+                      as={`/products/${product?.id}`}
+                    >
+                      {product?.name}
+                    </Link>
                   </h5>
                 </td>
               ) : feature == "price" ? (
@@ -36,18 +41,32 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
               ) : feature == "rating" ? (
                 <td>
                   <div className="rating_wrap">
-                    {product.review >= 0 && (
+                    {product.total_reviews >= 0 && (
                       <>
                         <div className="product-rate d-inline-block">
                           <div
                             className="product-rating"
                             style={{
-                              width: `${product.ratingScore}%`,
+                              width: `${
+                                product?.overall_rating
+                                  ? product?.overall_rating
+                                  : product?.product?.overall_rating
+                                  ? product?.product?.overall_rating
+                                  : 0
+                              }%`,
                             }}
                           ></div>
                         </div>
 
-                        <span className="rating_num">({product.review})</span>
+                        <span className="rating_num">
+                          {`(${
+                            product?.total_reviews
+                              ? product.total_reviews
+                              : product?.product?.total_reviews
+                              ? product?.product?.total_reviews
+                              : 0
+                          })`}
+                        </span>
                       </>
                     )}
                   </div>
