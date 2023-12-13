@@ -161,7 +161,12 @@ const OrderReceived = ({ cartItems }) => {
                   {cartItemsData?.cartProducts?.map((item, i) => (
                     <tr>
                       <td class="text-left">
-                        <Link href="/products">{item?.product?.name}</Link>
+                        <Link
+                          href="/products/[slug]"
+                          as={`/products/${item?.product?.id}`}
+                        >
+                          {item?.product?.name}
+                        </Link>
                       </td>
                       <td class="text-left">{item?.product?.model}</td>
                       <td class="text-right"> {item?.quantity}</td>
