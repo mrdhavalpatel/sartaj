@@ -89,8 +89,12 @@ const IntroPopup = () => {
                       </span>
                     </div>
                   </div> */}
-
-                  <Link href="/" className="btn hover-up">
+                  {console.log("PopData", PopData)}
+                  <Link
+                    href="/products/[slug]"
+                    as={`/products/${PopData?.product_id}`}
+                    className="btn hover-up"
+                  >
                     Shop Now <i className="fi-rs-arrow-right"></i>
                   </Link>
                 </div>
