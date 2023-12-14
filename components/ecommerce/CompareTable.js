@@ -1,11 +1,9 @@
 import Link from "next/link";
 import { connect } from "react-redux";
-import { toast } from "react-toastify";
 import { addToCart } from "../../redux/action/cart";
 const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
   const handleCart = (product) => {
     addToCart(product);
-    // toast("Product added to Cart !");
   };
   return (
     <table className="table text-center">
@@ -37,6 +35,10 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
               ) : feature == "price" ? (
                 <td className="product_price">
                   <span className="price">¥{product?.price}</span>
+                </td>
+              ) : feature == "Category" ? (
+                <td className="product_price">
+                  <span>{product?.category}</span>
                 </td>
               ) : feature == "rating" ? (
                 <td>
@@ -110,7 +112,10 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                         : "Add to cart"}
                     </button>
                   ) : (
-                    <Link href="/page-contact">
+                    <Link
+                      href="/products/[slug]"
+                      as={`/products/${product?.id}`}
+                    >
                       <button className="btn  btn-sm btn-secondary">
                         <i className="fi-rs-headset mr-5"></i>
                         Contact Us

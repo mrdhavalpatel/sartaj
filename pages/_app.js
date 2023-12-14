@@ -14,16 +14,16 @@ import { useRouter } from "next/router";
 import { AuthProvider } from "../components/context/AuthContext";
 import { IntlProvider } from "react-intl";
 import en from "../lang/en.json";
-import fr from "../lang/fr.json";
+import jp from "../lang/jp.json";
 import { LanguageProvider } from "../components/context/LanguageContext";
 
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
-  const { locale } = useRouter();
+  const { locale = "en" } = useRouter();
 
   const messages = {
     en: en,
-    fr: fr,
+    jp: jp,
   };
 
   useEffect(() => {

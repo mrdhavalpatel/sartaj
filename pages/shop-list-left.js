@@ -2,18 +2,18 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Breadcrumb2 from "../components/layout/Breadcrumb2";
-import CategoryProduct from "./../components/ecommerce/Filter/CategoryProduct";
-import PriceRangeSlider from "./../components/ecommerce/Filter/PriceRangeSlider";
-import ShowSelect from "./../components/ecommerce/Filter/ShowSelect";
-import SizeFilter from "./../components/ecommerce/Filter/SizeFilter";
-import SortSelect from "./../components/ecommerce/Filter/SortSelect";
-import VendorFilter from "./../components/ecommerce/Filter/VendorFilter";
-import Pagination from "./../components/ecommerce/Pagination";
-import QuickView from "./../components/ecommerce/QuickView";
-import SingleProductList from "./../components/ecommerce/SingleProductList";
-import WishlistModal from "./../components/ecommerce/WishlistModal";
-import Layout from "./../components/layout/Layout";
-import { fetchProduct } from "./../redux/action/product";
+import CategoryProduct from "../components/ecommerce/Filter/CategoryProduct";
+import PriceRangeSlider from "../components/ecommerce/Filter/PriceRangeSlider";
+import ShowSelect from "../components/ecommerce/Filter/ShowSelect";
+import SizeFilter from "../components/ecommerce/Filter/SizeFilter";
+import SortSelect from "../components/ecommerce/Filter/SortSelect";
+import VendorFilter from "../components/ecommerce/Filter/VendorFilter";
+import Pagination from "../components/ecommerce/Pagination";
+import QuickView from "../components/ecommerce/QuickView";
+import SingleProductList from "../components/ecommerce/SingleProductList";
+import WishlistModal from "../components/ecommerce/WishlistModal";
+import Layout from "../components/layout/Layout";
+import { fetchProduct } from "../redux/action/product";
 
 const ProductsList = ({ products, productFilters, fetchProduct }) => {
   let Router = useRouter(),

@@ -24,6 +24,7 @@ const Compare = ({ compare, clearCompare, deleteFromCompare }) => {
                         features={[
                           "preview",
                           "name",
+                          "Category",
                           "price",
                           "rating",
                           "description",

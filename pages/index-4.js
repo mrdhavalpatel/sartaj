@@ -2,15 +2,15 @@ import Link from "next/link";
 import CategoryTab from "../components/ecommerce/categoryTab";
 import FeatchDeals from "../components/ecommerce/fetchDeals";
 import Layout from "../components/layout/Layout";
-import CategoryProduct from "./../components/ecommerce/Filter/CategoryProduct";
-import PriceRangeSlider from "./../components/ecommerce/Filter/PriceRangeSlider";
-import SizeFilter from "./../components/ecommerce/Filter/SizeFilter";
-import VendorFilter from "./../components/ecommerce/Filter/VendorFilter";
-import Banner5 from "./../components/elements/Banner5";
-import Bottom from "./../components/elements/Bottom";
-import IntroPopup from "./../components/elements/IntroPopup";
-import CategorySlider2 from "./../components/sliders/Category2";
-import Intro4 from "./../components/sliders/intro4";
+import CategoryProduct from "../components/ecommerce/Filter/CategoryProduct";
+import PriceRangeSlider from "../components/ecommerce/Filter/PriceRangeSlider";
+import SizeFilter from "../components/ecommerce/Filter/SizeFilter";
+import VendorFilter from "../components/ecommerce/Filter/VendorFilter";
+import Banner5 from "../components/elements/Banner5";
+import Bottom from "../components/elements/Bottom";
+import IntroPopup from "../components/elements/IntroPopup";
+import CategorySlider2 from "../components/sliders/Category2";
+import Intro4 from "../components/sliders/intro4";
 
 function Test() {
   return (

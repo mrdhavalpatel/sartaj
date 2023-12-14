@@ -1,15 +1,15 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import CompareModal from "./../components/ecommerce/CompareModal";
-import Pagination from "./../components/ecommerce/Pagination";
-import QuickView from "./../components/ecommerce/QuickView";
-import ShowSelect from "./../components/ecommerce/Filter/ShowSelect";
-import SingleProduct from "./../components/ecommerce/SingleProduct";
-import SortSelect from "./../components/ecommerce/Filter/SortSelect";
-import WishlistModal from "./../components/ecommerce/WishlistModal";
-import Layout from "./../components/layout/Layout";
-import { fetchProduct } from "./../redux/action/product";
+import CompareModal from "../components/ecommerce/CompareModal";
+import Pagination from "../components/ecommerce/Pagination";
+import QuickView from "../components/ecommerce/QuickView";
+import ShowSelect from "../components/ecommerce/Filter/ShowSelect";
+import SingleProduct from "../components/ecommerce/SingleProduct";
+import SortSelect from "../components/ecommerce/Filter/SortSelect";
+import WishlistModal from "../components/ecommerce/WishlistModal";
+import Layout from "../components/layout/Layout";
+import { fetchProduct } from "../redux/action/product";
 import { ApiCall } from "../lib/other/other";
 
 const ProductsFullWidth = ({ products, productFilters }) => {

@@ -24,12 +24,7 @@ import * as Yup from "yup";
 import { auth } from "../lib/auth/auth";
 
 const Cart = ({
-  openCart,
   cartItems,
-  cartItemsData,
-  getCartItems,
-  activeCart,
-  closeCart,
   increaseQuantity,
   decreaseQuantity,
   deleteFromCart,
@@ -39,11 +34,7 @@ const Cart = ({
   const [cartDataUpdated, setCartDataUpdated] = useState(false);
   const [cartTotal, setCartTotal] = useState([]);
   const [cartProducts, setCartProducts] = useState([]);
-  const price = () => {
-    let price = 0;
-    cartItems.forEach((item) => (price += item?.price * item?.quantity));
-    return price;
-  };
+
   const proceedToCheckout = () => {
     if (cartProducts?.length > 0) {
       return (
@@ -113,7 +104,6 @@ const Cart = ({
         localStorage.setItem("token", res.token);
         addCurrenItems(res.token);
         setIsLoggedIn(true);
-        // router.push("/");
       }
     });
   };
@@ -133,7 +123,6 @@ const Cart = ({
   }, [isLoggedIn]);
   useEffect(() => {
     let Token = storage.get("token");
-
     const fetchData = () => {
       if (Token) {
         getCartData(Token);
@@ -142,11 +131,7 @@ const Cart = ({
         setCartProducts(cartItems);
       }
     };
-
-    // Adding a timeout of 1000 milliseconds (1 second), you can adjust this value
     const timeoutId = setTimeout(fetchData, 700);
-
-    // Cleanup function to clear the timeout in case the component unmounts
     return () => clearTimeout(timeoutId);
   }, [isLoggedIn, cartDataUpdated]);
   return (

@@ -133,8 +133,8 @@ const Header = ({
                       </Link>
                       <ul className="language-dropdown">
                         <Link
-                          href="/fr"
-                          onClick={() => handleLanguageSwitch("fr")}
+                          href="/jp"
+                          onClick={() => handleLanguageSwitch("jp")}
                         >
                           <img
                             src="/assets/imgs/theme/flag-jp.png"
