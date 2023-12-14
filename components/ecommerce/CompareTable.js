@@ -117,8 +117,7 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                       as={`/products/${product?.id}`}
                     >
                       <button className="btn  btn-sm btn-secondary">
-                        <i className="fi-rs-headset mr-5"></i>
-                        Contact Us
+                        Buy Now
                       </button>
                     </Link>
                   )}
