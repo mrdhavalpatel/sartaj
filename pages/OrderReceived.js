@@ -19,7 +19,7 @@ const OrderReceived = ({ cartItems }) => {
   const [userDetails, setUserDetails] = useState([]);
   const [address, setAddress] = useState("");
   const [cartItemsData, setCartItemsData] = useState([]);
-  const [showConfirmation, setShowConfirmation] = useState(false); // State to manage popup visibility
+  const [shippingData, setShippingData] = useState([]); // State to manage popup visibility
 
   const router = useRouter();
   // useEffect(() => {
@@ -101,11 +101,32 @@ const OrderReceived = ({ cartItems }) => {
         console.log("error", error?.code === "ERR_NETWORK");
       });
   };
+
+  const getShippingDetails = async (token) => {
+    const response = await axios
+      .get(
+        `${API_BASE_URL}customer/order/shipping_list/${router.query.order_id}`,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        setShippingData(response?.data?.data);
+      })
+      .catch((error) => {
+        console.log("error", error?.code === "ERR_NETWORK");
+      });
+  };
   useEffect(() => {
     let encodedToken = localStorage.getItem("token");
-    getCartsItem(encodedToken);
-    getUserDetails(encodedToken);
-    getAddress(encodedToken);
+    // getCartsItem(encodedToken);
+    // getUserDetails(encodedToken);
+    // getAddress(encodedToken);
+    getShippingDetails(encodedToken);
   }, []);
   return (
     <Layout parent="Home" sub="Shop" subChild="Checkout">
@@ -131,18 +152,20 @@ const OrderReceived = ({ cartItems }) => {
                   </tr>
                 </thead>
                 <tbody>
+                  {console.log(shippingData)}
                   <tr>
                     <td>
-                      {address?.billing_address?.[0]?.house}
+                      {shippingData?.delivery_address?.house}
                       <br />
-                      {address?.billing_address?.[0]?.floor}{" "}
-                      {address?.billing_address?.[0]?.road}
+                      {shippingData?.delivery_address?.floor}{" "}
+                      {shippingData?.delivery_address?.road}
                       <br />
-                      {address?.billing_address?.[0]?.address}
+                      {shippingData?.delivery_address?.address}
                     </td>
                     <td>
-                      {userDetails?.email} <br />
-                      {userDetails?.phone}
+                      {shippingData?.delivery_address?.contact_person_name}{" "}
+                      <br />
+                      {shippingData?.delivery_address?.contact_person_number}
                     </td>
                   </tr>
                 </tbody>
@@ -158,7 +181,7 @@ const OrderReceived = ({ cartItems }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {cartItemsData?.cartProducts?.map((item, i) => (
+                  {shippingData?.products?.map((item, i) => (
                     <tr>
                       <td class="text-left">
                         <Link
@@ -188,7 +211,7 @@ const OrderReceived = ({ cartItems }) => {
                     <td colspan="4" class="text-right">
                       Sub Total
                     </td>
-                    <td class="text-right">¥{cartItemsData?.total_sub_amt}</td>
+                    <td class="text-right">¥{shippingData?.total_sub_amt}</td>
                   </tr>
                   <tr>
                     <td colspan="4" class="text-right">
@@ -196,30 +219,30 @@ const OrderReceived = ({ cartItems }) => {
                     </td>
                     <td class="text-right">
                       {" "}
-                      ¥{cartItemsData?.delivery_charge}
+                      ¥{shippingData?.delivery_charge}
                     </td>
                   </tr>
                   <tr>
                     <td colspan="4" class="text-right">
-                      Consumption Tax {cartItemsData?.eight_percent ? 8 : 0}%
+                      Consumption Tax {shippingData?.eight_percent ? 8 : 0}%
                     </td>
                     <td class="text-right">
                       {" "}
                       ¥
-                      {cartItemsData?.eight_percent
-                        ? cartItemsData?.eight_percent
+                      {shippingData?.eight_percent
+                        ? shippingData?.eight_percent
                         : 0}
                     </td>
                   </tr>
                   <tr>
                     <td colspan="4" class="text-right">
-                      Consumption Tax {cartItemsData?.ten_percent ? 10 : 0}%
+                      Consumption Tax {shippingData?.ten_percent ? 10 : 0}%
                     </td>
                     <td class="text-right">
                       {" "}
                       ¥
-                      {cartItemsData?.ten_percent
-                        ? cartItemsData?.ten_percent
+                      {shippingData?.ten_percent
+                        ? shippingData?.ten_percent
                         : 0}
                     </td>
                   </tr>
@@ -228,7 +251,7 @@ const OrderReceived = ({ cartItems }) => {
                     <td colspan="4" class="text-right">
                       Total
                     </td>
-                    <td class="text-right">¥{cartItemsData?.total_amt}</td>
+                    <td class="text-right">¥{shippingData?.total_amt}</td>
                   </tr>
                 </tbody>
               </table>
@@ -242,10 +265,7 @@ const OrderReceived = ({ cartItems }) => {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>
-                      Hello! Can you please send Soya sticks tomato flavour and
-                      magic masala flavour as a free gift. Thank you!
-                    </td>
+                    <td>{shippingData?.order_note}</td>
                   </tr>
                 </tbody>
               </table>

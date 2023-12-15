@@ -105,7 +105,7 @@ const Cart = ({
     );
     if (response?.status == 200) {
       // clearCart();
-      router.push("/OrderReceived");
+      router.push(`/OrderReceived?order_id=${response?.data?.order_id}`);
     }
   };
   const getAddress = async (encodedToken) => {
@@ -648,7 +648,7 @@ const Cart = ({
                       </table>
                     ) : null}
                   </div>
-                  {timeSlot.map((Item, index) => {
+                  {timeSlot?.map((Item, index) => {
                     const radioId = Item?.id;
 
                     return (
