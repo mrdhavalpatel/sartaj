@@ -135,7 +135,7 @@ const OrderReceived = ({ cartItems }) => {
           <div style={{ margin: "0 auto", fontFamily: "Montserrat" }}>
             <div style={{ pageBreakAfter: "always" }}>
               <h1>Order Received - Thank You!</h1>
-              {/* <h3>Order id #{}</h3> */}
+              <h3>Order id #{router?.query?.order_id}</h3>
               <p>
                 Your order has been successfully received. Thank you for your
                 purchase!
@@ -186,12 +186,12 @@ const OrderReceived = ({ cartItems }) => {
                       <td class="text-left">
                         <Link
                           href="/products/[slug]"
-                          as={`/products/${item?.product?.id}`}
+                          as={`/products/${item?.id}`}
                         >
-                          {item?.product?.name}
+                          {item?.name}
                         </Link>
                       </td>
-                      <td class="text-left">{item?.product?.model}</td>
+                      <td class="text-left">{item?.model}</td>
                       <td class="text-right"> {item?.quantity}</td>
                       <td class="text-right">¥{item?.price}</td>
                       <td class="text-right">
@@ -222,30 +222,36 @@ const OrderReceived = ({ cartItems }) => {
                       ¥{shippingData?.delivery_charge}
                     </td>
                   </tr>
-                  <tr>
-                    <td colspan="4" class="text-right">
-                      Consumption Tax {shippingData?.eight_percent ? 8 : 0}%
-                    </td>
-                    <td class="text-right">
-                      {" "}
-                      ¥
-                      {shippingData?.eight_percent
-                        ? shippingData?.eight_percent
-                        : 0}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="4" class="text-right">
-                      Consumption Tax {shippingData?.ten_percent ? 10 : 0}%
-                    </td>
-                    <td class="text-right">
-                      {" "}
-                      ¥
-                      {shippingData?.ten_percent
-                        ? shippingData?.ten_percent
-                        : 0}
-                    </td>
-                  </tr>
+                  {shippingData?.eight_percent != 0 ? (
+                    <tr>
+                      <td colspan="4" class="text-right">
+                        Consumption Tax {shippingData?.eight_percent ? 8 : 0}%
+                      </td>
+                      <td class="text-right">
+                        {" "}
+                        ¥
+                        {shippingData?.eight_percent
+                          ? shippingData?.eight_percent
+                          : 0}
+                      </td>
+                    </tr>
+                  ) : (
+                    0
+                  )}
+                  {shippingData?.ten_percent != 0 ? (
+                    <tr>
+                      <td colspan="4" class="text-right">
+                        Consumption Tax {shippingData?.ten_percent ? 10 : 0}%
+                      </td>
+                      <td class="text-right">
+                        {" "}
+                        ¥
+                        {shippingData?.ten_percent
+                          ? shippingData?.ten_percent
+                          : 0}
+                      </td>
+                    </tr>
+                  ) : null}
 
                   <tr>
                     <td colspan="4" class="text-right">
