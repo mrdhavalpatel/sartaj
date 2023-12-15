@@ -106,7 +106,13 @@ const SingleProduct = ({
 
           <div>
             <span className="font-small text-muted">
-              By <Link href="/vendor/1">{product?.manufacturer?.name}</Link>
+              By{" "}
+              <Link
+                href="/vendor/[slug]"
+                as={`/vendor/${product?.manufacturer?.id}`}
+              >
+                {product?.manufacturer?.name}
+              </Link>
             </span>
           </div>
 

@@ -13,46 +13,29 @@ import QuickView from "../../components/ecommerce/QuickView";
 import SingleProduct from "../../components/ecommerce/SingleProduct";
 import Layout from "../../components/layout/Layout";
 import { fetchProduct } from "../../redux/action/product";
-import data from "../../util/storeData";
+import { ApiCall } from "../../lib/other/other";
 
 const Products = ({ products, productFilters, fetchProduct }) => {
-  let Router = useRouter(),
-    searchTerm = Router.query.search,
-    showLimit = 12,
-    showPagination = 4;
-
-  let [pagination, setPagination] = useState([]);
-  let [limit, setLimit] = useState(showLimit);
-  let [pages, setPages] = useState(Math.ceil(products.items.length / limit));
-  let [currentPage, setCurrentPage] = useState(1);
-
-  const [singleStore, setSingleStore] = useState(null);
-
-  const { id } = Router.query;
-
-  useEffect(() => {
-    fetchProduct(searchTerm, "/static/product.json", productFilters);
-    setSingleStore(data.find((data) => data.id == id));
-    cratePagination();
-  }, [productFilters, limit, pages, products.items.length, id]);
-
+  const [productsData, setProductsData] = useState([]);
+  const [pagination, setPagination] = useState([]);
+  const [limit, setLimit] = useState(12);
+  const [productTotal, setProductTotal] = useState([]);
+  const [pages, setPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  // const [singleStore, setSingleStore] = useState([]);
+  let Router = useRouter();
   const cratePagination = () => {
-    // set pagination
-    let arr = new Array(Math.ceil(products.items.length / limit))
+    let arr = new Array(Math.ceil(productTotal / limit))
       .fill()
       .map((_, idx) => idx + 1);
 
     setPagination(arr);
-    setPages(Math.ceil(products.items.length / limit));
+    setPages(Math.ceil(productTotal / limit));
   };
 
-  const startIndex = currentPage * limit - limit;
-  const endIndex = startIndex + limit;
-  const getPaginatedProducts = products.items.slice(startIndex, endIndex);
+  const getPaginatedProducts = productsData;
 
-  let start = Math.floor((currentPage - 1) / showPagination) * showPagination;
-  let end = start + showPagination;
-  const getPaginationGroup = pagination.slice(start, end);
+  const getPaginationGroup = pagination;
 
   const next = () => {
     setCurrentPage((page) => page + 1);
@@ -69,8 +52,32 @@ const Products = ({ products, productFilters, fetchProduct }) => {
   const selectChange = (e) => {
     setLimit(Number(e.target.value));
     setCurrentPage(1);
-    setPages(Math.ceil(products.items.length / Number(e.target.value)));
   };
+  const getAllProduct = async () => {
+    let payload = {
+      limit: limit,
+      offset: currentPage,
+      sort_by: productFilters?.featured,
+      manufacturer_id: Router?.query?.id,
+    };
+
+    const request = await ApiCall("post", "products/all", payload);
+    const allProducts = await request?.data;
+    setProductTotal(allProducts?.total_size);
+    setProductsData(allProducts?.products);
+  };
+  // const getManufacturer = async () => {
+  //   const request = await ApiCall("get", `manufacturer/${Router?.query?.id}`);
+  //   const manufacturer = await request?.data;
+
+  //   setSingleStore(manufacturer);
+  // };
+  useEffect(() => {
+    // getManufacturer();
+    getAllProduct();
+    cratePagination();
+  }, [productFilters?.featured, limit, currentPage]);
+
   return (
     <>
       <Layout parent="Home" sub="Store  " subChild="About">
@@ -83,17 +90,14 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                     <p>
                       We found
                       <strong className="text-brand">
-                        {products.items.length}
+                        {productsData?.length}
                       </strong>
                       items for you!
                     </p>
                   </div>
                   <div className="sort-by-product-area">
                     <div className="sort-by-cover mr-10">
-                      <ShowSelect
-                        selectChange={selectChange}
-                        showLimit={showLimit}
-                      />
+                      <ShowSelect selectChange={selectChange} showLimit={12} />
                     </div>
                     <div className="sort-by-cover">
                       <SortSelect />
@@ -130,12 +134,12 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                 </div>
               </div>
               <div className="col-lg-1-5 primary-sidebar sticky-sidebar">
-                {singleStore && (
+                {/* {singleStore && (
                   <>
                     <div className="sidebar-widget widget-store-info mb-30 bg-3 border-0">
                       <div className="vendor-logo mb-30">
                         <img
-                          src={`/assets/imgs/vendor/${singleStore.img}`}
+                          src={`/assets/imgs/vendor/${singleStore?.image}`}
                           alt="nest"
                         />
                       </div>
@@ -144,8 +148,12 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                           <span className="text-muted">Since 2012</span>
                         </div>
                         <h4 className="mb-5">
-                          <Link href="/vendor/1" className="text-heading">
-                            {singleStore.title}
+                          <Link
+                            href="/vendor/[slug]"
+                            as={`/vendor/${singleStore?.id}`}
+                            className="text-heading"
+                          >
+                            {singleStore.name}
                           </Link>
                         </h4>
 
@@ -164,10 +172,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
 
                         <div className="vendor-des mb-30">
                           <p className="ont-sm text-heading">
-                            Got a smooth, buttery spread in your fridge? Chances
-                            are good that it's Good Chef. This brand made
-                            Lionto's list of the most popular grocery brands
-                            across the country.
+                            {singleStore?.meta_description}
                           </p>
                         </div>
                         <div className="ollow-social mb-20">
@@ -240,7 +245,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                       </div>
                     </div>
                   </>
-                )}
+                )} */}
 
                 <div className="sidebar-widget widget-category-2 mb-30">
                   <h5 className="section-title style-1 mb-30">Category</h5>
@@ -259,18 +264,10 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                     </div>
                   </div>
 
-                  <div className="list-group">
-                    <div className="list-group-item mb-10 mt-10">
-                      <label className="fw-900">Color</label>
-                      <VendorFilter />
-                      <label className="fw-900 mt-15">Item Condition</label>
-                      <SizeFilter />
-                    </div>
-                  </div>
                   <br />
                 </div>
 
-                <div className="sidebar-widget product-sidebar  mb-30 p-30 bg-grey border-radius-10">
+                {/* <div className="sidebar-widget product-sidebar  mb-30 p-30 bg-grey border-radius-10">
                   <h5 className="section-title style-1 mb-30">New products</h5>
                   <div className="single-post clearfix">
                     <div className="image">
@@ -335,7 +332,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                       Juice
                     </h4>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
