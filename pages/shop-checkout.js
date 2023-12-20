@@ -538,7 +538,7 @@ const Cart = ({
                       "No Products"
                     )}
                     <div className="divider-2 mb-30"></div>
-                    {cartTotal?.length > 0 ? (
+                    {cartTotal.cartProducts?.length > 0 ? (
                       <table
                         style={{
                           border: "1px solid #bababa",

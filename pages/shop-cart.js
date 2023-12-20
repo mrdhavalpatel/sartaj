@@ -380,6 +380,26 @@ const Cart = ({
                                   </td>
                                 </tr>
                                 <tr>
+                                  <td className="cart_total_label">
+                                  Eight Percent
+                                  </td>
+                                  <td className="cart_total_amount">
+                                    <span className="font-lg fw-900 text-brand">
+                                      ¥ {cartTotal?.eight_percent}
+                                    </span>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td className="cart_total_label">
+                                  Ten Percent
+                                  </td>
+                                  <td className="cart_total_amount">
+                                    <span className="font-lg fw-900 text-brand">
+                                      ¥ {cartTotal?.ten_percent}
+                                    </span>
+                                  </td>
+                                </tr>
+                                <tr>
                                   <td className="cart_total_label">Shipping</td>
                                   <td className="cart_total_amount">
                                     <i className="ti-gift mr-5"></i>¥

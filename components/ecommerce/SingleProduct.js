@@ -118,11 +118,18 @@ const SingleProduct = ({
 
           <div className="product-card-bottom">
             <div className="product-price">
+              <span>¥{product.actual_price} </span>
+              {product.actual_price == product.price ? null : <span className="old-price">
+                {product.price && `¥ ${product.price}`}
+              </span> }
+              
+            </div>
+            {/* <div className="product-price">
               <span>¥{product.price} </span>
               <span className="old-price">
                 {product.oldPrice && `¥ ${product.oldPrice}`}
               </span>
-            </div>
+            </div> */}
             <div className="add-cart">
               <button
                 className="add"
