@@ -27,7 +27,7 @@ const SingleProduct2 = ({
 
   const handleWishlist = (product) => {
     addToWishlist(product);
-    toast("Added to Wishlist !");
+    // toast("Added to Wishlist !");
   };
 
   return (

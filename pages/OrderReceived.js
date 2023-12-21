@@ -144,7 +144,7 @@ const OrderReceived = ({ cartItems }) => {
                 <thead>
                   <tr>
                     <td style={{ width: "50%" }}>
-                      <b>Shipping Address</b>
+                      <b >Shipping Address</b>
                     </td>
                     <td style={{ width: "50%" }}>
                       <b>Contact</b>
@@ -152,15 +152,16 @@ const OrderReceived = ({ cartItems }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {console.log(shippingData)}
+                  {console.log("thank you for order shipping address object",shippingData)}
                   <tr>
                     <td>
-                      {shippingData?.delivery_address?.house}
-                      <br />
-                      {shippingData?.delivery_address?.floor}{" "}
-                      {shippingData?.delivery_address?.road}
-                      <br />
                       {shippingData?.delivery_address?.address}
+                      <br />
+                      {shippingData?.delivery_address?.road}{" "}
+                      {shippingData?.delivery_address?.state}{" "}
+                      {shippingData?.delivery_address?.city}{" "}
+                      {shippingData?.delivery_address?.post_code}
+                      <br />
                     </td>
                     <td>
                       {shippingData?.delivery_address?.contact_person_name}{" "}
@@ -181,7 +182,8 @@ const OrderReceived = ({ cartItems }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {shippingData?.products?.map((item, i) => (
+           
+                  {/* {shippingData?.products?.map((item, i) => (
                     <tr>
                       <td class="text-left">
                         <Link
@@ -190,6 +192,7 @@ const OrderReceived = ({ cartItems }) => {
                         >
                           {item?.name}
                         </Link>
+                        {console.log("item",item)}
                       </td>
                       <td class="text-left">{item?.model}</td>
                       <td class="text-right"> {item?.quantity}</td>
@@ -197,6 +200,25 @@ const OrderReceived = ({ cartItems }) => {
                       <td class="text-right">
                         {" "}
                         ¥{(item?.quantity ? item?.quantity : 1) * item?.price}
+                      </td>
+                    </tr>
+                  ))} */}
+                       {shippingData?.details?.map((item, i) => (
+                    <tr>
+                      <td class="text-left">
+                        <Link
+                          href="/products/[slug]"
+                          as={`/products/${item?.product_id}`}
+                        >
+                          {item?.product.name}
+                        </Link>
+                      </td>
+                      <td class="text-left">{item?.product.model}</td>
+                      <td class="text-right"> {item?.quantity}</td>
+                      <td class="text-right">¥{item?.product.actual_price ? item?.product.actual_price : item.price}</td>
+                      <td class="text-right">
+                        {" "}
+                        ¥{(item?.quantity ? item?.quantity : 1) * (item?.product.actual_price ? item?.product.actual_price : item.price)}
                       </td>
                     </tr>
                   ))}
@@ -236,7 +258,7 @@ const OrderReceived = ({ cartItems }) => {
                       </td>
                     </tr>
                   ) : (
-                    0
+                    null
                   )}
                   {shippingData?.ten_percent != 0 ? (
                     <tr>

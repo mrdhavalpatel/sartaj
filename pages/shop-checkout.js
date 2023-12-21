@@ -147,10 +147,15 @@ const Cart = ({
     let token = localStorage.getItem("token");
     let payload = {
       address: values?.billing_address,
+      full_name:
+        values?.full_name != undefined || values?.full_name != null
+          ? values?.full_name
+          : selectedAddressData?.full_name,
       road:
-        values?.road != undefined || values?.road != null
-          ? values?.road
-          : selectedAddressData?.road,
+        values?.billing_address2 != undefined ||
+        values?.billing_address2 != null
+          ? values?.billing_address2
+          : selectedAddressData?.billing_address2,
       house:
         values?.house != undefined || values?.house != null
           ? values?.house
@@ -170,25 +175,21 @@ const Cart = ({
       post_code: values?.post_code
         ? values?.post_code
         : selectedAddressData?.post_code,
-      contact_person_name: values?.email
-        ? values?.email
+      contact_person_name: values?.contact_person_name
+        ? values?.contact_person_name
         : selectedAddressData?.contact_person_name,
-      contact_person_number: values?.phone
-        ? values?.phone
+      contact_person_number: values?.contact_person_number
+        ? values?.contact_person_number
         : selectedAddressData?.contact_person_number,
     };
     const response = await axios
-      .put(
-        `${API_BASE_URL}customer/address/update/${selectedAddressData?.id}`,
-        payload,
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .put(`${API_BASE_URL}customer/address/update`, payload, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         console.log("response", response);
         if (response.status == 200) {
@@ -221,6 +222,7 @@ const Cart = ({
   const handlePrefillAddress = async () => {
     if (address?.billing_address?.length > 0) {
       const defaultAddress = address.billing_address[0];
+      console.log("auto address", address?.billing_address[0]);
       setSelectedAddressDropdown(defaultAddress.id);
       findElementById(defaultAddress.id);
     }
@@ -234,15 +236,14 @@ const Cart = ({
       <Formik
         enableReinitialize
         initialValues={{
-          fname: userDetails?.f_name,
-          lname: userDetails?.l_name,
+          full_name: selectedAddressData?.full_name,
           billing_address: selectedAddressData?.address,
           billing_address2: selectedAddressData?.road,
           city: selectedAddressData?.city,
           state: selectedAddressData?.state,
-          zipcode: selectedAddressData?.post_code,
-          phone: selectedAddressData?.contact_person_number,
-          email: selectedAddressData?.contact_person_number,
+          post_code: selectedAddressData?.post_code,
+          contact_person_number: selectedAddressData?.contact_person_number,
+          contact_person_name: selectedAddressData?.contact_person_name,
         }}
         onSubmit={(values) => handleAddressSubmit(values)}
       >
@@ -252,16 +253,8 @@ const Cart = ({
               <Field
                 type="text"
                 required=""
-                name="fname"
-                placeholder="First name *"
-              />
-            </div>
-            <div className="form-group">
-              <Field
-                type="text"
-                required=""
-                name="lname"
-                placeholder="Last name *"
+                name="full_name"
+                placeholder="Full Name*"
               />
             </div>
 
@@ -301,7 +294,7 @@ const Cart = ({
               <Field
                 required=""
                 type="text"
-                name="zipcode"
+                name="post_code"
                 placeholder="Postcode / ZIP *"
               />
             </div>
@@ -309,18 +302,19 @@ const Cart = ({
               <Field
                 required=""
                 type="text"
-                name="phone"
-                placeholder="Phone *"
+                name="contact_person_name"
+                placeholder="Contact Person Name*"
               />
             </div>
             <div className="form-group">
               <Field
                 required=""
                 type="text"
-                name="email"
-                placeholder="Email address *"
+                name="contact_person_number"
+                placeholder="Contact Person Number*"
               />
             </div>
+
             <div
               id="collapsePassword"
               className="form-group create-account collapse in"
@@ -466,7 +460,19 @@ const Cart = ({
                   >
                     {address?.billing_address?.map((option) => (
                       <option key={option.id} value={option.id}>
-                        {`${option?.floor}, ${option?.house},${option?.road},${option?.post_code},${option?.city},${option?.state}`}
+                        {`${
+                          option?.full_name !== null
+                            ? option.full_name + ","
+                            : ""
+                        } ${
+                          option?.address !== null ? option.address + "," : ""
+                        }${option?.road !== null ? option.road + "," : ""}${
+                          option?.post_code !== null
+                            ? option?.post_code + ","
+                            : ""
+                        }${option?.city !== null ? option?.city + "," : ""}${
+                          option?.state !== null ? option?.state + "," : ""
+                        }`}
                       </option>
                     ))}
                   </select>

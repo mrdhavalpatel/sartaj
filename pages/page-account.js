@@ -430,11 +430,14 @@ function Account() {
                                 {address?.billing_address?.map((address) => (
                                   <>
                                     <address>
-                                      {address?.house},{address?.floor},
-                                      {/* <br /> */}
+                                      {address?.house ? `${address?.house}, `: null}{address?.floor ? `${address?.floor} `: null}
+                                    <br />
+                                      {address?.address ? `${address?.address} `: null}
                                       <br />
-                                      {address?.road}, <br />
-                                      {address?.address}
+                                      {address?.city ? `${address?.city} - `: null} {address?.post_code ? `${address?.post_code} `: null}
+                                      <br />
+                                      {address?.state ? `${address?.state} `: null}
+                                      <br />
                                     </address>
                                     <Button
                                       style={{

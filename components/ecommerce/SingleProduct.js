@@ -36,7 +36,7 @@ const SingleProduct = ({
           <div className="product-img product-img-zoom">
             <Link href="/products/[slug]" as={`/products/${product?.id}`}>
               {product?.image?.map((itm) => {
-                return <img className="default-img" src={itm} alt="nest" />;
+                return <img  className="default-img" src={itm} alt="nest" />;
               })}
             </Link>
           </div>
