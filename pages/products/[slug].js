@@ -4,6 +4,7 @@ import Layout from "../../components/layout/Layout";
 import { useRouter } from "next/router";
 import { ApiCall } from "../../lib/other/other";
 import Preloader from "../../components/elements/Preloader";
+import SEO from "../../components/seo/SEO";
 
 const ProductId = () => {
   const router = useRouter();
@@ -24,7 +25,14 @@ const ProductId = () => {
     <>
       <Layout parent="Home" sub="Shop" subChild={product?.name}>
         <div className="container">
-          {loading ? <Preloader /> : <ProductDetails product={product} />}
+          {loading ? (
+            <Preloader />
+          ) : (
+            <>
+              <SEO title={product.name} description={product?.name} />
+              <ProductDetails product={product} />
+            </>
+          )}
         </div>
       </Layout>
     </>
