@@ -1,7 +1,7 @@
 import Link from "next/link";
 import CategoryTab from "../components/ecommerce/categoryTab";
 import FeatchDeals from "../components/ecommerce/fetchDeals";
-import Layout from "../components/layout/Layout";
+// import Layout from "../components/layout/Layout";
 import Intro2 from "../components/sliders/Intro2";
 import FetchTabSlider from "../components/ecommerce/fetchTabSlider";
 import Bottom from "../components/elements/Bottom";
@@ -10,7 +10,8 @@ import CategorySlider2 from "../components/sliders/Category2";
 import { useEffect, useState } from "react";
 import { ApiCall } from "../lib/other/other";
 import { useRouter } from "next/router";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
+import Layout from "../components/layout/Layout";
 
 function Index2() {
   const [adBanner, setAdBanner] = useState([]);
@@ -18,12 +19,9 @@ function Index2() {
 
   const intl = useIntl();
 
-  const title = intl.formatMessage({ id: "page.home.head.title" });
-  const description = intl.formatMessage({
-    id: "page.home.head.meta.description",
-  });
+  // console.log("---->>>>>>>>", intl?.locale);
   const getBanners = async () => {
-    const res = await ApiCall("get", "banners/get-other-banners");
+    const res = await ApiCall("get", intl, "banners/get-other-banners");
     setAdBanner(res?.data);
   };
   useEffect(() => {

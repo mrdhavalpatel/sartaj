@@ -29,14 +29,18 @@ const SingleProduct = ({
     addToWishlist(product);
     // toast("Added to Wishlist !");
   };
+  console.log("@@@@@@@@@@@@@@@@@@@@@@", product);
   return (
     <>
       <div className="product-cart-wrap mb-30">
         <div className="product-img-action-wrap">
           <div className="product-img product-img-zoom">
-            <Link href="/products/[slug]" as={`/products/${product?.id}`}>
+            <Link
+              href={`/products/${product?.seo_en}`}
+              as={`/products/${product?.seo_en}`}
+            >
               {product?.image?.map((itm) => {
-                return <img  className="default-img" src={itm} alt="nest" />;
+                return <img className="default-img" src={itm} alt="nest" />;
               })}
             </Link>
           </div>
@@ -82,7 +86,10 @@ const SingleProduct = ({
             <Link href="/products">{product?.manufacturer?.name}</Link>
           </div>
           <h2>
-            <Link href="/products/[slug]" as={`/products/${product?.id}`}>
+            <Link
+              href={`/products/${product?.seo_en}`}
+              // as={`/products/${product?.seo_en}`}
+            >
               {product?.name}
             </Link>
           </h2>
@@ -119,10 +126,11 @@ const SingleProduct = ({
           <div className="product-card-bottom">
             <div className="product-price">
               <span>¥{product.actual_price} </span>
-              {product.actual_price == product.price ? null : <span className="old-price">
-                {product.price && `¥ ${product.price}`}
-              </span> }
-              
+              {product.actual_price == product.price ? null : (
+                <span className="old-price">
+                  {product.price && `¥ ${product.price}`}
+                </span>
+              )}
             </div>
             {/* <div className="product-price">
               <span>¥{product.price} </span>
