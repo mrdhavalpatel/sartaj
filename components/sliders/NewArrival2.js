@@ -24,15 +24,13 @@ const NewArrival2 = () => {
       {newArrival?.slice(0, 3).map((product, i) => (
         <article className="row align-items-center hover-up" key={i}>
           <figure className="col-md-4 mb-0">
-            <Link href="/products/[slug]" as={`/products/${product?.id}`}>
+            <Link href={`/${product?.seo_en}`}>
               <img src={product?.image?.[0]} alt="nest" />
             </Link>
           </figure>
           <div className="col-md-8 mb-0">
             <h6>
-              <Link href="/products/[slug]" as={`/products/${product?.id}`}>
-                {product?.name}
-              </Link>
+              <Link href={`/${product?.seo_en}`}>{product?.name}</Link>
             </h6>
             <div className="product-rate-cover">
               <div className="product-rate d-inline-block">
