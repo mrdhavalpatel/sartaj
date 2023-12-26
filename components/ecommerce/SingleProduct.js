@@ -83,11 +83,13 @@ const SingleProduct = ({
         </div>
         <div className="product-content-wrap">
           <div className="product-category">
-            <Link href="/products">{product?.manufacturer?.name}</Link>
+            <Link href={`/vendor/${product?.manufacturer.id}`}>
+              {product?.manufacturer?.name}
+            </Link>
           </div>
           <h2>
             <Link
-              href={`/products/${product?.seo_en}`}
+              href={`/${product?.seo_en}`}
               // as={`/products/${product?.seo_en}`}
             >
               {product?.name}
