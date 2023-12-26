@@ -36,8 +36,8 @@ const SingleProduct = ({
         <div className="product-img-action-wrap">
           <div className="product-img product-img-zoom">
             <Link
-              href={`/products/${product?.seo_en}`}
-              as={`/products/${product?.seo_en}`}
+              href={`/${product?.seo_en}`}
+              // as={`/products/${product?.seo_en}`}
             >
               {product?.image?.map((itm) => {
                 return <img className="default-img" src={itm} alt="nest" />;
