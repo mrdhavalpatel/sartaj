@@ -91,15 +91,6 @@ function FeatchTabSlider({ banners }) {
                 Shop Now <i className="fi-rs-arrow-small-right"></i>
               </Link>
             </div>
-
-            {/* <img
-              src={`${banners?.[1]?.banner_logo}`}
-              onClick={() => {
-                window.location.replace(
-                  `${banners?.[1]?.link ? banners?.[1]?.link : "#"}`
-                );
-              }}
-            /> */}
           </div>
         </div>
         <div className="col-lg-9 col-md-12">
@@ -113,25 +104,6 @@ function FeatchTabSlider({ banners }) {
                 <FeaturedSlider products={featured} />
               </div>
             </div>
-
-            {/* <div
-              className={
-                active === "2" ? "tab-pane fade show active" : "tab-pane fade"
-              }
-            >
-              <div className="carausel-4-columns-cover card-product-small arrow-center position-relative">
-                <TrendingSlider products={trending} />
-              </div>
-            </div>
-            <div
-              className={
-                active === "3" ? "tab-pane fade show active" : "tab-pane fade"
-              }
-            >
-              <div className="carausel-4-columns-cover card-product-small arrow-center position-relative">
-                <NewArrivalTabSlider products={newArrival} />
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

@@ -29,13 +29,12 @@ const SingleProduct2 = ({
     addToWishlist(product);
     // toast("Added to Wishlist !");
   };
-
   return (
     <>
       <div className="product-cart-wrap mb-30">
         <div className="product-img-action-wrap">
           <div className="product-img product-img-zoom">
-            <Link href={`/${product?.seo_eng}`}>
+            <Link href={`/${product?.seo_en}`}>
               <img className="default-img" src={product?.image} alt="nest" />
               <img className="hover-img" src={product?.image} alt="nest" />
             </Link>
@@ -65,23 +64,10 @@ const SingleProduct2 = ({
               <i className="fi-rs-shuffle"></i>
             </a>
           </div>
-
-          {/* <div className="product-badges product-badges-position product-badges-mrg">
-            {product.trending && <span className="hot">Hot</span>}
-            {product.created && <span className="new">New</span>}
-            {product.totalSell > 100 && <span className="best">Best Sell</span>}
-            {product.discount.isActive && <span className="sale">Sale</span>}
-            {product.discount.percentage >= 5 && (
-              <span className="hot">{product.discount.percentage}%</span>
-            )}
-          </div> */}
         </div>
         <div className="product-content-wrap">
-          {/* <div className="product-category">
-            <Link href="/products">{product?.brand}</Link>
-          </div> */}
           <h2>
-            <Link href={`/${product?.seo_eng}`}>{product?.name}</Link>
+            <Link href={`/${product?.seo_en}`}>{product?.name}</Link>
           </h2>
 
           <div className="product-rate d-inline-block">

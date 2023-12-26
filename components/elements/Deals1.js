@@ -19,7 +19,7 @@ const Deals1 = ({ product, addToCart }) => {
       >
         <div className="product-img-action-wrap">
           <div className="product-img">
-            <Link href="/products">
+            <Link href={`/${product?.seo_en}`}>
               <img src={product?.image?.[0]} alt="nest" />
             </Link>
           </div>
@@ -31,9 +31,7 @@ const Deals1 = ({ product, addToCart }) => {
           </div>
           <div className="deals-content">
             <h2>
-              <Link href="/products/[slug]" as={`/products/${product.id}`}>
-                {product.name}
-              </Link>
+              <Link href={`/${product?.seo_en}`}>{product.name}</Link>
             </h2>
             <div className="product-rate-cover">
               <div className="product-rate d-inline-block">
