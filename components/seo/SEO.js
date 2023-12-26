@@ -4,7 +4,7 @@ const SEO = ({ title, description, keywords }) => {
   console.log(title, description, keywords);
   return (
     <Head>
-      <title>{`sartaj | ${"t11111111111111111111111111111111111111111111111111111111111"}`}</title>
+      <title>{`https://sartaj.vercel.app | ${title}`}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
     </Head>
