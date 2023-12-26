@@ -31,6 +31,7 @@ const Cart = ({
   const [coupenCode, setCoupenCode] = useState("");
   const [coupenCodeDis, setCoupenCodeDis] = useState("");
   const [cartTotal, setCartTotal] = useState([]);
+  const [coupanDetails, setCoupanDetails] = useState("");
   const router = useRouter();
   const [cartItemsData, setCartItemsData] = useState([]);
   const [timeSlot, setTimeSlot] = useState([]);
@@ -61,53 +62,118 @@ const Cart = ({
   };
   const handleCoupencode = async () => {
     let token = localStorage.getItem("token");
-    let payload = {
-      code: coupenCode,
-    };
-    const response = await axios.post(`${API_BASE_URL}coupon/apply`, payload, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    // coupenCode(response);
-    if (response?.status === 200) {
-      setCoupenCodeDis(response?.data?.discount);
-      toast.success("Coupen code is applied");
+    try {
+      let payload = {
+        code: coupenCode,
+      };
+
+      const response = await axios
+        .post(`${API_BASE_URL}coupon/apply`, payload, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          console.log("coupon response", response);
+          if (response?.status == 200) {
+            console.log("first");
+            setCoupenCodeDis(response?.data?.discount);
+            if (response.data.discount_type == "percent") {
+              setCoupanDetails(
+                `${response?.data?.discount}% applied sucessfully`
+              );
+            }
+
+            toast.success("Coupon applied successfully");
+            getCartData(token);
+          }
+        });
+    } catch (error) {
+      // Log and handle the error
+      // console.error("Error applying coupon:", error);
+      setCoupanDetails("");
+      toast.error("Please enter valid coupan");
     }
   };
-
   const placeOrder = async () => {
-    let token = localStorage.getItem("token");
+    try {
+      let token = localStorage.getItem("token");
 
-    let payload = {
-      order_amount: cartTotal?.total_amt,
-      payment_method: "cash_on_delivery",
-      delivery_address_id: address?.billing_address?.[0]?.id,
-      order_type: "delivery",
-      coupon_discount_amount: coupenCodeDis,
-      cart: cartItemsData,
-      time_slot_id: selectedRadioId,
-      order_note: orderNotes,
-    };
+      let payload = {
+        order_amount: cartTotal?.total_amt,
+        payment_method: "cash_on_delivery",
+        delivery_address_id: address?.billing_address?.[0]?.id,
+        order_type: "delivery",
+        coupon_discount_amount: coupenCodeDis,
+        cart: cartItemsData,
+        time_slot_id: selectedRadioId,
+        order_note: orderNotes,
+      };
 
-    const response = await axios.post(
-      `${API_BASE_URL}customer/order/place`,
-      payload,
-      {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+      const response = await axios.post(
+        `${API_BASE_URL}customer/order/place`,
+        payload,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response?.status === 200) {
+        // clearCart();
+        router.push(`/OrderReceived?order_id=${response?.data?.order_id}`);
       }
-    );
-    if (response?.status == 200) {
-      // clearCart();
-      router.push(`/OrderReceived?order_id=${response?.data?.order_id}`);
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.errors) {
+        const errorMessage = error.response.data.errors[0]?.message;
+        toast.error(errorMessage + "¥");
+      } else {
+        console.error("Error while placing order:", error);
+        toast.error("An error occurred while placing the order");
+      }
     }
   };
+
+  //   const placeOrder = async () => {
+  //     let token = localStorage.getItem("token");
+
+  //     let payload = {
+  //       order_amount: cartTotal?.total_amt,
+  //       payment_method: "cash_on_delivery",
+  //       delivery_address_id: address?.billing_address?.[0]?.id,
+  //       order_type: "delivery",
+  //       coupon_discount_amount: coupenCodeDis,
+  //       cart: cartItemsData,
+  //       time_slot_id: selectedRadioId,
+  //       order_note: orderNotes,
+  //     };
+  // try{
+  //   const response = await axios.post(
+  //     `${API_BASE_URL}customer/order/place`,
+  //     payload,
+  //     {
+  //       headers: {
+  //         "Access-Control-Allow-Origin": "*",
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     }
+  //   ).then((res)=>{console.log("response while place order",res)})
+  //   if (response?.status == 200) {
+  //     // clearCart();
+  //     router.push(`/OrderReceived?order_id=${response?.data?.order_id}`);
+  //   }
+  // }
+  // catch(error){
+  //   console.log("error in try catch" , error)
+  // }
+
+  //   };
   const getAddress = async (encodedToken) => {
     const response = await api.get("customer/address/list", {
       headers: {
@@ -388,6 +454,8 @@ const Cart = ({
                           Apply Coupon
                         </button>
                       </form>
+
+                      <h6 style={{ color: "green" }}>{coupanDetails}</h6>
                     </div>
                     <div
                       className="panel-collapse collapse login_form"
@@ -772,6 +840,18 @@ const Cart = ({
                       </div> */}
                     </div>
                   </div>
+                  {cartTotal?.total_amt <= 2500 ? (
+                    <h8 style={{ color: "red" }}>
+                      Oops! Your cart is below 2500 ¥. Please add items worth{" "}
+                      {Math.round(2500 - (cartTotal?.total_amt || 0))} ¥ or more
+                      to place your order. Happy shopping!
+                    </h8>
+                  ) : (
+                    <h8 style={{ color: "green" }}>
+                      Congratulation , You are eligible to place order
+                    </h8>
+                  )}
+                  <h6></h6>
                   <button
                     onClick={() => {
                       placeOrder();

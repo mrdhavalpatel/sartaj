@@ -29,16 +29,12 @@ const SingleProduct = ({
     addToWishlist(product);
     // toast("Added to Wishlist !");
   };
-  console.log("@@@@@@@@@@@@@@@@@@@@@@", product);
   return (
     <>
       <div className="product-cart-wrap mb-30">
         <div className="product-img-action-wrap">
           <div className="product-img product-img-zoom">
-            <Link
-              href={`/${product?.seo_en}`}
-              // as={`/products/${product?.seo_en}`}
-            >
+            <Link href={`/${product?.seo_en}`}>
               {product?.image?.map((itm) => {
                 return <img className="default-img" src={itm} alt="nest" />;
               })}
@@ -88,12 +84,7 @@ const SingleProduct = ({
             </Link>
           </div>
           <h2>
-            <Link
-              href={`/${product?.seo_en}`}
-              // as={`/products/${product?.seo_en}`}
-            >
-              {product?.name}
-            </Link>
+            <Link href={`/${product?.seo_en}`}>{product?.name}</Link>
           </h2>
 
           <div className="product-rate-cover">

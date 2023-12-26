@@ -35,7 +35,7 @@ const SingleProduct2 = ({
       <div className="product-cart-wrap mb-30">
         <div className="product-img-action-wrap">
           <div className="product-img product-img-zoom">
-            <Link href="/products/[slug]" as={`/products/${product?.id}`}>
+            <Link href={`/${product?.seo_eng}`}>
               <img className="default-img" src={product?.image} alt="nest" />
               <img className="hover-img" src={product?.image} alt="nest" />
             </Link>
@@ -81,9 +81,7 @@ const SingleProduct2 = ({
             <Link href="/products">{product?.brand}</Link>
           </div> */}
           <h2>
-            <Link href="/products/[slug]" as={`/products/${product?.id}`}>
-              {product?.name}
-            </Link>
+            <Link href={`/${product?.seo_eng}`}>{product?.name}</Link>
           </h2>
 
           <div className="product-rate d-inline-block">
