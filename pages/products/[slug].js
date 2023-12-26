@@ -10,13 +10,15 @@ const ProductId = () => {
   const router = useRouter();
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
-
+  console.log(router?.query);
   useEffect(() => {
     setLoading(true);
-    ApiCall("get", `products/details/${router?.query?.id}`).then((response) => {
-      setProduct(response?.data);
-      setLoading(false);
-    });
+    ApiCall("get", `products/details/${router?.query?.slug}`).then(
+      (response) => {
+        setProduct(response?.data);
+        setLoading(false);
+      }
+    );
   }, []);
 
   return (
@@ -27,7 +29,11 @@ const ProductId = () => {
             <Preloader />
           ) : (
             <>
-              <SEO title={product.seo_eng} description={product?.description} />
+              <SEO
+                title={product.meta_title}
+                description={product?.meta_tag_description}
+                keywords={product?.meta_tag_keywords}
+              />
               <ProductDetails product={product} />
             </>
           )}
