@@ -88,7 +88,7 @@ const ProductDetails = ({
                       <div className="clearfix product-price-cover">
                         <div className="product-price primary-color float-left">
                           <span className="current-price  text-brand">
-                            ¥{product?.price}
+                            ¥{product?.actual_price}
                           </span>
                           {product?.discount?.percentage == null ? (
                             <span></span>
@@ -97,10 +97,8 @@ const ProductDetails = ({
                               <span className="save-price font-md color3 ml-15">
                                 {product?.discount?.percentage}% Off
                               </span>
-                              <span className="old-price font-md ml-15">
-                                {product.oldPrice
-                                  ? `¥ ${product?.oldPrice}`
-                                  : null}
+                              <span className="old-price">
+                                {product?.price && `¥ ${product?.price}`}
                               </span>
                             </span>
                           )}
