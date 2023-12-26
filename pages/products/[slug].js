@@ -13,12 +13,10 @@ const ProductId = () => {
 
   useEffect(() => {
     setLoading(true);
-    ApiCall("get", `products/details/${router?.query?.slug}`).then(
-      (response) => {
-        setProduct(response?.data);
-        setLoading(false);
-      }
-    );
+    ApiCall("get", `products/details/${router?.query?.id}`).then((response) => {
+      setProduct(response?.data);
+      setLoading(false);
+    });
   }, []);
 
   return (
