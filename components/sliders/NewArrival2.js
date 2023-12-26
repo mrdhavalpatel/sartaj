@@ -38,7 +38,7 @@ const NewArrival2 = () => {
                   className="product-rating"
                   style={{
                     width: `${
-                      product?.overall_rating ? product.overall_rating : 0
+                      product?.overall_rating ? product?.overall_rating : 0
                     }%`,
                   }}
                 ></div>
@@ -51,7 +51,7 @@ const NewArrival2 = () => {
             <div className="product-price">
               <span>¥{product?.price} </span>
               <span className="old-price">
-                {product.oldPrice && `¥ ${product.oldPrice}`}
+                {product.oldPrice && `¥ ${product?.oldPrice}`}
               </span>
             </div>
           </div>

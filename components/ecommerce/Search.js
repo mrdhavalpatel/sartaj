@@ -97,7 +97,7 @@ const Search = () => {
                   cursor: "pointer",
                 }}
               >
-                <a href={`/products/${result?.id}}`}>{result?.name}</a>
+                <a href={`${result?.seo_en}`}>{result?.name}</a>
               </li>
             ))}
           </ul>
