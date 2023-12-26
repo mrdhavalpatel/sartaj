@@ -29,7 +29,7 @@ const ProductId = () => {
             <Preloader />
           ) : (
             <>
-              <SEO title={product.name} description={product?.name} />
+              <SEO title={product.seo_eng} description={product?.description} />
               <ProductDetails product={product} />
             </>
           )}

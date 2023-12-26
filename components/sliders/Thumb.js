@@ -7,7 +7,7 @@ SwiperCore.use([Navigation, Thumbs]);
 
 const ThumbSlider = ({ product }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-
+  console.log("-------->", product);
   return (
     <div>
       <Swiper
@@ -33,7 +33,7 @@ const ThumbSlider = ({ product }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <Swiper
+      {/* <Swiper
         onSwiper={setThumbsSwiper}
         spaceBetween={10}
         slidesPerView={4}
@@ -46,7 +46,7 @@ const ThumbSlider = ({ product }) => {
             <img src={item} />
           </SwiperSlide>
         ))}
-      </Swiper>
+      </Swiper> */}
     </div>
   );
 };

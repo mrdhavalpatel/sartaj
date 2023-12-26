@@ -3,8 +3,7 @@ import Head from "next/head";
 const SEO = ({ title, description }) => {
   return (
     <Head>
-      <title>{`https://sartaj.vercel.app/ | ${title}`}</title>
-
+      <title>{`https://sartaj.vercel.app/products | ${title}`}</title>
       <meta name="description" content={description} />
     </Head>
   );
