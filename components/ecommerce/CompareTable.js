@@ -40,7 +40,11 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                 </td>
               ) : feature == "Category" ? (
                 <td className="product_price">
-                  <span>{product?.category}</span>
+                  <span>
+                    {product?.category_ids?.map((item) =>
+                      item.name ? `${item.name},` : null
+                    )}
+                  </span>
                 </td>
               ) : feature == "rating" ? (
                 <td>

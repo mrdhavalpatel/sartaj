@@ -10,6 +10,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../../lib/api";
 import { useLanguage } from "../context/LanguageContext";
 import { useIntl } from "react-intl";
+import { useRouter } from "next/router";
 const Header = ({
   totalCartItems,
   totalCompareItems,
@@ -21,11 +22,21 @@ const Header = ({
   const [scroll, setScroll] = useState(0);
   const { logout } = useAuth();
   const [categories, setCategories] = useState([]);
+  const [DLang, setDLang] = useState(intl.locale);
   const [cartItemsCount, setCartItemsCount] = useState(0);
   const { language, switchLanguage } = useLanguage();
-
+  const router = useRouter();
   const handleLanguageSwitch = (newLanguage) => {
     switchLanguage(newLanguage);
+    setDLang(newLanguage);
+
+    const currentSlug = router.query.slug || "";
+
+    const pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
+
+    const newUrl = `/${newLanguage}/${pathWithoutLanguage}`;
+
+    window.location.replace(newUrl);
   };
   const getAllCategories = async () => {
     const request = await ApiCall("get", intl, "categories");
@@ -131,15 +142,13 @@ const Header = ({
                         <strong className="text-brand">072-751-1975</strong>
                       </a>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
                         href="/"
                         onClick={() => handleLanguageSwitch("eng")}
                         className="language-dropdown-active"
                       >
                         <i className="fi-rs-world"></i>
-                        {/* {intl.formatMessage({ id: "English" })}
-                         */}
                         English
                         <i className="fi-rs-angle-small-down"></i>
                       </Link>
@@ -155,15 +164,22 @@ const Header = ({
                           日本語
                         </Link>
                       </ul>
+                    </li> */}
+                    <li>
+                      <label htmlFor="languageDropdown" className="sr-only">
+                        Select Language
+                      </label>
+                      <select
+                        id="languageDropdown"
+                        onChange={(e) => handleLanguageSwitch(e.target.value)}
+                        value={DLang} // Assuming you have a variable for the current language
+                      >
+                        <option value="eng">English</option>
+                        <option value="jp">日本語</option>
+                        {/* Add more options as needed */}
+                      </select>
                     </li>
-                    {/* <div>
-                      <button >
-                        English
-                      </button>
-                      <button onClick={() => handleLanguageSwitch("fr")}>
-                        French
-                      </button>
-                    </div> */}
+                    {console.log("language", language)}
                   </ul>
                 </div>
               </div>

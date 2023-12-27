@@ -80,7 +80,6 @@ const Cart = ({
           },
         })
         .then((response) => {
-          console.log("coupon response", response);
           if (response?.status == 200) {
             setCoupanRes(response?.data);
             setCoupenCodeDis(response?.data?.discount_price);
@@ -664,7 +663,6 @@ const Cart = ({
                               <strong>
                                 {intl.formatMessage({ id: "Consumption Tax" })}{" "}
                                 {cartTotal?.eight_percent ? 8 : 0}{" "}
-                                {cartTotal?.eight_percent ? 8 : 0}%
                               </strong>
                             </td>
                             <td
@@ -691,7 +689,6 @@ const Cart = ({
                                   id: "Consumption Tax",
                                 })}{" "}
                                 {cartTotal?.eight_percent ? 8 : 0}
-                                10%
                               </strong>
                             </td>
                             <td
