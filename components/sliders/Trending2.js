@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { fetchByCatagory } from "../../redux/action/product";
 import { ApiCall } from "../../lib/other/other";
 
-const TrendingSlider = () => {
+const TrendingSlider = ({ intl }) => {
   const [trending, setTrending] = useState([]);
 
   useEffect(() => {
@@ -22,13 +22,19 @@ const TrendingSlider = () => {
       {trending?.slice(0, 3)?.map((product, i) => (
         <article className="row align-items-center hover-up" key={i}>
           <figure className="col-md-4 mb-0">
-            <Link href="/products/[slug]" as={`/products/${product?.id}`}>
+            <Link
+              href={`/${intl.locale == "en" ? product.seo_en : product.seo_ja}`}
+            >
               <img src={product?.image?.[0]} alt="nest" />
             </Link>
           </figure>
           <div className="col-md-8 mb-0">
             <h6>
-              <Link href="/products/[slug]" as={`/products/${product?.id}`}>
+              <Link
+                href={`/${
+                  intl.locale == "en" ? product.seo_en : product.seo_ja
+                }`}
+              >
                 {product?.name}
               </Link>
             </h6>

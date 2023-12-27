@@ -80,7 +80,7 @@ const Cart = ({
           console.log("coupon response", response);
           if (response?.status == 200) {
             setCoupanRes(response?.data);
-            setCoupenCodeDis(response?.data?.discount);
+            setCoupenCodeDis(response?.data?.discount_price);
             if (response.data.discount_type == "percent") {
               setCoupanDetails(
                 `${response?.data?.discount}% applied sucessfully`

@@ -1,12 +1,11 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import SwiperCore, { Navigation } from "swiper";
-import { fetchByCatagory } from "../../redux/action/product";
 import { ApiCall } from "../../lib/other/other";
 
 SwiperCore.use([Navigation]);
 
-const TopRatedSlider = () => {
+const TopRatedSlider = ({ intl }) => {
   const [discount, setDiscount] = useState([]);
 
   useEffect(() => {
@@ -23,13 +22,19 @@ const TopRatedSlider = () => {
       {discount?.slice(0, 3)?.map((product, i) => (
         <article className="row align-items-center hover-up" key={i}>
           <figure className="col-md-4 mb-0">
-            <Link href="/products/[slug]" as={`/products/${product?.id}`}>
+            <Link
+              href={`/${intl.locale == "en" ? product.seo_en : product.seo_ja}`}
+            >
               <img src={product?.image?.[0]} alt="nest" />
             </Link>
           </figure>
           <div className="col-md-8 mb-0">
             <h6>
-              <Link href="/products/[slug]" as={`/products/${product.id}`}>
+              <Link
+                href={`/${
+                  intl.locale == "en" ? product.seo_en : product.seo_ja
+                }`}
+              >
                 {product.name}
               </Link>
             </h6>
@@ -46,7 +51,6 @@ const TopRatedSlider = () => {
               </div>
               <span className="font-small ml-5 text-muted">
                 {`(${product?.total_reviews ? product?.total_reviews : 0})`}
-                {/* ({product?.rating}) */}
               </span>
             </div>
             <div className="product-price">
