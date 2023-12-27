@@ -103,10 +103,6 @@ const OrderReceived = ({ cartItems }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {console.log(
-                    "thank you for order shipping address object",
-                    shippingData
-                  )}
                   <tr>
                     <td>
                       {shippingData?.delivery_address?.address}
@@ -170,8 +166,9 @@ const OrderReceived = ({ cartItems }) => {
                     <tr>
                       <td class="text-left">
                         <Link
-                          href="/products/[slug]"
-                          as={`/products/${item?.product_id}`}
+                          href={`/${
+                            intl.locale == "en" ? item?.seo_en : item?.seo_ja
+                          }`}
                         >
                           {item?.product.name}
                         </Link>
@@ -250,7 +247,7 @@ const OrderReceived = ({ cartItems }) => {
                   {shippingData?.couponPrice ? (
                     <tr>
                       <td colspan="4" class="text-right">
-                        Discount Price 
+                        Discount Price
                       </td>
                       <td class="text-right"> ¥{shippingData?.couponPrice}</td>
                     </tr>

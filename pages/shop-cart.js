@@ -213,7 +213,21 @@ const Cart = ({
                           </td>
                           <td className="product-des product-name">
                             <h6 className="product-name">
-                              <Link href="/products">
+                              <Link
+                                href={
+                                  intl.locale == "eng"
+                                    ? `${
+                                        item?.seo_en
+                                          ? item?.seo_en
+                                          : item?.product?.seo_en
+                                      }`
+                                    : `${
+                                        item?.seo_ja
+                                          ? item?.seo_ja
+                                          : item?.product?.seo_ja
+                                      }`
+                                }
+                              >
                                 {item?.name ? item?.name : item?.product?.name}
                               </Link>
                             </h6>

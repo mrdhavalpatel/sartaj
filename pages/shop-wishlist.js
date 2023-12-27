@@ -68,7 +68,15 @@ const Wishlist = ({
 
                             <td className="product-des product-name">
                               <h6 className="product-name  mb-10">
-                                <a>{product.name}</a>
+                                <a
+                                  href={`/${
+                                    intl.locale == "eng"
+                                      ? product?.seo_en
+                                      : product?.seo_ja
+                                  }`}
+                                >
+                                  {product?.name}
+                                </a>
                               </h6>
                               <div className="product-rate-cover">
                                 <div className="product-rate d-inline-block">
