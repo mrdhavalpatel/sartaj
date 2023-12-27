@@ -103,7 +103,9 @@ const Cart = ({
       let token = localStorage.getItem("token");
 
       let payload = {
-        order_amount: cartTotal?.total_amt,
+        order_amount: coupanRes?.orderAmount
+          ? coupanRes?.orderAmount
+          : cartTotal?.total_amt,
         payment_method: "cash_on_delivery",
         delivery_address_id: address?.billing_address?.[0]?.id,
         order_type: "delivery",
