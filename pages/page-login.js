@@ -9,10 +9,12 @@ import { useAuth } from "../components/context/AuthContext";
 import { connect } from "react-redux";
 import { API_BASE_URL } from "../lib/api";
 import axios from "axios";
+import { useIntl } from "react-intl";
 
 function Login({ cartItems }) {
   const router = useRouter();
   const { login } = useAuth();
+  const intl = useIntl();
   const addCurrenItems = (token) => {
     if (cartItems?.length > 0) {
       let FCart = cartItems?.map((item) => ({
@@ -76,10 +78,16 @@ function Login({ cartItems }) {
                     <div className="login_wrap widget-taber-content background-white">
                       <div className="padding_eight_all bg-white">
                         <div className="heading_s1">
-                          <h1 className="mb-5">{intl.formatMessage({ id: "Login" })}</h1>
+                          <h1 className="mb-5">
+                            {intl.formatMessage({ id: "Login" })}
+                          </h1>
                           <p className="mb-30">
-                          {intl.formatMessage({ id: "Don't have an account?" })}{" "}
-                            <Link href="/page-register">{intl.formatMessage({ id: "Create here" })}</Link>
+                            {intl.formatMessage({
+                              id: "Don't have an account?",
+                            })}{" "}
+                            <Link href="/page-register">
+                              {intl.formatMessage({ id: "Create here" })}
+                            </Link>
                           </p>
                         </div>
                         <Formik
@@ -99,7 +107,9 @@ function Login({ cartItems }) {
                               <Field
                                 type="text"
                                 name="usernameOrEmail"
-                                placeholder={intl.formatMessage({ id: "Username or Email *" })}
+                                placeholder={intl.formatMessage({
+                                  id: "Username or Email *",
+                                })}
                                 className="form-control"
                               />
                               <ErrorMessage
@@ -112,7 +122,9 @@ function Login({ cartItems }) {
                               <Field
                                 type="password"
                                 name="password"
-                                placeholder={intl.formatMessage({ id: "Your password *" })}
+                                placeholder={intl.formatMessage({
+                                  id: "Your password *",
+                                })}
                                 className="form-control"
                               />
                               <ErrorMessage
