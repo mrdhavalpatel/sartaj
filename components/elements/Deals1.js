@@ -56,9 +56,9 @@ const Deals1 = ({ product, addToCart }) => {
             </div>
             <div className="product-card-bottom">
               <div className="product-price">
-                <span>¥{product?.price}</span>
+                <span>¥{product?.actual_price}</span>
                 <span className="old-price">
-                  {product.oldPrice && `¥ ${product.oldPrice}`}
+                  {product.price && `¥ ${product.price}`}
                 </span>
               </div>
               <div className="add-cart">

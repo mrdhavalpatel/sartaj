@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Layout from "../components/layout/Layout";
-
+import { useIntl } from "react-intl";
 import Link from "next/link";
 import {
   clearCart,
@@ -30,6 +30,7 @@ const Cart = ({
   deleteFromCart,
   clearCart,
 }) => {
+  const intl = useIntl();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartDataUpdated, setCartDataUpdated] = useState(false);
   const [cartTotal, setCartTotal] = useState([]);
@@ -40,13 +41,13 @@ const Cart = ({
       return (
         <a href="/shop-checkout" className="btn" aria-disabled>
           <i className="fi-rs-box-alt mr-10"></i>
-          Proceed To CheckOut
+          {intl.formatMessage({ id: "Proceed To CheckOut" })}
         </a>
       );
     } else {
       <a className="btn" aria-disabled>
         <i className="fi-rs-box-alt mr-10"></i>
-        Proceed To CheckOut
+        {intl.formatMessage({ id: "Proceed To CheckOut" })}
       </a>;
     }
   };
@@ -142,10 +143,14 @@ const Cart = ({
           <div className="container">
             <div className="row">
               <div className="col-lg-8 mb-40">
-                <h1 className="heading-2 mb-10">Your Cart</h1>
+                <h1 className="heading-2 mb-10">
+                  {intl.formatMessage({ id: "Your Cart" })}
+                </h1>
                 <div className="d-flex justify-content-between">
                   <h6 className="text-body">
-                    Carefully check the information before checkout
+                    {intl.formatMessage({
+                      id: "Carefully check the information before checkout",
+                    })}
                   </h6>
                   <h6 className="text-body">
                     <a
@@ -155,7 +160,7 @@ const Cart = ({
                       }}
                     >
                       <i className="fi-rs-trash mr-5"></i>
-                      Clear Cart
+                      {intl.formatMessage({ id: "Clear Cart" })}
                     </a>
                   </h6>
                 </div>
@@ -178,13 +183,19 @@ const Cart = ({
                           className="custome-checkbox start pl-30"
                           colSpan="2"
                         >
-                          Product
+                          {intl.formatMessage({ id: "Product" })}
                         </th>
-                        <th scope="col">Unit Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Subtotal</th>
+                        <th scope="col">
+                          {intl.formatMessage({ id: "Unit Price" })}
+                        </th>
+                        <th scope="col">
+                          {intl.formatMessage({ id: "Quantity" })}
+                        </th>
+                        <th scope="col">
+                          {intl.formatMessage({ id: "Sub Total" })}
+                        </th>
                         <th scope="col" className="end">
-                          Remove
+                          {intl.formatMessage({ id: "Remove" })}
                         </th>
                       </tr>
                     </thead>
@@ -352,7 +363,7 @@ const Cart = ({
                 <div className="cart-action text-end">
                   <a className="btn " href="/shop-fullwidth">
                     <i className="fi-rs-shopping-bag mr-10"></i>
-                    Continue Shopping
+                    {intl.formatMessage({ id: "Continue Shopping" })}
                   </a>
                 </div>
                 <div className="divider center_icon mt-50 mb-50">
@@ -364,14 +375,16 @@ const Cart = ({
                       <div className="col-lg-6 col-md-12">
                         <div className="border p-md-4 p-30 border-radius cart-totals">
                           <div className="heading_s1 mb-3">
-                            <h4>Cart Totals</h4>
+                            <h4>{intl.formatMessage({ id: "Cart Totals" })}</h4>
                           </div>
                           <div className="table-responsive">
                             <table className="table">
                               <tbody>
                                 <tr>
                                   <td className="cart_total_label">
-                                    Cart Subtotal
+                                    {intl.formatMessage({
+                                      id: "Cart Subtotal",
+                                    })}
                                   </td>
                                   <td className="cart_total_amount">
                                     <span className="font-lg fw-900 text-brand">
@@ -379,36 +392,50 @@ const Cart = ({
                                     </span>
                                   </td>
                                 </tr>
-                                {cartTotal?.eight_percent ? (<tr>
-                                  <td className="cart_total_label">
-                                  Consumption Tax 8%
-                                  </td>
-                                  <td className="cart_total_amount">
-                                    <span className="font-lg fw-900 text-brand">
-                                      ¥ {cartTotal?.eight_percent}
-                                    </span>
-                                  </td>
-                                </tr>): null}
-                                {cartTotal?.ten_percent ? (<tr>
-                                  <td className="cart_total_label">
-                                  Consumption Tax 10%
-                                  </td>
-                                  <td className="cart_total_amount">
-                                    <span className="font-lg fw-900 text-brand">
-                                      ¥ {cartTotal?.ten_percent}
-                                    </span>
-                                  </td>
-                                </tr>): null}
-                                
+                                {cartTotal?.eight_percent ? (
+                                  <tr>
+                                    <td className="cart_total_label">
+                                      {intl.formatMessage({
+                                        id: "Consumption Tax",
+                                      })}{" "}
+                                      8%
+                                    </td>
+                                    <td className="cart_total_amount">
+                                      <span className="font-lg fw-900 text-brand">
+                                        ¥ {cartTotal?.eight_percent}
+                                      </span>
+                                    </td>
+                                  </tr>
+                                ) : null}
+                                {cartTotal?.ten_percent ? (
+                                  <tr>
+                                    <td className="cart_total_label">
+                                      {intl.formatMessage({
+                                        id: "Consumption Tax",
+                                      })}{" "}
+                                      10%
+                                    </td>
+                                    <td className="cart_total_amount">
+                                      <span className="font-lg fw-900 text-brand">
+                                        ¥ {cartTotal?.ten_percent}
+                                      </span>
+                                    </td>
+                                  </tr>
+                                ) : null}
+
                                 <tr>
-                                  <td className="cart_total_label">Shipping</td>
+                                  <td className="cart_total_label">
+                                    {intl.formatMessage({ id: "Shipping" })}
+                                  </td>
                                   <td className="cart_total_amount">
                                     <i className="ti-gift mr-5"></i>¥
                                     {cartTotal?.delivery_charge}
                                   </td>
                                 </tr>
                                 <tr>
-                                  <td className="cart_total_label">Total</td>
+                                  <td className="cart_total_label">
+                                    {intl.formatMessage({ id: "Total" })}
+                                  </td>
                                   <td className="cart_total_amount">
                                     <strong>
                                       <span className="font-xl fw-900 text-brand">
@@ -439,12 +466,18 @@ const Cart = ({
                                 <div className="padding_eight_all bg-white">
                                   <div className="heading_s1">
                                     <h1 className="mb-5">
-                                      Login for Checkout{" "}
+                                      {intl.formatMessage({
+                                        id: "Login for Checkout",
+                                      })}{" "}
                                     </h1>
                                     <p className="mb-30">
-                                      Don't have an account?{" "}
+                                      {intl.formatMessage({
+                                        id: "Don't have an account?",
+                                      })}{" "}
                                       <Link href="/page-register">
-                                        Create here
+                                        {intl.formatMessage({
+                                          id: "Create here",
+                                        })}
                                       </Link>
                                     </p>
                                   </div>
@@ -474,7 +507,9 @@ const Cart = ({
                                           <Field
                                             type="text"
                                             name="usernameOrEmail"
-                                            placeholder="Username or Email *"
+                                            placeholder={intl.formatMessage({
+                                              id: "Username or Email *",
+                                            })}
                                             className="form-control"
                                           />
                                           <ErrorMessage
@@ -487,7 +522,9 @@ const Cart = ({
                                           <Field
                                             type="password"
                                             name="currentpassword"
-                                            placeholder="Your password *"
+                                            placeholder={intl.formatMessage({
+                                              id: "Your password *",
+                                            })}
                                             className="form-control"
                                           />
                                           <ErrorMessage
@@ -504,7 +541,9 @@ const Cart = ({
                                             name="login"
                                             disabled={isSubmitting} // Disable the button while submitting
                                           >
-                                            Log in
+                                            {intl.formatMessage({
+                                              id: "Login",
+                                            })}
                                           </button>
                                         </div>
                                       </Form>

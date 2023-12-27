@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { ApiCall } from "../../lib/other/other";
-import {  useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 const Search = () => {
   const intl = useIntl();
   const [searchTerm, setSearchTerm] = useState("");
@@ -57,7 +57,9 @@ const Search = () => {
             borderRadius: "4px",
           }}
         >
-          <option value="">{intl.formatMessage({ id: "All Categories" })}</option>
+          <option value="">
+            {intl.formatMessage({ id: "All Categories" })}
+          </option>
           {categories?.map((itm) => (
             <option key={itm.id} value={itm.id}>
               {itm.name}
@@ -98,7 +100,13 @@ const Search = () => {
                   cursor: "pointer",
                 }}
               >
-                <a href={`/products/${result?.id}}`}>{result?.name}</a>
+                <a
+                  href={`/${
+                    intl.locale == "eng" ? result?.seo_en : result?.seo_ja
+                  }}`}
+                >
+                  {result?.name}
+                </a>
               </li>
             ))}
           </ul>

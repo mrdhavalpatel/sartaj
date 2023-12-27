@@ -23,7 +23,9 @@ const TrendingSlider = ({ intl }) => {
         <article className="row align-items-center hover-up" key={i}>
           <figure className="col-md-4 mb-0">
             <Link
-              href={`/${intl.locale == "en" ? product.seo_en : product.seo_ja}`}
+              href={`/${
+                intl.locale == "eng" ? product.seo_en : product.seo_ja
+              }`}
             >
               <img src={product?.image?.[0]} alt="nest" />
             </Link>
@@ -54,7 +56,7 @@ const TrendingSlider = ({ intl }) => {
               </span>
             </div>
             <div className="product-price">
-              <span>¥{product?.price} </span>
+              <span>¥{product?.actual_price} </span>
               <span className="old-price">
                 {product?.Price && `¥ ${product?.oldPrice}`}
               </span>

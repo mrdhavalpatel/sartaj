@@ -6,10 +6,10 @@ import { useRouter } from "next/router";
 import { auth } from "../lib/auth/auth";
 import { toast } from "react-toastify";
 import DateInput from "../components/customDatePicker/DateInput";
-
+import { useIntl } from "react-intl";
 function Privacy() {
   const router = useRouter();
-
+  const intl = useIntl();
   const validationSchema = Yup.object().shape({
     f_name: Yup.string().required("First name is required"),
     l_name: Yup.string().required("Last name is required"),
@@ -61,10 +61,16 @@ function Privacy() {
                     <div className="login_wrap widget-taber-content background-white">
                       <div className="padding_eight_all bg-white">
                         <div className="heading_s1 mb-50">
-                          <h1 className="mb-5">Create an Account</h1>
+                          <h1 className="mb-5">
+                            {intl.formatMessage({ id: "Create an Account" })}
+                          </h1>
                           <p>
-                            Already have an account?{" "}
-                            <Link href="/page-login">Log in instead!</Link>
+                            {intl.formatMessage({
+                              id: "Already have an account?",
+                            })}{" "}
+                            <Link href="/page-login">
+                              {intl.formatMessage({ id: "Log in instead!" })}
+                            </Link>
                           </p>
                         </div>
 
@@ -90,7 +96,9 @@ function Privacy() {
                               <Field
                                 type="text"
                                 name="f_name"
-                                placeholder="First Name"
+                                placeholder={intl.formatMessage({
+                                  id: "First Name",
+                                })}
                                 className="form-control"
                               />
                               <ErrorMessage
@@ -103,7 +111,9 @@ function Privacy() {
                               <Field
                                 type="text"
                                 name="l_name"
-                                placeholder="Last Name"
+                                placeholder={intl.formatMessage({
+                                  id: "Last Name",
+                                })}
                                 className="form-control"
                               />
                               <ErrorMessage
@@ -116,7 +126,9 @@ function Privacy() {
                               <Field
                                 type="text"
                                 name="email"
-                                placeholder="Email"
+                                placeholder={intl.formatMessage({
+                                  id: "Email",
+                                })}
                                 className="form-control"
                               />
                               <ErrorMessage
@@ -129,7 +141,9 @@ function Privacy() {
                               <Field
                                 type="text"
                                 name="phone"
-                                placeholder="phone no."
+                                placeholder={intl.formatMessage({
+                                  id: "phone no.",
+                                })}
                                 className="form-control"
                               />
                               <ErrorMessage
@@ -141,14 +155,18 @@ function Privacy() {
                             <Field
                               name="dob"
                               label="Date of Birth"
-                              placeholder="Select Date of Birth"
+                              placeholder={intl.formatMessage({
+                                id: "Select Date of Birth",
+                              })}
                               component={DateInput}
                             />
                             <div className="form-group">
                               <Field
                                 type="password"
                                 name="password"
-                                placeholder="Password"
+                                placeholder={intl.formatMessage({
+                                  id: "Password",
+                                })}
                                 className="form-control"
                               />
                               <ErrorMessage
@@ -161,7 +179,9 @@ function Privacy() {
                               <Field
                                 type="password"
                                 name="confirmPassword"
-                                placeholder="Confirm password"
+                                placeholder={intl.formatMessage({
+                                  id: "Confirm password",
+                                })}
                                 className="form-control"
                               />
                               <ErrorMessage
@@ -185,7 +205,13 @@ function Privacy() {
                                     className="form-check-label"
                                     htmlFor="exampleCheckbox12"
                                   >
-                                    <span>I agree to terms &amp; Policy.</span>
+                                    <span>
+                                      {intl.formatMessage({
+                                        id: "I agree to terms",
+                                      })}{" "}
+                                      &amp;{" "}
+                                      {intl.formatMessage({ id: "Policy." })}
+                                    </span>
                                   </label>
                                 </div>
                                 <ErrorMessage
@@ -196,22 +222,24 @@ function Privacy() {
                               </div>
                               <Link href="/page-privacy-policy">
                                 <i className="fi-rs-book-alt mr-5 text-muted"></i>
-                                Lean more
+                                {intl.formatMessage({ id: "Lean more" })}
                               </Link>
                             </div>
 
                             <p className="font-xs text-muted">
-                              <strong>Note:</strong>Your personal data will be
-                              used to support your experience throughout this
-                              website, to manage access to your account, and for
-                              other purposes described in our privacy policy
+                              <strong>
+                                {intl.formatMessage({ id: "Note:" })}
+                              </strong>
+                              {intl.formatMessage({
+                                id: "Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy",
+                              })}
                             </p>
                             <button
                               type="submit"
                               className="btn btn-fill-out btn-block hover-up font-weight-bold"
                               name="login"
                             >
-                              Submit & Register
+                              {intl.formatMessage({ id: "Submit & Register" })}
                             </button>
                           </Form>
                         </Formik>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import ProductDetails from "../../components/ecommerce/ProductDetails";
-import Layout from "../../components/layout/Layout";
+import ProductDetails from "../components/ecommerce/ProductDetails";
+import Layout from "../components/layout/Layout";
 import { useRouter } from "next/router";
-import { ApiCall } from "../../lib/other/other";
-import Preloader from "../../components/elements/Preloader";
-import SEO from "../../components/seo/SEO";
+import { ApiCall } from "../lib/other/other";
+import Preloader from "../components/elements/Preloader";
+import SEO from "../components/seo/SEO";
 import { useIntl } from "react-intl";
 
 const ProductId = () => {
@@ -14,7 +14,7 @@ const ProductId = () => {
   const intl = useIntl();
   useEffect(() => {
     setLoading(true);
-    ApiCall("get", `${router?.query?.slug}`).then((response) => {
+    ApiCall("get", `product_seo/${router?.query?.slug}`).then((response) => {
       setProduct(response?.data);
       setLoading(false);
     });

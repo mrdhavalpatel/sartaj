@@ -13,16 +13,16 @@ import Preloader from "../components/elements/Preloader";
 import { useRouter } from "next/router";
 import { AuthProvider } from "../components/context/AuthContext";
 import { IntlProvider } from "react-intl";
-import en from "../lang/en.json";
+import eng from "../lang/en.json";
 import jp from "../lang/jp.json";
 import { LanguageProvider } from "../components/context/LanguageContext";
 
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
-  const { locale = "en" } = useRouter();
+  const { locale = "eng" } = useRouter();
 
   const messages = {
-    en: en,
+    eng: eng,
     jp: jp,
   };
 

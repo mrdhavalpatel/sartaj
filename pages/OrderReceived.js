@@ -18,91 +18,8 @@ import { ApiCall } from "../lib/other/other";
 import { useIntl } from "react-intl";
 const OrderReceived = ({ cartItems }) => {
   const intl = useIntl();
-  const [userDetails, setUserDetails] = useState([]);
-  const [address, setAddress] = useState("");
-  const [cartItemsData, setCartItemsData] = useState([]);
   const [shippingData, setShippingData] = useState([]); // State to manage popup visibility
-
   const router = useRouter();
-  // useEffect(() => {
-  //   const handleBeforeUnload = (event) => {
-  //     if (showConfirmation) {
-  //       const confirmationMessage = "Are you sure you want to leave?";
-  //       event.returnValue = confirmationMessage;
-  //       return confirmationMessage;
-  //     }
-  //   };
-
-  //   window.addEventListener("beforeunload", handleBeforeUnload);
-
-  //   return () => {
-  //     window.removeEventListener("beforeunload", handleBeforeUnload);
-  //   };
-  // }, [router.pathname, showConfirmation]);
-
-  // useEffect(() => {
-  //   setShowConfirmation(true);
-  //   let token = localStorage.getItem("token");
-  //   const confirmationTimeout = setTimeout(() => {
-  //     setShowConfirmation(false);
-
-  //     const res = axios
-  //       .delete(`${API_BASE_URL}customer/cart/clear-cart`, {
-  //         headers: {
-  //           "Access-Control-Allow-Origin": "*",
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       })
-  //       .then(() => {
-  //         localStorage.setItem("dokani_cart", "[]");
-  //       });
-  //   });
-
-  //   return () => clearTimeout(confirmationTimeout);
-  // }, [router.pathname]);
-
-  const getUserDetails = async (encodedToken) => {
-    try {
-      const response = await api.get("customer/info", {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${encodedToken}`,
-        },
-      });
-      setUserDetails(response?.data);
-    } catch (error) {
-      console.error("API Error:", error);
-    }
-  };
-
-  const getAddress = async (encodedToken) => {
-    const response = await api.get("customer/address/list", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${encodedToken}`,
-      },
-    });
-    setAddress(response?.data);
-  };
-  const getCartsItem = async (token) => {
-    const response = await axios
-      .get(`${API_BASE_URL}customer/cart`, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setCartItemsData(response?.data);
-      })
-      .catch((error) => {
-        console.log("error", error?.code === "ERR_NETWORK");
-      });
-  };
 
   const getShippingDetails = async (token) => {
     const response = await axios
@@ -118,18 +35,44 @@ const OrderReceived = ({ cartItems }) => {
       )
       .then((response) => {
         setShippingData(response?.data?.data);
+        clearCart();
       })
       .catch((error) => {
         console.log("error", error?.code === "ERR_NETWORK");
       });
   };
+  // useEffect(() => {
+  //   let encodedToken = localStorage.getItem("token");
+  //   getShippingDetails(encodedToken);
+  // }, []);
   useEffect(() => {
     let encodedToken = localStorage.getItem("token");
-    // getCartsItem(encodedToken);
-    // getUserDetails(encodedToken);
-    // getAddress(encodedToken);
     getShippingDetails(encodedToken);
-  }, []);
+
+    // Clear the cart when the component is unmounted or the user navigates away
+    return () => {
+      clearCart();
+    };
+  }, [clearCart]);
+
+  // // Listen for changes in the browser's history
+  // useEffect(() => {
+  //   const handleRouteChange = (url) => {
+  //     // Check if the user navigated back
+  //     if (url === "/") {
+  //       // Redirect to the home page
+  //       router.push("/");
+  //     }
+  //   };
+
+  //   // Attach the event listener
+  //   router.events.on("beforeHistoryChange", handleRouteChange);
+
+  //   // Remove the event listener when the component is unmounted
+  //   return () => {
+  //     router.events.off("beforeHistoryChange", handleRouteChange);
+  //   };
+  // }, [router]);
   return (
     <Layout parent="Home" sub="Shop" subChild="Checkout">
       <section className="mt-50 mb-50">
@@ -303,10 +246,11 @@ const OrderReceived = ({ cartItems }) => {
                       </td>
                     </tr>
                   ) : null}
+                  {console.log("asda", shippingData?.couponPrice)}
                   {shippingData?.couponPrice ? (
                     <tr>
                       <td colspan="4" class="text-right">
-                        Discount Price
+                        Discount Price 
                       </td>
                       <td class="text-right"> ¥{shippingData?.couponPrice}</td>
                     </tr>

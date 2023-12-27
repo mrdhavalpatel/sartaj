@@ -10,8 +10,9 @@ import WishlistModal from "../components/ecommerce/WishlistModal";
 import Layout from "../components/layout/Layout";
 import { fetchProduct } from "../redux/action/product";
 import ShopFilter from "../components/ecommerce/Filter/Filter";
-
+import { useIntl } from "react-intl";
 const ProductsFullWidth = ({ products, productFilters, fetchProduct }) => {
+  const intl = useIntl();
   let Router = useRouter(),
     searchTerm = Router.query.search,
     showLimit = 12,
@@ -75,11 +76,11 @@ const ProductsFullWidth = ({ products, productFilters, fetchProduct }) => {
                 <div className="shop-product-fillter">
                   <div className="totall-product">
                     <p>
-                      We found
+                      {intl.formatMessage({ id: "We found" })}
                       <strong className="text-brand">
                         {products.items.length}
                       </strong>
-                      items for you!
+                      {intl.formatMessage({ id: "items for you!" })}
                     </p>
                   </div>
                   <div className="sort-by-product-area">
@@ -96,7 +97,7 @@ const ProductsFullWidth = ({ products, productFilters, fetchProduct }) => {
                 </div>
                 <div className="row product-grid-3">
                   {getPaginatedProducts.length === 0 && (
-                    <h3>No Products Found </h3>
+                    <h3>{intl.formatMessage({ id: "No Products Found" })} </h3>
                   )}
 
                   {getPaginatedProducts.map((item, i) => (

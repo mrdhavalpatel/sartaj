@@ -13,8 +13,9 @@ import { fetchProduct } from "../redux/action/product";
 import { ApiCall } from "../lib/other/other";
 import QuickView from "../components/ecommerce/QuickView";
 import Link from "next/link";
-
+import { useIntl } from "react-intl";
 const Products = ({ productFilters }) => {
+  const intl = useIntl();
   const [products, setProducts] = useState([]);
   const [newProducts, setNewProducts] = useState([]);
   const [pagination, setPagination] = useState([]);
@@ -112,9 +113,9 @@ const Products = ({ productFilters }) => {
                 <div className="shop-product-fillter">
                   <div className="totall-product">
                     <p>
-                      We found
+                      {intl.formatMessage({ id: "We found" })}
                       <strong className="text-brand">{products?.length}</strong>
-                      items for you!
+                      {intl.formatMessage({ id: "items for you!" })}
                     </p>
                   </div>
                   <div className="sort-by-product-area">
@@ -128,7 +129,7 @@ const Products = ({ productFilters }) => {
                 </div>
                 <div className="row product-grid">
                   {getPaginatedProducts?.length === 0 && (
-                    <h3>No Products Found </h3>
+                    <h3>{intl.formatMessage({ id: "No Products Found" })} </h3>
                   )}
 
                   {getPaginatedProducts?.map((item, i) => (
@@ -156,11 +157,15 @@ const Products = ({ productFilters }) => {
               </div>
               <div className="col-lg-1-5 primary-sidebar sticky-sidebar">
                 <div className="sidebar-widget widget-category-2 mb-30">
-                  <h5 className="section-title style-1 mb-30">Category</h5>
+                  <h5 className="section-title style-1 mb-30">
+                    {intl.formatMessage({ id: "Category" })}
+                  </h5>
                   <CategoryProduct />
                 </div>
                 <div className="sidebar-widget price_range range mb-30">
-                  <h5 className="section-title style-1 mb-30">Fill by price</h5>
+                  <h5 className="section-title style-1 mb-30">
+                    {intl.formatMessage({ id: "Fill by price" })}
+                  </h5>
 
                   <div className="price-filter">
                     <div className="price-filter-inner">
@@ -171,7 +176,9 @@ const Products = ({ productFilters }) => {
                   </div>
                 </div>
                 <div className="sidebar-widget product-sidebar  mb-30 p-30 bg-grey border-radius-10">
-                  <h5 className="section-title style-1 mb-30">New products</h5>
+                  <h5 className="section-title style-1 mb-30">
+                    {intl.formatMessage({ id: "New products" })}
+                  </h5>
                   {newProducts?.slice(0, 5)?.map((newProducts) => {
                     return (
                       <div className="single-post clearfix">

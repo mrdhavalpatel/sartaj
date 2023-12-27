@@ -9,7 +9,7 @@ import {
 } from "../redux/action/wishlistAction";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-
+import { useIntl } from "react-intl";
 const Wishlist = ({
   wishlist,
   clearWishlist,
@@ -17,6 +17,7 @@ const Wishlist = ({
   deleteFromWishlist,
   addToCart,
 }) => {
+  const intl = useIntl();
   const handleCart = (product) => {
     addToCart(product);
     // toast("Product added to Cart !");
@@ -38,13 +39,19 @@ const Wishlist = ({
                             className="custome-checkbox start pl-30"
                             colSpan="2"
                           >
-                            Product
+                            {intl.formatMessage({ id: "Product" })}
                           </th>
-                          <th scope="col">Price</th>
-                          <th scope="col">Stock Status</th>
-                          <th scope="col">Action</th>
+                          <th scope="col">
+                            {intl.formatMessage({ id: "Price" })}
+                          </th>
+                          <th scope="col">
+                            {intl.formatMessage({ id: "Stock Status" })}
+                          </th>
+                          <th scope="col">
+                            {intl.formatMessage({ id: "Action" })}
+                          </th>
                           <th scope="col" className="end">
-                            Remove
+                            {intl.formatMessage({ id: "Remove" })}
                           </th>
                         </tr>
                       </thead>
@@ -96,28 +103,28 @@ const Wishlist = ({
                               {product.out_of_stock_status ===
                               "out of stock" ? (
                                 <span className="stock-status out-stock mb-0">
-                                  Out of stock
+                                  {intl.formatMessage({ id: "Out of stock" })}
                                 </span>
                               ) : product?.out_of_stock_status ===
                                 "2-3 days" ? (
                                 <span className="stock-status in-stock mb-0">
-                                  2-3 days
+                                  {intl.formatMessage({ id: "2-3 days" })}
                                 </span>
                               ) : product?.out_of_stock_status ===
                                 "pre order" ? (
                                 <span className="stock-status in-stock mb-0">
-                                  Pre Order
+                                  {intl.formatMessage({ id: "Pre Order" })}
                                 </span>
                               ) : (
                                 <span className="stock-status in-stock mb-0">
-                                  In stock
+                                  {intl.formatMessage({ id: "In stock" })}
                                 </span>
                               )}
                             </td>
                             <td className="text-right" data-title="Cart">
                               {product.stock === 0 ? (
                                 <button className="btn btn-sm btn-secondary">
-                                  Contact Us
+                                  {intl.formatMessage({ id: "Contact Us" })}
                                 </button>
                               ) : (
                                 <button
@@ -154,12 +161,14 @@ const Wishlist = ({
                     </table>
                     <div className="text-right">
                       <span className="clear-btn" onClick={clearWishlist}>
-                        Clear All
+                        {intl.formatMessage({ id: "Clear All" })}
                       </span>
                     </div>
                   </div>
                 ) : (
-                  <h4 className="mb-0">No Products</h4>
+                  <h4 className="mb-0">
+                    {intl.formatMessage({ id: "No Products" })}
+                  </h4>
                 )}
               </div>
             </div>

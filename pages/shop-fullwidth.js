@@ -11,8 +11,9 @@ import WishlistModal from "../components/ecommerce/WishlistModal";
 import Layout from "../components/layout/Layout";
 import { fetchProduct } from "../redux/action/product";
 import { ApiCall } from "../lib/other/other";
-
+import { useIntl } from "react-intl";
 const ProductsFullWidth = ({ products, productFilters }) => {
+  const intl = useIntl();
   const [productsData, setProductsData] = useState([]);
   const [pagination, setPagination] = useState([]);
   const [limit, setLimit] = useState(12);
@@ -78,11 +79,11 @@ const ProductsFullWidth = ({ products, productFilters }) => {
                 <div className="shop-product-fillter">
                   <div className="totall-product">
                     <p>
-                      We found
+                      {intl.formatMessage({ id: "We found" })}
                       <strong className="text-brand">
                         {productsData?.length}
                       </strong>
-                      items for you!
+                      {intl.formatMessage({ id: "items for you!" })}
                     </p>
                   </div>
                   <div className="sort-by-product-area">
@@ -96,7 +97,7 @@ const ProductsFullWidth = ({ products, productFilters }) => {
                 </div>
                 <div className="row product-grid-3">
                   {getPaginatedProducts?.length === 0 && (
-                    <h3>No Products Found </h3>
+                    <h3>{intl.formatMessage({ id: "No Products Found" })} </h3>
                   )}
 
                   {getPaginatedProducts?.map((item, i) => (

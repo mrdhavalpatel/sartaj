@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import CompareTable from "../components/ecommerce/CompareTable";
 import Layout from "../components/layout/Layout";
 import { clearCompare, deleteFromCompare } from "../redux/action/compareAction";
-
+import { useIntl } from "react-intl";
 const Compare = ({ compare, clearCompare, deleteFromCompare }) => {
+  const intl = useIntl();
   return (
     <>
       <Layout parent="Home" sub="Shop" subChild="Compare">
@@ -12,9 +13,13 @@ const Compare = ({ compare, clearCompare, deleteFromCompare }) => {
           <div className="container">
             <div className="row">
               <div className="col-xl-10 col-lg-12 m-auto">
-                <h1 className="heading-2 mb-10">Products Compare</h1>
+                <h1 className="heading-2 mb-10">
+                  {intl.formatMessage({ id: "Products Compare" })}
+                </h1>
                 <h6 className="text-body mb-40">
-                  This is your products list to compare
+                  {intl.formatMessage({
+                    id: "This is your products list to compare",
+                  })}
                 </h6>
                 <div className="table-responsive">
                   {compare.items.length > 0 ? (
@@ -46,12 +51,16 @@ const Compare = ({ compare, clearCompare, deleteFromCompare }) => {
                           }}
                           onClick={clearCompare}
                         >
-                          Clear All
+                          {intl.formatMessage({ id: "Clear All" })}
                         </span>
                       </div>
                     </>
                   ) : (
-                    <h4>No Products</h4>
+                    <h4>
+                      {intl.formatMessage({
+                        id: "This is your products list to compare",
+                      })}
+                    </h4>
                   )}
                 </div>
               </div>

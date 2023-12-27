@@ -38,7 +38,7 @@ const SingleProduct = ({
           <div className="product-img product-img-zoom">
             <Link
               href={`/${
-                intel.locale === "en" ? product?.seo_en : product?.seo_ja
+                intel.locale === "eng" ? product?.seo_en : product?.seo_ja
               }`}
             >
               {product?.image?.map((itm) => {
@@ -92,7 +92,7 @@ const SingleProduct = ({
           <h2>
             <Link
               href={`/${
-                intel.locale === "en" ? product?.seo_en : product?.seo_ja
+                intel.locale === "eng" ? product?.seo_en : product?.seo_ja
               }`}
             >
               {product?.name}

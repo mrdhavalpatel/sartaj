@@ -15,8 +15,9 @@ import Breadcrumb2 from "../components/layout/Breadcrumb2";
 import Layout from "../components/layout/Layout";
 import { fetchProduct } from "../redux/action/product";
 import { ApiCall } from "../lib/other/other";
-
+import { useIntl } from "react-intl";
 const Products = ({ products, productFilters, fetchProduct }) => {
+  const intl = useIntl();
   let Router = useRouter(),
     searchTerm = Router.query.search,
     showLimit = 12,
@@ -93,13 +94,17 @@ const Products = ({ products, productFilters, fetchProduct }) => {
             <div className="row flex-row-reverse">
               <div className="col-lg-1-5 primary-sidebar sticky-sidebar">
                 <div className="sidebar-widget widget-category-2 mb-30">
-                  <h5 className="section-title style-1 mb-30">Category</h5>
+                  <h5 className="section-title style-1 mb-30">
+                    {intl.formatMessage({ id: "Category" })}
+                  </h5>
                   <CategoryProduct />
                 </div>
 
                 <div className="sidebar-widget price_range range mb-30">
                   <div className="widget-header position-relative mb-20 pb-10">
-                    <h5 className="widget-title mb-10">Fill by price</h5>
+                    <h5 className="widget-title mb-10">
+                      {intl.formatMessage({ id: "Fill by price" })}
+                    </h5>
                     <div className="bt-1 border-color-1"></div>
                   </div>
 
@@ -114,9 +119,13 @@ const Products = ({ products, productFilters, fetchProduct }) => {
 
                   <div className="list-group">
                     <div className="list-group-item mb-10 mt-10">
-                      <label className="fw-900">Color</label>
+                      <label className="fw-900">
+                        {intl.formatMessage({ id: "Color" })}
+                      </label>
                       <VendorFilter />
-                      <label className="fw-900 mt-15">Item Condition</label>
+                      <label className="fw-900 mt-15">
+                        {intl.formatMessage({ id: "Item Condition" })}
+                      </label>
                       <SizeFilter />
                     </div>
                   </div>
@@ -196,11 +205,11 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                 <div className="shop-product-fillter">
                   <div className="totall-product">
                     <p>
-                      We found
+                      {intl.formatMessage({ id: "We found" })}
                       <strong className="text-brand">
                         {allProducts?.length}
                       </strong>
-                      items for you!
+                      {intl.formatMessage({ id: "items for you!" })}
                     </p>
                   </div>
                   <div className="sort-by-product-area">
@@ -216,7 +225,9 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                   </div>
                 </div>
                 <div className="row product-grid-3">
-                  {allProducts?.length === 0 && <h3>No Products Found </h3>}
+                  {allProducts?.length === 0 && (
+                    <h3>{intl.formatMessage({ id: "No Products Found" })} </h3>
+                  )}
 
                   {allProducts?.map((item, i) => (
                     <div

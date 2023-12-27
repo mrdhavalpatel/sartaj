@@ -87,8 +87,9 @@ const SingleProduct2 = ({
             <div
               className="product-rating"
               style={{
-                width: `${product?.overall_rating ? product.overall_rating : 0
-                  }%`,
+                width: `${
+                  product?.overall_rating ? product.overall_rating : 0
+                }%`,
               }}
             ></div>
             <span className="font-small ml-5 text-muted">
@@ -101,9 +102,9 @@ const SingleProduct2 = ({
             </span>
           </div>
           <div className="product-price mt-10">
-            <span>¥{product?.price} </span>
+            <span>¥{product?.actual_price} </span>
             <span className="old-price">
-              {product?.oldPrice && `¥ ${product?.oldPrice}`}
+              {product?.price && `¥ ${product?.price}`}
             </span>
           </div>
           <div className="sold mt-15 mb-15">
@@ -112,12 +113,13 @@ const SingleProduct2 = ({
                 className="progress-bar"
                 role="progressbar"
                 style={{
-                  width: `${((product?.sold_products || 0) /
+                  width: `${
+                    ((product?.sold_products || 0) /
                       (product?.total_product_count === 0
                         ? 1
                         : product?.total_product_count || 1)) *
                     100
-                    }%`,
+                  }%`,
                 }}
               ></div>
             </div>
@@ -132,8 +134,9 @@ const SingleProduct2 = ({
             className="btn w-100 hover-up"
             style={{
               border: "none",
-              backgroundColor: `${product?.out_of_stock_status !== "in stock" ? "grey" : ""
-                }`,
+              backgroundColor: `${
+                product?.out_of_stock_status !== "in stock" ? "grey" : ""
+              }`,
             }}
             disabled={product?.out_of_stock_status !== "in stock"}
             onClick={(e) => {

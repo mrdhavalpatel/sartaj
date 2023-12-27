@@ -11,7 +11,6 @@ import { addToWishlist } from "../../redux/action/wishlistAction";
 import ProductTab from "../elements/ProductTab";
 import RelatedSlider from "../sliders/Related";
 import ThumbSlider from "../sliders/Thumb";
-import { useIntl } from "react-intl";
 
 const ProductDetails = ({
   intl,
@@ -25,7 +24,7 @@ const ProductDetails = ({
   quickView,
 }) => {
   const [quantity, setQuantity] = useState(1);
-  // const intl = useIntl();
+
   const handleCart = () => {
     toast("Product added to Cart !");
   };
@@ -40,7 +39,6 @@ const ProductDetails = ({
   };
 
   const inCart = cartItems?.find((cartItem) => cartItem?.id === product?.id);
-  console.log(intl.locale == "en" ? product?.seo_en : product?.seo_ja, product);
 
   return (
     <>
@@ -89,9 +87,19 @@ const ProductDetails = ({
                       </div>
                       <div className="clearfix product-price-cover">
                         <div className="product-price primary-color float-left">
-                          <span className="current-price  text-brand">
+                          {/* <span className="current-price  text-brand">
                             ¥{product?.price}
-                          </span>
+                          </span> */}
+                          <div className="product-price">
+                            <span className="current-price  text-brand">
+                              ¥{product?.actual_price}{" "}
+                            </span>
+                            {product?.actual_price == product?.price ? null : (
+                              <span className="old-price">
+                                {product?.price && `¥ ${product?.price}`}
+                              </span>
+                            )}
+                          </div>
                           {product?.discount?.percentage == null ? (
                             <span></span>
                           ) : (

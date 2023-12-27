@@ -126,7 +126,6 @@ const Cart = ({
       );
 
       if (response?.status === 200) {
-        // clearCart();
         router.push(`/OrderReceived?order_id=${response?.data?.order_id}`);
       }
     } catch (error) {
@@ -140,41 +139,6 @@ const Cart = ({
     }
   };
 
-  //   const placeOrder = async () => {
-  //     let token = localStorage.getItem("token");
-
-  //     let payload = {
-  //       order_amount: cartTotal?.total_amt,
-  //       payment_method: "cash_on_delivery",
-  //       delivery_address_id: address?.billing_address?.[0]?.id,
-  //       order_type: "delivery",
-  //       coupon_discount_amount: coupenCodeDis,
-  //       cart: cartItemsData,
-  //       time_slot_id: selectedRadioId,
-  //       order_note: orderNotes,
-  //     };
-  // try{
-  //   const response = await axios.post(
-  //     `${API_BASE_URL}customer/order/place`,
-  //     payload,
-  //     {
-  //       headers: {
-  //         "Access-Control-Allow-Origin": "*",
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     }
-  //   ).then((res)=>{console.log("response while place order",res)})
-  //   if (response?.status == 200) {
-  //     // clearCart();
-  //     router.push(`/OrderReceived?order_id=${response?.data?.order_id}`);
-  //   }
-  // }
-  // catch(error){
-  //   console.log("error in try catch" , error)
-  // }
-
-  //   };
   const getAddress = async (encodedToken) => {
     const response = await api.get("customer/address/list", {
       headers: {
@@ -289,7 +253,6 @@ const Cart = ({
   const handlePrefillAddress = async () => {
     if (address?.billing_address?.length > 0) {
       const defaultAddress = address.billing_address[0];
-      console.log("auto address", address?.billing_address[0]);
       setSelectedAddressDropdown(defaultAddress.id);
       findElementById(defaultAddress.id);
     }

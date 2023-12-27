@@ -10,19 +10,14 @@ import CategorySlider2 from "../components/sliders/Category2";
 import { useEffect, useState } from "react";
 import { ApiCall } from "../lib/other/other";
 import { useRouter } from "next/router";
-import {  useIntl } from "react-intl";
+import { useIntl } from "react-intl";
+import { replaceBaseURL } from "../util/urlUtils";
 
 function Index2() {
   const [adBanner, setAdBanner] = useState([]);
-  const { locales } = useRouter();
-
   const intl = useIntl();
-
-  const title = intl.formatMessage({ id: "page.home.head.title" });
-  const description = intl.formatMessage({
-    id: "page.home.head.meta.description",
-  });
-  console.log("description", description)
+  const router = useRouter();
+  const currentURL = router.asPath;
   const getBanners = async () => {
     const res = await ApiCall("get", "banners/get-other-banners");
     setAdBanner(res?.data);
@@ -30,6 +25,24 @@ function Index2() {
   useEffect(() => {
     getBanners();
   }, []);
+  useEffect(() => {
+    const handleURLModification = () => {
+      const modifiedURLEng = replaceBaseURL(currentURL);
+      const modifiedURLJp = replaceBaseURL(currentURL, "jp");
+    };
+
+    handleURLModification();
+
+    const routeChangeComplete = () => {
+      handleURLModification();
+    };
+
+    router.events.on("routeChangeComplete", routeChangeComplete);
+
+    return () => {
+      router.events.off("routeChangeComplete", routeChangeComplete);
+    };
+  }, [currentURL, router]);
 
   return (
     <>
@@ -69,10 +82,11 @@ function Index2() {
                   </div>
 
                   <img
-                    src={`${adBanner?.[0]?.banner_logo
-                      ? adBanner?.[0]?.banner_logo
-                      : "#"
-                      }`}
+                    src={`${
+                      adBanner?.[0]?.banner_logo
+                        ? adBanner?.[0]?.banner_logo
+                        : "#"
+                    }`}
                     onClick={() => {
                       window.location.replace(
                         `${adBanner?.[0]?.link ? adBanner?.[0]?.link : "#"}`
@@ -107,9 +121,11 @@ function Index2() {
               className="section-title wow animate__animated animate__fadeIn"
               data-wow-delay="0"
             >
-              <h3 className="">{intl.formatMessage({ id: "Deals Of The Day" })}</h3>
+              <h3 className="">
+                {intl.formatMessage({ id: "Deals Of The Day" })}
+              </h3>
               <Link href="/shop-fullwidth" className="show-all">
-              {intl.formatMessage({ id: "All Deals" })}
+                {intl.formatMessage({ id: "All Deals" })}
                 <i className="fi-rs-angle-right"></i>
               </Link>
             </div>
@@ -123,7 +139,7 @@ function Index2() {
               <div className="title">
                 <h3>{intl.formatMessage({ id: "Shop by Categories" })}</h3>
                 <Link href="/shop-fullwidth" className="show-all">
-                {intl.formatMessage({ id: "All Categories" })}
+                  {intl.formatMessage({ id: "All Categories" })}
                   <i className="fi-rs-angle-right"></i>
                 </Link>
               </div>
