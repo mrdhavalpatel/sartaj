@@ -115,6 +115,7 @@ const Cart = ({
         cart: cartItemsData,
         time_slot_id: selectedRadioId,
         order_note: orderNotes,
+        coupon_code: coupenCode,
       };
 
       const response = await axios.post(

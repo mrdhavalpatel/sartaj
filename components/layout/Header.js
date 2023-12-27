@@ -26,17 +26,32 @@ const Header = ({
   const [cartItemsCount, setCartItemsCount] = useState(0);
   const { language, switchLanguage } = useLanguage();
   const router = useRouter();
+  // const handleLanguageSwitch = (newLanguage) => {
+  //   switchLanguage(newLanguage);
+  //   setDLang(newLanguage);
+
+  //   const currentSlug = router.query.slug || "";
+
+  //   const pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
+
+  //   const newUrl = `/${newLanguage}/${pathWithoutLanguage}`;
+  //   console.log("window.location", window.location.pathname);
+  //   window.location.replace(newUrl);
+  // };
   const handleLanguageSwitch = (newLanguage) => {
     switchLanguage(newLanguage);
     setDLang(newLanguage);
-
-    const currentSlug = router.query.slug || "";
-
-    const pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
-
-    const newUrl = `/${newLanguage}/${pathWithoutLanguage}`;
-
-    window.location.replace(newUrl);
+    const currentPath = window.location.pathname;
+    console.log(
+      "window.location.pathname",
+      window.location.pathname.startsWith("/jp"),
+      window.location.pathname.startsWith("/eng"),
+      window.location.pathname
+    );
+    // if (currentPath.startsWith("/eng") || currentPath.startsWith("/jp")) {
+    //   const newPath = currentPath.replace(/^\/[a-z]{2}\//, `/${newLanguage}/`);
+    //   window.location.replace(newPath);
+    // }
   };
   const getAllCategories = async () => {
     const request = await ApiCall("get", intl, "categories");
