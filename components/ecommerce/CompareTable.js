@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { connect } from "react-redux";
 import { addToCart } from "../../redux/action/cart";
+import { useIntl } from "react-intl";
 const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
+  const intl = useIntl();
   const handleCart = (product) => {
     addToCart(product);
   };
@@ -80,10 +82,12 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
               ) : feature == "stock" ? (
                 <td className="row_stock">
                   {product?.out_of_stock_status === "in stock" ? (
-                    <span className="text-success">In Stock</span>
+                    <span className="text-success">
+                      {intl.formatMessage({ id: "In Stock" })}
+                    </span>
                   ) : (
                     <span className="text-danger font-weight-bold">
-                      Out of stock
+                      {intl.formatMessage({ id: "Out of stock" })}
                     </span>
                   )}
                 </td>
@@ -117,7 +121,7 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                       as={`/products/${product?.id}`}
                     >
                       <button className="btn  btn-sm btn-secondary">
-                        Buy Now
+                        {intl.formatMessage({ id: "Buy Now" })}
                       </button>
                     </Link>
                   )}
@@ -126,7 +130,7 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                 <td className="row_remove">
                   <a onClick={() => deleteFromCompare(product.id)}>
                     <i className="fi-rs-trash mr-5"></i>
-                    <span>Remove</span>
+                    <span>{intl.formatMessage({ id: "Remove" })}</span>
                   </a>
                 </td>
               ) : null

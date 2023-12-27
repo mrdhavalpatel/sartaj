@@ -289,7 +289,7 @@ const Cart = ({
                 type="text"
                 required=""
                 name="full_name"
-                placeholder="Full Name*"
+                placeholder={intl.formatMessage({ id: "Full Name*" })}
               />
             </div>
 
@@ -298,7 +298,7 @@ const Cart = ({
                 type="text"
                 name="billing_address"
                 required=""
-                placeholder="Address *"
+                placeholder={intl.formatMessage({ id: "Address *" })}
               />
             </div>
             <div className="form-group">
@@ -306,7 +306,7 @@ const Cart = ({
                 type="text"
                 name="billing_address2"
                 required=""
-                placeholder="Address line2"
+                placeholder={intl.formatMessage({ id: "Address line2" })}
               />
             </div>
             <div className="form-group">
@@ -314,7 +314,7 @@ const Cart = ({
                 required=""
                 type="text"
                 name="city"
-                placeholder="City / Town *"
+                placeholder={intl.formatMessage({ id: "City / Town *" })}
               />
             </div>
             <div className="form-group">
@@ -322,7 +322,7 @@ const Cart = ({
                 required=""
                 type="text"
                 name="state"
-                placeholder="State / County *"
+                placeholder={intl.formatMessage({ id: "State / County *" })}
               />
             </div>
             <div className="form-group">
@@ -330,7 +330,7 @@ const Cart = ({
                 required=""
                 type="text"
                 name="post_code"
-                placeholder="Postcode / ZIP *"
+                placeholder={intl.formatMessage({ id: "Postcode / ZIP *" })}
               />
             </div>
             <div className="form-group">
@@ -338,7 +338,7 @@ const Cart = ({
                 required=""
                 type="text"
                 name="contact_person_name"
-                placeholder="Contact Person Name*"
+                placeholder={intl.formatMessage({ id: "Contact Person Name*" })}
               />
             </div>
             <div className="form-group">
@@ -346,7 +346,9 @@ const Cart = ({
                 required=""
                 type="text"
                 name="contact_person_number"
-                placeholder="Contact Person Number*"
+                placeholder={intl.formatMessage({
+                  id: "Contact Person Number*",
+                })}
               />
             </div>
 
@@ -357,7 +359,7 @@ const Cart = ({
               <Field
                 required=""
                 type="password"
-                placeholder="Password"
+                placeholder={intl.formatMessage({ id: "Password" })}
                 name="password"
               />
             </div>
@@ -368,11 +370,13 @@ const Cart = ({
                 rows="5"
                 value={orderNotes}
                 onChange={(e) => setorderNotes(e.target.value)}
-                placeholder="Order notes"
+                placeholder={intl.formatMessage({ id: "Order notes" })}
               />
             </div>
             <div>
-              <button type="submit">Save Changes</button>
+              <button type="submit">
+                {intl.formatMessage({ id: "Save Changes" })}
+              </button>
             </div>
           </Form>
         )}
@@ -389,7 +393,9 @@ const Cart = ({
                 <h1 className="heading-2 mb-10">Checkout</h1>
                 <div className="d-flex justify-content-between">
                   <h6 className="text-body">
-                    Carefully check the information before checkout
+                    {intl.formatMessage({
+                      id: "Carefully check the information before checkout",
+                    })}
                   </h6>
                 </div>
               </div>
@@ -406,7 +412,9 @@ const Cart = ({
                             setCoupenCode(e?.target?.value);
                           }}
                           value={coupenCode}
-                          placeholder="Enter Coupon Code..."
+                          placeholder={intl.formatMessage({
+                            id: "Enter Coupon Code...",
+                          })}
                         />
                         <button
                           className="btn  btn-md"
@@ -420,7 +428,7 @@ const Cart = ({
                             handleCoupencode();
                           }}
                         >
-                          Apply Coupon
+                          {intl.formatMessage({ id: "Apply Coupon" })}
                         </button>
                       </form>
 
@@ -432,23 +440,29 @@ const Cart = ({
                     >
                       <div className="panel-body">
                         <p className="mb-30 font-sm">
-                          If you have shopped with us before, please enter your
-                          details below. If you are a new customer, please
-                          proceed to the Billing &amp; Shipping section.
+                          {intl.formatMessage({
+                            id: "If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing",
+                          })}{" "}
+                          &amp;{" "}
+                          {intl.formatMessage({ id: "Shipping section." })}
                         </p>
                         <form method="post">
                           <div className="form-group">
                             <input
                               type="text"
                               name="email"
-                              placeholder="Username Or Email"
+                              placeholder={intl.formatMessage({
+                                id: "Username Or Email",
+                              })}
                             />
                           </div>
                           <div className="form-group">
                             <input
                               type="password"
                               name="password"
-                              placeholder="Password"
+                              placeholder={intl.formatMessage({
+                                id: "Password",
+                              })}
                             />
                           </div>
                           <div className="login_footer form-group">
@@ -465,15 +479,19 @@ const Cart = ({
                                   className="form-check-label"
                                   htmlFor="remember"
                                 >
-                                  <span>Remember me</span>
+                                  <span>
+                                    {intl.formatMessage({ id: "Remember me" })}
+                                  </span>
                                 </label>
                               </div>
                             </div>
-                            <a href="#">Forgot password?</a>
+                            {/* <a href="#">
+                              {intl.formatMessage({ id: "Forgot password?" })}
+                            </a> */}
                           </div>
                           <div className="form-group">
                             <button className="btn btn-md" name="login">
-                              Log in
+                              {intl.formatMessage({ id: "Login" })}
                             </button>
                           </div>
                         </form>
@@ -482,10 +500,12 @@ const Cart = ({
                   </div>
                 </div>
                 <div className="mb-25">
-                  <h4>Billing Details</h4>
+                  <h4>{intl.formatMessage({ id: "Billing Details" })}</h4>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="selectedDropdownOption">Select Address</label>
+                  <label htmlFor="selectedDropdownOption">
+                    {intl.formatMessage({ id: "Select Address" })}
+                  </label>
                   <select
                     as="select"
                     name="selectedAddress"
@@ -519,8 +539,10 @@ const Cart = ({
               <div className="col-lg-5">
                 <div className="border p-40 cart-totals ml-30 mb-50">
                   <div className="d-flex align-items-end justify-content-between mb-30">
-                    <h4>Your Order</h4>
-                    <h6 className="text-muted">Subtotal</h6>
+                    <h4>{intl.formatMessage({ id: "Your Order" })}</h4>
+                    <h6 className="text-muted">
+                      {intl.formatMessage({ id: "Subtotal" })}
+                    </h6>
                   </div>
                   <div className="divider-2 mb-30"></div>
                   <div className="table-responsive order_table">
@@ -596,7 +618,9 @@ const Cart = ({
                               padding: "5px",
                             }}
                           >
-                            <strong>Sub-Total:</strong>
+                            <strong>
+                              {intl.formatMessage({ id: "Sub-Total:" })}
+                            </strong>
                           </td>
                           <td
                             style={{
@@ -614,7 +638,11 @@ const Cart = ({
                               padding: "5px",
                             }}
                           >
-                            <strong>All Item in Dry Shipping:</strong>
+                            <strong>
+                              {intl.formatMessage({
+                                id: "All Item in Dry Shipping:",
+                              })}
+                            </strong>
                           </td>
                           <td
                             style={{
@@ -634,7 +662,8 @@ const Cart = ({
                               }}
                             >
                               <strong>
-                                Consumption Tax{" "}
+                                {intl.formatMessage({ id: "Consumption Tax" })}{" "}
+                                {cartTotal?.eight_percent ? 8 : 0}{" "}
                                 {cartTotal?.eight_percent ? 8 : 0}%
                               </strong>
                             </td>
@@ -656,7 +685,14 @@ const Cart = ({
                                 padding: "5px",
                               }}
                             >
-                              <strong>Consumption Tax 10%</strong>
+                              <strong>
+                                {" "}
+                                {intl.formatMessage({
+                                  id: "Consumption Tax",
+                                })}{" "}
+                                {cartTotal?.eight_percent ? 8 : 0}
+                                10%
+                              </strong>
                             </td>
                             <td
                               style={{
@@ -679,7 +715,10 @@ const Cart = ({
                                 padding: "5px",
                               }}
                             >
-                              <strong>Discount price</strong>
+                              <strong>
+                                {" "}
+                                {intl.formatMessage({ id: "Discount price" })}
+                              </strong>
                             </td>
                             <td
                               style={{
@@ -698,7 +737,9 @@ const Cart = ({
                               padding: "5px",
                             }}
                           >
-                            <strong>Total:</strong>
+                            <strong>
+                              {intl.formatMessage({ id: "Total:" })}
+                            </strong>
                           </td>
                           <td
                             style={{
@@ -746,7 +787,7 @@ const Cart = ({
                   })}
                   <div className="payment_method">
                     <div className="mb-25">
-                      <h5>Payment</h5>
+                      <h5>{intl.formatMessage({ id: "Payment" })}</h5>
                     </div>
                     <div className="payment_option">
                       <div className="custome-radio">
@@ -765,7 +806,7 @@ const Cart = ({
                           data-target="#bankTranfer"
                           aria-controls="bankTranfer"
                         >
-                          COD
+                          {intl.formatMessage({ id: "COD" })}
                         </label>
                         {/* <div
                           className="form-group collapse in"
@@ -835,13 +876,19 @@ const Cart = ({
                   </div>
                   {cartTotal?.total_amt <= 2500 ? (
                     <h8 style={{ color: "red" }}>
-                      Oops! Your cart is below 2500 ¥. Please add items worth{" "}
+                      {intl.formatMessage({
+                        id: "Oops! Your cart is below 2500 ¥. Please add items worth",
+                      })}{" "}
                       {Math.round(2500 - (cartTotal?.total_amt || 0))} ¥ or more
-                      to place your order. Happy shopping!
+                      {intl.formatMessage({
+                        id: "or more to place your order. Happy shopping!",
+                      })}
                     </h8>
                   ) : (
                     <h8 style={{ color: "green" }}>
-                      Congratulation , You are eligible to place order
+                      {intl.formatMessage({
+                        id: "Congratulation , You are eligible to place order",
+                      })}
                     </h8>
                   )}
                   <h6></h6>
@@ -851,7 +898,7 @@ const Cart = ({
                     }}
                     className="btn btn-fill-out btn-block mt-30"
                   >
-                    Place Order
+                    {intl.formatMessage({ id: "Place Order" })}
                   </button>
                 </div>
               </div>
