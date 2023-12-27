@@ -6,7 +6,7 @@ import FeaturedSlider from "../sliders/Featured";
 import NewArrivalTabSlider from "../sliders/NewArrivalTab";
 import TrendingSlider from "../sliders/Trending";
 import { ApiCall } from "../../lib/other/other";
-import {  useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 function FeatchTabSlider({ banners }) {
   const intl = useIntl();
   const [active, setActive] = useState("1");
@@ -15,7 +15,7 @@ function FeatchTabSlider({ banners }) {
   const [newArrival, setNewArrival] = useState([]);
 
   const featuredProduct = async () => {
-    const request = await ApiCall("get", "products/trending");
+    const request = await ApiCall("get", intl, "products/trending");
     const allProducts = await request;
 
     setFeatured(allProducts?.data?.products);
@@ -89,7 +89,8 @@ function FeatchTabSlider({ banners }) {
             <div className="banner-text">
               <h2 className="mb-100">{banners?.[1]?.title}</h2>
               <Link href="/products" className="btn btn-xs">
-              {intl.formatMessage({ id: "Shop Now" })} <i className="fi-rs-arrow-small-right"></i>
+                {intl.formatMessage({ id: "Shop Now" })}{" "}
+                <i className="fi-rs-arrow-small-right"></i>
               </Link>
             </div>
 

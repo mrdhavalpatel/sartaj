@@ -3,15 +3,16 @@ import Link from "next/link";
 import { ApiCall } from "../../lib/other/other";
 import { Formik, Field, Form } from "formik";
 import { toast } from "react-toastify";
+import { useIntl } from "react-intl";
 
 const Footer = () => {
   const [footerData, setFooterData] = useState([]);
-
+  const intl = useIntl();
   const initialValues = {
     email: "",
   };
   const fetchFooterData = async () => {
-    const request = await ApiCall("get", "config");
+    const request = await ApiCall("get", intl, "config");
     const newArrivals = await request?.data;
     setFooterData(newArrivals);
   };
@@ -21,7 +22,12 @@ const Footer = () => {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       let payload = values;
-      const response = await ApiCall("post", "subscribe-newsletter", payload);
+      const response = await ApiCall(
+        "post",
+        intl,
+        "subscribe-newsletter",
+        payload
+      );
 
       if (response?.status === 200) {
         toast.success(response?.data?.message);

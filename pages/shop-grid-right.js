@@ -76,7 +76,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
       search: searchTerm ? searchTerm : "",
     };
 
-    const request = await ApiCall("post", "products/all", payload);
+    const request = await ApiCall("post", intl, "products/all", payload);
     const allProducts = await request?.data?.products;
     setAllproducts(allProducts);
   };

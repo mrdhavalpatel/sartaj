@@ -14,10 +14,12 @@ const ProductId = () => {
   const intl = useIntl();
   useEffect(() => {
     setLoading(true);
-    ApiCall("get", `product_seo/${router?.query?.slug}`).then((response) => {
-      setProduct(response?.data);
-      setLoading(false);
-    });
+    ApiCall("get", intl, `product_seo/${router?.query?.slug}`).then(
+      (response) => {
+        setProduct(response?.data);
+        setLoading(false);
+      }
+    );
   }, []);
 
   return (

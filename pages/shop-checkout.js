@@ -15,6 +15,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { ApiCall } from "../lib/other/other";
+import { useIntl } from "react-intl";
 
 const Cart = ({
   openCart,
@@ -44,9 +45,11 @@ const Cart = ({
 
   const [selectedAddressDropdown, setSelectedAddressDropdown] = useState("");
   const [orderNotes, setorderNotes] = useState("");
+  const intl = useIntl();
   const handleRadioChange = (id) => {
     setSelectedRadioId(id);
   };
+
   const getUserDetails = async (encodedToken) => {
     try {
       const response = await api.get("customer/info", {
@@ -172,7 +175,7 @@ const Cart = ({
 
   const getTimeSlot = async () => {
     //timeSlot
-    const res = await ApiCall("get", "timeSlot");
+    const res = await ApiCall("get", intl, "timeSlot");
     const data = res.data;
     setTimeSlot(data);
   };

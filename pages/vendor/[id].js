@@ -62,7 +62,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
       manufacturer_id: Router?.query?.id,
     };
 
-    const request = await ApiCall("post", "products/all", payload);
+    const request = await ApiCall("post", intl, "products/all", payload);
     const allProducts = await request?.data;
     setProductTotal(allProducts?.total_size);
     setProductsData(allProducts?.products);

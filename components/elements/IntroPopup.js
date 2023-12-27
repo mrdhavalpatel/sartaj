@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Timer from "./Timer";
 import { ApiCall } from "../../lib/other/other";
-import {  useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 const IntroPopup = () => {
   const intl = useIntl();
   const [openClass, setOpenClass] = useState(0);
@@ -12,7 +12,7 @@ const IntroPopup = () => {
   };
   const fixDate = new Date();
   const getPopData = async () => {
-    let res = await ApiCall("get", "hot-deals");
+    let res = await ApiCall("get", intl, "hot-deals");
     let data = res?.data;
     setPopData(data);
   };
@@ -45,7 +45,9 @@ const IntroPopup = () => {
                 }}
               >
                 <div className="deal-top">
-                  <h2 className="text-brand">{intl.formatMessage({ id: "Deal of the Month" })}</h2>
+                  <h2 className="text-brand">
+                    {intl.formatMessage({ id: "Deal of the Month" })}
+                  </h2>
                   <h5>{intl.formatMessage({ id: "Limited Offer." })}</h5>
                 </div>
                 <div className="deal-content  detail-info">
@@ -61,7 +63,8 @@ const IntroPopup = () => {
                       </span>
                       <span>
                         <span className="save-price font-md color3 ml-15">
-                          {PopData?.discount}% {intl.formatMessage({ id: "Off" })}
+                          {PopData?.discount}%{" "}
+                          {intl.formatMessage({ id: "Off" })}
                         </span>
                         <span className="old-price font-md ml-15">
                           ¥{PopData?.product_price}
@@ -71,7 +74,9 @@ const IntroPopup = () => {
                   </div>
                 </div>
                 <div className="deal-bottom">
-                  <p className="mb-20">{intl.formatMessage({ id: "Hurry Up! Offer End In:" })}</p>
+                  <p className="mb-20">
+                    {intl.formatMessage({ id: "Hurry Up! Offer End In:" })}
+                  </p>
                   {/* <Timer endDateTime="2024-11-27 00:00:00" /> */}
                   <Timer
                     endDateTime={PopData?.end_date ? PopData?.end_date : null}
@@ -95,7 +100,8 @@ const IntroPopup = () => {
                     as={`/products/${PopData?.product_id}`}
                     className="btn hover-up"
                   >
-                    {intl.formatMessage({ id: "Shop Now" })} <i className="fi-rs-arrow-right"></i>
+                    {intl.formatMessage({ id: "Shop Now" })}{" "}
+                    <i className="fi-rs-arrow-right"></i>
                   </Link>
                 </div>
               </div>

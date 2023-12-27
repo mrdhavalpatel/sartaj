@@ -4,12 +4,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { fetchByCatagory } from "../../redux/action/product";
 import SingleProduct from "./../ecommerce/SingleProduct";
 import { ApiCall } from "../../lib/other/other";
+import { useIntl } from "react-intl";
 
 SwiperCore.use([Navigation]);
 
 const RelatedSlider = ({ id }) => {
   const [related, setRelated] = useState([]);
-
+  const intl = useIntl();
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -17,6 +18,7 @@ const RelatedSlider = ({ id }) => {
   const fetchProducts = async () => {
     const request = await ApiCall(
       "get",
+      intl,
       `${"products/related-products"}/${id}`
     );
     const allProducts = await request?.data;

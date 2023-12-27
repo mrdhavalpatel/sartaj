@@ -19,7 +19,7 @@ function Index2() {
   const router = useRouter();
   const currentURL = router.asPath;
   const getBanners = async () => {
-    const res = await ApiCall("get", "banners/get-other-banners");
+    const res = await ApiCall("get", intl, "banners/get-other-banners");
     setAdBanner(res?.data);
   };
   useEffect(() => {

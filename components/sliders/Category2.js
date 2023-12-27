@@ -6,14 +6,16 @@ import { ApiCall } from "../../lib/other/other";
 import { useRouter } from "next/router";
 import { updateProductCategory } from "../../redux/action/productFiltersAction";
 import { connect } from "react-redux";
+import { useIntl } from "react-intl";
 
 SwiperCore.use([Navigation, Autoplay]);
 
 const CategorySlider2 = ({ updateProductCategory }) => {
   const [categories, setCategories] = useState([]);
   const router = useRouter();
+  const intl = useIntl();
   const getAllCategories = async () => {
-    const request = await ApiCall("get", "categories");
+    const request = await ApiCall("get", intl, "categories");
     const allCategories = await request;
 
     setCategories(allCategories?.data);

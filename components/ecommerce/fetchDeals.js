@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { server } from "../../config/index";
 import Deals1 from "../elements/Deals1";
 import { ApiCall } from "../../lib/other/other";
+import { useIntl } from "react-intl";
 
 function FeatchDeals() {
   const [deals, setDeals] = useState([]);
-
+  const intl = useIntl();
   const dealsProduct = async () => {
-    const request = await ApiCall("get", "products/sale-products");
+    const request = await ApiCall("get", intl, "products/sale-products");
     const allProducts = await request;
     // Discount
     setDeals(allProducts?.data?.products);

@@ -6,11 +6,12 @@ import { updateProductFilters } from "../../../redux/action/productFiltersAction
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { ApiCall } from "../../../lib/other/other";
+import { useIntl } from "react-intl";
 
 const PriceRangeSlider = ({ updateProductFilters }) => {
   const Router = useRouter();
   const searchTerm = Router.query.search;
-
+  const intl = useIntl();
   const [maxPrice, setMaxPrice] = useState(1000);
   const [price, setPrice] = useState({ value: { min: 0, max: 1000 } });
   useEffect(() => {
@@ -26,7 +27,7 @@ const PriceRangeSlider = ({ updateProductFilters }) => {
     setActive(index);
   };
   const getmaxPrice = async () => {
-    let res = await ApiCall("get", "products/max-price");
+    let res = await ApiCall("get", intl, "products/max-price");
     setMaxPrice(res?.data?.max_price);
   };
   useEffect(() => {

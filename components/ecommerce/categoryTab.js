@@ -5,7 +5,7 @@ import Cat2Tab from "../elements/NewArrivalTab";
 import Cat3Tab from "../elements/TrendingTab";
 import Link from "next/link";
 import { ApiCall } from "../../lib/other/other";
-import {  useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 function CategoryTab() {
   const intl = useIntl();
   const [active, setActive] = useState("1");
@@ -15,13 +15,13 @@ function CategoryTab() {
   const [cat3, setCat3] = useState([]);
 
   const catPAll = async () => {
-    const request = await ApiCall("post", "products/all");
+    const request = await ApiCall("post", intl, "products/all");
     const allProducts = await request?.data?.products;
     setCatAll(allProducts);
     setActive("1");
   };
   const catP1 = async () => {
-    const request = await ApiCall("get", "products/featured");
+    const request = await ApiCall("get", intl, "products/featured");
     const allProducts = await request?.data?.products;
     setCat1(allProducts);
 
@@ -29,13 +29,13 @@ function CategoryTab() {
   };
 
   const catP2 = async () => {
-    const request = await ApiCall("get", "products/popular");
+    const request = await ApiCall("get", intl, "products/popular");
     const allProducts = await request?.data?.products;
     setCat2(allProducts);
     setActive("3");
   };
   const catP3 = async () => {
-    const request = await ApiCall("get", "products/latest");
+    const request = await ApiCall("get", intl, "products/latest");
     const allProducts = await request?.data?.products;
     setCat3(allProducts);
     setActive("4");

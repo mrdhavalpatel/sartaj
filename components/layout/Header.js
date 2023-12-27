@@ -28,7 +28,7 @@ const Header = ({
     switchLanguage(newLanguage);
   };
   const getAllCategories = async () => {
-    const request = await ApiCall("get", "categories");
+    const request = await ApiCall("get", intl, "categories");
     const allCategories = await request;
     setCategories(allCategories?.data);
   };

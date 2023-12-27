@@ -5,12 +5,14 @@ import { ApiCall } from "../../lib/other/other";
 import { updateProductCategory } from "../../redux/action/productFiltersAction";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
+import { useIntl } from "react-intl";
 
 const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
   const [isActive, setIsActive] = useState({
     status: false,
     key: "",
   });
+  const intl = useIntl();
   const [categories, setCategories] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
@@ -37,7 +39,7 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
     });
   });
   const getAllCategories = async () => {
-    const request = await ApiCall("get", "categories");
+    const request = await ApiCall("get", intl, "categories");
     const allCategories = await request;
     setCategories(allCategories?.data);
   };

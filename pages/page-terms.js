@@ -3,12 +3,13 @@ import BlogSidebar from "../components/elements/BlogSidebar";
 import Layout from "../components/layout/Layout";
 import { useEffect, useState } from "react";
 import { ApiCall } from "../lib/other/other";
+import { useIntl } from "react-intl";
 
 function Terms() {
   const [termsData, setTermsData] = useState([]);
-
+  const intl = useIntl();
   const getTermsData = async () => {
-    const request = await ApiCall("get", "config");
+    const request = await ApiCall("get", intl, "config");
     const privacyPolicyData = await request;
     setTermsData(privacyPolicyData?.data?.privacy_policy);
   };

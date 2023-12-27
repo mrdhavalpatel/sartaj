@@ -59,7 +59,7 @@ const ProductsFullWidth = ({ products, productFilters }) => {
     };
     //initial commit
 
-    const request = await ApiCall("post", "products/all", payload);
+    const request = await ApiCall("post", intl, "products/all", payload);
     const allProducts = await request?.data;
     setProductTotal(allProducts?.total_size);
     setProductsData(allProducts?.products);

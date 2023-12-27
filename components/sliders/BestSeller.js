@@ -2,16 +2,20 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { fetchByCatagory } from "../../redux/action/product";
 import { ApiCall } from "../../lib/other/other";
+import { useIntl } from "react-intl";
 
 const BestSellerSlider = ({ intl }) => {
   const [bestSeller, setBestSeller] = useState([]);
-
   useEffect(() => {
     fetchProducts();
   }, []);
 
   const fetchProducts = async () => {
-    const request = await ApiCall("get", "products/latest-three-products");
+    const request = await ApiCall(
+      "get",
+      intl,
+      "products/latest-three-products"
+    );
     const newArrivals = await request?.data?.products;
     setBestSeller(newArrivals);
   };

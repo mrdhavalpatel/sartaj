@@ -2,18 +2,18 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import SwiperCore, { Navigation } from "swiper";
 import { ApiCall } from "../../lib/other/other";
+import { useIntl } from "react-intl";
 
 SwiperCore.use([Navigation]);
 
 const NewArrival2 = ({ intl }) => {
   const [newArrival, setNewArrival] = useState([]);
-
   useEffect(() => {
     fetchProducts();
   }, []);
 
   const fetchProducts = async () => {
-    const request = await ApiCall("get", "products/restored-products");
+    const request = await ApiCall("get", intl, "products/restored-products");
     const allProducts = await await request?.data;
 
     setNewArrival(allProducts);

@@ -12,7 +12,11 @@ const TrendingSlider = ({ intl }) => {
   }, []);
 
   const fetchProducts = async () => {
-    const request = await ApiCall("get", "/products/trending-three-products");
+    const request = await ApiCall(
+      "get",
+      intl,
+      "/products/trending-three-products"
+    );
     const trendingItem = await request?.data?.products;
     setTrending(trendingItem);
   };

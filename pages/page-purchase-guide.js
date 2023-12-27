@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import BlogSidebar from "../components/elements/BlogSidebar";
 import Layout from "../components/layout/Layout";
 import { ApiCall } from "../lib/other/other";
+import { useIntl } from "react-intl";
 
 function Guide() {
   const [privacyData, setPrivacyData] = useState([]);
-
+  const intl = useIntl();
   const getPrivacyPolicy = async () => {
-    const request = await ApiCall("get", "config");
+    const request = await ApiCall("get", intl, "config");
     const privacyPolicyData = await request;
     setPrivacyData(privacyPolicyData?.data?.delivery_information);
   };

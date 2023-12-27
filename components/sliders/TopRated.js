@@ -13,7 +13,11 @@ const TopRatedSlider = ({ intl }) => {
   }, []);
 
   const fetchProducts = async () => {
-    const request = await ApiCall("get", "/products/rated-three-products");
+    const request = await ApiCall(
+      "get",
+      intl,
+      "/products/rated-three-products"
+    );
     const topRated = await request?.data;
     setDiscount(topRated?.products);
   };

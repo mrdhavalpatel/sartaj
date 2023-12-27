@@ -69,7 +69,7 @@ const Products = ({ productFilters }) => {
       max: productFilters?.price?.max ? productFilters?.price?.max : 500,
       sort_by: productFilters?.featured,
     };
-    let res = await ApiCall("post", "products/all", payload);
+    let res = await ApiCall("post", intl, "products/all", payload);
     console.log(res); // Log the response
     setProducts(res?.data?.products);
     setProductTotal(res?.data?.total_size);
@@ -89,7 +89,11 @@ const Products = ({ productFilters }) => {
   ]);
   console.log("productFilters", productFilters?.price);
   const fetchProducts = async () => {
-    const request = await ApiCall("get", "products/latest-three-products");
+    const request = await ApiCall(
+      "get",
+      intl,
+      "products/latest-three-products"
+    );
     const newArrivals = await request?.data?.products;
     setNewProducts(newArrivals);
   };

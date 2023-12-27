@@ -4,13 +4,15 @@ import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ApiCall } from "../../lib/other/other";
+import { useIntl } from "react-intl";
 
 SwiperCore.use([Navigation, Pagination, EffectFade]);
 
 const Intro2 = () => {
   const [banners, setBanners] = useState([]);
+  const intl = useIntl();
   const getAllBanners = async () => {
-    const request = await ApiCall("get", "banners/get-home-banners");
+    const request = await ApiCall("get", intl, "banners/get-home-banners");
     const allBanners = await request;
     setBanners(allBanners?.data);
   };

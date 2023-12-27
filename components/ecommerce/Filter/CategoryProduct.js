@@ -3,13 +3,15 @@ import { connect } from "react-redux";
 import { updateProductCategory } from "../../../redux/action/productFiltersAction";
 import { useEffect, useState } from "react";
 import { ApiCall } from "../../../lib/other/other";
+import { useIntl } from "react-intl";
 
 const CategoryProduct = ({ updateProductCategory }) => {
   const router = useRouter();
+  const intl = useIntl();
   const [categories, setCategories] = useState([]);
 
   const getAllCategories = async () => {
-    const request = await ApiCall("get", "categories");
+    const request = await ApiCall("get", intl, "categories");
     const allCategories = await request;
 
     setCategories(allCategories?.data);
