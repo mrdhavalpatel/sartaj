@@ -11,8 +11,9 @@ import IntroPopup from "../components/elements/IntroPopup";
 import CategorySlider2 from "../components/sliders/Category2";
 import Intro2 from "../components/sliders/Intro2";
 import Link from "next/link";
-
+import {  useIntl } from "react-intl";
 function Test() {
+  const intl = useIntl();
   return (
     <>
       <IntroPopup />
@@ -32,9 +33,9 @@ function Test() {
 
               <section className="section-padding pb-5">
                 <div className="section-title" data-wow-delay="0">
-                  <h3 className="">Deals Of The Day</h3>
+                  <h3 className="">{intl.formatMessage({ id: "Deals Of The Day" })}</h3>
                   <Link href="/shop-fullwidth" className="show-all">
-                    All Deals
+                    {intl.formatMessage({ id: "All Deals" })}
                     <i className="fi-rs-angle-right"></i>
                   </Link>
                 </div>
@@ -50,12 +51,12 @@ function Test() {
             </div>
             <div className="col-lg-1-5 primary-sidebar sticky-sidebar pt-30">
               <div className="sidebar-widget widget-category-2 mb-30">
-                <h5 className="section-title style-1 mb-30">Category</h5>
+                <h5 className="section-title style-1 mb-30">{intl.formatMessage({ id: "Category" })}</h5>
                 <CategoryProduct />
               </div>
 
               <div className="sidebar-widget price_range range mb-30">
-                <h5 className="section-title style-1 mb-30">Fill by price</h5>
+                <h5 className="section-title style-1 mb-30">{intl.formatMessage({ id: "Fill by price" })}</h5>
                 <div className="bt-1 border-color-1"></div>
 
                 <div className="price-filter">
@@ -69,9 +70,9 @@ function Test() {
 
                 <div className="list-group">
                   <div className="list-group-item mb-10 mt-10">
-                    <label className="fw-900">Color</label>
+                    <label className="fw-900">{intl.formatMessage({ id: "Color" })}</label>
                     <VendorFilter />
-                    <label className="fw-900 mt-15">Item Condition</label>
+                    <label className="fw-900 mt-15">{intl.formatMessage({ id: "Item Condition" })}</label>
                     <SizeFilter />
                   </div>
                 </div>
@@ -79,7 +80,7 @@ function Test() {
               </div>
 
               <div className="sidebar-widget product-sidebar  mb-30 p-30 bg-grey border-radius-10">
-                <h5 className="section-title style-1 mb-30">New products</h5>
+                <h5 className="section-title style-1 mb-30">{intl.formatMessage({ id: "New products" })}</h5>
                 <div className="bt-1 border-color-1"></div>
 
                 <div className="single-post clearfix">
@@ -88,7 +89,7 @@ function Test() {
                   </div>
                   <div className="content pt-10">
                     <h5>
-                      <a>Chen Cardigan</a>
+                      <a>{intl.formatMessage({ id: "Chen Cardigan" })}</a>
                     </h5>
                     <p className="price mb-0 mt-5">$99.50</p>
                     <div className="product-rate">
@@ -105,7 +106,7 @@ function Test() {
                   </div>
                   <div className="content pt-10">
                     <h6>
-                      <a>Chen Sweater</a>
+                      <a>{intl.formatMessage({ id: "Chen Sweater" })}</a>
                     </h6>
                     <p className="price mb-0 mt-5">$89.50</p>
                     <div className="product-rate">
@@ -122,7 +123,7 @@ function Test() {
                   </div>
                   <div className="content pt-10">
                     <h6>
-                      <a>Colorful Jacket</a>
+                      <a>{intl.formatMessage({ id: "Colorful Jacket" })}</a>
                     </h6>
                     <p className="price mb-0 mt-5">$25</p>
                     <div className="product-rate">
@@ -137,12 +138,12 @@ function Test() {
               <div className="banner-img wow fadeIn mb-lg-0 animated d-lg-block d-none">
                 <img src="/assets/imgs/banner/banner-11.png" alt="nest" />
                 <div className="banner-text">
-                  <span>Oganic</span>
+                  <span>{intl.formatMessage({ id: "Oganic" })}</span>
                   <h4>
-                    Save 17% <br />
-                    on <span className="text-brand">Oganic</span>
+                  {intl.formatMessage({ id: "Save" })} 17% <br />
+                  {intl.formatMessage({ id: "on" })} <span className="text-brand">{intl.formatMessage({ id: "Oganic" })}</span>
                     <br />
-                    Juice
+                    {intl.formatMessage({ id: "Juice" })}
                   </h4>
                 </div>
               </div>
@@ -154,9 +155,9 @@ function Test() {
           <div className="container">
             <div className="section-title">
               <div className="title">
-                <h3>Shop by Categories</h3>
+                <h3>{intl.formatMessage({ id: "Shop by Categories" })}</h3>
                 <Link href="/shop-fullwidth" className="show-all">
-                  All Categories
+                {intl.formatMessage({ id: "All Categories" })}
                   <i className="fi-rs-angle-right"></i>
                 </Link>
               </div>

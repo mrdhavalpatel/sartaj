@@ -24,13 +24,15 @@ const NewArrival2 = () => {
       {newArrival?.slice(0, 3).map((product, i) => (
         <article className="row align-items-center hover-up" key={i}>
           <figure className="col-md-4 mb-0">
-            <Link href={`/${product?.seo_en}`}>
+            <Link href="/products/[slug]" as={`/products/${product?.id}`}>
               <img src={product?.image?.[0]} alt="nest" />
             </Link>
           </figure>
           <div className="col-md-8 mb-0">
             <h6>
-              <Link href={`/${product?.seo_en}`}>{product?.name}</Link>
+              <Link href="/products/[slug]" as={`/products/${product?.id}`}>
+                {product?.name}
+              </Link>
             </h6>
             <div className="product-rate-cover">
               <div className="product-rate d-inline-block">
@@ -38,7 +40,7 @@ const NewArrival2 = () => {
                   className="product-rating"
                   style={{
                     width: `${
-                      product?.overall_rating ? product?.overall_rating : 0
+                      product?.overall_rating ? product.overall_rating : 0
                     }%`,
                   }}
                 ></div>
@@ -51,7 +53,7 @@ const NewArrival2 = () => {
             <div className="product-price">
               <span>¥{product?.price} </span>
               <span className="old-price">
-                {product.oldPrice && `¥ ${product?.oldPrice}`}
+                {product.oldPrice && `¥ ${product.oldPrice}`}
               </span>
             </div>
           </div>

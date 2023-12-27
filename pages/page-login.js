@@ -76,10 +76,10 @@ function Login({ cartItems }) {
                     <div className="login_wrap widget-taber-content background-white">
                       <div className="padding_eight_all bg-white">
                         <div className="heading_s1">
-                          <h1 className="mb-5">Login</h1>
+                          <h1 className="mb-5">{intl.formatMessage({ id: "Login" })}</h1>
                           <p className="mb-30">
-                            Don't have an account?{" "}
-                            <Link href="/page-register">Create here</Link>
+                          {intl.formatMessage({ id: "Don't have an account?" })}{" "}
+                            <Link href="/page-register">{intl.formatMessage({ id: "Create here" })}</Link>
                           </p>
                         </div>
                         <Formik
@@ -99,7 +99,7 @@ function Login({ cartItems }) {
                               <Field
                                 type="text"
                                 name="usernameOrEmail"
-                                placeholder="Username or Email *"
+                                placeholder={intl.formatMessage({ id: "Username or Email *" })}
                                 className="form-control"
                               />
                               <ErrorMessage
@@ -112,7 +112,7 @@ function Login({ cartItems }) {
                               <Field
                                 type="password"
                                 name="password"
-                                placeholder="Your password *"
+                                placeholder={intl.formatMessage({ id: "Your password *" })}
                                 className="form-control"
                               />
                               <ErrorMessage
@@ -128,7 +128,7 @@ function Login({ cartItems }) {
                                 className="btn btn-heading btn-block hover-up"
                                 name="login"
                               >
-                                Log in
+                                {intl.formatMessage({ id: "Login" })}
                               </button>
                             </div>
                           </Form>

@@ -9,12 +9,14 @@ import { ApiCall } from "../../lib/other/other";
 import axios from "axios";
 import { API_BASE_URL } from "../../lib/api";
 import { useLanguage } from "../context/LanguageContext";
+import {  useIntl } from "react-intl";
 const Header = ({
   totalCartItems,
   totalCompareItems,
   toggleClick,
   totalWishlistItems,
 }) => {
+  const intl = useIntl();
   const [isToggled, setToggled] = useState(false);
   const [scroll, setScroll] = useState(0);
   const { logout } = useAuth();
@@ -92,8 +94,8 @@ const Header = ({
       <header className="header-area header-style-1 header-height-2">
         <div className="mobile-promotion">
           <span>
-            Grand opening, <strong>up to 15%</strong> off all items. Only{" "}
-            <strong>3 days</strong> left
+          {intl.formatMessage({ id: "Grand opening" })}, <strong>{intl.formatMessage({ id: "up to 15%" })}</strong> {intl.formatMessage({ id: "off all items. Only" })}{" "}
+            <strong>3 {intl.formatMessage({ id: "days" })}</strong> {intl.formatMessage({ id: "left" })}
           </span>
         </div>
         <div className="header-top header-top-ptb-1 d-none d-lg-block">
@@ -103,10 +105,10 @@ const Header = ({
                 <div className="header-info">
                   <ul>
                     <li>
-                      <Link href="/page-account">My Account</Link>
+                      <Link href="/page-account">{intl.formatMessage({ id: "My Account" })}</Link>
                     </li>
                     <li>
-                      <Link href="/shop-wishlist">Wishlist</Link>
+                      <Link href="/shop-wishlist">{intl.formatMessage({ id: "Wishlist" })}</Link>
                     </li>
                   </ul>
                 </div>
@@ -116,7 +118,7 @@ const Header = ({
                 <div className="header-info header-info-right">
                   <ul>
                     <li>
-                      Need help? Call Us:&nbsp;'
+                    {intl.formatMessage({ id: "Need help? Call Us" })}:&nbsp;'
                       <a href="tel:0727511975">
                         <strong className="text-brand">072-751-1975</strong>
                       </a>
@@ -128,7 +130,7 @@ const Header = ({
                         className="language-dropdown-active"
                       >
                         <i className="fi-rs-world"></i>
-                        English
+                        {intl.formatMessage({ id: "English" })}
                         <i className="fi-rs-angle-small-down"></i>
                       </Link>
                       <ul className="language-dropdown">
@@ -184,7 +186,7 @@ const Header = ({
                         </span>
                       </Link>
                       <Link href="/shop-compare">
-                        <span className="lable ml-0">Compare</span>
+                        <span className="lable ml-0">{intl.formatMessage({ id: "Compare" })}</span>
                       </Link>
                     </div>
                     <div className="header-action-icon-2">
@@ -199,7 +201,7 @@ const Header = ({
                         </span>
                       </Link>
                       <Link href="/shop-wishlist">
-                        <span className="lable">Wishlist</span>
+                        <span className="lable">{intl.formatMessage({ id: "Wishlist" })}</span>
                       </Link>
                     </div>
                     <div className="header-action-icon-2">
@@ -211,7 +213,7 @@ const Header = ({
                         <span className="pro-count blue">{totalCartItems}</span>
                       </Link>
                       <Link href="/shop-cart">
-                        <span className="lable">Cart</span>
+                        <span className="lable">{intl.formatMessage({ id: "Cart" })}</span>
                       </Link>
                     </div>
 
@@ -224,21 +226,21 @@ const Header = ({
                         />
                       </Link>
                       <Link href="/">
-                        <span className="lable ml-0">Account</span>
+                        <span className="lable ml-0">{intl.formatMessage({ id: "Account" })}</span>
                       </Link>
                       <div className="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                         <ul>
                           <li>
                             <Link href="/page-account">
                               <i className="fi fi-rs-user mr-10"></i>
-                              My Account
+                              {intl.formatMessage({ id: "My Account" })}
                             </Link>
                           </li>
 
                           <li>
                             <Link href="/page-account">
                               <i className="fi fi-rs-heart mr-10"></i>
-                              My Wishlist
+                              {intl.formatMessage({ id: "My Wishlist" })}
                             </Link>
                           </li>
 
@@ -251,7 +253,7 @@ const Header = ({
                               }}
                             >
                               <i className="fi fi-rs-sign-out mr-10"></i>
-                              Sign out
+                              {intl.formatMessage({ id: "Sign out" })}
                             </Link>
                           </li>
                         </ul>
@@ -284,7 +286,7 @@ const Header = ({
                     onClick={handleToggle}
                   >
                     <span className="fi-rs-apps"></span>
-                    <span className="et">Browse</span> All Categories
+                    <span className="et">{intl.formatMessage({ id: "Browse" })}</span> {intl.formatMessage({ id: "All Categories" })}
                     <i className="fi-rs-angle-down"></i>
                   </a>
 
@@ -306,25 +308,25 @@ const Header = ({
                     <ul>
                       <li>
                         <Link href="/" className="active">
-                          Home
+                        {intl.formatMessage({ id: "Home" })}
                         </Link>
                       </li>
                       <li>
-                        <Link href="/page-about">About</Link>
+                        <Link href="/page-about">{intl.formatMessage({ id: "About" })}</Link>
                       </li>
                       <li>
-                        <Link href="/shop-fullwidth">Shop</Link>
+                        <Link href="/shop-fullwidth">{intl.formatMessage({ id: "Shop" })}</Link>
                       </li>
                       <li>
-                        <Link href="/page-contact">Contact</Link>
+                        <Link href="/page-contact">{intl.formatMessage({ id: "Contact" })}</Link>
                       </li>
                       <li>
                         <Link href="/page-purchase-guide">
-                          Delivery Information
+                        {intl.formatMessage({ id: "Delivery Information" })}
                         </Link>
                       </li>
                       <li>
-                        <Link href="/page-faqs">FAQs</Link>
+                        <Link href="/page-faqs">{intl.formatMessage({ id: "FAQs" })}</Link>
                       </li>
                     </ul>
                   </nav>
@@ -340,7 +342,7 @@ const Header = ({
                   <a href="tel:0727511975">
                     <strong className="text-brand">072-751-1975</strong>
                   </a>
-                  <span>Support Center</span>
+                  <span>{intl.formatMessage({ id: "Support Center" })}</span>
                 </p>
               </div>
 

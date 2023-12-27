@@ -7,7 +7,7 @@ SwiperCore.use([Navigation, Thumbs]);
 
 const ThumbSlider = ({ product }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  console.log("-------->", product);
+  console.log("locho --->", product);
   return (
     <div>
       <Swiper
@@ -24,29 +24,15 @@ const ThumbSlider = ({ product }) => {
           <SwiperSlide>
             <img src={item} />
             {/* <Zoom
-                            img={item.thumb}
-                            zoomScale={5}
-                            width={500}
-                            height={500}
-                            ransitionTime={0.5}
-                        /> */}
+              img={item}
+              zoomScale={5}
+              width={500}
+              height={500}
+              ransitionTime={0.5}
+            /> */}
           </SwiperSlide>
         ))}
       </Swiper>
-      {/* <Swiper
-        onSwiper={setThumbsSwiper}
-        spaceBetween={10}
-        slidesPerView={4}
-        freeMode={true}
-        watchSlidesProgress={true}
-        className="mySwiper"
-      >
-        {product?.gallery?.map((item) => (
-          <SwiperSlide>
-            <img src={item} />
-          </SwiperSlide>
-        ))}
-      </Swiper> */}
     </div>
   );
 };

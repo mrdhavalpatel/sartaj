@@ -32,6 +32,7 @@ const Cart = ({
   const [coupenCodeDis, setCoupenCodeDis] = useState("");
   const [cartTotal, setCartTotal] = useState([]);
   const [coupanDetails, setCoupanDetails] = useState("");
+  const [coupanRes, setCoupanRes] = useState("");
   const router = useRouter();
   const [cartItemsData, setCartItemsData] = useState([]);
   const [timeSlot, setTimeSlot] = useState([]);
@@ -78,7 +79,7 @@ const Cart = ({
         .then((response) => {
           console.log("coupon response", response);
           if (response?.status == 200) {
-            console.log("first");
+            setCoupanRes(response?.data);
             setCoupenCodeDis(response?.data?.discount);
             if (response.data.discount_type == "percent") {
               setCoupanDetails(
@@ -87,7 +88,7 @@ const Cart = ({
             }
 
             toast.success("Coupon applied successfully");
-            getCartData(token);
+            // getCartData(token);
           }
         });
     } catch (error) {
@@ -656,51 +657,72 @@ const Cart = ({
                             ¥{cartTotal?.delivery_charge}
                           </td>
                         </tr>
-                        <tr>
-                          <td
-                            style={{
-                              border: "1px solid #bababa",
-                              padding: "5px",
-                            }}
-                          >
-                            <strong>
-                              Consumption Tax {cartTotal?.eight_percent ? 8 : 0}
-                              %
-                            </strong>
-                          </td>
-                          <td
-                            style={{
-                              border: "1px solid #bababa",
-                              padding: "5px",
-                            }}
-                          >
-                            ¥{cartTotal?.eight_percent}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td
-                            style={{
-                              border: "1px solid #bababa",
-                              padding: "5px",
-                            }}
-                          >
-                            <strong>
-                              Consumption Tax {cartTotal?.ten_percent ? 10 : 0}%
-                            </strong>
-                          </td>
-                          <td
-                            style={{
-                              border: "1px solid #bababa",
-                              padding: "5px",
-                            }}
-                          >
-                            ¥
-                            {cartTotal?.ten_percent
-                              ? cartTotal?.ten_percent
-                              : 0}
-                          </td>
-                        </tr>
-
+                        {cartTotal?.eight_percent ? (
+                          <tr>
+                            <td
+                              style={{
+                                border: "1px solid #bababa",
+                                padding: "5px",
+                              }}
+                            >
+                              <strong>
+                                Consumption Tax{" "}
+                                {cartTotal?.eight_percent ? 8 : 0}%
+                              </strong>
+                            </td>
+                            <td
+                              style={{
+                                border: "1px solid #bababa",
+                                padding: "5px",
+                              }}
+                            >
+                              ¥{cartTotal?.eight_percent}
+                            </td>
+                          </tr>
+                        ) : null}
+                        {cartTotal?.ten_percent ? (
+                          <tr>
+                            <td
+                              style={{
+                                border: "1px solid #bababa",
+                                padding: "5px",
+                              }}
+                            >
+                              <strong>Consumption Tax 10%</strong>
+                            </td>
+                            <td
+                              style={{
+                                border: "1px solid #bababa",
+                                padding: "5px",
+                              }}
+                            >
+                              ¥
+                              {cartTotal?.ten_percent
+                                ? cartTotal?.ten_percent
+                                : 0}
+                            </td>
+                          </tr>
+                        ) : null}
+                        {coupanRes ? (
+                          <tr>
+                            <td
+                              style={{
+                                border: "1px solid #bababa",
+                                padding: "5px",
+                              }}
+                            >
+                              <strong>Discount price</strong>
+                            </td>
+                            <td
+                              style={{
+                                border: "1px solid #bababa",
+                                padding: "5px",
+                              }}
+                            >
+                              ¥{coupanRes?.discount_price}
+                            </td>
+                          </tr>
+                        ) : null}
                         <tr>
                           <td
                             style={{
@@ -716,7 +738,10 @@ const Cart = ({
                               padding: "5px",
                             }}
                           >
-                            ¥{cartTotal?.total_amt}
+                            ¥
+                            {coupanRes
+                              ? coupanRes?.orderAmount
+                              : cartTotal?.total_amt}
                           </td>
                         </tr>
                       </table>

@@ -64,8 +64,21 @@ const SingleProduct2 = ({
               <i className="fi-rs-shuffle"></i>
             </a>
           </div>
+
+          {/* <div className="product-badges product-badges-position product-badges-mrg">
+            {product.trending && <span className="hot">Hot</span>}
+            {product.created && <span className="new">New</span>}
+            {product.totalSell > 100 && <span className="best">Best Sell</span>}
+            {product.discount.isActive && <span className="sale">Sale</span>}
+            {product.discount.percentage >= 5 && (
+              <span className="hot">{product.discount.percentage}%</span>
+            )}
+          </div> */}
         </div>
         <div className="product-content-wrap">
+          {/* <div className="product-category">
+            <Link href="/products">{product?.brand}</Link>
+          </div> */}
           <h2>
             <Link href={`/${product?.seo_en}`}>{product?.name}</Link>
           </h2>
@@ -74,9 +87,8 @@ const SingleProduct2 = ({
             <div
               className="product-rating"
               style={{
-                width: `${
-                  product?.overall_rating ? product.overall_rating : 0
-                }%`,
+                width: `${product?.overall_rating ? product.overall_rating : 0
+                  }%`,
               }}
             ></div>
             <span className="font-small ml-5 text-muted">
@@ -100,13 +112,12 @@ const SingleProduct2 = ({
                 className="progress-bar"
                 role="progressbar"
                 style={{
-                  width: `${
-                    ((product?.sold_products || 0) /
+                  width: `${((product?.sold_products || 0) /
                       (product?.total_product_count === 0
                         ? 1
                         : product?.total_product_count || 1)) *
                     100
-                  }%`,
+                    }%`,
                 }}
               ></div>
             </div>
@@ -121,9 +132,8 @@ const SingleProduct2 = ({
             className="btn w-100 hover-up"
             style={{
               border: "none",
-              backgroundColor: `${
-                product?.out_of_stock_status !== "in stock" ? "grey" : ""
-              }`,
+              backgroundColor: `${product?.out_of_stock_status !== "in stock" ? "grey" : ""
+                }`,
             }}
             disabled={product?.out_of_stock_status !== "in stock"}
             onClick={(e) => {

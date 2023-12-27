@@ -7,6 +7,7 @@ import { addToCompare } from "../../redux/action/compareAction";
 import { openQuickView } from "../../redux/action/quickViewAction";
 import { addToWishlist } from "../../redux/action/wishlistAction";
 import QuickView from "./QuickView";
+import { useIntl } from "react-intl";
 
 const SingleProduct = ({
   product,
@@ -15,6 +16,7 @@ const SingleProduct = ({
   addToWishlist,
   openQuickView,
 }) => {
+  const intel = useIntl();
   const handleCart = async (product) => {
     addToCart(product);
     // toast("Product added to Cart !");
@@ -34,7 +36,11 @@ const SingleProduct = ({
       <div className="product-cart-wrap mb-30">
         <div className="product-img-action-wrap">
           <div className="product-img product-img-zoom">
-            <Link href={`/${product?.seo_en}`}>
+            <Link
+              href={`/${
+                intel.locale === "en" ? product?.seo_en : product?.seo_ja
+              }`}
+            >
               {product?.image?.map((itm) => {
                 return <img className="default-img" src={itm} alt="nest" />;
               })}
@@ -84,7 +90,13 @@ const SingleProduct = ({
             </Link>
           </div>
           <h2>
-            <Link href={`/${product?.seo_en}`}>{product?.name}</Link>
+            <Link
+              href={`/${
+                intel.locale === "en" ? product?.seo_en : product?.seo_ja
+              }`}
+            >
+              {product?.name}
+            </Link>
           </h2>
 
           <div className="product-rate-cover">

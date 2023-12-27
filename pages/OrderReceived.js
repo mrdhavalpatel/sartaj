@@ -15,7 +15,9 @@ import Layout from "../components/layout/Layout";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { ApiCall } from "../lib/other/other";
+import {  useIntl } from "react-intl";
 const OrderReceived = ({ cartItems }) => {
+  const intl = useIntl();
   const [userDetails, setUserDetails] = useState([]);
   const [address, setAddress] = useState("");
   const [cartItemsData, setCartItemsData] = useState([]);
@@ -134,20 +136,19 @@ const OrderReceived = ({ cartItems }) => {
         <div className="container">
           <div style={{ margin: "0 auto", fontFamily: "Montserrat" }}>
             <div style={{ pageBreakAfter: "always" }}>
-              <h1>Order Received - Thank You!</h1>
-              <h3>Order id #{router?.query?.order_id}</h3>
+              <h1>{intl.formatMessage({ id: "Order Received - Thank You!" })}</h1>
+              <h3>{intl.formatMessage({ id: "Order id" })} {router?.query?.order_id}</h3>
               <p>
-                Your order has been successfully received. Thank you for your
-                purchase!
+              {intl.formatMessage({ id: "Your order has been successfully received. Thank you for your purchase!" })}
               </p>
               <table className="table table-bordered">
                 <thead>
                   <tr>
                     <td style={{ width: "50%" }}>
-                      <b >Shipping Address</b>
+                      <b >{intl.formatMessage({ id: "Shipping Address" })}</b>
                     </td>
                     <td style={{ width: "50%" }}>
-                      <b>Contact</b>
+                      <b>{intl.formatMessage({ id: "Contact" })}</b>
                     </td>
                   </tr>
                 </thead>
@@ -174,11 +175,11 @@ const OrderReceived = ({ cartItems }) => {
               <table className="table table-bordered">
                 <thead>
                   <tr>
-                    <td className="text-left">Product</td>
-                    <td className="text-left">Model</td>
-                    <td className="text-right">Quantity</td>
-                    <td className="text-right">Unit Price</td>
-                    <td className="text-right">Total</td>
+                    <td className="text-left">{intl.formatMessage({ id: "Product" })}</td>
+                    <td className="text-left">{intl.formatMessage({ id: "Model" })}</td>
+                    <td className="text-right">{intl.formatMessage({ id: "Quantity" })}</td>
+                    <td className="text-right">{intl.formatMessage({ id: "Unit Price" })}</td>
+                    <td className="text-right">{intl.formatMessage({ id: "Total" })}</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -231,13 +232,13 @@ const OrderReceived = ({ cartItems }) => {
             </tr> */}
                   <tr>
                     <td colspan="4" class="text-right">
-                      Sub Total
+                    {intl.formatMessage({ id: "Sub Total" })}
                     </td>
                     <td class="text-right">¥{shippingData?.total_sub_amt}</td>
                   </tr>
                   <tr>
                     <td colspan="4" class="text-right">
-                      All Item in Dry Shipping:{" "}
+                    {intl.formatMessage({ id: "All Item in Dry Shipping" })}:{" "}
                     </td>
                     <td class="text-right">
                       {" "}
@@ -247,7 +248,7 @@ const OrderReceived = ({ cartItems }) => {
                   {shippingData?.eight_percent != 0 ? (
                     <tr>
                       <td colspan="4" class="text-right">
-                        Consumption Tax {shippingData?.eight_percent ? 8 : 0}%
+                      {intl.formatMessage({ id: "Consumption Tax" })} {shippingData?.eight_percent ? 8 : 0}%
                       </td>
                       <td class="text-right">
                         {" "}
@@ -263,7 +264,7 @@ const OrderReceived = ({ cartItems }) => {
                   {shippingData?.ten_percent != 0 ? (
                     <tr>
                       <td colspan="4" class="text-right">
-                        Consumption Tax {shippingData?.ten_percent ? 10 : 0}%
+                      {intl.formatMessage({ id: "Consumption Tax" })} {shippingData?.ten_percent ? 10 : 0}%
                       </td>
                       <td class="text-right">
                         {" "}
@@ -277,7 +278,7 @@ const OrderReceived = ({ cartItems }) => {
 
                   <tr>
                     <td colspan="4" class="text-right">
-                      Total
+                    {intl.formatMessage({ id: "Total" })}
                     </td>
                     <td class="text-right">¥{shippingData?.total_amt}</td>
                   </tr>
@@ -287,7 +288,7 @@ const OrderReceived = ({ cartItems }) => {
                 <thead>
                   <tr>
                     <td>
-                      <b>Customer Comment</b>
+                      <b>{intl.formatMessage({ id: "Customer Comment" })}</b>
                     </td>
                   </tr>
                 </thead>

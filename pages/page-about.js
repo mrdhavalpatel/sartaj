@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/layout/Layout";
 import { ApiCall } from "../lib/other/other";
-
+import {  useIntl } from "react-intl";
 function About() {
+  const intl = useIntl();
   const [aboutData, setAboutData] = useState([]);
 
   const getAboutUsData = async () => {
@@ -50,7 +51,7 @@ function About() {
                 <div dangerouslySetInnerHTML={{ __html: aboutData }}></div>
               </section>
               <section className="text-center mb-50">
-                <h2 className="title style-3 mb-40">What We Provide?</h2>
+                <h2 className="title style-3 mb-40">{intl.formatMessage({ id: "What We Provide?" })}</h2>
                 <div className="row">
                   <div className="col-lg-4 col-md-6 mb-24">
                     <div className="featured-card">
@@ -58,11 +59,9 @@ function About() {
                         src="/assets/imgs/theme/icons/icon-1.svg"
                         alt="nest"
                       />
-                      <h4>Best Prices & Offers</h4>
+                      <h4>{intl.formatMessage({ id: "Best Prices & Offers" })}</h4>
                       <p>
-                        There are many variations of passages of Lorem Ipsum
-                        available, but the majority have suffered alteration in
-                        some form
+                      {intl.formatMessage({ id: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form" })}
                       </p>
                     </div>
                   </div>
@@ -72,11 +71,9 @@ function About() {
                         src="/assets/imgs/theme/icons/icon-2.svg"
                         alt="nest"
                       />
-                      <h4>Wide Assortment</h4>
+                      <h4>{intl.formatMessage({ id: "Wide Assortment" })}</h4>
                       <p>
-                        There are many variations of passages of Lorem Ipsum
-                        available, but the majority have suffered alteration in
-                        some form
+                      {intl.formatMessage({ id: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form" })}
                       </p>
                     </div>
                   </div>
@@ -86,11 +83,9 @@ function About() {
                         src="/assets/imgs/theme/icons/icon-3.svg"
                         alt="nest"
                       />
-                      <h4>Free Delivery</h4>
+                      <h4>{intl.formatMessage({ id: "Free Delivery" })}</h4>
                       <p>
-                        There are many variations of passages of Lorem Ipsum
-                        available, but the majority have suffered alteration in
-                        some form
+                      {intl.formatMessage({ id: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form" })}
                       </p>
                     </div>
                   </div>
@@ -100,11 +95,9 @@ function About() {
                         src="/assets/imgs/theme/icons/icon-4.svg"
                         alt="nest"
                       />
-                      <h4>Easy Returns</h4>
+                      <h4>{intl.formatMessage({ id: "Easy Returns" })}</h4>
                       <p>
-                        There are many variations of passages of Lorem Ipsum
-                        available, but the majority have suffered alteration in
-                        some form
+                      {intl.formatMessage({ id: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form" })}
                       </p>
                     </div>
                   </div>
@@ -114,11 +107,9 @@ function About() {
                         src="/assets/imgs/theme/icons/icon-5.svg"
                         alt="nest"
                       />
-                      <h4>100% Satisfaction</h4>
+                      <h4>{intl.formatMessage({ id: "100% Satisfaction" })}</h4>
                       <p>
-                        There are many variations of passages of Lorem Ipsum
-                        available, but the majority have suffered alteration in
-                        some form
+                      {intl.formatMessage({ id: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form" })}
                       </p>
                     </div>
                   </div>
@@ -128,11 +119,9 @@ function About() {
                         src="/assets/imgs/theme/icons/icon-6.svg"
                         alt="nest"
                       />
-                      <h4>Great Daily Deal</h4>
+                      <h4>{intl.formatMessage({ id: "Great Daily Deal" })}</h4>
                       <p>
-                        There are many variations of passages of Lorem Ipsum
-                        available, but the majority have suffered alteration in
-                        some form
+                      {intl.formatMessage({ id: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form" })}
                       </p>
                     </div>
                   </div>

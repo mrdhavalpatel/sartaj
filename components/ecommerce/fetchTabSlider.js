@@ -6,8 +6,9 @@ import FeaturedSlider from "../sliders/Featured";
 import NewArrivalTabSlider from "../sliders/NewArrivalTab";
 import TrendingSlider from "../sliders/Trending";
 import { ApiCall } from "../../lib/other/other";
-
+import {  useIntl } from "react-intl";
 function FeatchTabSlider({ banners }) {
+  const intl = useIntl();
   const [active, setActive] = useState("1");
   const [featured, setFeatured] = useState([]);
   const [trending, setTrending] = useState([]);
@@ -45,7 +46,7 @@ function FeatchTabSlider({ banners }) {
   return (
     <>
       <div className="section-title wow animate__animated animate__fadeIn">
-        <h3 className="">Daily Best Sells</h3>
+        <h3 className="">{intl.formatMessage({ id: "Daily Best Sells" })}</h3>
 
         {/* <ul className="nav nav-tabs links" id="myTab-1" role="tablist">
           <li className="nav-item" role="presentation">
@@ -88,9 +89,18 @@ function FeatchTabSlider({ banners }) {
             <div className="banner-text">
               <h2 className="mb-100">{banners?.[1]?.title}</h2>
               <Link href="/products" className="btn btn-xs">
-                Shop Now <i className="fi-rs-arrow-small-right"></i>
+              {intl.formatMessage({ id: "Shop Now" })} <i className="fi-rs-arrow-small-right"></i>
               </Link>
             </div>
+
+            {/* <img
+              src={`${banners?.[1]?.banner_logo}`}
+              onClick={() => {
+                window.location.replace(
+                  `${banners?.[1]?.link ? banners?.[1]?.link : "#"}`
+                );
+              }}
+            /> */}
           </div>
         </div>
         <div className="col-lg-9 col-md-12">
@@ -104,6 +114,25 @@ function FeatchTabSlider({ banners }) {
                 <FeaturedSlider products={featured} />
               </div>
             </div>
+
+            {/* <div
+              className={
+                active === "2" ? "tab-pane fade show active" : "tab-pane fade"
+              }
+            >
+              <div className="carausel-4-columns-cover card-product-small arrow-center position-relative">
+                <TrendingSlider products={trending} />
+              </div>
+            </div>
+            <div
+              className={
+                active === "3" ? "tab-pane fade show active" : "tab-pane fade"
+              }
+            >
+              <div className="carausel-4-columns-cover card-product-small arrow-center position-relative">
+                <NewArrivalTabSlider products={newArrival} />
+              </div>
+            </div> */}
           </div>
         </div>
       </div>

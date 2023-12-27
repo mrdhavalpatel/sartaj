@@ -12,12 +12,10 @@ const ProductId = () => {
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const intl = useIntl();
-  console.log("router?.query?.slug", router?.query?.slug);
   useEffect(() => {
     setLoading(true);
     ApiCall("get", `${router?.query?.slug}`).then((response) => {
       setProduct(response?.data);
-      console.log("response?.data", response);
       setLoading(false);
     });
   }, []);
@@ -35,7 +33,7 @@ const ProductId = () => {
                 description={product?.meta_tag_description}
                 keywords={product?.meta_tag_keywords}
               />
-              <ProductDetails product={product} />
+              <ProductDetails intl={intl} product={product} />
             </>
           )}
         </div>

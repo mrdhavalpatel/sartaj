@@ -1,8 +1,9 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { ApiCall } from "../../lib/other/other";
-
+import {  useIntl } from "react-intl";
 const Search = () => {
+  const intl = useIntl();
   const [searchTerm, setSearchTerm] = useState("");
   const [categories, setCategories] = useState([]);
   const [categoriesValue, setCategoriesValue] = useState("");
@@ -56,7 +57,7 @@ const Search = () => {
             borderRadius: "4px",
           }}
         >
-          <option value="">All Categories</option>
+          <option value="">{intl.formatMessage({ id: "All Categories" })}</option>
           {categories?.map((itm) => (
             <option key={itm.id} value={itm.id}>
               {itm.name}
@@ -67,7 +68,7 @@ const Search = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           type="text"
-          placeholder="Search"
+          placeholder={intl.formatMessage({ id: "Search" })}
           style={{
             padding: "8px",
             borderRadius: "4px",
@@ -97,7 +98,7 @@ const Search = () => {
                   cursor: "pointer",
                 }}
               >
-                <a href={`${result?.seo_en}`}>{result?.name}</a>
+                <a href={`/products/${result?.id}}`}>{result?.name}</a>
               </li>
             ))}
           </ul>

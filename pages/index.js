@@ -1,7 +1,7 @@
 import Link from "next/link";
 import CategoryTab from "../components/ecommerce/categoryTab";
 import FeatchDeals from "../components/ecommerce/fetchDeals";
-// import Layout from "../components/layout/Layout";
+import Layout from "../components/layout/Layout";
 import Intro2 from "../components/sliders/Intro2";
 import FetchTabSlider from "../components/ecommerce/fetchTabSlider";
 import Bottom from "../components/elements/Bottom";
@@ -10,8 +10,7 @@ import CategorySlider2 from "../components/sliders/Category2";
 import { useEffect, useState } from "react";
 import { ApiCall } from "../lib/other/other";
 import { useRouter } from "next/router";
-import { useIntl } from "react-intl";
-import Layout from "../components/layout/Layout";
+import {  useIntl } from "react-intl";
 
 function Index2() {
   const [adBanner, setAdBanner] = useState([]);
@@ -19,9 +18,13 @@ function Index2() {
 
   const intl = useIntl();
 
-  // console.log("---->>>>>>>>", intl?.locale);
+  const title = intl.formatMessage({ id: "page.home.head.title" });
+  const description = intl.formatMessage({
+    id: "page.home.head.meta.description",
+  });
+  console.log("description", description)
   const getBanners = async () => {
-    const res = await ApiCall("get", intl, "banners/get-other-banners");
+    const res = await ApiCall("get", "banners/get-other-banners");
     setAdBanner(res?.data);
   };
   useEffect(() => {
@@ -66,11 +69,10 @@ function Index2() {
                   </div>
 
                   <img
-                    src={`${
-                      adBanner?.[0]?.banner_logo
-                        ? adBanner?.[0]?.banner_logo
-                        : "#"
-                    }`}
+                    src={`${adBanner?.[0]?.banner_logo
+                      ? adBanner?.[0]?.banner_logo
+                      : "#"
+                      }`}
                     onClick={() => {
                       window.location.replace(
                         `${adBanner?.[0]?.link ? adBanner?.[0]?.link : "#"}`
@@ -105,9 +107,9 @@ function Index2() {
               className="section-title wow animate__animated animate__fadeIn"
               data-wow-delay="0"
             >
-              <h3 className="">Deals Of The Day</h3>
+              <h3 className="">{intl.formatMessage({ id: "Deals Of The Day" })}</h3>
               <Link href="/shop-fullwidth" className="show-all">
-                All Deals
+              {intl.formatMessage({ id: "All Deals" })}
                 <i className="fi-rs-angle-right"></i>
               </Link>
             </div>
@@ -119,9 +121,9 @@ function Index2() {
           <div className="container">
             <div className="section-title">
               <div className="title">
-                <h3>Shop by Categories</h3>
+                <h3>{intl.formatMessage({ id: "Shop by Categories" })}</h3>
                 <Link href="/shop-fullwidth" className="show-all">
-                  All Categories
+                {intl.formatMessage({ id: "All Categories" })}
                   <i className="fi-rs-angle-right"></i>
                 </Link>
               </div>

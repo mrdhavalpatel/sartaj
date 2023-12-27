@@ -5,8 +5,9 @@ import Cat2Tab from "../elements/NewArrivalTab";
 import Cat3Tab from "../elements/TrendingTab";
 import Link from "next/link";
 import { ApiCall } from "../../lib/other/other";
-
+import {  useIntl } from "react-intl";
 function CategoryTab() {
+  const intl = useIntl();
   const [active, setActive] = useState("1");
   const [catAll, setCatAll] = useState([]);
   const [cat1, setCat1] = useState([]);
@@ -46,14 +47,14 @@ function CategoryTab() {
   return (
     <>
       <div className="section-title style-2 wow animate__animated animate__fadeIn">
-        <h3>Popular Products</h3>
+        <h3>{intl.formatMessage({ id: "Popular Products" })}</h3>
         <ul className="nav nav-tabs links" id="myTab" role="tablist">
           <li className="nav-item" role="presentation">
             <button
               className={active === "1" ? "nav-link active" : "nav-link"}
               onClick={catPAll}
             >
-              All
+              {intl.formatMessage({ id: "All" })}
             </button>
           </li>
           <li className="nav-item" role="presentation">
@@ -61,7 +62,7 @@ function CategoryTab() {
               className={active === "2" ? "nav-link active" : "nav-link"}
               onClick={catP1}
             >
-              Featured
+              {intl.formatMessage({ id: "Featured" })}
             </button>
           </li>
           <li className="nav-item" role="presentation">
@@ -69,7 +70,7 @@ function CategoryTab() {
               className={active === "3" ? "nav-link active" : "nav-link"}
               onClick={catP2}
             >
-              Popular
+              {intl.formatMessage({ id: "Popular" })}
             </button>
           </li>
           <li className="nav-item" role="presentation">
@@ -77,7 +78,7 @@ function CategoryTab() {
               className={active === "4" ? "nav-link active" : "nav-link"}
               onClick={catP3}
             >
-              New added
+              {intl.formatMessage({ id: "New added" })}
             </button>
           </li>
         </ul>

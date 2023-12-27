@@ -1,6 +1,8 @@
 import Layout from "../components/layout/Layout";
 import Link from "next/link";
+import {  useIntl } from "react-intl";
 function Custom404() {
+  const intl = useIntl();
   return (
     <>
       <Layout parent="Home" sub="Pages" subChild="404">
@@ -16,20 +18,19 @@ function Custom404() {
                       className="hover-up"
                     />
                   </p>
-                  <h1 className="display-2 mb-30">Page Not Found</h1>
+                  <h1 className="display-2 mb-30">{intl.formatMessage({ id: "Page Not Found" })}</h1>
                   <p className="font-lg text-grey-700 mb-30">
-                    The link you clicked may be broken or the page may have been
-                    removed.
+                  {intl.formatMessage({ id: "The link you clicked may be broken or the page may have been removed." })}
                     <br />
-                    visit the{" "}
+                    {intl.formatMessage({ id: "visit the" })}{" "}
                     <Link href="/">
-                      <span> Homepage</span>
+                      <span> {intl.formatMessage({ id: "Homepage" })}</span>
                     </Link>
-                    or{" "}
+                    {intl.formatMessage({ id: "or" })}{" "}
                     <Link href="/page-contact">
-                      <span>Contact us</span>
+                      <span>{intl.formatMessage({ id: "Contact us" })}</span>
                     </Link>
-                    about the problem
+                    {intl.formatMessage({ id: "about the problem" })}
                   </p>
                   <div className="search-form">
                     <form action="#">
@@ -43,7 +44,7 @@ function Custom404() {
                     className="btn btn-default submit-auto-width font-xs hover-up mt-30"
                     href="/"
                   >
-                    <i className="fi-rs-home mr-5"></i> Back To Home Page
+                    <i className="fi-rs-home mr-5"></i> {intl.formatMessage({ id: "Back To Home Page" })}
                   </Link>
                 </div>
               </div>

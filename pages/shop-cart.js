@@ -379,26 +379,27 @@ const Cart = ({
                                     </span>
                                   </td>
                                 </tr>
-                                <tr>
+                                {cartTotal?.eight_percent ? (<tr>
                                   <td className="cart_total_label">
-                                  Eight Percent
+                                  Consumption Tax 8%
                                   </td>
                                   <td className="cart_total_amount">
                                     <span className="font-lg fw-900 text-brand">
                                       ¥ {cartTotal?.eight_percent}
                                     </span>
                                   </td>
-                                </tr>
-                                <tr>
+                                </tr>): null}
+                                {cartTotal?.ten_percent ? (<tr>
                                   <td className="cart_total_label">
-                                  Ten Percent
+                                  Consumption Tax 10%
                                   </td>
                                   <td className="cart_total_amount">
                                     <span className="font-lg fw-900 text-brand">
                                       ¥ {cartTotal?.ten_percent}
                                     </span>
                                   </td>
-                                </tr>
+                                </tr>): null}
+                                
                                 <tr>
                                   <td className="cart_total_label">Shipping</td>
                                   <td className="cart_total_amount">

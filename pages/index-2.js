@@ -8,8 +8,9 @@ import Banner5 from "../components/elements/Banner5";
 import Bottom from "../components/elements/Bottom";
 import IntroPopup from "../components/elements/IntroPopup";
 import CategorySlider2 from "../components/sliders/Category2";
-
+import {  useIntl } from "react-intl";
 function Index2() {
+  const intl = useIntl();
   return (
     <>
       <IntroPopup />
@@ -27,16 +28,16 @@ function Index2() {
                 <div className="banner-img style-3 animated animated">
                   <div className="banner-text mt-50">
                     <h2 className="mb-50">
-                      Delivered <br />
-                      to
+                    {intl.formatMessage({ id: "Delivered" })} <br />
+                    {intl.formatMessage({ id: "to" })}
                       <span className="text-brand">
-                        your
+                      {intl.formatMessage({ id: "your" })}
                         <br />
-                        home
+                        {intl.formatMessage({ id: "home" })}
                       </span>
                     </h2>
                     <Link href="/shop-fullwidth" className="btn btn-xs">
-                      Shop Now <i className="fi-rs-arrow-small-right"></i>
+                    {intl.formatMessage({ id: "Shop Now" })} <i className="fi-rs-arrow-small-right"></i>
                     </Link>
                   </div>
                 </div>
@@ -80,9 +81,9 @@ function Index2() {
               className="section-title wow animate__animated animate__fadeIn"
               data-wow-delay="0"
             >
-              <h3 className="">Deals Of The Day</h3>
+              <h3 className="">{intl.formatMessage({ id: "Deals Of The Day" })}</h3>
               <Link href="/shop-fullwidth" className="show-all">
-                All Deals
+              {intl.formatMessage({ id: "All Deals" })}
                 <i className="fi-rs-angle-right"></i>
               </Link>
             </div>
@@ -94,9 +95,9 @@ function Index2() {
           <div className="container">
             <div className="section-title">
               <div className="title">
-                <h3>Shop by Categories</h3>
+                <h3>{intl.formatMessage({ id: "Shop by Categories" })}</h3>
                 <Link href="/shop-fullwidth" className="show-all">
-                  All Categories
+                {intl.formatMessage({ id: "All Categories" })}
                   <i className="fi-rs-angle-right"></i>
                 </Link>
               </div>

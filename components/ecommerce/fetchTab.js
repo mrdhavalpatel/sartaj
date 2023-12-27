@@ -4,8 +4,9 @@ import FeaturedTab from './../elements/FeaturedTab';
 import NewArrivalTab from './../elements/NewArrivalTab';
 import TrendingTab from './../elements/TrendingTab';
 import Link from "next/link"
-
+import {  useIntl } from "react-intl";
 function FeatchTab() {
+    const intl = useIntl();
     const [active, setActive] = useState("1");
     const [featured, setFeatured] = useState([]);
     const [trending, setTrending] = useState([]);
@@ -43,7 +44,7 @@ function FeatchTab() {
     return (
         <>
             <div className="section-title style-2 wow animate__animated animate__fadeIn">
-            <h3>Popular Products</h3>
+            <h3>{intl.formatMessage({ id: "Popular Products" })}</h3>
                 <ul className="nav nav-tabs links" id="myTab" role="tablist">
                     <li className="nav-item" role="presentation">
                         <button
@@ -52,7 +53,7 @@ function FeatchTab() {
                             }
                             onClick={featuredProduct}
                         >
-                            Featured
+                            {intl.formatMessage({ id: "Featured" })}
                         </button>
                     </li>
                     <li className="nav-item" role="presentation">
@@ -62,7 +63,7 @@ function FeatchTab() {
                             }
                             onClick={trendingProduct}
                         >
-                            Popular
+                            {intl.formatMessage({ id: "Popular" })}
                         </button>
                     </li>
                     <li className="nav-item" role="presentation">
@@ -72,7 +73,7 @@ function FeatchTab() {
                             }
                             onClick={newArrivalProduct}
                         >
-                            New added
+                            {intl.formatMessage({ id: "New added" })}
                         </button>
                     </li>
                 </ul>

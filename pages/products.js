@@ -86,6 +86,7 @@ const Products = ({ productFilters }) => {
     productFilters?.price?.min,
     productFilters?.price?.max,
   ]);
+  console.log("productFilters", productFilters?.price);
   const fetchProducts = async () => {
     const request = await ApiCall("get", "products/latest-three-products");
     const newArrivals = await request?.data?.products;

@@ -11,8 +11,10 @@ import { addToWishlist } from "../../redux/action/wishlistAction";
 import ProductTab from "../elements/ProductTab";
 import RelatedSlider from "../sliders/Related";
 import ThumbSlider from "../sliders/Thumb";
+import { useIntl } from "react-intl";
 
 const ProductDetails = ({
+  intl,
   product,
   cartItems,
   addToCompare,
@@ -23,11 +25,10 @@ const ProductDetails = ({
   quickView,
 }) => {
   const [quantity, setQuantity] = useState(1);
-
+  // const intl = useIntl();
   const handleCart = () => {
     toast("Product added to Cart !");
   };
-
   const handleCompare = (product) => {
     addToCompare(product);
     // +toast("Added to Compare list !");
@@ -39,6 +40,7 @@ const ProductDetails = ({
   };
 
   const inCart = cartItems?.find((cartItem) => cartItem?.id === product?.id);
+  console.log(intl.locale == "en" ? product?.seo_en : product?.seo_ja, product);
 
   return (
     <>
@@ -230,7 +232,7 @@ const ProductDetails = ({
                       </div>
                       <div className="col-12">
                         <div className="row related-products position-relative">
-                          <RelatedSlider id={product?.id} />
+                          {/* <RelatedSlider id={product?.seo_eng} /> */}
                         </div>
                       </div>
                     </div>
