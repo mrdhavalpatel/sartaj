@@ -41,6 +41,8 @@ const Cart = ({
   const [selectedAddressPrefillData, setSelectedAddressPrefillData] = useState(
     []
   );
+  const [ip, setIp] = useState("");
+  const [browserData, setBrowserData] = useState([]);
   const [selectedAddressData, setSelectedAddressData] = useState({});
 
   const [selectedAddressDropdown, setSelectedAddressDropdown] = useState("");
@@ -116,6 +118,10 @@ const Cart = ({
         time_slot_id: selectedRadioId,
         order_note: orderNotes,
         coupon_code: coupenCode,
+        ip_address: ip,
+        forwarded_ip: ip,
+        user_agent: browserData?.userAgent,
+        accept_language: browserData?.language,
       };
 
       const response = await axios.post(
@@ -383,6 +389,18 @@ const Cart = ({
       </Formik>
     );
   };
+  useEffect(() => {
+    const fnBrowserDetect = () => {
+      fetch("https://geolocation-db.com/json/")
+        .then((response) => response.json())
+        .then((data) => {
+          setIp(data?.IPv4);
+          setBrowserData(navigator);
+        });
+    };
+    // Call the browser detection function
+    fnBrowserDetect();
+  }, []);
   return (
     <>
       <Layout parent="Home" sub="Shop" subChild="Checkout">

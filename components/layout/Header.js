@@ -38,21 +38,7 @@ const Header = ({
     console.log("window.location", window.location.pathname);
     window.location.replace(newUrl);
   };
-  // const handleLanguageSwitch = (newLanguage) => {
-  //   switchLanguage(newLanguage);
-  //   setDLang(newLanguage);
-  //   const currentPath = window.location.pathname;
-  //   console.log(
-  //     "window.location.pathname",
-  //     window.location.pathname.startsWith("/jp"),
-  //     window.location.pathname.startsWith("/eng"),
-  //     window.location.pathname
-  //   );
-  //   if (currentPath.startsWith("/eng") || currentPath.startsWith("/jp")) {
-  //     const newPath = currentPath.replace(/^\/[a-z]{2}\//, `/${newLanguage == 'en' ? 'eng' : "jp"}/`);
-  //     window.location.replace(newPath);
-  //   }
-  // };
+
   const getAllCategories = async () => {
     const request = await ApiCall("get", intl, "categories");
     const allCategories = await request;
