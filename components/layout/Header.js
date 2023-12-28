@@ -317,7 +317,14 @@ const Header = ({
                                 {intl.formatMessage({ id: "Sign out" })}
                               </Link>
                             </li>
-                          ) : null}
+                          ) : (
+                            <li>
+                              <Link href="/page-login">
+                                <i className="fi fi-rs-sign-out mr-10"></i>
+                                {intl.formatMessage({ id: "Sign In" })}
+                              </Link>
+                            </li>
+                          )}
                         </ul>
                       </div>
                     </div>
