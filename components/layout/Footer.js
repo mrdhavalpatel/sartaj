@@ -292,7 +292,9 @@ const Footer = () => {
                     <a href="/page-account">Shipping Details</a>
                   </li>
                   <li>
-                    <a href="/shop-compare">Compare products</a>
+                    <a href={`/${intl?.locale}/shop-compare`}>
+                      Compare products
+                    </a>
                   </li>
                 </ul>
               </div>

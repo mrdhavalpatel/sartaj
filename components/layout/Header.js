@@ -37,9 +37,13 @@ const Header = ({
 
     const newUrl = `/${newLanguage}/${pathWithoutLanguage}`;
 
-    console.log("window.location", window.location.pathname);
-
-    window.location.replace(newUrl);
+    if (router.pathname.includes("shop-compare")) {
+      window.location.replace(`/${newLanguage}/shop-compare`);
+    } else if (router.pathname.includes("shop-wishlist")) {
+      window.location.replace(`/${newLanguage}/shop-wishlist`);
+    } else {
+      window.location.replace(newUrl);
+    }
   };
 
   const getAllCategories = async () => {
@@ -115,6 +119,12 @@ const Header = ({
       let currentSlug = router.query.slug || "";
       let pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
       router.push(`/${"eng"}/${pathWithoutLanguage}`);
+    } else {
+      if (router.pathname.includes("shop-compare")) {
+        router.push(`/${intl.locale}/${router.pathname}`);
+      } else if (router.pathname.includes("shop-wishlist")) {
+        router.push(`/${intl.locale}/${router.pathname}`);
+      }
     }
   }, []);
   const handleToggle = () => setToggled(!isToggled);
@@ -217,7 +227,7 @@ const Header = ({
                 <div className="header-action-right">
                   <div className="header-action-2">
                     <div className="header-action-icon-2">
-                      <Link href="/shop-compare">
+                      <Link href={`/${intl?.locale}/shop-compare`}>
                         <img
                           className="svgInject"
                           alt="Evara"
@@ -227,7 +237,7 @@ const Header = ({
                           {totalCompareItems}
                         </span>
                       </Link>
-                      <Link href="/shop-compare">
+                      <Link href={`/${intl?.locale}/shop-compare`}>
                         <span className="lable ml-0">
                           {intl.formatMessage({ id: "Compare" })}
                         </span>
