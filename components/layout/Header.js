@@ -267,7 +267,7 @@ const Header = ({
                           src="/assets/imgs/theme/icons/icon-cart.svg"
                         />
                         <span className="pro-count blue">
-                          {cartItemsCount.length}
+                          {cartItemsCount?.length}
                         </span>
                       </Link>
                       <Link href="/shop-cart">
@@ -472,9 +472,9 @@ const Header = ({
 };
 
 const mapStateToProps = (state) => ({
-  totalCartItems: state.cart.length,
-  totalCompareItems: state.compare.items.length,
-  totalWishlistItems: state.wishlist.items.length,
+  totalCartItems: state.cart?.length,
+  totalCompareItems: state.compare.items?.length,
+  totalWishlistItems: state.wishlist.items?.length,
 });
 
 export default connect(mapStateToProps, null)(Header);
