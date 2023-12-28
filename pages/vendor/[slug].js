@@ -23,7 +23,6 @@ const Products = ({ products, productFilters, fetchProduct }) => {
   const [productTotal, setProductTotal] = useState([]);
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  // const [singleStore, setSingleStore] = useState([]);
   let Router = useRouter();
   const cratePagination = () => {
     let arr = new Array(Math.ceil(productTotal / limit))

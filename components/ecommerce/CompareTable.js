@@ -27,8 +27,11 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                 <td className="product_name">
                   <h5>
                     <Link
-                      href="/products/[slug]"
-                      as={`/products/${product?.id}`}
+                      href={`/${
+                        intl?.locale == "eng"
+                          ? product?.seo_en
+                          : product?.seo_ja
+                      }`}
                     >
                       {product?.name}
                     </Link>

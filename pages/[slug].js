@@ -12,6 +12,7 @@ const ProductId = () => {
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const intl = useIntl();
+  // const URL = window.location.pathname;
   useEffect(() => {
     setLoading(true);
     ApiCall("get", intl, `product_seo/${router?.query?.slug}`).then(
@@ -22,6 +23,27 @@ const ProductId = () => {
     );
   }, []);
 
+  // useEffect(() => {
+  //   setLoading(true);
+
+  //   // Get the current slug from the router
+  //   const currentSlug = window.location.pathname;
+
+  //   // Check if the current slug contains "/eng" or "/jp"
+  //   if (
+  //     !currentSlug ||
+  //     !currentSlug.includes("/eng") ||
+  //     !currentSlug.includes("/jp")
+  //   ) {
+  //     // If not, replace it with intl.locale
+  //     const newSlug = `/${intl.locale}/${currentSlug}`;
+  //     // Update the URL using window.location.replace
+  //     const newUrl = window.location.pathname.replace(currentSlug, newSlug);
+  //     window.location.replace(newUrl);
+  //   }
+  //   console.log("currentSlug", currentSlug);
+  //   // Make the API call with the updated slug
+  // }, []);
   return (
     <>
       <Layout parent="Home" sub="Shop" subChild={product?.name}>

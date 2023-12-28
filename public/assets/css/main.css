@@ -12391,3 +12391,19 @@ footer .hotline img {
 .custom-date-picker-container .react-datepicker-wrapper {
   width: 100%;
 }
+.banner-img img {
+  width: 70%;
+  margin: 0 auto 40px;
+}
+.product-cart-wrap .product-img-action-wrap .product-img a img {
+  height: 250px;
+  object-fit: contain;
+  object-position: center;
+}
+
+.product-list-small figure img {
+  height: 90px;
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+}

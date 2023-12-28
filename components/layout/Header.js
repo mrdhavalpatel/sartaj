@@ -194,7 +194,6 @@ const Header = ({
                         {/* Add more options as needed */}
                       </select>
                     </li>
-                    {console.log("language", language)}
                   </ul>
                 </div>
               </div>
