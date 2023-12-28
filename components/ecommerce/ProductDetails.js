@@ -240,7 +240,7 @@ const ProductDetails = ({
                       </div>
                       <div className="col-12">
                         <div className="row related-products position-relative">
-                          {/* <RelatedSlider id={product?.id} /> */}
+                          <RelatedSlider id={product?.id} />
                         </div>
                       </div>
                     </div>
