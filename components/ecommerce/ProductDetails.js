@@ -75,7 +75,7 @@ const ProductDetails = ({
                                   product?.overall_rating
                                     ? product?.overall_rating
                                     : 0
-                                }`,
+                                }%`,
                               }}
                             ></div>
                           </div>

@@ -180,7 +180,7 @@ const ProductTab = ({ description, review, id, total_reviews }) => {
                         style={{
                           width: `${
                             productRating?.overall_rating
-                              ? productRating?.overall_rating
+                              ? (productRating?.overall_rating * 100) / 5
                               : 0
                           }%`,
                         }}

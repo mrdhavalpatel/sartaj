@@ -39,7 +39,7 @@ const Header = ({
 
     console.log("window.location", window.location.pathname);
 
-    // window.location.replace(newUrl);
+    window.location.replace(newUrl);
   };
 
   const getAllCategories = async () => {
