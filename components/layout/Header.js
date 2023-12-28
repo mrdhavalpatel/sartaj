@@ -107,7 +107,8 @@ const Header = ({
   useEffect(() => {
     if (
       !window.location.pathname.includes("eng/") &&
-      !window.location.pathname.includes("jp/")
+      !window.location.pathname.includes("jp/") &&
+      router.query.slug
     ) {
       let currentSlug = router.query.slug || "";
       let pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
@@ -187,11 +188,10 @@ const Header = ({
                       <select
                         id="languageDropdown"
                         onChange={(e) => handleLanguageSwitch(e.target.value)}
-                        value={DLang} // Assuming you have a variable for the current language
+                        value={DLang}
                       >
                         <option value="eng">English</option>
                         <option value="jp">日本語</option>
-                        {/* Add more options as needed */}
                       </select>
                     </li>
                   </ul>

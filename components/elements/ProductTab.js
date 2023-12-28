@@ -137,7 +137,12 @@ const ProductTab = ({ description, review, id, total_reviews }) => {
                         <div className="single-comment justify-content-between d-flex">
                           <div className="user justify-content-between d-flex">
                             <div className="thumb text-center">
-                              <img src={ITM?.Img} alt="nest" />
+                              <img
+                                src={
+                                  "https://cdn.pixabay.com/photo/2017/02/23/13/05/avatar-2092113_1280.png"
+                                }
+                                alt="nest"
+                              />
                               <h6>
                                 <a>{ITM?.customer?.f_name}</a>
                               </h6>

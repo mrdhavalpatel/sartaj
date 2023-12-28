@@ -33,9 +33,6 @@ function MyApp({ Component, pageProps }) {
     }, 2000);
   }, []);
 
-  useEffect(() => {
-    console.log("routerrouterrouterrouterrouter", window.location.pathname);
-  }, [router]);
   return (
     <>
       {!loading ? (
