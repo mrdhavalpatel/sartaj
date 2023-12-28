@@ -111,6 +111,24 @@ const ProductId = (products, productFilters, fetchProduct) => {
     getAllProduct();
     cratePagination();
   }, [productFilters?.featured, limit, currentPage]);
+
+  useEffect(() => {
+    if (
+      !window.location.pathname.includes("eng/") &&
+      !window.location.pathname.includes("jp/") &&
+      router.query.slug
+    ) {
+      let currentSlug = router.query.slug || "";
+      let pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
+      router.push(`/${"eng"}/${pathWithoutLanguage}`);
+    } else {
+      if (router.pathname.includes("shop-compare")) {
+        router.push(`/${intl.locale}/${router.pathname}`);
+      } else if (router.pathname.includes("shop-wishlist")) {
+        router.push(`/${intl.locale}/${router.pathname}`);
+      }
+    }
+  }, []);
   return (
     <>
       {seoType == "product" ? (

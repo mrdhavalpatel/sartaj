@@ -280,7 +280,7 @@ const Footer = () => {
                     <a href="/shop-cart">View Cart</a>
                   </li>
                   <li>
-                    <a href="/shop-wishlist">My Wishlist</a>
+                    <a href={`/${intl.locale}/shop-wishlist`}>My Wishlist</a>
                   </li>
                   {/* <li>
                     <a href="#">Track My Order</a>

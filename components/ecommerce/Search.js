@@ -11,7 +11,7 @@ const Search = () => {
   const router = useRouter();
 
   const getAllCategories = async () => {
-    const request = await ApiCall("get", intl,"categories");
+    const request = await ApiCall("get", intl, "categories");
     const allCategories = await request;
     setCategories(allCategories?.data);
   };
@@ -21,7 +21,7 @@ const Search = () => {
       category_id: categoriesValue,
       sort_by: searchTerm,
     };
-    let res = await ApiCall("post",intl, "products/all", payload);
+    let res = await ApiCall("post", intl, "products/all", payload);
     setProductsSuggestions(res?.data?.products);
     return res;
   };
@@ -103,7 +103,7 @@ const Search = () => {
                 <a
                   href={`/${
                     intl.locale == "eng" ? result?.seo_en : result?.seo_ja
-                  }}`}
+                  }`}
                 >
                   {result?.name}
                 </a>

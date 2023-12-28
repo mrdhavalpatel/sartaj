@@ -153,7 +153,7 @@ const Header = ({
                       </Link>
                     </li>
                     <li>
-                      <Link href="/shop-wishlist">
+                      <Link href={`/${intl.locale}/shop-wishlist`}>
                         {intl.formatMessage({ id: "Wishlist" })}
                       </Link>
                     </li>
@@ -244,7 +244,7 @@ const Header = ({
                       </Link>
                     </div>
                     <div className="header-action-icon-2">
-                      <Link href="/shop-wishlist">
+                      <Link href={`/${intl.locale}/shop-wishlist`}>
                         <img
                           className="svgInject"
                           alt="Evara"
@@ -254,7 +254,7 @@ const Header = ({
                           {totalWishlistItems}
                         </span>
                       </Link>
-                      <Link href="/shop-wishlist">
+                      <Link href={`/${intl.locale}/shop-wishlist`}>
                         <span className="lable">
                           {intl.formatMessage({ id: "Wishlist" })}
                         </span>
@@ -298,7 +298,7 @@ const Header = ({
                           </li>
 
                           <li>
-                            <Link href="/page-account">
+                            <Link href={`/${intl.locale}/shop-wishlist`}>
                               <i className="fi fi-rs-heart mr-10"></i>
                               {intl.formatMessage({ id: "My Wishlist" })}
                             </Link>
@@ -440,7 +440,7 @@ const Header = ({
               <div className="header-action-right d-block d-lg-none">
                 <div className="header-action-2">
                   <div className="header-action-icon-2">
-                    <Link href="/shop-wishlist">
+                    <Link href={`/${intl.locale}/shop-wishlist`}>
                       <img
                         alt="Evara"
                         src="/assets/imgs/theme/icons/icon-heart.svg"
