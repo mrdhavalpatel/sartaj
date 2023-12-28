@@ -98,7 +98,7 @@ const ProductId = (products, productFilters, fetchProduct) => {
       limit: limit,
       offset: currentPage,
       sort_by: productFilters?.featured,
-      manufacturer_id: router?.query?.id,
+      manufacturer_id: router?.query?.slug,
     };
 
     const request = await ApiCall("post", intl, "products/all", payload);

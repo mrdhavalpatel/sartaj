@@ -7,7 +7,6 @@ SwiperCore.use([Navigation, Thumbs]);
 
 const ThumbSlider = ({ product }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  console.log("locho --->", product);
   return (
     <div>
       <Swiper
