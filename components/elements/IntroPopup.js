@@ -110,7 +110,6 @@ const IntroPopup = () => {
                   </Link>
                 </div>
               </div>
-              {console.log("PopData", PopData)}
             </div>
           </div>
         </div>
