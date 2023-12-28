@@ -266,7 +266,9 @@ const Header = ({
                           alt="Evara"
                           src="/assets/imgs/theme/icons/icon-cart.svg"
                         />
-                        <span className="pro-count blue">{totalCartItems}</span>
+                        <span className="pro-count blue">
+                          {cartItemsCount.length}
+                        </span>
                       </Link>
                       <Link href="/shop-cart">
                         <span className="lable">

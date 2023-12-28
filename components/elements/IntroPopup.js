@@ -98,8 +98,11 @@ const IntroPopup = () => {
                     </div>
                   </div> */}
                   <Link
-                    href="/products/[slug]"
-                    as={`/products/${PopData?.product_id}`}
+                    href={`/${
+                      intl?.locale == "eng"
+                        ? PopData?.product?.seo_en
+                        : PopData?.product?.seo_ja
+                    }`}
                     className="btn hover-up"
                   >
                     {intl.formatMessage({ id: "Shop Now" })}{" "}
@@ -107,6 +110,7 @@ const IntroPopup = () => {
                   </Link>
                 </div>
               </div>
+              {console.log("PopData", PopData)}
             </div>
           </div>
         </div>

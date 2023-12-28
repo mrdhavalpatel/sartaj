@@ -124,21 +124,22 @@ const Cart = ({
         accept_language: browserData?.language,
       };
 
-      const response = await axios.post(
-        `${API_BASE_URL}customer/order/place`,
-        payload,
-        {
+      const response = await axios
+        .post(`${API_BASE_URL}customer/order/place`, payload, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
-      );
-
-      if (response?.status === 200) {
-        router.push(`/OrderReceived?order_id=${response?.data?.order_id}`);
-      }
+        })
+        .then((response) => {
+          if (response?.status === 200) {
+            router.push(`/OrderReceived?order_id=${response?.data?.order_id}`);
+          }
+        })
+        .then(() => {
+          clearCart();
+        });
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         const errorMessage = error.response.data.errors[0]?.message;
