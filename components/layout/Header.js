@@ -26,7 +26,7 @@ const Header = ({
   const [cartItemsCount, setCartItemsCount] = useState(0);
   const { language, switchLanguage } = useLanguage();
   const router = useRouter();
-
+  const [isLoggin, setIsLoggin] = useState(false);
   const handleLanguageSwitch = (newLanguage) => {
     switchLanguage(newLanguage);
     setDLang(newLanguage);
@@ -97,9 +97,11 @@ const Header = ({
     let token = localStorage.getItem("token");
     if (token) {
       getCartItemsCount("login", token);
+      setIsLoggin(true);
     } else {
       let Cart = localStorage.getItem("dokani_cart");
       getCartItemsCount("notLogin", Cart);
+      setIsLoggin(false);
     }
     getAllCategories();
   }, []);
@@ -292,18 +294,20 @@ const Header = ({
                             </Link>
                           </li>
 
-                          <li>
-                            <Link
-                              href="/page-login"
-                              onClick={() => {
-                                localStorage.removeItem("token");
-                                logout();
-                              }}
-                            >
-                              <i className="fi fi-rs-sign-out mr-10"></i>
-                              {intl.formatMessage({ id: "Sign out" })}
-                            </Link>
-                          </li>
+                          {isLoggin ? (
+                            <li>
+                              <Link
+                                href="/page-login"
+                                onClick={() => {
+                                  localStorage.removeItem("token");
+                                  logout();
+                                }}
+                              >
+                                <i className="fi fi-rs-sign-out mr-10"></i>
+                                {intl.formatMessage({ id: "Sign out" })}
+                              </Link>
+                            </li>
+                          ) : null}
                         </ul>
                       </div>
                     </div>

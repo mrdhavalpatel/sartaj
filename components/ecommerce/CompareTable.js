@@ -21,7 +21,7 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
             {data.map((product) =>
               feature == "preview" ? (
                 <td className="row_img">
-                  <img src={product?.image?.[0]} />
+                  <img className="compare-img" src={product?.image?.[0]} />
                 </td>
               ) : feature == "name" ? (
                 <td className="product_name">
@@ -124,8 +124,11 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                     </button>
                   ) : (
                     <Link
-                      href="/products/[slug]"
-                      as={`/products/${product?.id}`}
+                      href={`/${
+                        intl?.locale == "eng"
+                          ? product?.seo_en
+                          : product?.seo_ja
+                      }`}
                     >
                       <button className="btn  btn-sm btn-secondary">
                         {intl.formatMessage({ id: "Buy Now" })}

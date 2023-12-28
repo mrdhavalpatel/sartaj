@@ -95,7 +95,6 @@ const IntroPopup = () => {
                       </span>
                     </div>
                   </div> */}
-                  {console.log("PopData", PopData)}
                   <Link
                     href="/products/[slug]"
                     as={`/products/${PopData?.product_id}`}

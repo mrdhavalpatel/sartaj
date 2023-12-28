@@ -31,26 +31,28 @@ const ProductId = (products, productFilters, fetchProduct) => {
   // const URL = window.location.pathname;
   useEffect(() => {
     setLoading(true);
-    let payload = {
-      seo: `${router.locale}/${router.query.slug}`,
-    };
-    ApiCall("post", intl, `seo_type_check`, payload).then((res) => {
-      setSeoType(res?.data?.type);
-      ApiCall(
-        "get",
-        intl,
-        res?.data?.type == "product"
-          ? `product_seo/${router?.query?.slug}`
-          : `manufacture_seo/${router?.query?.slug}`
-      ).then((response) => {
-        if (res?.data?.type == "product") {
-          setProduct(response?.data);
-        } else if (res?.data?.type == "manufacturer") {
-          setManufacturer(response?.data);
-        }
-        setLoading(false);
+    if (router.query.slug) {
+      let payload = {
+        seo: `${router.locale}/${router.query.slug}`,
+      };
+      ApiCall("post", intl, `seo_type_check`, payload).then((res) => {
+        setSeoType(res?.data?.type);
+        ApiCall(
+          "get",
+          intl,
+          res?.data?.type == "product"
+            ? `product_seo/${router?.query?.slug}`
+            : `manufacture_seo/${router?.query?.slug}`
+        ).then((response) => {
+          if (res?.data?.type == "product") {
+            setProduct(response?.data);
+          } else if (res?.data?.type == "manufacturer") {
+            setManufacturer(response?.data);
+          }
+          setLoading(false);
+        });
       });
-    });
+    }
   }, []);
 
   //  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
