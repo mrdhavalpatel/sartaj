@@ -7,6 +7,7 @@ import { addToCompare } from "../../redux/action/compareAction";
 import { openQuickView } from "../../redux/action/quickViewAction";
 import { addToWishlist } from "../../redux/action/wishlistAction";
 import QuickView from "./QuickView";
+import { useIntl } from "react-intl";
 
 const SingleProduct2 = ({
   product,
@@ -15,6 +16,7 @@ const SingleProduct2 = ({
   addToWishlist,
   openQuickView,
 }) => {
+  const intl = useIntl();
   const handleCart = (product) => {
     addToCart(product);
     // toast("Product added to Cart !");
@@ -98,7 +100,16 @@ const SingleProduct2 = ({
           </div>
           <div>
             <span className="font-small text-muted">
-              By <Link href="/vendor/1">{product?.manufacturer?.name}</Link>
+              By{" "}
+              <Link
+                href={`/${
+                  intl.locale === "eng"
+                    ? product?.manufacturer?.seo_en
+                    : product?.manufacturer?.seo_ja
+                }`}
+              >
+                {product?.manufacturer?.name}
+              </Link>
             </span>
           </div>
           <div className="product-price mt-10">

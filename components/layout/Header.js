@@ -26,6 +26,7 @@ const Header = ({
   const [cartItemsCount, setCartItemsCount] = useState(0);
   const { language, switchLanguage } = useLanguage();
   const router = useRouter();
+
   const handleLanguageSwitch = (newLanguage) => {
     switchLanguage(newLanguage);
     setDLang(newLanguage);
@@ -35,8 +36,10 @@ const Header = ({
     const pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
 
     const newUrl = `/${newLanguage}/${pathWithoutLanguage}`;
+
     console.log("window.location", window.location.pathname);
-    window.location.replace(newUrl);
+
+    // window.location.replace(newUrl);
   };
 
   const getAllCategories = async () => {
@@ -99,6 +102,17 @@ const Header = ({
       getCartItemsCount("notLogin", Cart);
     }
     getAllCategories();
+  }, []);
+
+  useEffect(() => {
+    if (
+      !window.location.pathname.includes("eng/") &&
+      !window.location.pathname.includes("jp/")
+    ) {
+      let currentSlug = router.query.slug || "";
+      let pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
+      router.push(`/${"eng"}/${pathWithoutLanguage}`);
+    }
   }, []);
   const handleToggle = () => setToggled(!isToggled);
 

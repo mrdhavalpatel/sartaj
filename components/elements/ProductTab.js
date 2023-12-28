@@ -289,7 +289,7 @@ const ProductTab = ({ description, review, id, total_reviews }) => {
                       aria-valuemax="100"
                     >
                       {(productRating?.ratings_details?.["1"]
-                        ? productRating?.ratings_details?.["2"]
+                        ? productRating?.ratings_details?.["1"]
                         : 0) + "%"}
                     </div>
                   </div>

@@ -5,8 +5,10 @@ import { toast } from "react-toastify";
 import { addToCart } from "../../redux/action/cart";
 import Timer from "./Timer";
 import QuickView from "../ecommerce/QuickView";
+import { useIntl } from "react-intl";
 
 const Deals1 = ({ product, addToCart }) => {
+  const intl = useIntl();
   const handleCart = (product) => {
     addToCart(product);
     // toast("Product added to Cart !");
@@ -51,7 +53,16 @@ const Deals1 = ({ product, addToCart }) => {
             </div>
             <div>
               <span className="font-small text-muted">
-                By <Link href="/vendor/1">{product?.manufacturer?.name}</Link>
+                By{" "}
+                <Link
+                  href={`/${
+                    intl.locale === "eng"
+                      ? product?.manufacturer?.seo_en
+                      : product?.manufacturer?.seo_ja
+                  }`}
+                >
+                  {product?.manufacturer?.name}
+                </Link>
               </span>
             </div>
             <div className="product-card-bottom">

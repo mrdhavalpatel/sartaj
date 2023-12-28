@@ -19,7 +19,7 @@ import { LanguageProvider } from "../components/context/LanguageContext";
 
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
-  const { locale = "eng" } = useRouter();
+  const { router, locale = "eng" } = useRouter();
 
   const messages = {
     eng: eng,
@@ -33,6 +33,9 @@ function MyApp({ Component, pageProps }) {
     }, 2000);
   }, []);
 
+  useEffect(() => {
+    console.log("routerrouterrouterrouterrouter", window.location.pathname);
+  }, [router]);
   return (
     <>
       {!loading ? (

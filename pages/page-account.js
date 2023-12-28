@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import Button from "react-bootstrap/Button";
 import AddressDialog from "../components/dialogs/AddressDialog";
 import { useRouter } from "next/router";
-import {  useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 function Account() {
   const intl = useIntl();
   const [activeIndex, setActiveIndex] = useState(1);
@@ -182,7 +182,8 @@ function Account() {
                             }
                             onClick={() => handleOnClick(2)}
                           >
-                            <i className="fi-rs-shopping-bag mr-10"></i>{intl.formatMessage({ id: "Orders" })}
+                            <i className="fi-rs-shopping-bag mr-10"></i>
+                            {intl.formatMessage({ id: "Orders" })}
                           </a>
                         </li>
 
@@ -193,7 +194,8 @@ function Account() {
                             }
                             onClick={() => handleOnClick(4)}
                           >
-                            <i className="fi-rs-marker mr-10"></i>{intl.formatMessage({ id: "My Address" })}
+                            <i className="fi-rs-marker mr-10"></i>
+                            {intl.formatMessage({ id: "My Address" })}
                           </a>
                         </li>
                         <li className="nav-item">
@@ -203,7 +205,8 @@ function Account() {
                             }
                             onClick={() => handleOnClick(5)}
                           >
-                            <i className="fi-rs-user mr-10"></i>{intl.formatMessage({ id: "Account details" })}
+                            <i className="fi-rs-user mr-10"></i>
+                            {intl.formatMessage({ id: "Account details" })}
                           </a>
                         </li>
                         <li className="nav-item">
@@ -246,7 +249,8 @@ function Account() {
                             onClick={() => handleLogout()}
                             className="nav-link"
                           >
-                            <i className="fi-rs-sign-out mr-10"></i>{intl.formatMessage({ id: "Logout" })}
+                            <i className="fi-rs-sign-out mr-10"></i>
+                            {intl.formatMessage({ id: "Logout" })}
                           </Link>
                         </li>
                       </ul>
@@ -264,20 +268,32 @@ function Account() {
                         <div className="card">
                           <div className="card-header">
                             <h3 className="mb-0">
-                            {intl.formatMessage({ id: "Hello" })} {userDetails?.f_name}!{" "}
+                              {intl.formatMessage({ id: "Hello" })}{" "}
+                              {userDetails?.f_name}!{" "}
                             </h3>
                           </div>
                           <div className="card-body">
                             <p>
-                            {intl.formatMessage({ id: "From your account dashboard. you can easily check" })}
-                              &amp; {intl.formatMessage({ id: "view your" })} <a href="#">{intl.formatMessage({ id: "recent orders" })}</a>,
+                              {intl.formatMessage({
+                                id: "From your account dashboard. you can easily check",
+                              })}
+                              &amp; {intl.formatMessage({ id: "view your" })}{" "}
+                              <a href="#">
+                                {intl.formatMessage({ id: "recent orders" })}
+                              </a>
+                              ,
                               <br />
                               {intl.formatMessage({ id: "manage your" })}{" "}
                               <a href="#">
-                              {intl.formatMessage({ id: "shipping and billing addresses" })}
-                              </a> {intl.formatMessage({ id: "and" })}{" "}
+                                {intl.formatMessage({
+                                  id: "shipping and billing addresses",
+                                })}
+                              </a>{" "}
+                              {intl.formatMessage({ id: "and" })}{" "}
                               <a href="#">
-                              {intl.formatMessage({ id: "edit your password and account details." })}
+                                {intl.formatMessage({
+                                  id: "edit your password and account details.",
+                                })}
                               </a>
                             </p>
                           </div>
@@ -292,18 +308,30 @@ function Account() {
                       >
                         <div className="card">
                           <div className="card-header">
-                            <h3 className="mb-0">{intl.formatMessage({ id: "Your Orders" })}</h3>
+                            <h3 className="mb-0">
+                              {intl.formatMessage({ id: "Your Orders" })}
+                            </h3>
                           </div>
                           <div className="card-body">
                             <div className="table-responsive">
                               <table className="table">
                                 <thead>
                                   <tr>
-                                    <th>{intl.formatMessage({ id: "Order" })}</th>
-                                    <th>{intl.formatMessage({ id: "Date" })}</th>
-                                    <th>{intl.formatMessage({ id: "Status" })}</th>
-                                    <th>{intl.formatMessage({ id: "Total" })}</th>
-                                    <th>{intl.formatMessage({ id: "Actions" })}</th>
+                                    <th>
+                                      {intl.formatMessage({ id: "Order" })}
+                                    </th>
+                                    <th>
+                                      {intl.formatMessage({ id: "Date" })}
+                                    </th>
+                                    <th>
+                                      {intl.formatMessage({ id: "Status" })}
+                                    </th>
+                                    <th>
+                                      {intl.formatMessage({ id: "Total" })}
+                                    </th>
+                                    <th>
+                                      {intl.formatMessage({ id: "Actions" })}
+                                    </th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -318,8 +346,10 @@ function Account() {
                                         </td>
                                         <td>{Item?.order_status}</td>
                                         <td>
-                                          ¥{Item?.order_amount} {intl.formatMessage({ id: "for" })}{" "}
-                                          {Item?.details_count} {intl.formatMessage({ id: "item" })}
+                                          ¥{Item?.order_amount}{" "}
+                                          {intl.formatMessage({ id: "for" })}{" "}
+                                          {Item?.details_count}{" "}
+                                          {intl.formatMessage({ id: "item" })}
                                         </td>
                                         <td>
                                           <a
@@ -349,7 +379,9 @@ function Account() {
                       >
                         <div className="card">
                           <div className="card-header">
-                            <h3 className="mb-0">{intl.formatMessage({ id: "Change Password" })}</h3>
+                            <h3 className="mb-0">
+                              {intl.formatMessage({ id: "Change Password" })}
+                            </h3>
                           </div>
                           <div className="card-body contact-from-area">
                             <Formik
@@ -360,7 +392,9 @@ function Account() {
                               <Form>
                                 <div>
                                   <label htmlFor="current_password">
-                                  {intl.formatMessage({ id: "Current Password:" })}
+                                    {intl.formatMessage({
+                                      id: "Current Password:",
+                                    })}
                                   </label>
                                   <Field
                                     type="password"
@@ -376,7 +410,9 @@ function Account() {
 
                                 <div>
                                   <label htmlFor="new_password">
-                                  {intl.formatMessage({ id: "New Password:" })}
+                                    {intl.formatMessage({
+                                      id: "New Password:",
+                                    })}
                                   </label>
                                   <Field
                                     type="password"
@@ -392,7 +428,9 @@ function Account() {
 
                                 <div>
                                   <label htmlFor="confirm_password">
-                                  {intl.formatMessage({ id: "Confirm Password:" })}
+                                    {intl.formatMessage({
+                                      id: "Confirm Password:",
+                                    })}
                                   </label>
                                   <Field
                                     type="password"
@@ -407,7 +445,9 @@ function Account() {
                                 </div>
 
                                 <button type="submit" className="mt-4">
-                                {intl.formatMessage({ id: "Change Password" })}
+                                  {intl.formatMessage({
+                                    id: "Change Password",
+                                  })}
                                 </button>
                               </Form>
                             </Formik>
@@ -425,19 +465,37 @@ function Account() {
                           <div className="col-lg-6">
                             <div className="card mb-3 mb-lg-0">
                               <div className="card-header">
-                                <h3 className="mb-0">{intl.formatMessage({ id: "Billing Address" })}</h3>
+                                <h3 className="mb-0">
+                                  {intl.formatMessage({
+                                    id: "Billing Address",
+                                  })}
+                                </h3>
                               </div>
                               <div className="card-body">
                                 {address?.billing_address?.map((address) => (
                                   <>
                                     <address>
-                                      {address?.house ? `${address?.house}, `: null}{address?.floor ? `${address?.floor} `: null}
-                                    <br />
-                                      {address?.address ? `${address?.address} `: null}
+                                      {address?.house
+                                        ? `${address?.house}, `
+                                        : null}
+                                      {address?.floor
+                                        ? `${address?.floor} `
+                                        : null}
                                       <br />
-                                      {address?.city ? `${address?.city} - `: null} {address?.post_code ? `${address?.post_code} `: null}
+                                      {address?.address
+                                        ? `${address?.address} `
+                                        : null}
                                       <br />
-                                      {address?.state ? `${address?.state} `: null}
+                                      {address?.city
+                                        ? `${address?.city} - `
+                                        : null}{" "}
+                                      {address?.post_code
+                                        ? `${address?.post_code} `
+                                        : null}
+                                      <br />
+                                      {address?.state
+                                        ? `${address?.state} `
+                                        : null}
                                       <br />
                                     </address>
                                     <Button
@@ -499,12 +557,19 @@ function Account() {
                       >
                         <div className="card">
                           <div className="card-header">
-                            <h5>{intl.formatMessage({ id: "Account Details" })}</h5>
+                            <h5>
+                              {intl.formatMessage({ id: "Account Details" })}
+                            </h5>
                           </div>
                           <div className="card-body">
                             <p>
-                            {intl.formatMessage({ id: "Already have an account?" })}{" "}
-                              <Link href="/page-login"> {intl.formatMessage({ id: "Log in instead!" })}</Link>
+                              {intl.formatMessage({
+                                id: "Already have an account?",
+                              })}{" "}
+                              <Link href="/page-login">
+                                {" "}
+                                {intl.formatMessage({ id: "Log in instead!" })}
+                              </Link>
                             </p>
                             <Formik
                               enableReinitialize
@@ -524,7 +589,7 @@ function Account() {
                                 <div className="row">
                                   <div className="form-group col-md-6">
                                     <label>
-                                    {intl.formatMessage({ id: "First Name" })}{" "}
+                                      {intl.formatMessage({ id: "First Name" })}{" "}
                                       <span className="required">*</span>
                                     </label>
                                     <Field
@@ -536,7 +601,7 @@ function Account() {
                                   </div>
                                   <div className="form-group col-md-6">
                                     <label>
-                                    {intl.formatMessage({ id: "Last Name" })}{" "}
+                                      {intl.formatMessage({ id: "Last Name" })}{" "}
                                       <span className="required">*</span>
                                     </label>
                                     <Field
@@ -547,7 +612,9 @@ function Account() {
                                   </div>
                                   <div className="form-group col-md-12">
                                     <label>
-                                    {intl.formatMessage({ id: "Display Name" })}{" "}
+                                      {intl.formatMessage({
+                                        id: "Display Name",
+                                      })}{" "}
                                       <span className="required">*</span>
                                     </label>
                                     <Field
@@ -559,7 +626,9 @@ function Account() {
                                   </div>
                                   <div className="form-group col-md-12">
                                     <label>
-                                    {intl.formatMessage({ id: "Email Address" })}{" "}
+                                      {intl.formatMessage({
+                                        id: "Email Address",
+                                      })}{" "}
                                       <span className="required">*</span>
                                     </label>
                                     <Field
@@ -612,7 +681,9 @@ function Account() {
                                       name="submit"
                                       value="Submit"
                                     >
-                                      {intl.formatMessage({ id: "Save Change" })}
+                                      {intl.formatMessage({
+                                        id: "Save Change",
+                                      })}
                                     </button>
                                   </div>
                                 </div>

@@ -2,7 +2,7 @@ import Layout from "../components/layout/Layout";
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import {  useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 const Gmap = dynamic(() => import("../components/elements/Gmap"), {
   ssr: false,
 });
@@ -29,55 +29,94 @@ function Contact() {
                 <section className="mb-50">
                   <div className="row mb-60">
                     <div className="col-md-4 mb-4 mb-md-0">
-                      <h4 className="mb-15 text-brand">{intl.formatMessage({ id: "Office" })}</h4>
-                      {intl.formatMessage({ id: "205 North Michigan Avenue, Suite 810" })}
+                      <h4 className="mb-15 text-brand">
+                        {intl.formatMessage({ id: "Office" })}
+                      </h4>
+                      {intl.formatMessage({
+                        id: "205 North Michigan Avenue, Suite 810",
+                      })}
                       <br />
                       {intl.formatMessage({ id: "Chicago, 60601, USA" })}
                       <br />
-                      <abbr title="Phone">{intl.formatMessage({ id: "Phone" })}:</abbr> (123) 456-7890
+                      <abbr title="Phone">
+                        {intl.formatMessage({ id: "Phone" })}:
+                      </abbr>{" "}
+                      (123) 456-7890
                       <br />
-                      <abbr title="Email">{intl.formatMessage({ id: "Email" })}: </abbr>{intl.formatMessage({ id: "contact@Evara.com" })}
+                      <abbr title="Email">
+                        {intl.formatMessage({ id: "Email" })}:{" "}
+                      </abbr>
+                      {intl.formatMessage({ id: "contact@Evara.com" })}
                       <br />
                       <a className="btn btn-sm font-weight-bold text-white mt-20 border-radius-5 btn-shadow-brand hover-up">
-                        <i className="fi-rs-marker mr-5"></i>{intl.formatMessage({ id: "View map" })}
+                        <i className="fi-rs-marker mr-5"></i>
+                        {intl.formatMessage({ id: "View map" })}
                       </a>
                     </div>
                     <div className="col-md-4 mb-4 mb-md-0">
-                      <h4 className="mb-15 text-brand">{intl.formatMessage({ id: "Studio" })}</h4>
-                      {intl.formatMessage({ id: "205 North Michigan Avenue, Suite 810" })}
+                      <h4 className="mb-15 text-brand">
+                        {intl.formatMessage({ id: "Studio" })}
+                      </h4>
+                      {intl.formatMessage({
+                        id: "205 North Michigan Avenue, Suite 810",
+                      })}
                       <br />
                       {intl.formatMessage({ id: "Chicago, 60601, USA" })}
                       <br />
-                      <abbr title="Phone">{intl.formatMessage({ id: "Phone" })}:</abbr> (123) 456-7890
+                      <abbr title="Phone">
+                        {intl.formatMessage({ id: "Phone" })}:
+                      </abbr>{" "}
+                      (123) 456-7890
                       <br />
-                      <abbr title="Email">{intl.formatMessage({ id: "Email" })}: </abbr>{intl.formatMessage({ id: "contact@Evara.com" })}
+                      <abbr title="Email">
+                        {intl.formatMessage({ id: "Email" })}:{" "}
+                      </abbr>
+                      {intl.formatMessage({ id: "contact@Evara.com" })}
                       <br />
                       <a className="btn btn-sm font-weight-bold text-white mt-20 border-radius-5 btn-shadow-brand hover-up">
-                        <i className="fi-rs-marker mr-5"></i>{intl.formatMessage({ id: "View map" })}
+                        <i className="fi-rs-marker mr-5"></i>
+                        {intl.formatMessage({ id: "View map" })}
                       </a>
                     </div>
                     <div className="col-md-4">
-                      <h4 className="mb-15 text-brand">{intl.formatMessage({ id: "Shop" })}</h4>
-                      {intl.formatMessage({ id: "205 North Michigan Avenue, Suite 810" })}
+                      <h4 className="mb-15 text-brand">
+                        {intl.formatMessage({ id: "Shop" })}
+                      </h4>
+                      {intl.formatMessage({
+                        id: "205 North Michigan Avenue, Suite 810",
+                      })}
                       <br />
                       {intl.formatMessage({ id: "Chicago, 60601, USA" })}
                       <br />
-                      <abbr title="Phone">{intl.formatMessage({ id: "Phone" })}:</abbr> (123) 456-7890
+                      <abbr title="Phone">
+                        {intl.formatMessage({ id: "Phone" })}:
+                      </abbr>{" "}
+                      (123) 456-7890
                       <br />
-                      <abbr title="Email">{intl.formatMessage({ id: "Email" })}: </abbr>{intl.formatMessage({ id: "contact@Evara.com" })}
+                      <abbr title="Email">
+                        {intl.formatMessage({ id: "Email" })}:{" "}
+                      </abbr>
+                      {intl.formatMessage({ id: "contact@Evara.com" })}
                       <br />
                       <a className="btn btn-sm font-weight-bold text-white mt-20 border-radius-5 btn-shadow-brand hover-up">
-                        <i className="fi-rs-marker mr-5"></i>{intl.formatMessage({ id: "View map" })}
+                        <i className="fi-rs-marker mr-5"></i>
+                        {intl.formatMessage({ id: "View map" })}
                       </a>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-xl-8">
                       <div className="contact-from-area padding-20-row-col">
-                        <h5 className="text-brand mb-10">{intl.formatMessage({ id: "Contact form" })}</h5>
-                        <h2 className="mb-10">{intl.formatMessage({ id: "Drop Us a Line" })}</h2>
+                        <h5 className="text-brand mb-10">
+                          {intl.formatMessage({ id: "Contact form" })}
+                        </h5>
+                        <h2 className="mb-10">
+                          {intl.formatMessage({ id: "Drop Us a Line" })}
+                        </h2>
                         <p className="text-muted mb-30 font-sm">
-                        {intl.formatMessage({ id: "Your email address will not be published. Required fields are marked *" })}
+                          {intl.formatMessage({
+                            id: "Your email address will not be published. Required fields are marked *",
+                          })}
                         </p>
                         <form
                           className="contact-form-style mt-30"
@@ -90,7 +129,9 @@ function Contact() {
                               <div className="input-style mb-20">
                                 <input
                                   name="name"
-                                  placeholder={intl.formatMessage({ id: "First Name" })}
+                                  placeholder={intl.formatMessage({
+                                    id: "First Name",
+                                  })}
                                   type="text"
                                 />
                               </div>
@@ -99,7 +140,9 @@ function Contact() {
                               <div className="input-style mb-20">
                                 <input
                                   name="email"
-                                  placeholder={intl.formatMessage({ id: "Your Email" })}
+                                  placeholder={intl.formatMessage({
+                                    id: "Your Email",
+                                  })}
                                   type="email"
                                 />
                               </div>
@@ -108,7 +151,9 @@ function Contact() {
                               <div className="input-style mb-20">
                                 <input
                                   name="telephone"
-                                  placeholder={intl.formatMessage({ id: "Your Phone" })}
+                                  placeholder={intl.formatMessage({
+                                    id: "Your Phone",
+                                  })}
                                   type="tel"
                                 />
                               </div>
@@ -117,7 +162,9 @@ function Contact() {
                               <div className="input-style mb-20">
                                 <input
                                   name="subject"
-                                  placeholder={intl.formatMessage({ id: "Subject" })}
+                                  placeholder={intl.formatMessage({
+                                    id: "Subject",
+                                  })}
                                   type="text"
                                 />
                               </div>
@@ -126,7 +173,9 @@ function Contact() {
                               <div className="textarea-style mb-30">
                                 <textarea
                                   name="message"
-                                  placeholder={intl.formatMessage({ id: "Message" })}
+                                  placeholder={intl.formatMessage({
+                                    id: "Message",
+                                  })}
                                 ></textarea>
                               </div>
                               <button

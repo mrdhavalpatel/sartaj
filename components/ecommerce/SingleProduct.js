@@ -85,13 +85,22 @@ const SingleProduct = ({
         </div>
         <div className="product-content-wrap">
           <div className="product-category">
-            <Link href={`/vendor/${product?.manufacturer.id}`}>
+            <Link
+              href={`/${
+                intel.locale === "eng"
+                  ? product?.manufacturer?.seo_en
+                  : product?.manufacturer?.seo_ja
+              }`}
+            >
               {product?.manufacturer?.name}
             </Link>
           </div>
           <h2>
             <Link
               href={`/${
+                intel.locale === "eng" ? product?.seo_en : product?.seo_ja
+              }`}
+              as={`/${
                 intel.locale === "eng" ? product?.seo_en : product?.seo_ja
               }`}
             >
@@ -120,8 +129,11 @@ const SingleProduct = ({
             <span className="font-small text-muted">
               By{" "}
               <Link
-                href="/vendor/[slug]"
-                as={`/vendor/${product?.manufacturer?.id}`}
+                href={`/${
+                  intel.locale === "eng"
+                    ? product?.manufacturer?.seo_en
+                    : product?.manufacturer?.seo_ja
+                }`}
               >
                 {product?.manufacturer?.name}
               </Link>
