@@ -78,9 +78,11 @@ const IntroPopup = () => {
                     {intl.formatMessage({ id: "Hurry Up! Offer End In:" })}
                   </p>
                   {/* <Timer endDateTime="2024-11-27 00:00:00" /> */}
-                  <Timer
-                    endDateTime={PopData?.end_date ? PopData?.end_date : null}
-                  />
+                  {PopData?.end_date ? (
+                    <Timer
+                      endDateTime={PopData?.end_date ? PopData?.end_date : null}
+                    />
+                  ) : null}
                   {/* <div className="product-detail-rating">
                     <div className="product-rate-cover text-end">
                       <div className="product-rate d-inline-block">
