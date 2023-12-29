@@ -3967,7 +3967,11 @@ table .product-thumbnail img {
   -webkit-transition: 0.2s;
   -o-transition: 0.2s;
 }
-
+.badgesmain:hover{
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
 .product-cart-wrap .product-img-action-wrap {
   position: relative;
   background-color: #fff;

@@ -31,9 +31,9 @@ const ProductId = (products, productFilters, fetchProduct) => {
   // const URL = window.location.pathname;
   useEffect(() => {
     setLoading(true);
-    if (router.query.slug) {
+    if (router?.query?.slug) {
       let payload = {
-        seo: `${router.locale}/${router.query.slug}`,
+        seo: `${router?.locale}/${router?.query?.slug}`,
       };
       ApiCall("post", intl, `seo_type_check`, payload).then((res) => {
         setSeoType(res?.data?.type);
@@ -53,8 +53,8 @@ const ProductId = (products, productFilters, fetchProduct) => {
         });
       });
     }
-  }, []);
-
+  }, [router?.query?.slug]);
+// router?.query?.slug add in useefect hook dependency for referesh page when user clicks on related product
   //  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
   //  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
   //  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
@@ -122,10 +122,10 @@ const ProductId = (products, productFilters, fetchProduct) => {
       let pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
       router.push(`/${"eng"}/${pathWithoutLanguage}`);
     } else {
-      if (router.pathname.includes("shop-compare")) {
-        router.push(`/${intl.locale}/${router.pathname}`);
+      if (router?.pathname?.includes("shop-compare")) {
+        router.push(`/${intl.locale}/${router?.pathname}`);
       } else if (router.pathname.includes("shop-wishlist")) {
-        router.push(`/${intl.locale}/${router.pathname}`);
+        router.push(`/${intl.locale}/${router?.pathname}`);
       }
     }
   }, []);

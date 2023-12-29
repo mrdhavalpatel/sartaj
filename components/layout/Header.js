@@ -267,7 +267,7 @@ const Header = ({
                           src="/assets/imgs/theme/icons/icon-cart.svg"
                         />
                         <span className="pro-count blue">
-                          {cartItemsCount?.length}
+                          {totalCartItems}
                         </span>
                       </Link>
                       <Link href="/shop-cart">

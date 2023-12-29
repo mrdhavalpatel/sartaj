@@ -19,7 +19,7 @@ const Search = () => {
   const handleInput = async () => {
     let payload = {
       category_id: categoriesValue,
-      sort_by: searchTerm,
+      search: searchTerm,
     };
     let res = await ApiCall("post", intl, "products/all", payload);
     setProductsSuggestions(res?.data?.products);
@@ -66,6 +66,7 @@ const Search = () => {
             </option>
           ))}
         </select>
+        {console.log("search =====>",searchTerm)}
         <input
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}

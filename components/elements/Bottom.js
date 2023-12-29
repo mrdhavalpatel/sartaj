@@ -17,7 +17,7 @@ const Bottom = () => {
               data-wow-delay="0"
             >
               <h4 className="section-title style-1 mb-30  animated animated">
-                New Arrival
+                {intl.formatMessage({ id: "New Arrival" })}
               </h4>
               <div className="product-list-small  animated animated">
                 <BestSellerSlider intl={intl} />
@@ -28,7 +28,7 @@ const Bottom = () => {
               data-wow-delay=".1s"
             >
               <h4 className="section-title style-1 mb-30  animated animated">
-                Top Selling
+                {intl.formatMessage({ id: "Top Selling" })}
               </h4>
               <div className="product-list-small  animated animated">
                 <TrendingSlider2 intl={intl} />
@@ -39,7 +39,7 @@ const Bottom = () => {
               data-wow-delay=".2s"
             >
               <h4 className="section-title style-1 mb-30  animated animated">
-                Restock Products
+                {intl.formatMessage({ id: "Restock Products" })}
               </h4>
               <div className="product-list-small  animated animated">
                 <NewArrival2 intl={intl} />
@@ -50,7 +50,7 @@ const Bottom = () => {
               data-wow-delay=".3s"
             >
               <h4 className="section-title style-1 mb-30  animated animated">
-                Top Rated
+                {intl.formatMessage({ id: "Top Rated" })}
               </h4>
               <div className="product-list-small  animated animated">
                 <TopRatedSlider intl={intl} />

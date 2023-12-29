@@ -163,7 +163,11 @@ export default (state = [], action) => {
               Authorization: `Bearer ${token}`,
             },
           })
+          .then((res) =>
+            console.log("response when add cart", res)
+          )
           .catch((error) => {
+            console.log("error when" , error)
             console.log("error", error?.code === "ERR_NETWORK");
           });
         storage.set("dokani_cart", [...state]);

@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
@@ -39,7 +40,7 @@ const ProductDetails = ({
   };
 
   const inCart = cartItems?.find((cartItem) => cartItem?.id === product?.id);
-  console.log(product);
+  // console.log(product);
   return (
     <>
       <section className="mt-50 mb-50">
@@ -64,17 +65,21 @@ const ProductDetails = ({
                       {/* {product?.sale_start_date !== null ? null : (
                         <span className="stock-status out-stock">Sale Off</span>
                       )} */}
+                 
+                     <div className="product-cart-wrap badgesmain" style={{width:"auto" , display:"inline-block", border:"none"}}>
+                      <div className="product-badges" style={{display:"inline-flex"}}>
                       {product?.badges?.map((Itm) => {
                         return (
                           <>
                             {Itm == "new" && <span className="new">New</span>}
                             {Itm == "hot" && <span className="hot">Hot</span>}
-                            {Itm == "sale" && (
-                              <span className="sale">Sale</span>
-                            )}
+                            {Itm == "sale" && <span className="sale">Sale</span>}
                           </>
                         );
                       })}
+                      </div>
+                     </div>
+                   
                       <h2 className="title-detail">{product?.name}</h2>
                       <div className="product-detail-rating">
                         <div className="product-rate-cover text-end">

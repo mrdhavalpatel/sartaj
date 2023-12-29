@@ -487,6 +487,7 @@ const Cart = ({
                           <div className="login_footer form-group">
                             <div className="chek-form">
                               <div className="custome-checkbox">
+                            
                                 <input
                                   className="form-check-input"
                                   type="checkbox"

@@ -295,32 +295,34 @@ const Cart = ({
                                 </span>
                                 <a
                                   onClick={(e) => {
-                                    // if (
-                                    //   (item?.quantity
-                                    //     ? item?.quantity
-                                    //     : item?.product?.product?.quantity) <
-                                    //   (item?.maximum_order_quantity
-                                    //     ? item?.maximum_order_quantity
-                                    //     : item?.product?.maximum_order_quantity)
-                                    // ) {
-
-                                    if (isLoggedIn) {
-                                      increaseQuantity(item?.product?.id);
-                                      setCartDataUpdated(!cartDataUpdated);
+                                  
+                                    if (
+                                      (item?.quantity
+                                        ? item?.quantity
+                                        : item?.product?.product?.quantity) <
+                                      (item?.maximum_order_quantity
+                                        ? item?.maximum_order_quantity
+                                        : item?.product?.maximum_order_quantity)
+                                    ) {
+                                      if (isLoggedIn) {
+                                        console.log("user  login quanity",item?.product?.id)
+                                        increaseQuantity(item?.product?.id);
+                                        setCartDataUpdated(!cartDataUpdated);
+                                      } else {
+                                        console.log("user not login quanity",item?.id)
+                                        increaseQuantity(item?.id);
+                                        setCartDataUpdated(!cartDataUpdated);
+                                      }
                                     } else {
-                                      increaseQuantity(item?.id);
-                                      setCartDataUpdated(!cartDataUpdated);
+                                      toast.error(
+                                        `Maximum order quantity is ${
+                                          item?.maximum_order_quantity
+                                            ? item?.maximum_order_quantity
+                                            : item?.product
+                                                ?.maximum_order_quantity
+                                        }`
+                                      );
                                     }
-                                    // } else {
-                                    //   toast.error(
-                                    //     `Maximum order quantity is${
-                                    //       item?.maximum_order_quantity
-                                    //         ? item?.maximum_order_quantity
-                                    //         : item?.product
-                                    //             ?.maximum_order_quantity
-                                    //     }`
-                                    //   );
-                                    // }
                                   }}
                                   className="qty-up"
                                 >
