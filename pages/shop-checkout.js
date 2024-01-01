@@ -89,10 +89,12 @@ const Cart = ({
               setCoupanDetails(
                 `${response?.data?.discount}% applied sucessfully`
               );
+              getCartData(token);
             }
 
             toast.success("Coupon applied successfully");
-            // getCartData(token);
+          
+     
           }
         });
     } catch (error) {
@@ -161,7 +163,9 @@ const Cart = ({
     });
     setAddress(response?.data);
   };
-
+  const calculateAmountToAdd = () => {
+    return Math.round(cartTotal?.minOrderAmount - (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0));
+  };
   const getCartData = (token) => {
     const response = axios
       .get(`${API_BASE_URL}customer/cart`, {
@@ -892,23 +896,23 @@ const Cart = ({
                       </div> */}
                     </div>
                   </div>
-                  {cartTotal?.total_amt <= 2500 ? (
-                    <h8 style={{ color: "red" }}>
-                      {intl.formatMessage({
-                        id: "Oops! Your cart is below 2500 ¥. Please add items worth",
-                      })}{" "}
-                      {Math.round(2500 - (cartTotal?.total_amt || 0))} ¥ or more
-                      {intl.formatMessage({
-                        id: "or more to place your order. Happy shopping!",
-                      })}
-                    </h8>
-                  ) : (
-                    <h8 style={{ color: "green" }}>
-                      {intl.formatMessage({
-                        id: "Congratulation , You are eligible to place order",
-                      })}
-                    </h8>
-                  )}
+                  {cartTotal?.total_amt <= cartTotal?.minOrderAmount ? (
+        <h8 style={{ color: "red" }}>
+          {intl.formatMessage({
+            id: `Oops! Your cart is below ${cartTotal?.minOrderAmount} ¥. Please add items worth`,
+          })}{" "}
+          {calculateAmountToAdd()} ¥ 
+          {intl.formatMessage({
+            id: " or more to place your order. Happy shopping!",
+          })}
+        </h8>
+      ) : (
+        <h8 style={{ color: "green" }}>
+          {intl.formatMessage({
+            id: "Congratulations, You are eligible to place an order",
+          })}
+        </h8>
+      )}
                   <h6></h6>
                   <button
                     onClick={() => {

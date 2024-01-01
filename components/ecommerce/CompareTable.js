@@ -14,9 +14,9 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
           <tr>
             <th
               className="text-muted font-md fw-600"
-              style={{ textTransform: "capitalize" }}
+              style={{ textTransform: "capitalize", whiteSpace: "nowrap" }}
             >
-              {feature}
+              {feature && intl.formatMessage({ id: feature })}
             </th>
             {data.map((product) =>
               feature == "preview" ? (
@@ -115,7 +115,7 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                             : ""
                         }`,
                       }}
-                      onClick={(e) => handleCart(product)}
+                      onClick={(_e) => handleCart(product)}
                     >
                       <i className="fi-rs-shopping-bag mr-5"></i>
                       {product?.out_of_stock_status !== "in stock"

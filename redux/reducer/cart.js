@@ -35,95 +35,126 @@ export default (state = [], action) => {
       }
     case Types.ADD_TO_CART:
       index = findProductIndexById(state, action?.payload?.product?.id);
+      const localCartItems = JSON.parse(localStorage.getItem("dokani_cart"));
 
-      if (index !== -1) {
-        state[index].quantity += 1;
-        if (token) {
-          let payload = {
-            product_id: action?.payload?.product?.id,
-            quantity: state[index].quantity,
-          };
+      const localCartItemIndex = findProductIndexById(
+        localCartItems,
+        action?.payload?.product?.id
+      );
 
-          const response = axios
-            .post(`${API_BASE_URL}customer/cart/add-to-cart`, payload, {
-              headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            })
-            .then((res) => {
-              if (res?.data?.status == 200) {
-                toast("Product added to Cart !");
-              } else {
-                toast.error(res?.data?.error);
-              }
-            })
-            .catch((error) => {
-              console.log("error", error?.code === "ERR_NETWORK");
-            });
+      const productQuantityAllowed =
+        action?.payload?.product?.total_stock -
+          localCartItems[localCartItemIndex]?.quantity ||
+        action?.payload?.product?.total_stock;
+
+      if (productQuantityAllowed < action?.payload?.product?.quantity) {
+        if (productQuantityAllowed < 1) {
+          toast.error(
+            `Maximum order quantity is ${action?.payload?.product?.total_stock}`
+          );
+          return [...state];
         }
-        storage.set("dokani_cart", [...state]);
-
+        toast.error(
+          `Maximum order quantity allowed now is ${productQuantityAllowed}`
+        );
         return [...state];
-      } else {
-        if (!action?.payload?.product?.quantity) {
-          action.payload.product.quantity = 1;
-          if (token) {
-            let payload = {
-              product_id: action?.payload?.product?.id,
-              quantity: 1,
-            };
-            const response = axios
-              .post(`${API_BASE_URL}customer/cart/add-to-cart`, payload, {
-                headers: {
-                  "Access-Control-Allow-Origin": "*",
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-                },
-              })
-              .then((res) => {
-                if (res?.data?.status == 200) {
-                  toast("Product added to Cart !");
-                } else {
-                  toast.error(res?.data?.error);
-                }
-              })
-              .catch((error) => {
-                console.log("error", error?.code === "ERR_NETWORK");
-              });
-          }
-        } else {
-          if (token) {
-            let payload = {
-              product_id: action?.payload?.product?.id,
-              quantity: 1,
-            };
-
-            const response = axios
-              .post(`${API_BASE_URL}customer/cart/add-to-cart`, payload, {
-                headers: {
-                  "Access-Control-Allow-Origin": "*",
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-                },
-              })
-              .then((res) => {
-                if (res?.data?.status == 200) {
-                  toast("Product added to Cart !");
-                } else {
-                  toast.error(res?.data?.error);
-                }
-              })
-              .catch((error) => {
-                console.log("error", error?.code === "ERR_NETWORK");
-              });
-          }
-        }
-        storage.set("dokani_cart", [...state, action.payload.product]);
-
-        return [...state, action.payload.product];
       }
+
+      if (productQuantityAllowed > 0) {
+        if (index !== -1) {
+          action?.payload?.product?.quantity
+            ? (state[index].quantity += action?.payload?.product?.quantity)
+            : (state[index].quantity += 1);
+
+          if (token) {
+            let payload = {
+              product_id: action?.payload?.product?.id,
+              quantity: state[index].quantity,
+            };
+
+            const response = axios
+              .post(`${API_BASE_URL}customer/cart/add-to-cart`, payload, {
+                headers: {
+                  "Access-Control-Allow-Origin": "*",
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              })
+              .then((res) => {
+                if (res?.data?.status == 200) {
+                  toast("Product added to Cart !");
+                } else {
+                  toast.error(res?.data?.error);
+                }
+              })
+              .catch((error) => {
+                console.log("error", error?.code === "ERR_NETWORK");
+              });
+          }
+
+          storage.set("dokani_cart", [...state]);
+
+          return [...state];
+        } else {
+          if (!action?.payload?.product?.quantity) {
+            action.payload.product.quantity = 1;
+            if (token) {
+              let payload = {
+                product_id: action?.payload?.product?.id,
+                quantity: 1,
+              };
+              const response = axios
+                .post(`${API_BASE_URL}customer/cart/add-to-cart`, payload, {
+                  headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                  },
+                })
+                .then((res) => {
+                  if (res?.data?.status == 200) {
+                    toast("Product added to Cart !");
+                  } else {
+                    toast.error(res?.data?.error);
+                  }
+                })
+                .catch((error) => {
+                  console.log("error", error?.code === "ERR_NETWORK");
+                });
+            }
+          } else {
+            if (token) {
+              let payload = {
+                product_id: action?.payload?.product?.id,
+                quantity: 1,
+              };
+
+              const response = axios
+                .post(`${API_BASE_URL}customer/cart/add-to-cart`, payload, {
+                  headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                  },
+                })
+                .then((res) => {
+                  if (res?.data?.status == 200) {
+                    toast("Product added to Cart !");
+                  } else {
+                    toast.error(res?.data?.error);
+                  }
+                })
+                .catch((error) => {
+                  console.log("error", error?.code === "ERR_NETWORK");
+                });
+            }
+          }
+          storage.set("dokani_cart", [...state, action.payload.product]);
+          toast("Product added to Cart !");
+          return [...state, action.payload.product];
+        }
+      }
+
     case Types.DELETE_FROM_CART:
       const newCartItems = deleteProduct(state, action.payload.productId);
       if (token) {
@@ -163,17 +194,14 @@ export default (state = [], action) => {
               Authorization: `Bearer ${token}`,
             },
           })
-          .then((res) =>
-            console.log("response when add cart", res)
-          )
+          .then((res) => console.log("response when add cart", res))
           .catch((error) => {
-            console.log("error when" , error)
+            console.log("error when", error);
             console.log("error", error?.code === "ERR_NETWORK");
           });
-        storage.set("dokani_cart", [...state]);
-
-        return [...state];
       }
+      storage.set("dokani_cart", [...state]);
+      return [...state];
 
     case Types.DECREASE_QUANTITY:
       index = findProductIndexById(state, action.payload.productId);

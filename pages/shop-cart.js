@@ -22,6 +22,7 @@ import { Form } from "react-bootstrap";
 import { useAuth } from "../components/context/AuthContext";
 import * as Yup from "yup";
 import { auth } from "../lib/auth/auth";
+import { findProductIndexById } from "../util/util";
 
 const Cart = ({
   cartItems,
@@ -122,6 +123,7 @@ const Cart = ({
       setCartProducts(cartItems);
     }
   }, [isLoggedIn]);
+
   useEffect(() => {
     let Token = storage.get("token");
     const fetchData = () => {
@@ -275,7 +277,7 @@ const Cart = ({
                             <div className="detail-extralink mr-15">
                               <div className="detail-qty border radius ">
                                 <a
-                                  onClick={(e) => {
+                                  onClick={() => {
                                     if (item?.quantity >= 1) {
                                       if (isLoggedIn) {
                                         decreaseQuantity(item?.product?.id);
@@ -295,7 +297,6 @@ const Cart = ({
                                 </span>
                                 <a
                                   onClick={(e) => {
-                                  
                                     if (
                                       (item?.quantity
                                         ? item?.quantity
@@ -305,13 +306,20 @@ const Cart = ({
                                         : item?.product?.maximum_order_quantity)
                                     ) {
                                       if (isLoggedIn) {
-                                        console.log("user  login quanity",item?.product?.id)
                                         increaseQuantity(item?.product?.id);
                                         setCartDataUpdated(!cartDataUpdated);
                                       } else {
-                                        console.log("user not login quanity",item?.id)
-                                        increaseQuantity(item?.id);
-                                        setCartDataUpdated(!cartDataUpdated);
+                                        if (
+                                          item?.quantity + 1 >
+                                          item?.total_stock
+                                        ) {
+                                          toast.error(
+                                            `Maximum order quantity is ${item?.total_stock}`
+                                          );
+                                        } else {
+                                          increaseQuantity(item?.id);
+                                          setCartDataUpdated(!cartDataUpdated);
+                                        }
                                       }
                                     } else {
                                       toast.error(

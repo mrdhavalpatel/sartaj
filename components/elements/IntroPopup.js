@@ -5,7 +5,7 @@ import { ApiCall } from "../../lib/other/other";
 import { useIntl } from "react-intl";
 const IntroPopup = () => {
   const intl = useIntl();
-  const [openClass, setOpenClass] = useState(0);
+  const [openClass, setOpenClass] = useState(1);
   const [PopData, setPopData] = useState({});
   const handleRemove = () => {
     setOpenClass(!openClass);
@@ -15,6 +15,7 @@ const IntroPopup = () => {
     let res = await ApiCall("get", intl, "hot-deals");
     let data = res?.data;
     setPopData(data);
+    setOpenClass(0);
   };
   useEffect(() => {
     getPopData();
