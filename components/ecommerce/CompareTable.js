@@ -43,7 +43,26 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                 </td>
               ) : feature == "price" ? (
                 <td className="product_price">
-                  <span className="price">¥{product?.price}</span>
+                  <span className="price">
+                    <div className="product-price mt-10">
+                      {product?.actual_price !== product?.price ? (
+                        <>
+                          <span>¥{product?.actual_price + " "}</span>
+                          <span
+                            className="old-price"
+                            style={{
+                              textDecoration: "line-through",
+                              color: "grey",
+                            }}
+                          >
+                            ¥{product?.price}
+                          </span>
+                        </>
+                      ) : (
+                        <span>¥{product?.actual_price}</span>
+                      )}
+                    </div>
+                  </span>
                 </td>
               ) : feature == "Category" ? (
                 <td className="product_price">

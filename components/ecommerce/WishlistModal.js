@@ -48,6 +48,7 @@ const WishlistModal = ({
                   </td>
                   <td>
                     <strong>Action</strong>
+                 
                   </td>
                 </tr>
 
