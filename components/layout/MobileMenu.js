@@ -110,7 +110,7 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                     {categories?.map((itm) => {
                       return (
                         <li onClick={(e) => selectCategory(e, itm?.id)}>
-                          <Link href="/shop-fullwidth">
+                          <Link href={`/${intl.locale}/shop-fullwidth`}>
                             <i className="evara-font-dress"></i>
                             {itm?.name}
                           </Link>
@@ -165,10 +165,10 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                     >
                       <i className="fi-rs-angle-small-down"></i>
                     </span> */}
-                    <Link href="/shop-fullwidth">shop</Link>
+                    <Link href={`/${intl.locale}/shop-fullwidth`}>shop</Link>
                     {/* <ul className={isActive.key == 2 ? "dropdown" : "d-none"}>
                       <li>
-                        <Link href="/shop-fullwidth">
+                        <Link href={`/${intl.locale}/shop-fullwidth`}>
                           Shop Grid – Right Sidebar
                         </Link>
                       </li>
@@ -188,7 +188,7 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                         </Link>
                       </li>
                       <li>
-                        <Link href="/shop-fullwidth">Shop - Wide</Link>
+                        <Link href={`/${intl.locale}/shop-fullwidth`}>Shop - Wide</Link>
                       </li>
                       <li>
                         <Link href="/shop-filter">Shop – Filter</Link>

@@ -36,16 +36,22 @@ export default (state = [], action) => {
     case Types.ADD_TO_CART:
       index = findProductIndexById(state, action?.payload?.product?.id);
       const localCartItems = JSON.parse(localStorage.getItem("dokani_cart"));
+      let localCartItemIndex = undefined;
+      if (localCartItems) {
+        localCartItemIndex = findProductIndexById(
+          localCartItems,
+          action?.payload?.product?.id
+        );
+      }
 
-      const localCartItemIndex = findProductIndexById(
-        localCartItems,
-        action?.payload?.product?.id
-      );
+      let productQuantityAllowed = action?.payload?.product?.total_stock;
 
-      const productQuantityAllowed =
-        action?.payload?.product?.total_stock -
-          localCartItems[localCartItemIndex]?.quantity ||
-        action?.payload?.product?.total_stock;
+      if (localCartItemIndex > 0) {
+        productQuantityAllowed =
+          action?.payload?.product?.total_stock -
+            localCartItems[localCartItemIndex]?.quantity ||
+          action?.payload?.product?.total_stock;
+      }
 
       if (productQuantityAllowed < action?.payload?.product?.quantity) {
         if (productQuantityAllowed < 1) {
@@ -147,10 +153,12 @@ export default (state = [], action) => {
                 .catch((error) => {
                   console.log("error", error?.code === "ERR_NETWORK");
                 });
+            } else {
+              toast("Product added to Cart !");
             }
           }
           storage.set("dokani_cart", [...state, action.payload.product]);
-          toast("Product added to Cart !");
+
           return [...state, action.payload.product];
         }
       }

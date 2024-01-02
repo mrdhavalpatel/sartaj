@@ -10,12 +10,20 @@ const IntroPopup = () => {
   const handleRemove = () => {
     setOpenClass(!openClass);
   };
-  const fixDate = new Date();
   const getPopData = async () => {
     let res = await ApiCall("get", intl, "hot-deals");
     let data = res?.data;
-    setPopData(data);
-    setOpenClass(0);
+    // Assuming `data.start_date` is received correctly and in a parsable format
+    let apiDate = new Date(data.start_date);
+
+    // Get current date and time
+    let currentDate = new Date();
+
+    // Check if API date is greater than current date
+    if (apiDate > currentDate) {
+      setPopData(data);
+      setOpenClass(0);
+    }
   };
   useEffect(() => {
     getPopData();

@@ -41,7 +41,12 @@ const Header = ({
       window.location.replace(`/${newLanguage}/shop-compare`);
     } else if (router.pathname.includes("shop-wishlist")) {
       window.location.replace(`/${newLanguage}/shop-wishlist`);
-    } else {
+    } else if (router.pathname.includes("shop-fullwidth")) {
+      window.location.replace(`/${newLanguage}/shop-fullwidth`);
+     } else if (router.pathname.includes("shop-cart")) {
+        window.location.replace(`/${newLanguage}/shop-cart`);
+      }
+     else {
       window.location.replace(newUrl);
     }
   };
@@ -266,9 +271,7 @@ const Header = ({
                           alt="Evara"
                           src="/assets/imgs/theme/icons/icon-cart.svg"
                         />
-                        <span className="pro-count blue">
-                          {totalCartItems}
-                        </span>
+                        <span className="pro-count blue">{totalCartItems}</span>
                       </Link>
                       <Link href="/shop-cart">
                         <span className="lable">
@@ -391,7 +394,7 @@ const Header = ({
                         </Link>
                       </li>
                       <li>
-                        <Link href="/shop-fullwidth">
+                        <Link href={`/${intl.locale}/shop-fullwidth`}>
                           {intl.formatMessage({ id: "Shop" })}
                         </Link>
                       </li>
