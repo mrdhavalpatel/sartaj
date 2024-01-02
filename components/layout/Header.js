@@ -43,10 +43,7 @@ const Header = ({
       window.location.replace(`/${newLanguage}/shop-wishlist`);
     } else if (router.pathname.includes("shop-fullwidth")) {
       window.location.replace(`/${newLanguage}/shop-fullwidth`);
-     } else if (router.pathname.includes("shop-cart")) {
-        window.location.replace(`/${newLanguage}/shop-cart`);
-      }
-     else {
+    } else {
       window.location.replace(newUrl);
     }
   };

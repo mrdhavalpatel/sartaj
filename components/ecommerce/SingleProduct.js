@@ -18,6 +18,11 @@ const SingleProduct = ({
 }) => {
   const intel = useIntl();
   const handleCart = async (product) => {
+    product = {
+      ...product,
+      quantity: 1,
+    };
+    console.log(product);
     addToCart(product);
     // toast("Product added to Cart !");
   };

@@ -36,7 +36,7 @@ export default (state = [], action) => {
     case Types.ADD_TO_CART:
       index = findProductIndexById(state, action?.payload?.product?.id);
       const localCartItems = JSON.parse(localStorage.getItem("dokani_cart"));
-      let localCartItemIndex = undefined;
+      let localCartItemIndex = -1;
       if (localCartItems) {
         localCartItemIndex = findProductIndexById(
           localCartItems,
@@ -46,14 +46,21 @@ export default (state = [], action) => {
 
       let productQuantityAllowed = action?.payload?.product?.total_stock;
 
-      if (localCartItemIndex > 0) {
+      if (localCartItemIndex >= 0) {
         productQuantityAllowed =
           action?.payload?.product?.total_stock -
             localCartItems[localCartItemIndex]?.quantity ||
           action?.payload?.product?.total_stock;
       }
+      console.log(productQuantityAllowed);
+      console.log(action?.payload?.product);
 
-      if (productQuantityAllowed < action?.payload?.product?.quantity) {
+      if (
+        productQuantityAllowed < action?.payload?.product?.quantity ||
+        localCartItems[localCartItemIndex]?.quantity +
+          action?.payload?.product?.quantity >
+          action?.payload?.product?.total_stock
+      ) {
         if (productQuantityAllowed < 1) {
           toast.error(
             `Maximum order quantity is ${action?.payload?.product?.total_stock}`

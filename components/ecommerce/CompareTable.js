@@ -5,6 +5,10 @@ import { useIntl } from "react-intl";
 const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
   const intl = useIntl();
   const handleCart = (product) => {
+    product = {
+      ...product,
+      quantity: 1,
+    };
     addToCart(product);
   };
   return (

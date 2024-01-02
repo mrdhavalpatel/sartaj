@@ -18,6 +18,10 @@ const SingleProduct2 = ({
 }) => {
   const intl = useIntl();
   const handleCart = (product) => {
+    product = {
+      ...product,
+      quantity: 1,
+    };
     addToCart(product);
     // toast("Product added to Cart !");
   };

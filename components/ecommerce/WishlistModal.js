@@ -16,6 +16,10 @@ const WishlistModal = ({
   addToCart,
 }) => {
   const handleCart = (product) => {
+    product = {
+      ...product,
+      quantity: 1,
+    };
     addToCart(product);
     toast("Product added to Cart !");
   };

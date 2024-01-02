@@ -13,8 +13,8 @@ const IntroPopup = () => {
   const getPopData = async () => {
     let res = await ApiCall("get", intl, "hot-deals");
     let data = res?.data;
-    // Assuming `data.start_date` is received correctly and in a parsable format
-    let apiDate = new Date(data.start_date);
+
+    let apiDate = new Date(data.end_date);
 
     // Get current date and time
     let currentDate = new Date();
