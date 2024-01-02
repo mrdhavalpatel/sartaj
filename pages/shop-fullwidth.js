@@ -16,7 +16,7 @@ const ProductsFullWidth = ({ products, productFilters }) => {
   const intl = useIntl();
   const [productsData, setProductsData] = useState([]);
   const [pagination, setPagination] = useState([]);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [productTotal, setProductTotal] = useState([]);
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);

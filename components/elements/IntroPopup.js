@@ -11,18 +11,28 @@ const IntroPopup = () => {
     setOpenClass(!openClass);
   };
   const getPopData = async () => {
-    let res = await ApiCall("get", intl, "hot-deals");
-    let data = res?.data;
-
-    let apiDate = new Date(data.end_date);
-
-    // Get current date and time
-    let currentDate = new Date();
-
-    // Check if API date is greater than current date
-    if (apiDate > currentDate) {
-      setPopData(data);
-      setOpenClass(0);
+    try {
+      let res = await ApiCall("get", intl, "hot-deals");
+      let data = res?.data;
+  
+      console.log("API Response:", data);
+  
+      // Assuming `data.start_date` and `data.end_date` are received correctly
+      let startDate = new Date(data.start_date);
+      let endDate = new Date(data.end_date);
+      let currentDate = new Date();
+  
+      console.log("Start Date:", startDate);
+      console.log("End Date:", endDate);
+      console.log("Current Date:", currentDate);
+  
+      // Check if the current date is between start and end dates
+      if (startDate <= currentDate && currentDate <= endDate) {
+        setPopData(data);
+        setOpenClass(0);
+      }
+    } catch (error) {
+      console.error("Error fetching pop-up data:", error);
     }
   };
   useEffect(() => {

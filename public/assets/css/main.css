@@ -12412,3 +12412,45 @@ footer .hotline img {
   object-position: center;
   width: 100%;
 }
+.shopping-summery table tbody tr img{max-width:120px;border:1px solid #ececec;border-radius:15px;max-height:120px;object-fit:contain;height:120px;object-position:center center;width:120px;padding:10px;}
+.shopping-summery table td.product-des.product-name{padding-left:15px;padding-right:15px;}
+.shopping-summery table td.price h4{font-size:16px;padding:0 10px;}
+.shopping-summery table td[data-title="Cart"]{text-align:center;}
+.shopping-summery table td[data-title="Cart"] h4{font-size:16px;padding:0 15px;}
+.shopping-summery table td[data-title="Stock"] .detail-extralink.mr-15{margin:0 !important;}
+.shopping-summery table td[data-title="Stock"] .detail-extralink.mr-15 .detail-qty{margin:0;padding:9px 28px 9px 10px;text-align:right;}
+.shopping-summery table td[data-title="Remove"]{text-align:center;}
+.shopping-summery table thead th{font-size:16px;padding:18px 5px;text-align:center;}
+.shopping-summery table thead th.start{text-align:left;}
+.shopping-summery table td.product-des.product-name h6.product-name{font-size:16px;line-height:1.45em;}
+.shopping-summery table tbody tr td{padding:30px 0 0px 0 !important;}
+.shopping-summery table tbody tr{margin:0 !important;padding:0 !important;}
+.detail-gallery .product-image-slider img{width:100%;height:600px;object-fit:contain;object-position:center;}
+img.compare-img{height:100px;width:100%;object-fit:contain;object-position:center;}
+@media only screen and (max-width:480px){
+.deal{background-size:240px;background-repeat:no-repeat;background-position:right bottom;padding-bottom:130px;}
+.custom-modal .modal-dialog .modal-content{padding:20px;}
+.detail-info .product-price .current-price{font-size:45px;}
+}
+@media only screen and (max-width:767px){
+.shopping-summery table tbody tr td{padding:10px 0 !important;text-align:right;}
+.shopping-summery table tbody tr td.image.product-thumbnail{text-align:center;}
+.shopping-summery table tbody tr img{max-width:150px;border:1px solid #ececec;border-radius:15px;max-height:150px;object-fit:contain;height:150px;object-position:center center;width:150px;padding:10px;}
+.shopping-summery table td.product-des.product-name{padding-left:0;padding-right:0;text-align:center;}
+.shopping-summery table td.price h4{font-size:16px;padding:0;}
+.shopping-summery table td[data-title="Cart"]{text-align:right;}
+.shopping-summery table td[data-title="Cart"] h4{font-size:16px;padding:0;}
+.shopping-summery table td[data-title="Stock"] .detail-extralink.mr-15{margin:0 !important;text-align:right;}
+.shopping-summery table td[data-title="Stock"] .detail-extralink.mr-15 .detail-qty{margin:0;padding:9px 28px 9px 10px;text-align:right;}
+.shopping-summery table td[data-title="Remove"]{text-align:right;}
+.shopping-summery table thead th{font-size:16px;padding:18px 5px;text-align:center;}
+.shopping-summery table thead th.start{text-align:center;}
+.shopping-summery table td.product-des.product-name h6.product-name{font-size:16px;line-height:1.45em;}
+.shopping-summery table tbody tr{margin:0 !important;padding:0 !important;}
+.shopping-summery table tbody tr td:before{font-size:16px;}
+.shop-product-fillter .sort-by-product-area{flex-flow:column;gap:10px;}
+.newsletter .newsletter-inner .newsletter-content form input{border:0;border-radius:50px 0 0 50px;padding-left:37px;background-position:12px;font-size:14px;}
+.border.cart-totals{text-align:center;}
+.shopping-summery table tbody tr td.detail-info{text-align:right !important;}
+.shopping-summery table tbody tr td.price{text-align:right;}
+}

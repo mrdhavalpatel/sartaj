@@ -30,7 +30,7 @@ const Compare = ({ compare, clearCompare, deleteFromCompare }) => {
                   id: "This is your products list to compare",
                 })}
               </h6>
-              <div className="table-responsive">
+              <div className="table-responsive compare-table">
                 {compare.items.length > 0 ? (
                   <>
                     <CompareTable
