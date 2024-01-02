@@ -44,6 +44,11 @@ export default (state = [], action) => {
         );
       }
 
+
+
+
+
+
       let productQuantityAllowed = action?.payload?.product?.total_stock;
 
       if (localCartItemIndex >= 0) {

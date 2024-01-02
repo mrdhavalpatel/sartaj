@@ -90,7 +90,12 @@ const Cart = ({
             setCoupenCodeDis(response?.data?.discount_price);
             if (response.data.discount_type == "percent") {
               setCoupanDetails(
-                `${response?.data?.discount}% applied sucessfully`
+                `${response?.data?.discount}% discount applied sucessfully`
+              );
+            }
+           else if (response.data.discount_type == "amount") {
+              setCoupanDetails(
+                `${response?.data?.discount} ¥ discount applied sucessfully`
               );
             }
 

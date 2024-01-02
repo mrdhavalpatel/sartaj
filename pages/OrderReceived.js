@@ -121,7 +121,7 @@ const OrderReceived = ({ cartItems }) => {
                   </tr>
                 </tbody>
               </table>
-              <table className="table table-bordered">
+              <table className="table table-bordered  thankyou-table">
                 <thead>
                   <tr>
                     <td className="text-left">
@@ -270,7 +270,7 @@ const OrderReceived = ({ cartItems }) => {
                   </tr>
                 </tbody>
               </table>
-              <table className="table table-bordered">
+              <table className="table table-bordered  thankyou-table">
                 <thead>
                   <tr>
                     <td>
