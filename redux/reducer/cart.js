@@ -371,6 +371,8 @@ export default (state = [], action) => {
               .catch((error) => {
                 console.log("error", error?.code === "ERR_NETWORK");
               });
+          } else {
+            toast("Product added to Cart !");
           }
 
           storage.set("dokani_cart", [...state]);

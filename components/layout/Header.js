@@ -43,6 +43,8 @@ const Header = ({
       window.location.replace(`/${newLanguage}/shop-wishlist`);
     } else if (router.pathname.includes("shop-fullwidth")) {
       window.location.replace(`/${newLanguage}/shop-fullwidth`);
+    } else if (router.pathname.includes("shop-cart")) {
+      window.location.replace(`/${newLanguage}/shop-cart`);
     } else {
       window.location.replace(newUrl);
     }
@@ -263,14 +265,17 @@ const Header = ({
                       </Link>
                     </div>
                     <div className="header-action-icon-2">
-                      <Link href="/shop-cart" className="mini-cart-icon">
+                      <Link
+                        href={`/${intl.locale}/shop-cart`}
+                        className="mini-cart-icon"
+                      >
                         <img
                           alt="Evara"
                           src="/assets/imgs/theme/icons/icon-cart.svg"
                         />
                         <span className="pro-count blue">{totalCartItems}</span>
                       </Link>
-                      <Link href="/shop-cart">
+                      <Link href={`/${intl.locale}/shop-cart`}>
                         <span className="lable">
                           {intl.formatMessage({ id: "Cart" })}
                         </span>
@@ -453,7 +458,10 @@ const Header = ({
                     </Link>
                   </div>
                   <div className="header-action-icon-2">
-                    <Link href="/shop-cart" className="mini-cart-icon">
+                    <Link
+                      href={`/${intl.locale}/shop-cart`}
+                      className="mini-cart-icon"
+                    >
                       <img
                         alt="Evara"
                         src="/assets/imgs/theme/icons/icon-cart.svg"

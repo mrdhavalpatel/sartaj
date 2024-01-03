@@ -257,10 +257,10 @@ const Cart = ({
                         <td className="price" data-title="Price">
                           <h4 className="text-brand">
                             ¥
-                            {item?.price
-                              ? item?.price
-                              : item?.product?.price
-                              ? item?.product?.price
+                            {item?.actual_price
+                              ? item?.actual_price
+                              : item?.product?.actual_price
+                              ? item?.product?.actual_price
                               : 0}
                           </h4>
                         </td>
@@ -373,7 +373,11 @@ const Cart = ({
                           <h4 className="text-body">
                             ¥
                             {(item?.quantity ? item?.quantity : 1) *
-                              item?.price}
+                              (item?.actual_price
+                                ? item?.actual_price
+                                : item?.product?.actual_price
+                                ? item?.product?.actual_price
+                                : 0)}
                           </h4>
                         </td>
                         <td className="action" data-title="Remove">
@@ -426,11 +430,10 @@ const Cart = ({
                                 </td>
                                 <td className="cart_total_amount">
                                   <span className="font-lg fw-900 text-brand">
-                                    ¥ {cartTotal?.total_sub_amt}
+                                    ¥{cartTotal?.total_sub_amt}
                                   </span>
                                 </td>
                               </tr>
-                              {console.log("cartTotal", cartTotal)}
                               {cartTotal?.eight_percent ? (
                                 <tr>
                                   <td className="cart_total_label">
@@ -456,7 +459,7 @@ const Cart = ({
                                   </td>
                                   <td className="cart_total_amount">
                                     <span className="font-lg fw-900 text-brand">
-                                      ¥ {cartTotal?.ten_percent}
+                                      ¥{cartTotal?.ten_percent}
                                     </span>
                                   </td>
                                 </tr>

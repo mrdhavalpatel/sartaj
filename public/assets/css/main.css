@@ -12454,3 +12454,14 @@ img.compare-img{height:100px;width:100%;object-fit:contain;object-position:cente
 .shopping-summery table tbody tr td.detail-info{text-align:right !important;}
 .shopping-summery table tbody tr td.price{text-align:right;}
 }
+.thankyou-table td,
+.thankyou-table tr {
+  padding: 10px 20px !important;
+  border: 1px solid #ececec !important;
+}
+.compare-table tr td,
+.compare-table tr th {
+  max-width: 250px;
+  width: 250px;
+  min-width: 250px;
+}

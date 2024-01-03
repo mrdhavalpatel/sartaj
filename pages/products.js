@@ -65,8 +65,12 @@ const Products = ({ productFilters }) => {
       limit: limit,
       offset: currentPage,
       category_id: catId,
-      min: productFilters?.price?.min ? productFilters?.price?.min : 0,
-      max: productFilters?.price?.max ? productFilters?.price?.max : 500,
+      min: productFilters?.actual_price?.min
+        ? productFilters?.actual_price?.min
+        : 0,
+      max: productFilters?.actual_price?.max
+        ? productFilters?.actual_price?.max
+        : 500,
       sort_by: productFilters?.featured,
     };
     let res = await ApiCall("post", intl, "products/all", payload);
@@ -84,8 +88,8 @@ const Products = ({ productFilters }) => {
     pages,
     limit,
     productFilters?.featured,
-    productFilters?.price?.min,
-    productFilters?.price?.max,
+    productFilters?.actual_price?.min,
+    productFilters?.actual_price?.max,
   ]);
   const fetchProducts = async () => {
     const request = await ApiCall(

@@ -618,8 +618,14 @@ const Cart = ({
                               <td>
                                 <h4 className="text-brand">
                                   ¥
-                                  {(item.quantity ? item.quantity : 1) *
-                                    item.price}
+                                  {/* {(item.quantity ? item.quantity : 1) *
+                                    item.price} */}
+                                        {(item?.quantity ? item?.quantity : 1) *
+                                  item?.actual_price
+                                    ? item?.actual_price
+                                    : item?.product.actual_price
+                                    ? item?.product.actual_price
+                                    : 0}
                                 </h4>
                               </td>
                             </tr>
@@ -690,7 +696,7 @@ const Cart = ({
                             >
                               <strong>
                                 {intl.formatMessage({ id: "Consumption Tax" })}{" "}
-                                {cartTotal?.eight_percent ? 8 : 0}{" "}
+                                {cartTotal?.eight_percent ? 8 : 0}%
                               </strong>
                             </td>
                             <td
@@ -716,7 +722,7 @@ const Cart = ({
                                 {intl.formatMessage({
                                   id: "Consumption Tax",
                                 })}{" "}
-                                {cartTotal?.eight_percent ? 8 : 0}
+                                {cartTotal?.eight_percent ? 10 : 0}%
                               </strong>
                             </td>
                             <td
