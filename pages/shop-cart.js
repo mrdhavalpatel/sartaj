@@ -32,6 +32,7 @@ const Cart = ({
   clearCart,
 }) => {
   const intl = useIntl();
+console.log("intl", intl);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartDataUpdated, setCartDataUpdated] = useState(false);
   const [cartTotal, setCartTotal] = useState([]);
@@ -80,10 +81,12 @@ const Cart = ({
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
+          intl
         },
       })
       .then((res) => {
         setCartProducts(res?.data?.cartProducts);
+        console.log("cart response",res?.data)
         setCartTotal(res?.data);
       })
       .catch((error) => {
@@ -109,6 +112,7 @@ const Cart = ({
       }
     });
   };
+  
   const handleClearCart = () => {
     setCartDataUpdated(!cartDataUpdated);
     clearCart();
@@ -209,6 +213,8 @@ const Cart = ({
                         </td>
                         <td className="product-des product-name">
                           <h6 className="product-name">
+
+
                             <Link
                               href={
                                 intl.locale == "eng"

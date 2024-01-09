@@ -274,7 +274,7 @@ import * as Types from "../constants/actionTypes";
 import { API_BASE_URL } from "../../lib/api";
 import { toast } from "react-toastify";
 
-export default (state = [], action) => {
+export default (state = [], action) => {  
   let index = null;
   let token = storage.get("token");
 

@@ -24,6 +24,7 @@ const ProductDetails = ({
   decreaseQuantity,
   quickView,
 }) => {
+  console.log("data.........................................",quickView)
   const [quantity, setQuantity] = useState(1);
 
   const handleCompare = (product) => {
@@ -227,7 +228,7 @@ const ProductDetails = ({
                     description={product?.description}
                     review={product?.active_reviews}
                   />
-                  <div className="row mt-60">
+                  {product?.releted_product  ? (<div className="row mt-60">
                     <div className="col-12">
                       <h3 className="section-title style-1 mb-30">
                         Related products
@@ -238,7 +239,8 @@ const ProductDetails = ({
                         <RelatedSlider id={product?.id} />
                       </div>
                     </div>
-                  </div>
+                  </div>) : null}
+                  
                 </>
               )}
             </div>

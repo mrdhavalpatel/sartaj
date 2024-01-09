@@ -12465,3 +12465,38 @@ img.compare-img{height:100px;width:100%;object-fit:contain;object-position:cente
   width: 250px;
   min-width: 250px;
 }
+.compare-table tr th {
+  max-width: 70px !important;
+  width: 70px !important;
+  min-width: 70px !important;
+}
+.popular-categories .card-1 h6 a {
+  font-size: 15px;
+}
+.product-list-small h6 {
+  min-height: 57px;
+}
+.card-product-small h2 {
+  min-height: 60px;
+}
+.product-cart-wrap .product-img-action-wrap .product-img a {
+  display: block;
+}
+.related-products .product-img.product-img-zoom a img {
+  display: none;
+}
+.related-products .product-img.product-img-zoom a img:nth-child(1) {
+  display: block;
+}
+td.product-des.product-name {
+  width: 40%;
+}
+.no-spinners::-webkit-inner-spin-button,
+.no-spinners::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-spinners {
+  -moz-appearance: textfield;
+}

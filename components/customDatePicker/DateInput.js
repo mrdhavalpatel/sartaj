@@ -11,8 +11,8 @@ const DateInput = ({ field, form, ...props }) => {
     setFieldValue(name, date);
   };
 
-  // Parse the value into a Date object if it's a string
-  //   const parsedValue = typeof value === "string" ? new Date(value) : value;
+  // Get the current date
+  const currentDate = new Date();
 
   return (
     <div className="form-group">
@@ -21,8 +21,12 @@ const DateInput = ({ field, form, ...props }) => {
           selected={value}
           onChange={handleChange}
           name={name}
-          dateFormat="MM/dd/yyyy" // You can customize the date format
+          dateFormat="dd/MM/yyyy"
           placeholderText={props.placeholder}
+          showYearDropdown
+          showMonthDropdown
+          maxDate={currentDate}  // Set maxDate to the current date
+          dropdownMode="select"
           className={`form-control  ${
             touched[name] && errors[name] ? "is-invalid" : ""
           }`}

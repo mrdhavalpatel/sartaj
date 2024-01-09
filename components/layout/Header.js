@@ -199,7 +199,7 @@ const Header = ({
                     </li> */}
                     <li>
                       <label htmlFor="languageDropdown" className="sr-only">
-                        Select Language
+                        {intl.formatMessage({ id: "Select Language" })}
                       </label>
                       <select
                         id="languageDropdown"

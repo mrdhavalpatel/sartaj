@@ -93,7 +93,7 @@ const Cart = ({
                 `${response?.data?.discount}% discount applied sucessfully`
               );
             }
-           else if (response.data.discount_type == "amount") {
+            else if (response.data.discount_type == "amount") {
               setCoupanDetails(
                 `${response?.data?.discount} ¥ discount applied sucessfully`
               );
@@ -110,6 +110,7 @@ const Cart = ({
       toast.error("Please enter valid coupan");
     }
   };
+  console.log("cart prodyct detail", cartItemsData)
   const placeOrder = async () => {
     try {
       let token = localStorage.getItem("token");
@@ -204,7 +205,7 @@ const Cart = ({
           : selectedAddressData?.full_name,
       road:
         values?.billing_address2 != undefined ||
-        values?.billing_address2 != null
+          values?.billing_address2 != null
           ? values?.billing_address2
           : selectedAddressData?.billing_address2,
       house:
@@ -306,6 +307,7 @@ const Cart = ({
                 name="full_name"
                 placeholder={intl.formatMessage({ id: "Full Name*" })}
               />
+
             </div>
 
             <div className="form-group">
@@ -544,19 +546,15 @@ const Cart = ({
                   >
                     {address?.billing_address?.map((option) => (
                       <option key={option.id} value={option.id}>
-                        {`${
-                          option?.full_name !== null
+                        {`${option?.full_name !== null
                             ? option.full_name + ","
                             : ""
-                        } ${
-                          option?.address !== null ? option.address + "," : ""
-                        }${option?.road !== null ? option.road + "," : ""}${
-                          option?.post_code !== null
+                          } ${option?.address !== null ? option.address + "," : ""
+                          }${option?.road !== null ? option.road + "," : ""}${option?.post_code !== null
                             ? option?.post_code + ","
                             : ""
-                        }${option?.city !== null ? option?.city + "," : ""}${
-                          option?.state !== null ? option?.state + "," : ""
-                        }`}
+                          }${option?.city !== null ? option?.city + "," : ""}${option?.state !== null ? option?.state + "," : ""
+                          }`}
                       </option>
                     ))}
                   </select>
@@ -590,21 +588,19 @@ const Cart = ({
                                       <div
                                         className="product-rating"
                                         style={{
-                                          width: `${
-                                            item?.product?.overall_rating
+                                          width: `${item?.product?.overall_rating
                                               ? item?.product?.overall_rating
                                               : 0
-                                          }%`,
+                                            }%`,
                                         }}
                                       ></div>
                                     </div>
                                     <span className="font-small ml-5 text-muted">
                                       {`(
-                                    ${
-                                      item?.product?.total_reviews
-                                        ? item?.product?.total_reviews
-                                        : 0
-                                    }
+                                    ${item?.product?.total_reviews
+                                          ? item?.product?.total_reviews
+                                          : 0
+                                        }
                                     )`}
                                     </span>
                                   </div>
@@ -620,12 +616,12 @@ const Cart = ({
                                   ¥
                                   {/* {(item.quantity ? item.quantity : 1) *
                                     item.price} */}
-                                        {(item?.quantity ? item?.quantity : 1) *
-                                  item?.actual_price
+                                  {(item?.quantity ? item?.quantity : 1) *
+                                    item?.actual_price
                                     ? item?.actual_price
                                     : item?.product.actual_price
-                                    ? item?.product.actual_price
-                                    : 0}
+                                      ? item?.product.actual_price
+                                      : 0}
                                 </h4>
                               </td>
                             </tr>
@@ -643,6 +639,7 @@ const Cart = ({
                           width: "100%",
                           borderCollapse: "collapse",
                         }}
+                        className="checkout_info_table"
                       >
                         <tr>
                           <td
@@ -787,9 +784,10 @@ const Cart = ({
                       </table>
                     ) : null}
                   </div>
+                  <div className="delivery_time_div">
                   <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
-    <h8>Delivery time</h8>
-  </div>
+                    <h8>Delivery time</h8>
+                  </div>
 
                   {timeSlot?.map((Item, index) => {
                     const radioId = Item?.id;
@@ -820,6 +818,7 @@ const Cart = ({
                       </div>
                     );
                   })}
+                  </div>
                   <div className="payment_method">
                     <div className="mb-25">
                       <h5>{intl.formatMessage({ id: "Payment" })}</h5>
@@ -910,24 +909,24 @@ const Cart = ({
                     </div>
                   </div>
                   <div>
-      {cartTotal?.total_amt <= cartTotal.minOrderAmount ? (
-        <h8 style={{ color: "red" }}>
-          {intl.formatMessage({
-            id: "Oops! Your cart is below 2500 ¥. Please add items worth",
-          })}{" "}
-          {calculateAmountToAdd()} ¥ 
-          {intl.formatMessage({
-            id: " or more to place your order. Happy shopping!",
-          })}
-        </h8>
-      ) : (
-        <h8 style={{ color: "green" }}>
-          {intl.formatMessage({
-            id: "Congratulations, You are eligible to place an order",
-          })}
-        </h8>
-      )}
-    </div>
+                    {cartTotal?.total_amt <= cartTotal.minOrderAmount ? (
+                      <h8 style={{ color: "red" }}>
+                        {intl.formatMessage({
+                          id: "Oops! Your cart is below 2500 ¥. Please add items worth",
+                        })}{" "}
+                        {calculateAmountToAdd()} ¥
+                        {intl.formatMessage({
+                          id: " or more to place your order. Happy shopping!",
+                        })}
+                      </h8>
+                    ) : (
+                      <h8 style={{ color: "green" }}>
+                        {intl.formatMessage({
+                          id: "Congratulations, You are eligible to place an order",
+                        })}
+                      </h8>
+                    )}
+                  </div>
                   <h6></h6>
                   <button
                     onClick={() => {
