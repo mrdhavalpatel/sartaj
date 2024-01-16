@@ -8,19 +8,33 @@ import { connect } from "react-redux";
 import { useIntl } from "react-intl";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 function ResetPassword() {
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const intl = useIntl();
   const router = useRouter();
 
+  // const validationSchema = Yup.object().shape({
+  //   password: Yup.string()
+  //     .min(8, "Password must be at least 8 characters")
+  //     .required("Password is required"),
+  //   confirmPassword: Yup.string()
+  //     .oneOf([Yup.ref("password"), null], "Passwords must match")
+  //     .required("Confirm password is required"),
+  // });
   const validationSchema = Yup.object().shape({
-    password: Yup.string().required("Password is required"),
+    password: Yup.string()
+      .min(8, intl.formatMessage({ id: "Password must be at least 8 characters" }))
+      .required(intl.formatMessage({ id: "Password is required" })),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
-      .required("Confirm password is required"),
+      .oneOf(
+        [Yup.ref("password"), null],
+        intl.formatMessage({ id: "Passwords must match" })
+      )
+      .required(intl.formatMessage({ id: "Confirm password is required" })),
   });
-
   useEffect(() => {
     if (!router?.query?.token) {
       toast.error("Invalid Url");
@@ -91,38 +105,56 @@ function ResetPassword() {
                           }}
                         >
                           <Form>
-                            <div className="form-group">
+                            <div className="form-group position-relative">
                               <Field
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 name="password"
                                 placeholder={intl.formatMessage({
                                   id: "Your password *",
                                 })}
                                 className="form-control"
                               />
+                              <span
+                                className="password-toggle-icon"
+                                onClick={() => setShowPassword(!showPassword)}
+                              >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                              </span>
                               <ErrorMessage
                                 name="password"
                                 component="div"
-                                style={{ color: "red" }}
+                                style={{ color: "red", position: "absolute" }}
                               />
                             </div>
-                            <div className="form-group">
+                            <div className="form-group position-relative mt-40">
                               <Field
-                                type="password"
+                                type={showConfirmPassword ? "text" : "password"}
                                 name="confirmPassword"
                                 placeholder={intl.formatMessage({
                                   id: "Confirm password *",
                                 })}
                                 className="form-control"
                               />
+                              <span
+                                className="password-toggle-icon"
+                                onClick={() =>
+                                  setShowConfirmPassword(!showConfirmPassword)
+                                }
+                              >
+                                {showConfirmPassword ? (
+                                  <FaEyeSlash />
+                                ) : (
+                                  <FaEye />
+                                )}
+                              </span>
                               <ErrorMessage
                                 name="confirmPassword"
                                 component="div"
-                                style={{ color: "red" }}
+                                style={{ color: "red", position: "absolute" }}
                               />
                             </div>
 
-                            <div className="form-group">
+                            <div className="form-group mt-40">
                               <button
                                 type="submit"
                                 className="btn btn-heading btn-block hover-up"

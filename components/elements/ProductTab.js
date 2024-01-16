@@ -8,8 +8,9 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import Link from "next/link";
 import { auth } from "../../lib/auth/auth";
-
-const ProductTab = ({ description, review, id, total_reviews }) => {
+import {  useIntl } from "react-intl";
+const ProductTab = ({ description, review, id, total_reviews}) => {
+  const intl = useIntl();
   const [activeIndex, setActiveIndex] = useState(1);
   const [isLoggedIn, setIsloggedIn] = useState(false);
   const [productRating, setProductRating] = useState([]);
@@ -96,7 +97,7 @@ const ProductTab = ({ description, review, id, total_reviews }) => {
               data-bs-toggle="tab"
               onClick={() => handleOnClick(1)}
             >
-              Description
+              {intl.formatMessage({ id: 'Description' })}
             </a>
           </li>
 
@@ -107,7 +108,7 @@ const ProductTab = ({ description, review, id, total_reviews }) => {
               data-bs-toggle="tab"
               onClick={() => handleOnClick(4)}
             >
-              Reviews {`(${total_reviews ? total_reviews : 0})`}
+              {intl.formatMessage({ id: 'Reviews' })} {`(${total_reviews ? total_reviews : 0})`}
             </a>
           </li>
         </ul>
@@ -130,7 +131,7 @@ const ProductTab = ({ description, review, id, total_reviews }) => {
             <div className="comments-area">
               <div className="row">
                 <div className="col-lg-8">
-                  <h4 className="mb-30">Customer questions & answers</h4>
+                  <h4 className="mb-30">{intl.formatMessage({ id: 'Customer questions & answers' })}</h4>
                   <div className="comment-list">
                     {review?.map((ITM) => {
                       return (
@@ -177,7 +178,7 @@ const ProductTab = ({ description, review, id, total_reviews }) => {
                   </div>
                 </div>
                 <div className="col-lg-4">
-                  <h4 className="mb-30">Customer reviews</h4>
+                  <h4 className="mb-30">{intl.formatMessage({ id: 'Customer reviews' })}</h4>
                   <div className="d-flex mb-30">
                     <div className="product-rate d-inline-block mr-15">
                       <div

@@ -148,6 +148,7 @@
   "Select Date of Birth": "生年月日を選択する",
   "Password": "パスワード",
   "Confirm password": "パスワードを確認",
+  "Confirm password *":"パスワードを確認*",
   "I agree to terms": "利用規約に同意する",
   "Policy.": "ポリシー。",
   "Lean more": "詳しく知る",
@@ -265,5 +266,19 @@
   "Sign Out": "サインアウト",
   "Forgot password": "パスワードを忘れた",
   "Request": "リクエスト",
-  "Requesting": "リクエスト"
+  "Requesting": "リクエスト",
+  "Add to cart":"カートに追加",
+  "Availability":"可用性",
+  "Items In Stock":"在庫のある商品",
+  "Description":"説明",
+  "Reviews":"レビュー",
+  "Customer questions & answers":"お客様からの質問と回答",
+  "Customer reviews":"カスタマーレビュー",
+  "Related products":"関連製品",
+  "Add":"足す",
+  "Tags":"タグ",
+  "Password must be at least 8 characters":"パスワードは8文字以上でなければなりません",
+  "Password is required":"パスワードが必要",
+  "Passwords must match":"パスワードが一致する必要があります",
+  "Confirm password is required":"パスワードの確認が必要です"
 }

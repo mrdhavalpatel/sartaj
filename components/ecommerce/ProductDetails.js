@@ -183,8 +183,8 @@ const ProductDetails = ({
                           className="button button-add-to-cart"
                         >
                           {product?.out_of_stock_status !== "in stock"
-                            ? "Out of stock"
-                            : "Add to cart"}
+                            ?  intl.formatMessage({ id: 'Out of stock' })
+                            :  intl.formatMessage({ id: 'Add to cart' })}
                         </button>
 
                         <a
@@ -209,15 +209,15 @@ const ProductDetails = ({
                         <a href="#">{product?.sku ? product?.sku : "--"}</a>
                       </li>
                       <li className="mb-5">
-                        Tags:
+                      {intl.formatMessage({ id: 'Tags' })}:
                         <a href="#" rel="tag" className="me-1">
                           {product?.product_tag ? product?.product_tag : "--"}
                         </a>
                       </li>
                       <li>
-                        Availability:
+                      {intl.formatMessage({ id: 'Availability' })}:
                         <span className="in-stock text-success ml-5">
-                          {product?.stock} Items In Stock
+                          {product?.stock} {intl.formatMessage({ id: 'Items In Stock' })}
                         </span>
                       </li>
                     </ul>
@@ -237,7 +237,8 @@ const ProductDetails = ({
                     <div className="row mt-60">
                       <div className="col-12">
                         <h3 className="section-title style-1 mb-30">
-                          Related products
+                        {intl.formatMessage({ id: 'Related products' })}
+                          
                         </h3>
                       </div>
                       <div className="col-12">

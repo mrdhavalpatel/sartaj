@@ -12673,3 +12673,9 @@ td.product-des.product-name {
 .account_order table td {
   padding: 5px 10px;
 }
+.password-toggle-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translate(0px, -50%);
+}

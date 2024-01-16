@@ -264,5 +264,20 @@
   "Sign Out": "Sign Out",
   "Forgot password": "Forgot password",
   "Request": "Request",
-  "Requesting": "Requesting"
+  "Requesting": "Requesting",
+  "Add to cart":"Add to cart",
+  "Availability":"Availability",
+  "Items In Stock":"Items In Stock",
+  "Description":"Description",
+  "Reviews":"Reviews",
+  "Customer questions & answers":"Customer questions & answers",
+  "Customer reviews":"Customer reviews",
+  "Related products":"Related products",
+  "Add":"Add",
+  "Tags":"Tags",
+  "Confirm password *":"Confirm password *",
+  "Password must be at least 8 characters":"Password must be at least 8 characters",
+  "Password is required":"Password is required",
+  "Passwords must match": "Passwords must match",
+  "Confirm password is required":"Confirm password is required"
 }

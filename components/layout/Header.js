@@ -38,7 +38,7 @@ const Header = ({
     const pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
 
     const newUrl = `/${newLanguage}/${pathWithoutLanguage}`;
-
+    const currentToken = router.query.token || "";
     if (router.pathname.includes("shop-compare")) {
       window.location.replace(`/${newLanguage}/shop-compare`);
     } else if (router.pathname.includes("shop-wishlist")) {
@@ -47,7 +47,11 @@ const Header = ({
       window.location.replace(`/${newLanguage}/shop-fullwidth`);
     } else if (router.pathname.includes("shop-cart")) {
       window.location.replace(`/${newLanguage}/shop-cart`);
-    } else {
+    }
+      else if (router.pathname.includes("page-reset-password")) {
+        window.location.replace(`/${newLanguage}/page-reset-password?token=${currentToken}`);
+      }
+     else {
       window.location.replace(newUrl);
     }
   };

@@ -16,7 +16,7 @@ const SingleProduct = ({
   addToWishlist,
   openQuickView,
 }) => {
-  const intel = useIntl();
+  const intl = useIntl();
   const handleCart = async (product) => {
     product = {
       ...product,
@@ -42,7 +42,7 @@ const SingleProduct = ({
           <div className="product-img product-img-zoom">
             <Link
               href={`/${
-                intel.locale === "eng" ? product?.seo_en : product?.seo_ja
+                intl.locale === "eng" ? product?.seo_en : product?.seo_ja
               }`}
             >
               {Array.isArray(product?.image) &&
@@ -92,7 +92,7 @@ const SingleProduct = ({
           <div className="product-category">
             <Link
               href={`/${
-                intel.locale === "eng"
+                intl.locale === "eng"
                   ? product?.manufacturer?.seo_en
                   : product?.manufacturer?.seo_ja
               }`}
@@ -103,10 +103,10 @@ const SingleProduct = ({
           <h2>
             <Link
               href={`/${
-                intel.locale === "eng" ? product?.seo_en : product?.seo_ja
+                intl.locale === "eng" ? product?.seo_en : product?.seo_ja
               }`}
               as={`/${
-                intel.locale === "eng" ? product?.seo_en : product?.seo_ja
+                intl.locale === "eng" ? product?.seo_en : product?.seo_ja
               }`}
             >
               {product?.name}
@@ -135,7 +135,7 @@ const SingleProduct = ({
               By{" "}
               <Link
                 href={`/${
-                  intel.locale === "eng"
+                  intl.locale === "eng"
                     ? product?.manufacturer?.seo_en
                     : product?.manufacturer?.seo_ja
                 }`}
@@ -181,8 +181,8 @@ const SingleProduct = ({
               >
                 <i className="fi-rs-shopping-cart mr-5"></i>{" "}
                 {product?.out_of_stock_status !== "in stock"
-                  ? "Out of stock"
-                  : "Add"}
+                  ? intl.formatMessage({ id: 'Out of stock' })
+                  : intl.formatMessage({ id: 'Add' })}
               </button>
             </div>
           </div>
