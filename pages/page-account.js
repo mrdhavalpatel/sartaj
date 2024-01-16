@@ -16,7 +16,6 @@ import { Spinner } from "react-bootstrap";
 import ConfirmationDialog from "../components/dialogs/ConfirmationDialog";
 function Account() {
   const intl = useIntl();
-  const [activeIndex, setActiveIndex] = useState(1);
   const [userDetails, setUserDetails] = useState("");
   const [orderList, setOrderList] = useState([]);
   const [orderPDFURL, setOrderPDFURL] = useState("");
@@ -32,6 +31,10 @@ function Account() {
     setActiveIndex(index);
   };
   const [show, setShow] = useState(false);
+  const initialActiveIndex = router.query.activeIndex
+  ? parseInt(router.query.activeIndex, 10)
+  : 1;
+  const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
 
   const handleClose = () => setShow(false);
 
