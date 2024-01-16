@@ -21,8 +21,7 @@ function Privacy() {
       .required("Terms & Conditions are required"),
     phone: Yup.string()
       .required("Phone number is required")
-      .min(3, "Mobile must be between 3 and 32 characters!")
-      .max(32, "Mobile must be between 3 and 32 characters!"),
+      .matches(/^\d{9}$/, "Phone number must be 9 digits"),
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
       .required("Password is required"),
@@ -139,19 +138,17 @@ function Privacy() {
                             </div>
                             <div className="form-group">
                               <Field
-                                type="text"
+                                type="number"
                                 name="phone"
-                                placeholder={intl.formatMessage({
-                                  id: "phone no.",
-                                })}
-                                className="form-control"
+                                placeholder={intl.formatMessage({ id: "phone no." })}
+                                className="form-control no-spinners" // Add a custom class for styling
                               />
                               <ErrorMessage
                                 name="phone"
                                 component="div"
                                 style={{ color: "red" }}
                               />
-                            </div>
+                            </div>  
                             <Field
                               name="dob"
                               label="Date of Birth"
@@ -199,7 +196,7 @@ function Privacy() {
                                     type="checkbox"
                                     name="termsConditions"
                                     id="exampleCheckbox12"
-                                    // value=""
+                                  // value=""
                                   />
                                   <label
                                     className="form-check-label"

@@ -11,14 +11,21 @@ import Button from "react-bootstrap/Button";
 import AddressDialog from "../components/dialogs/AddressDialog";
 import { useRouter } from "next/router";
 import { useIntl } from "react-intl";
+import ViewOrderDetails from "../components/ecommerce/ViewOrderDetails";
+import { Spinner } from "react-bootstrap";
+import ConfirmationDialog from "../components/dialogs/ConfirmationDialog";
 function Account() {
   const intl = useIntl();
   const [activeIndex, setActiveIndex] = useState(1);
   const [userDetails, setUserDetails] = useState("");
   const [orderList, setOrderList] = useState([]);
-  const [orderID, setOrderId] = useState("");
+  const [orderPDFURL, setOrderPDFURL] = useState("");
+  const [isOrderPDFOpen, setIsOrderPDFOpen] = useState(false);
+  const [showOrderCancel, setShowOrderCancel] = useState(false);
+  const [orderId, setOrderId] = useState(null);
   const [editData, setEditData] = useState({});
   const [address, setAddress] = useState("");
+  const [isOrderListLoading, setIsOrderListLoading] = useState(true);
   const [token, setToken] = useState("");
   const router = useRouter();
   const handleOnClick = (index) => {
@@ -53,6 +60,11 @@ function Account() {
       .oneOf([yup.ref("new_password"), null], "Passwords must match")
       .required("Confirm Password is required"),
   });
+
+  const handleViewOrder = (url) => {
+    setIsOrderPDFOpen(true);
+    setOrderPDFURL(url);
+  };
 
   const handleChangePassword = async (values) => {
     let payload = {
@@ -117,6 +129,7 @@ function Account() {
   };
 
   const getOrderList = async (encodedToken) => {
+    setIsOrderListLoading(true);
     const response = await api.get("customer/order/list", {
       headers: {
         "Access-Control-Allow-Origin": "*",
@@ -125,6 +138,7 @@ function Account() {
       },
     });
     setOrderList(response?.data);
+    setIsOrderListLoading(false);
   };
 
   const getAddress = async (encodedToken) => {
@@ -138,9 +152,37 @@ function Account() {
     setAddress(response?.data);
   };
 
+  const handleOrderCancel = async (id) => {
+    let encodedToken = localStorage.getItem("token");
+    const response = await api.put(
+      "customer/order/cancel",
+      { order_id: id },
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${encodedToken}`,
+        },
+      }
+    );
+
+    if (response?.status === 200) {
+      toast.success(response?.data?.message);
+      setShowOrderCancel(false);
+      setOrderId(null);
+      await getOrderList(encodedToken);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("token");
   };
+
+  const handleOrderPDFClose = () => {
+    setOrderPDFURL(null);
+    setIsOrderPDFOpen(false);
+  };
+
   useEffect(() => {
     let encodedToken = localStorage.getItem("token");
     if (encodedToken) {
@@ -155,6 +197,18 @@ function Account() {
 
   return (
     <>
+      {/* <ViewOrderDetails
+        isOpen={isOrderPDFOpen}
+        pdfUrl={orderPDFURL}
+        onClose={handleOrderPDFClose}
+      /> */}
+      <ConfirmationDialog
+        showModal={() => setShowOrderCancel(true)}
+        modalShow={showOrderCancel}
+        hideModal={() => setShowOrderCancel(false)}
+        handleConfirm={handleOrderCancel}
+        orderId={orderId}
+      />
       <Layout parent="Home" sub="Pages" subChild="Account">
         <div className="page-content pt-150 pb-150">
           <div className="container">
@@ -307,10 +361,17 @@ function Account() {
                         }
                       >
                         <div className="card">
-                          <div className="card-header">
+                          <div className="card-header d-flex justify-content-between">
                             <h3 className="mb-0">
                               {intl.formatMessage({ id: "Your Orders" })}
                             </h3>
+                            {isOrderListLoading && (
+                              <Spinner animation="border" role="status">
+                                <span className="visually-hidden">
+                                  Loading...
+                                </span>
+                              </Spinner>
+                            )}
                           </div>
                           <div className="card-body">
                             <div className="table-responsive">
@@ -351,15 +412,33 @@ function Account() {
                                           {Item?.details_count}{" "}
                                           {intl.formatMessage({ id: "item" })}
                                         </td>
-                                        <td>
-                                          <a
-                                            href={Item?.invoice_link}
+                                        <td className="d-flex align-items-center justify-content-between">
+                                          <Link
+                                            // onClick={() => {
+                                            //   handleViewOrder(
+                                            //     Item?.invoice_link
+                                            //   );
+                                            // }}
+                                            href={`orders/${Item?.id}`}
                                             className="btn-small d-block"
-                                            target="_blank" // Add this attribute
-                                            rel="noopener noreferrer" // For security reasons, also include rel="noopener noreferrer"
+                                            // target="_blank" // Add this attribute
+                                            // rel="noopener noreferrer" // For security reasons, also include rel="noopener noreferrer"
                                           >
                                             {intl.formatMessage({ id: "View" })}
-                                          </a>
+                                          </Link>
+                                          {Item?.order_status === "pending" && (
+                                            <Button
+                                              variant="primary"
+                                              onClick={() => {
+                                                setOrderId(Item?.id);
+                                                setShowOrderCancel(true);
+                                              }}
+                                            >
+                                              {intl.formatMessage({
+                                                id: "Cancel",
+                                              })}
+                                            </Button>
+                                          )}
                                         </td>
                                       </tr>
                                     );

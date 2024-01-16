@@ -18,6 +18,10 @@ const SingleProduct2 = ({
 }) => {
   const intl = useIntl();
   const handleCart = (product) => {
+    product = {
+      ...product,
+      quantity: 1,
+    };
     addToCart(product);
     // toast("Product added to Cart !");
   };
@@ -113,11 +117,16 @@ const SingleProduct2 = ({
             </span>
           </div>
           <div className="product-price mt-10">
-            <span>¥{product?.actual_price} </span>
-            <span className="old-price">
-              {product?.price && `¥ ${product?.price}`}
-            </span>
+            {product?.actual_price !== product?.price ? (
+              <>
+                <span>¥{product?.actual_price}</span>
+                <span className="old-price">¥{product?.price}</span>
+              </>
+            ) : (
+              <span>¥{product?.actual_price}</span>
+            )}
           </div>
+
           <div className="sold mt-15 mb-15">
             <div className="progress mb-5">
               <div

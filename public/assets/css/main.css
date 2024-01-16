@@ -3967,7 +3967,7 @@ table .product-thumbnail img {
   -webkit-transition: 0.2s;
   -o-transition: 0.2s;
 }
-.badgesmain:hover{
+.badgesmain:hover {
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
   border: none !important;
@@ -12411,4 +12411,265 @@ footer .hotline img {
   object-fit: contain;
   object-position: center;
   width: 100%;
+}
+.shopping-summery table tbody tr img {
+  max-width: 120px;
+  border: 1px solid #ececec;
+  border-radius: 15px;
+  max-height: 120px;
+  object-fit: contain;
+  height: 120px;
+  object-position: center center;
+  width: 120px;
+  padding: 10px;
+}
+.shopping-summery table td.product-des.product-name {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.shopping-summery table td.price h4 {
+  font-size: 16px;
+  padding: 0 10px;
+}
+.shopping-summery table td[data-title="Cart"] {
+  text-align: center;
+}
+.shopping-summery table td[data-title="Cart"] h4 {
+  font-size: 16px;
+  padding: 0 15px;
+}
+.shopping-summery table td[data-title="Stock"] .detail-extralink.mr-15 {
+  margin: 0 !important;
+}
+.shopping-summery
+  table
+  td[data-title="Stock"]
+  .detail-extralink.mr-15
+  .detail-qty {
+  margin: 0;
+  padding: 9px 28px 9px 10px;
+  text-align: right;
+}
+.shopping-summery table td[data-title="Remove"] {
+  text-align: center;
+}
+.shopping-summery table thead th {
+  font-size: 16px;
+  padding: 18px 5px;
+  text-align: center;
+}
+.shopping-summery table thead th.start {
+  text-align: left;
+}
+.shopping-summery table td.product-des.product-name h6.product-name {
+  font-size: 16px;
+  line-height: 1.45em;
+}
+.shopping-summery table tbody tr td {
+  padding: 30px 0 0px 0 !important;
+}
+.shopping-summery table tbody tr {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.detail-gallery .product-image-slider img {
+  width: 100%;
+  height: 600px;
+  object-fit: contain;
+  object-position: center;
+}
+img.compare-img {
+  height: 100px;
+  width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+@media only screen and (max-width: 480px) {
+  .deal {
+    background-size: 240px;
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    padding-bottom: 130px;
+  }
+  .custom-modal .modal-dialog .modal-content {
+    padding: 20px;
+  }
+  .detail-info .product-price .current-price {
+    font-size: 45px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .shopping-summery table tbody tr td {
+    padding: 10px 0 !important;
+    text-align: right;
+  }
+  .shopping-summery table tbody tr td.image.product-thumbnail {
+    text-align: center;
+  }
+  .shopping-summery table tbody tr img {
+    max-width: 150px;
+    border: 1px solid #ececec;
+    border-radius: 15px;
+    max-height: 150px;
+    object-fit: contain;
+    height: 150px;
+    object-position: center center;
+    width: 150px;
+    padding: 10px;
+  }
+  .shopping-summery table td.product-des.product-name {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+  }
+  .shopping-summery table td.price h4 {
+    font-size: 16px;
+    padding: 0;
+  }
+  .shopping-summery table td[data-title="Cart"] {
+    text-align: right;
+  }
+  .shopping-summery table td[data-title="Cart"] h4 {
+    font-size: 16px;
+    padding: 0;
+  }
+  .shopping-summery table td[data-title="Stock"] .detail-extralink.mr-15 {
+    margin: 0 !important;
+    text-align: right;
+  }
+  .shopping-summery
+    table
+    td[data-title="Stock"]
+    .detail-extralink.mr-15
+    .detail-qty {
+    margin: 0;
+    padding: 9px 28px 9px 10px;
+    text-align: right;
+  }
+  .shopping-summery table td[data-title="Remove"] {
+    text-align: right;
+  }
+  .shopping-summery table thead th {
+    font-size: 16px;
+    padding: 18px 5px;
+    text-align: center;
+  }
+  .shopping-summery table thead th.start {
+    text-align: center;
+  }
+  .shopping-summery table td.product-des.product-name h6.product-name {
+    font-size: 16px;
+    line-height: 1.45em;
+  }
+  .shopping-summery table tbody tr {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .shopping-summery table tbody tr td:before {
+    font-size: 16px;
+  }
+  .shop-product-fillter .sort-by-product-area {
+    flex-flow: column;
+    gap: 10px;
+  }
+  .newsletter .newsletter-inner .newsletter-content form input {
+    border: 0;
+    border-radius: 50px 0 0 50px;
+    padding-left: 37px;
+    background-position: 12px;
+    font-size: 14px;
+  }
+  .border.cart-totals {
+    text-align: center;
+  }
+  .shopping-summery table tbody tr td.detail-info {
+    text-align: right !important;
+  }
+  .shopping-summery table tbody tr td.price {
+    text-align: right;
+  }
+}
+.thankyou-table td,
+.thankyou-table tr {
+  padding: 10px 20px !important;
+  border: 1px solid #ececec !important;
+}
+.compare-table tr td,
+.compare-table tr th {
+  max-width: 250px;
+  width: 250px;
+  min-width: 250px;
+}
+.compare-table tr th {
+  max-width: 70px !important;
+  width: 70px !important;
+  min-width: 70px !important;
+}
+.popular-categories .card-1 h6 a {
+  font-size: 15px;
+}
+.product-list-small h6 {
+  min-height: 57px;
+}
+.card-product-small h2 {
+  min-height: 60px;
+}
+.product-cart-wrap .product-img-action-wrap .product-img a {
+  display: block;
+}
+.related-products .product-img.product-img-zoom a img {
+  display: none;
+}
+.related-products .product-img.product-img-zoom a img:nth-child(1) {
+  display: block;
+}
+td.product-des.product-name {
+  width: 40%;
+}
+.no-spinners::-webkit-inner-spin-button,
+.no-spinners::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-spinners {
+  -moz-appearance: textfield;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup {
+  position: fixed;
+  width: 80%; /* Adjust the width as needed */
+  height: 90%; /* Adjust the height as needed */
+  background: white;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  overflow: hidden; /* Ensures the iframe is contained within the popup */
+}
+
+.account_order table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.account_order table tr,
+.account_order table td {
+  border: 1px solid;
+}
+
+.account_order table td {
+  padding: 5px 10px;
 }

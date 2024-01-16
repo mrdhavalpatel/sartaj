@@ -16,6 +16,10 @@ const WishlistModal = ({
   addToCart,
 }) => {
   const handleCart = (product) => {
+    product = {
+      ...product,
+      quantity: 1,
+    };
     addToCart(product);
     toast("Product added to Cart !");
   };
@@ -58,7 +62,7 @@ const WishlistModal = ({
                       />
                     </td>
 
-                    <td>¥{product.price}</td>
+                    <td>¥{product.actual_price}</td>
                     <td style={{ width: "200px" }}>
                       <span onClick={(e) => handleCart(product)}>
                         Add To Cart

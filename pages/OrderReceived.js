@@ -91,7 +91,7 @@ const OrderReceived = ({ cartItems }) => {
                   id: "Your order has been successfully received. Thank you for your purchase!",
                 })}
               </p>
-              <table className="table table-bordered">
+              <table className="table table-bordered thankyou-table">
                 <thead>
                   <tr>
                     <td style={{ width: "50%" }}>
@@ -121,7 +121,7 @@ const OrderReceived = ({ cartItems }) => {
                   </tr>
                 </tbody>
               </table>
-              <table className="table table-bordered">
+              <table className="table table-bordered  thankyou-table">
                 <thead>
                   <tr>
                     <td className="text-left">
@@ -165,13 +165,23 @@ const OrderReceived = ({ cartItems }) => {
                   {shippingData?.details?.map((item, i) => (
                     <tr>
                       <td class="text-left">
-                        <Link
-                          href={`/${
-                            intl.locale == "en" ? item?.seo_en : item?.seo_ja
-                          }`}
-                        >
-                          {item?.product.name}
-                        </Link>
+                      <Link
+                              href={
+                                intl.locale == "eng"
+                                  ? `${
+                                      item?.seo_en
+                                        ? item?.seo_en
+                                        : item?.product?.seo_en
+                                    }`
+                                  : `${
+                                      item?.seo_ja
+                                        ? item?.seo_ja
+                                        : item?.product?.seo_ja
+                                    }`
+                              }
+                            >
+                              {item?.name ? item?.name : item?.product?.name}
+                            </Link>
                       </td>
                       <td class="text-left">{item?.product.model}</td>
                       <td class="text-right"> {item?.quantity}</td>
@@ -260,7 +270,7 @@ const OrderReceived = ({ cartItems }) => {
                   </tr>
                 </tbody>
               </table>
-              <table className="table table-bordered">
+              <table className="table table-bordered  thankyou-table">
                 <thead>
                   <tr>
                     <td>

@@ -19,6 +19,10 @@ const Wishlist = ({
 }) => {
   const intl = useIntl();
   const handleCart = (product) => {
+    product = {
+      ...product,
+      quantity: 1,
+    };
     addToCart(product);
     // toast("Product added to Cart !");
   };
@@ -102,7 +106,22 @@ const Wishlist = ({
                               </div>
                             </td>
                             <td className="price" data-title="Price">
-                              <h3 className="text-brand">¥{product.price}</h3>
+                              <h3 className="text-brand"
+                              >
+                               <div className="product-price mt-10">
+  {product?.actual_price !== product?.price ? (
+    <>
+      <span className="old-price" style={{ textDecoration: "line-through", color: "grey", fontSize: "0.8em" }}>
+        ¥{product?.price}
+      </span>
+      <span> ¥{product?.actual_price}</span>
+    </>
+  ) : (
+    <span>¥{product?.actual_price}</span>
+  )}
+</div>
+                              
+                              </h3>
                             </td>
                             <td
                               className="text-center detail-info"

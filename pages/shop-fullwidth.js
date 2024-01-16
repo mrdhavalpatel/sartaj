@@ -16,23 +16,10 @@ const ProductsFullWidth = ({ products, productFilters }) => {
   const intl = useIntl();
   const [productsData, setProductsData] = useState([]);
   const [pagination, setPagination] = useState([]);
-  const [limit, setLimit] = useState(12);
+  const [limit, setLimit] = useState(10);
   const [productTotal, setProductTotal] = useState([]);
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-
-  const cratePagination = () => {
-    let arr = new Array(Math.ceil(productTotal / limit))
-      .fill()
-      .map((_, idx) => idx + 1);
-
-    setPagination(arr);
-    setPages(Math.ceil(productTotal / limit));
-  };
-
-  const getPaginatedProducts = productsData;
-
-  const getPaginationGroup = pagination;
 
   const next = () => {
     setCurrentPage((page) => page + 1);
@@ -55,83 +42,80 @@ const ProductsFullWidth = ({ products, productFilters }) => {
       limit: limit,
       offset: currentPage,
       sort_by: productFilters?.featured,
-      // search: searchTerm ? searchTerm : "",
     };
-    //initial commit
-
     const request = await ApiCall("post", intl, "products/all", payload);
     const allProducts = await request?.data;
     setProductTotal(allProducts?.total_size);
     setProductsData(allProducts?.products);
+    let arr = new Array(Math.ceil(allProducts?.total_size / limit))
+      .fill()
+      .map((_, idx) => idx + 1);
+    setPagination(arr);
+    setPages(Math.ceil(allProducts?.total_size / limit));
   };
+
   useEffect(() => {
     getAllProduct();
-    cratePagination();
-  }, [productFilters?.featured, limit, currentPage]);
+  }, [productFilters, limit, currentPage]);
 
   return (
-    <>
-      <Layout parent="Home" sub="Shop" subChild="Wide">
-        <section className="mt-50 mb-50">
-          <div className="container">
-            <div className="row flex-row-reverse">
-              <div className="col-lg-12">
-                <div className="shop-product-fillter">
-                  <div className="totall-product">
-                    <p>
-                      {intl.formatMessage({ id: "We found" })}
-                      <strong className="text-brand">
-                        {productsData?.length}
-                      </strong>
-                      {intl.formatMessage({ id: "items for you!" })}
-                    </p>
+    <Layout parent="Home" sub="Shop" subChild="Wide">
+      <section className="mt-50 mb-50">
+        <div className="container">
+          <div className="row flex-row-reverse">
+            <div className="col-lg-12">
+              <div className="shop-product-fillter">
+                <div className="totall-product">
+                  <p>
+                    {intl.formatMessage({ id: "We found" })}
+                    <strong className="text-brand">{productTotal}</strong>
+                    {intl.formatMessage({ id: "items for you!" })}
+                  </p>
+                </div>
+                <div className="sort-by-product-area">
+                  <div className="sort-by-cover mr-10">
+                    <ShowSelect selectChange={selectChange} />
                   </div>
-                  <div className="sort-by-product-area">
-                    <div className="sort-by-cover mr-10">
-                      <ShowSelect selectChange={selectChange} showLimit={12} />
-                    </div>
-                    <div className="sort-by-cover">
-                      <SortSelect />
-                    </div>
+                  <div className="sort-by-cover">
+                    <SortSelect />
                   </div>
                 </div>
-                <div className="row product-grid-3">
-                  {getPaginatedProducts?.length === 0 && (
-                    <h3>{intl.formatMessage({ id: "No Products Found" })} </h3>
-                  )}
+              </div>
+              <div className="row product-grid-3">
+                {productsData?.length === 0 && (
+                  <h3>{intl.formatMessage({ id: "No Products Found" })} </h3>
+                )}
 
-                  {getPaginatedProducts?.map((item, i) => (
-                    <div
-                      className="col-lg-1-5 col-md-4 col-12 col-sm-6"
-                      key={i}
-                    >
-                      <SingleProduct product={item} />
-                      {/* <SingleProductList product={item}/> */}
-                    </div>
-                  ))}
-                </div>
-
-                <div className="pagination-area mt-15 mb-sm-5 mb-lg-0">
-                  <nav aria-label="Page navigation example">
+                {productsData?.map((item, i) => (
+                  <div className="col-lg-1-5 col-md-4 col-12 col-sm-6" key={i}>
+                    <SingleProduct product={item} />
+                    {/* <SingleProductList product={item}/> */}
+                  </div>
+                ))}
+              </div>
+              <div className="pagination-area mt-15 mb-sm-5 mb-lg-0">
+                <nav aria-label="Page navigation example">
+                  {pages > 1 && (
                     <Pagination
-                      getPaginationGroup={getPaginationGroup}
+                      getPaginationGroup={pagination}
                       currentPage={currentPage}
                       pages={pages}
                       next={next}
                       prev={prev}
                       handleActive={handleActive}
                     />
-                  </nav>
-                </div>
+                  )}
+                </nav>
               </div>
             </div>
           </div>
-        </section>
-        <WishlistModal />
-        {/* <CompareModal /> */}
-        {/* <CartSidebar /> */}
-        <QuickView />
-        {/* <div className="container">
+        </div>
+      </section>
+      <WishlistModal />
+      {/* <CompareModal /> */}
+      {/* <CartSidebar /> */}
+      <QuickView />
+      {/* <div className="container">
                     <div className="row">
                         <div className="col-xl-6">
                             <Search />
@@ -158,8 +142,7 @@ const ProductsFullWidth = ({ products, productFilters }) => {
                         </div>
                     </div>
                 </div> */}
-      </Layout>
-    </>
+    </Layout>
   );
 };
 

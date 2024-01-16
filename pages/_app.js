@@ -20,7 +20,6 @@ import { LanguageProvider } from "../components/context/LanguageContext";
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
   const { router, locale = "eng" } = useRouter();
-
   const messages = {
     eng: eng,
     jp: jp,

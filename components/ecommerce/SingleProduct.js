@@ -18,6 +18,10 @@ const SingleProduct = ({
 }) => {
   const intel = useIntl();
   const handleCart = async (product) => {
+    product = {
+      ...product,
+      quantity: 1,
+    };
     addToCart(product);
     // toast("Product added to Cart !");
   };
@@ -41,9 +45,10 @@ const SingleProduct = ({
                 intel.locale === "eng" ? product?.seo_en : product?.seo_ja
               }`}
             >
-              {product?.image?.map((itm) => {
-                return <img className="default-img" src={itm} alt="nest" />;
-              })}
+              {Array.isArray(product?.image) &&
+                product?.image?.map((itm) => {
+                  return <img className="default-img" src={itm} alt="nest" />;
+                })}
             </Link>
           </div>
           <div className="product-action-1">

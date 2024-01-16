@@ -51,6 +51,14 @@ export default (state = initialState, action) => {
         items,
       };
 
+    case Types.UPDATE_COMPARE_PRODUCTS:
+      storage.set("dokani_compare", action.payload);
+
+      return {
+        ...state,
+        items: action.payload,
+      };
+
     case Types.DELETE_FROM_COMPARE:
       const list = deleteProduct(state.items, action.payload.productId);
       storage.set("dokani_compare", list);

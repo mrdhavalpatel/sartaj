@@ -5,16 +5,35 @@ import { ApiCall } from "../../lib/other/other";
 import { useIntl } from "react-intl";
 const IntroPopup = () => {
   const intl = useIntl();
-  const [openClass, setOpenClass] = useState(0);
+  const [openClass, setOpenClass] = useState(1);
   const [PopData, setPopData] = useState({});
   const handleRemove = () => {
     setOpenClass(!openClass);
   };
-  const fixDate = new Date();
   const getPopData = async () => {
-    let res = await ApiCall("get", intl, "hot-deals");
-    let data = res?.data;
-    setPopData(data);
+    try {
+      let res = await ApiCall("get", intl, "hot-deals");
+      let data = res?.data;
+  
+      console.log("API Response:", data);
+  
+      // Assuming `data.start_date` and `data.end_date` are received correctly
+      let startDate = new Date(data.start_date);
+      let endDate = new Date(data.end_date);
+      let currentDate = new Date();
+  
+      console.log("Start Date:", startDate);
+      console.log("End Date:", endDate);
+      console.log("Current Date:", currentDate);
+  
+      // Check if the current date is between start and end dates
+      if (startDate <= currentDate && currentDate <= endDate) {
+        setPopData(data);
+        setOpenClass(0);
+      }
+    } catch (error) {
+      console.error("Error fetching pop-up data:", error);
+    }
   };
   useEffect(() => {
     getPopData();

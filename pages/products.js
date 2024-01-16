@@ -65,12 +65,15 @@ const Products = ({ productFilters }) => {
       limit: limit,
       offset: currentPage,
       category_id: catId,
-      min: productFilters?.price?.min ? productFilters?.price?.min : 0,
-      max: productFilters?.price?.max ? productFilters?.price?.max : 500,
+      min: productFilters?.actual_price?.min
+        ? productFilters?.actual_price?.min
+        : 0,
+      max: productFilters?.actual_price?.max
+        ? productFilters?.actual_price?.max
+        : 500,
       sort_by: productFilters?.featured,
     };
     let res = await ApiCall("post", intl, "products/all", payload);
-    console.log(res); // Log the response
     setProducts(res?.data?.products);
     setProductTotal(res?.data?.total_size);
     return res;
@@ -84,8 +87,8 @@ const Products = ({ productFilters }) => {
     pages,
     limit,
     productFilters?.featured,
-    productFilters?.price?.min,
-    productFilters?.price?.max,
+    productFilters?.actual_price?.min,
+    productFilters?.actual_price?.max,
   ]);
   const fetchProducts = async () => {
     const request = await ApiCall(
@@ -106,132 +109,125 @@ const Products = ({ productFilters }) => {
   }, [products, limit, currentPage]);
 
   return (
-    <>
-      <Layout noBreadcrumb="d-none">
-        <Breadcrumb2 />
-        <section className="mt-50 mb-50">
-          <div className="container mb-30">
-            <div className="row flex-row-reverse">
-              <div className="col-lg-4-5">
-                <div className="shop-product-fillter">
-                  <div className="totall-product">
-                    <p>
-                      {intl.formatMessage({ id: "We found" })}
-                      <strong className="text-brand">{products?.length}</strong>
-                      {intl.formatMessage({ id: "items for you!" })}
-                    </p>
-                  </div>
-                  <div className="sort-by-product-area">
-                    <div className="sort-by-cover mr-10">
-                      <ShowSelect selectChange={selectChange} showLimit={12} />
-                    </div>
-                    <div className="sort-by-cover">
-                      <SortSelect />
-                    </div>
-                  </div>
+    <Layout noBreadcrumb="d-none">
+      <Breadcrumb2 />
+      <section className="mt-50 mb-50">
+        <div className="container mb-30">
+          <div className="row flex-row-reverse">
+            <div className="col-lg-4-5">
+              <div className="shop-product-fillter">
+                <div className="totall-product">
+                  <p>
+                    {intl.formatMessage({ id: "We found" })}
+                    <strong className="text-brand">{products?.length}</strong>
+                    {intl.formatMessage({ id: "items for you!" })}
+                  </p>
                 </div>
-                <div className="row product-grid">
-                  {getPaginatedProducts?.length === 0 && (
-                    <h3>{intl.formatMessage({ id: "No Products Found" })} </h3>
-                  )}
-
-                  {getPaginatedProducts?.map((item, i) => (
-                    <div
-                      className="col-lg-1-5 col-md-4 col-12 col-sm-6"
-                      key={i}
-                    >
-                      <SingleProduct product={item} />
-                    </div>
-                  ))}
-                </div>
-
-                <div className="pagination-area mt-15 mb-sm-5 mb-lg-0">
-                  <nav aria-label="Page navigation example">
-                    <Pagination
-                      getPaginationGroup={getPaginationGroup}
-                      currentPage={currentPage}
-                      pages={pages}
-                      next={next}
-                      prev={prev}
-                      handleActive={handleActive}
-                    />
-                  </nav>
+                <div className="sort-by-product-area">
+                  <div className="sort-by-cover mr-10">
+                    <ShowSelect selectChange={selectChange} showLimit={12} />
+                  </div>
+                  <div className="sort-by-cover">
+                    <SortSelect />
+                  </div>
                 </div>
               </div>
-              <div className="col-lg-1-5 primary-sidebar sticky-sidebar">
-                <div className="sidebar-widget widget-category-2 mb-30">
-                  <h5 className="section-title style-1 mb-30">
-                    {intl.formatMessage({ id: "Category" })}
-                  </h5>
-                  <CategoryProduct />
-                </div>
-                <div className="sidebar-widget price_range range mb-30">
-                  <h5 className="section-title style-1 mb-30">
-                    {intl.formatMessage({ id: "Fill by price" })}
-                  </h5>
+              <div className="row product-grid">
+                {getPaginatedProducts?.length === 0 && (
+                  <h3>{intl.formatMessage({ id: "No Products Found" })} </h3>
+                )}
 
-                  <div className="price-filter">
-                    <div className="price-filter-inner">
-                      <br />
-                      <PriceRangeSlider />
-                      <br />
-                    </div>
+                {getPaginatedProducts?.map((item, i) => (
+                  <div className="col-lg-1-5 col-md-4 col-12 col-sm-6" key={i}>
+                    <SingleProduct product={item} />
+                  </div>
+                ))}
+              </div>
+
+              <div className="pagination-area mt-15 mb-sm-5 mb-lg-0">
+                <nav aria-label="Page navigation example">
+                  <Pagination
+                    getPaginationGroup={getPaginationGroup}
+                    currentPage={currentPage}
+                    pages={pages}
+                    next={next}
+                    prev={prev}
+                    handleActive={handleActive}
+                  />
+                </nav>
+              </div>
+            </div>
+            <div className="col-lg-1-5 primary-sidebar sticky-sidebar">
+              <div className="sidebar-widget widget-category-2 mb-30">
+                <h5 className="section-title style-1 mb-30">
+                  {intl.formatMessage({ id: "Category" })}
+                </h5>
+                <CategoryProduct />
+              </div>
+              <div className="sidebar-widget price_range range mb-30">
+                <h5 className="section-title style-1 mb-30">
+                  {intl.formatMessage({ id: "Fill by price" })}
+                </h5>
+
+                <div className="price-filter">
+                  <div className="price-filter-inner">
+                    <br />
+                    <PriceRangeSlider />
+                    <br />
                   </div>
                 </div>
-                <div className="sidebar-widget product-sidebar  mb-30 p-30 bg-grey border-radius-10">
-                  <h5 className="section-title style-1 mb-30">
-                    {intl.formatMessage({ id: "New products" })}
-                  </h5>
-                  {newProducts?.slice(0, 5)?.map((newProducts) => {
-                    return (
-                      <div className="single-post clearfix">
-                        <div className="image">
-                          <img src={newProducts?.image?.[0]} alt="#" />
-                        </div>
-                        <div className="content pt-10">
-                          <h5>
-                            <Link
-                              href="/products/[slug]"
-                              as={`/products/${newProducts?.id}`}
-                            >
-                              {newProducts?.name}
-                            </Link>
-                          </h5>
-                          <p className="price mb-0 mt-5">
-                            ¥{newProducts?.price}
-                          </p>
-                          <div className="product-rate">
-                            <div
-                              className="product-rating"
-                              style={{
-                                width: `${
-                                  newProducts?.overall_rating
-                                    ? newProducts?.overall_rating
-                                    : 0
-                                }%`,
-                              }}
-                            ></div>
-                          </div>
-                          <span className="font-small ml-5 text-muted">
-                            {`(${
-                              newProducts?.total_reviews
-                                ? newProducts?.total_reviews
-                                : 0
-                            })`}
-                          </span>
-                        </div>
+              </div>
+              <div className="sidebar-widget product-sidebar  mb-30 p-30 bg-grey border-radius-10">
+                <h5 className="section-title style-1 mb-30">
+                  {intl.formatMessage({ id: "New products" })}
+                </h5>
+                {newProducts?.slice(0, 5)?.map((newProducts) => {
+                  return (
+                    <div className="single-post clearfix">
+                      <div className="image">
+                        <img src={newProducts?.image?.[0]} alt="#" />
                       </div>
-                    );
-                  })}
-                </div>
+                      <div className="content pt-10">
+                        <h5>
+                          <Link
+                            href="/products/[slug]"
+                            as={`/products/${newProducts?.id}`}
+                          >
+                            {newProducts?.name}
+                          </Link>
+                        </h5>
+                        <p className="price mb-0 mt-5">¥{newProducts?.price}</p>
+                        <div className="product-rate">
+                          <div
+                            className="product-rating"
+                            style={{
+                              width: `${
+                                newProducts?.overall_rating
+                                  ? newProducts?.overall_rating
+                                  : 0
+                              }%`,
+                            }}
+                          ></div>
+                        </div>
+                        <span className="font-small ml-5 text-muted">
+                          {`(${
+                            newProducts?.total_reviews
+                              ? newProducts?.total_reviews
+                              : 0
+                          })`}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <QuickView />
-      </Layout>
-    </>
+      <QuickView />
+    </Layout>
   );
 };
 

@@ -3,65 +3,53 @@ import Layout from "../components/layout/Layout";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { auth } from "../lib/auth/auth";
-import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import { useAuth } from "../components/context/AuthContext";
 import { connect } from "react-redux";
-import { API_BASE_URL } from "../lib/api";
-import axios from "axios";
 import { useIntl } from "react-intl";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
-function Login({ cartItems }) {
-  const router = useRouter();
-  const { login } = useAuth();
+function ResetPassword() {
+  const [isLoading, setIsLoading] = useState(false);
   const intl = useIntl();
-  const addCurrenItems = (token) => {
-    if (cartItems?.length > 0) {
-      let FCart = cartItems?.map((item) => ({
-        product_id: item?.id,
-        qty: item?.quantity,
-      }));
+  const router = useRouter();
 
-      let payload = {
-        cart: FCart,
-      };
-      const response = axios
-        .post(`${API_BASE_URL}customer/cart/add-items`, payload, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .catch((error) => {
-          console.log("error", error?.code === "ERR_NETWORK");
-        });
-    }
-  };
   const validationSchema = Yup.object().shape({
-    usernameOrEmail: Yup.string().required("Username or Email is required"),
     password: Yup.string().required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Confirm password is required"),
   });
+
+  useEffect(() => {
+    if (!router?.query?.token) {
+      toast.error("Invalid Url");
+    }
+  }, []);
+
   const handleSubmit = (values) => {
     const payload = {
-      email_or_phone: values?.usernameOrEmail,
       password: values?.password,
+      token: router?.query?.token,
     };
-    auth("post", "auth/login", payload).then((res) => {
-      if (res?.response?.data?.errors) {
-        toast.error(res?.response?.data?.errors?.[0]?.message);
-      } else {
-        localStorage.setItem("token", res.token);
-        addCurrenItems(res.token);
-
-        login(res.token);
-        router.push("/");
-      }
-    });
+    setIsLoading(true);
+    auth("post", "auth/reset-password-mail", payload)
+      .then((res) => {
+        if (res?.response?.data?.errors) {
+          toast.error(res?.response?.data?.errors?.[0]?.message);
+        } else {
+          toast.success(res?.message);
+          router.push("/page-login");
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
+
   return (
     <>
-      <Layout parent="Home" sub="Pages" subChild="Login & Register">
+      <Layout parent="Home" sub="Pages" subChild="Forgot password">
         <div className="page-content pt-150 pb-150">
           <div className="container">
             <div className="row">
@@ -79,20 +67,20 @@ function Login({ cartItems }) {
                       <div className="padding_eight_all bg-white">
                         <div className="heading_s1">
                           <h1 className="mb-5">
-                            {intl.formatMessage({ id: "Login" })}
+                            {intl.formatMessage({ id: "Reset password" })}
                           </h1>
                           <p className="mb-30">
                             {intl.formatMessage({
-                              id: "Don't have an account?",
+                              id: "Already have an account?",
                             })}{" "}
-                            <Link href="/page-register">
-                              {intl.formatMessage({ id: "Create here" })}
+                            <Link href="/page-login">
+                              {intl.formatMessage({ id: "Log in instead!" })}
                             </Link>
                           </p>
                         </div>
                         <Formik
                           initialValues={{
-                            usernameOrEmail: "",
+                            confirmPassword: "",
                             password: "",
                           }}
                           validationSchema={validationSchema}
@@ -103,21 +91,6 @@ function Login({ cartItems }) {
                           }}
                         >
                           <Form>
-                            <div className="form-group">
-                              <Field
-                                type="text"
-                                name="usernameOrEmail"
-                                placeholder={intl.formatMessage({
-                                  id: "Username or Email *",
-                                })}
-                                className="form-control"
-                              />
-                              <ErrorMessage
-                                name="usernameOrEmail"
-                                component="div"
-                                style={{ color: "red" }}
-                              />
-                            </div>
                             <div className="form-group">
                               <Field
                                 type="password"
@@ -133,18 +106,33 @@ function Login({ cartItems }) {
                                 style={{ color: "red" }}
                               />
                             </div>
-                            <p className="mb-30">
-                              <Link href="/page-forgotpassword">
-                                {intl.formatMessage({ id: "Forgot password" })}
-                              </Link>
-                            </p>
+                            <div className="form-group">
+                              <Field
+                                type="password"
+                                name="confirmPassword"
+                                placeholder={intl.formatMessage({
+                                  id: "Confirm password *",
+                                })}
+                                className="form-control"
+                              />
+                              <ErrorMessage
+                                name="confirmPassword"
+                                component="div"
+                                style={{ color: "red" }}
+                              />
+                            </div>
+
                             <div className="form-group">
                               <button
                                 type="submit"
                                 className="btn btn-heading btn-block hover-up"
                                 name="login"
+                                disabled={isLoading}
                               >
-                                {intl.formatMessage({ id: "Login" })}
+                                {intl.formatMessage({
+                                  id: `${isLoading ? "Requesting" : "Reset"}`,
+                                })}
+                                {isLoading && "..."}
                               </button>
                             </div>
                           </Form>
@@ -163,16 +151,5 @@ function Login({ cartItems }) {
 }
 const mapStateToProps = (state) => ({
   cartItems: state.cart,
-  activeCart: state.counter,
 });
-// const mapDispatchToProps = {
-//   closeCart,
-//   increaseQuantity,
-//   getCartItems,
-//   decreaseQuantity,
-//   deleteFromCart,
-//   openCart,
-//   clearCart,
-// };
-// export default Login;
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(ResetPassword);

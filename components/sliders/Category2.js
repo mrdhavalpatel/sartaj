@@ -68,12 +68,14 @@ const CategorySlider2 = ({ updateProductCategory }) => {
               onClick={(e) => selectCategory(e, item?.name, item?.id)}
             >
               <figure className=" img-hover-scale overflow-hidden">
-                <Link href="/shop-fullwidth">
+                <Link href={`/${intl.locale}/shop-fullwidth`}>
                   <img src={item?.image} alt={item?.name} />
                 </Link>
               </figure>
               <h6>
-                <Link href="/shop-fullwidth">{item?.name}</Link>
+                <Link href={`/${intl.locale}/shop-fullwidth`}>
+                  {item?.name}
+                </Link>
               </h6>
               <span className="count">{`(${item?.total_produts} items)`}</span>
               {/* <span>{"26 item"}</span> */}

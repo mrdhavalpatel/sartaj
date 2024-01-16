@@ -10,6 +10,10 @@ import { useIntl } from "react-intl";
 const Deals1 = ({ product, addToCart }) => {
   const intl = useIntl();
   const handleCart = (product) => {
+    product = {
+      ...product,
+      quantity: 1,
+    };
     addToCart(product);
     // toast("Product added to Cart !");
   };

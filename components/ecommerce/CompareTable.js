@@ -5,6 +5,10 @@ import { useIntl } from "react-intl";
 const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
   const intl = useIntl();
   const handleCart = (product) => {
+    product = {
+      ...product,
+      quantity: 1,
+    };
     addToCart(product);
   };
   return (
@@ -14,9 +18,9 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
           <tr>
             <th
               className="text-muted font-md fw-600"
-              style={{ textTransform: "capitalize" }}
+              style={{ textTransform: "capitalize", whiteSpace: "nowrap" }}
             >
-              {feature}
+              {feature && intl.formatMessage({ id: feature })}
             </th>
             {data.map((product) =>
               feature == "preview" ? (
@@ -39,7 +43,26 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                 </td>
               ) : feature == "price" ? (
                 <td className="product_price">
-                  <span className="price">¥{product?.price}</span>
+                  <span className="price">
+                    <div className="product-price mt-10">
+                      {product?.actual_price !== product?.price ? (
+                        <>
+                          <span>¥{product?.actual_price + " "}</span>
+                          <span
+                            className="old-price"
+                            style={{
+                              textDecoration: "line-through",
+                              color: "grey",
+                            }}
+                          >
+                            ¥{product?.price}
+                          </span>
+                        </>
+                      ) : (
+                        <span>¥{product?.actual_price}</span>
+                      )}
+                    </div>
+                  </span>
                 </td>
               ) : feature == "Category" ? (
                 <td className="product_price">
@@ -115,7 +138,7 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                             : ""
                         }`,
                       }}
-                      onClick={(e) => handleCart(product)}
+                      onClick={(_e) => handleCart(product)}
                     >
                       <i className="fi-rs-shopping-bag mr-5"></i>
                       {product?.out_of_stock_status !== "in stock"

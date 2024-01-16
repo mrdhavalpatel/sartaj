@@ -15,6 +15,10 @@ const SingleProductList = ({
   openQuickView,
 }) => {
   const handleCart = (product) => {
+    product = {
+      ...product,
+      quantity: 1,
+    };
     addToCart(product);
     toast("Product added to Cart !");
   };
@@ -26,7 +30,6 @@ const SingleProductList = ({
 
   const handleWishlist = (product) => {
     addToWishlist(product);
-    toast("Added to Wishlist !");
   };
 
   return (
