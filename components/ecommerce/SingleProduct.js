@@ -109,7 +109,11 @@ const SingleProduct = ({
                 intl.locale === "eng" ? product?.seo_en : product?.seo_ja
               }`}
             >
-              {product?.name}
+              {intl.locale === "eng"
+      ? product?.name
+      : product?.translations?.length > 0
+      ? product?.translations[0]?.value
+      : product?.name}
             </Link>
           </h2>
 
@@ -132,7 +136,7 @@ const SingleProduct = ({
 
           <div>
             <span className="font-small text-muted">
-              By{" "}
+            {intl.formatMessage({ id: 'By' })}{" "}
               <Link
                 href={`/${
                   intl.locale === "eng"

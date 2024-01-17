@@ -68,9 +68,9 @@ function Index2() {
                   }}
                 >
                   <div className="banner-text mt-50">
-                    <h2 className="mb-30">{adBanner?.[0]?.title}</h2>
+                    <h2 className="mb-30">{ intl.locale === "eng" ? adBanner?.[0]?.title : adBanner?.[0]?.title_ja }</h2>
                     <h5 className="mb-30 fw-300">
-                      {adBanner?.[0]?.description}
+                      {intl.locale === "eng" ? adBanner?.[0]?.description : adBanner?.[0]?.description_ja }
                     </h5>
 
                     {/* <Link

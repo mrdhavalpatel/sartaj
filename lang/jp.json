@@ -280,5 +280,18 @@
   "Password must be at least 8 characters":"パスワードは8文字以上でなければなりません",
   "Password is required":"パスワードが必要",
   "Passwords must match":"パスワードが一致する必要があります",
-  "Confirm password is required":"パスワードの確認が必要です"
+  "Confirm password is required":"パスワードの確認が必要です",
+  "By":"による",
+  "Reset password":"パスワードを再設定する",
+  "Reset":"リセット",
+  "Maximum order quantity allowed now is ":"現在許可されている最大注文数量は次のとおりです",
+  "Maximum order quantity is ":"最大注文数量は",
+  "Show":"見せる",
+  "Sort by:":"並べ替え:",
+  "Defaults":"デフォルト",
+  "Low To High":"低から高へ",
+  "High To Low":"高から低へ"
+  
+
+
 }

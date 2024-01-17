@@ -59,7 +59,23 @@ const Products = ({ productFilters }) => {
     setLimit(Number(e.target.value));
     setCurrentPage(1);
   };
-
+  const [maxPrice, setMaxPrice] = useState(20000);
+  const getmaxPrice = async () => {
+    let res = await ApiCall("get", intl, "products/max-price");
+    setMaxPrice(res?.data?.max_price);
+    getFilteredProduct(Router.query?.catId);
+  };
+  useEffect(() => {
+    getmaxPrice();
+  }, [
+    Router.query?.catId,
+    currentPage,
+    pages,
+    limit,
+    productFilters?.featured,
+    productFilters?.actual_price?.min,
+    productFilters?.actual_price?.max,
+  ]);
   const getFilteredProduct = async (catId) => {
     let payload = {
       limit: limit,
@@ -70,7 +86,7 @@ const Products = ({ productFilters }) => {
         : 0,
       max: productFilters?.actual_price?.max
         ? productFilters?.actual_price?.max
-        : 500,
+        : maxPrice,
       sort_by: productFilters?.featured,
     };
     let res = await ApiCall("post", intl, "products/all", payload);
@@ -79,17 +95,17 @@ const Products = ({ productFilters }) => {
     return res;
   };
 
-  useEffect(() => {
-    getFilteredProduct(Router.query?.catId);
-  }, [
-    Router.query?.catId,
-    currentPage,
-    pages,
-    limit,
-    productFilters?.featured,
-    productFilters?.actual_price?.min,
-    productFilters?.actual_price?.max,
-  ]);
+  // useEffect(() => {
+  //   getFilteredProduct(Router.query?.catId);
+  // }, [
+  //   Router.query?.catId,
+  //   currentPage,
+  //   pages,
+  //   limit,
+  //   productFilters?.featured,
+  //   productFilters?.actual_price?.min,
+  //   productFilters?.actual_price?.max,
+  // ]);
   const fetchProducts = async () => {
     const request = await ApiCall(
       "get",
@@ -117,11 +133,11 @@ const Products = ({ productFilters }) => {
             <div className="col-lg-4-5">
               <div className="shop-product-fillter">
                 <div className="totall-product">
-                  <p>
+              {products.length ==0 ? null :    <p>
                     {intl.formatMessage({ id: "We found" })}
                     <strong className="text-brand">{products?.length}</strong>
                     {intl.formatMessage({ id: "items for you!" })}
-                  </p>
+                  </p>}
                 </div>
                 <div className="sort-by-product-area">
                   <div className="sort-by-cover mr-10">
@@ -144,18 +160,20 @@ const Products = ({ productFilters }) => {
                 ))}
               </div>
 
-              <div className="pagination-area mt-15 mb-sm-5 mb-lg-0">
-                <nav aria-label="Page navigation example">
-                  <Pagination
-                    getPaginationGroup={getPaginationGroup}
-                    currentPage={currentPage}
-                    pages={pages}
-                    next={next}
-                    prev={prev}
-                    handleActive={handleActive}
-                  />
-                </nav>
-              </div>
+              {getPaginatedProducts?.length === 0 ? null : (
+                <div className="pagination-area mt-15 mb-sm-5 mb-lg-0">
+                  <nav aria-label="Page navigation example">
+                    <Pagination
+                      getPaginationGroup={getPaginationGroup}
+                      currentPage={currentPage}
+                      pages={pages}
+                      next={next}
+                      prev={prev}
+                      handleActive={handleActive}
+                    />
+                  </nav>
+                </div>
+              )}
             </div>
             <div className="col-lg-1-5 primary-sidebar sticky-sidebar">
               <div className="sidebar-widget widget-category-2 mb-30">

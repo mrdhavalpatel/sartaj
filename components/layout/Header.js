@@ -51,6 +51,9 @@ const Header = ({
       else if (router.pathname.includes("page-reset-password")) {
         window.location.replace(`/${newLanguage}/page-reset-password?token=${currentToken}`);
       }
+      else if (router.pathname.includes("page-login")) {
+        window.location.replace(`/${newLanguage}/page-login`);
+      }
      else {
       window.location.replace(newUrl);
     }

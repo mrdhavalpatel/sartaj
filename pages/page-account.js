@@ -32,8 +32,8 @@ function Account() {
   };
   const [show, setShow] = useState(false);
   const initialActiveIndex = router.query.activeIndex
-  ? parseInt(router.query.activeIndex, 10)
-  : 1;
+    ? parseInt(router.query.activeIndex, 10)
+    : 1;
   const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
 
   const handleClose = () => setShow(false);
@@ -61,7 +61,7 @@ function Account() {
     confirm_password: yup
       .string()
       .oneOf([yup.ref("new_password"), null], "Passwords must match")
-      .required("Confirm Password is required"),
+      .required("Confirm "),
   });
 
   const handleViewOrder = (url) => {

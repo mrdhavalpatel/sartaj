@@ -162,7 +162,7 @@ function ResetPassword() {
                                 disabled={isLoading}
                               >
                                 {intl.formatMessage({
-                                  id: `${isLoading ? "Requesting" : "Reset"}`,
+                                  id: `${isLoading ?  intl.formatMessage({ id: "Requesting" }) : intl.formatMessage({ id: "Reset" })}`,
                                 })}
                                 {isLoading && "..."}
                               </button>

@@ -7,10 +7,10 @@ export const getCartItems = (payload) => (dispatch) => {
     payload: { payload },
   });
 };
-export const addToCart = (product) => (dispatch) => {
+export const addToCart = (product , intl) => (dispatch) => {
   dispatch({
     type: Types.ADD_TO_CART,
-    payload: { product },
+    payload: { product , intl },
   });
 };
 

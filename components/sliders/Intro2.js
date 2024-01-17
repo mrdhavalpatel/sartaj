@@ -48,8 +48,8 @@ const Intro2 = () => {
                 }}
               >
                 <div className="slider-content">
-                  <h4>{banner?.title}</h4>
-                  <h1 className="display-2 mb-100">{banner?.description}</h1>
+                  <h4>{ intl.locale === "eng" ? banner?.title : banner?.title_ja}</h4>
+                  <h1 className="display-2 mb-100">{ intl.locale === "eng" ? banner?.description : banner?.description_ja}</h1>
                 </div>
               </div>
             </SwiperSlide>
