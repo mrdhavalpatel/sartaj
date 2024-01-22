@@ -39,8 +39,10 @@ function Login({ cartItems }) {
     }
   };
   const validationSchema = Yup.object().shape({
-    usernameOrEmail: Yup.string().required("Username or Email is required"),
-    password: Yup.string().required("Password is required"),
+    usernameOrEmail: Yup.string().required(
+      intl.formatMessage({ id: "Username or Email is required" })
+    ),
+    password: Yup.string().required({ id: "Password is required" }),
   });
   const handleSubmit = (values) => {
     const payload = {

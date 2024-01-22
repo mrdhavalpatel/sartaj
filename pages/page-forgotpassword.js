@@ -13,7 +13,9 @@ function ForgotPassword() {
   const intl = useIntl();
 
   const validationSchema = Yup.object().shape({
-    usernameOrEmail: Yup.string().required("Username or Email is required"),
+    usernameOrEmail: Yup.string().required(
+      intl.formatMessage({ id: "Username or Email is required" })
+    ),
   });
 
   const handleSubmit = (values) => {

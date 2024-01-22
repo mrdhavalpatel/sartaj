@@ -16,8 +16,10 @@ import PriceRangeSlider from "../components/ecommerce/Filter/PriceRangeSlider";
 import QuickView from "../components/ecommerce/QuickView";
 import SingleProduct from "../components/ecommerce/SingleProduct";
 import Link from "next/link";
+import axios from "axios";
+import { API_BASE_URL } from "../lib/api";
 
-const ProductId = (products, productFilters, fetchProduct) => {
+const ProductId = ({ products, productFilters, fetchProduct }) => {
   const router = useRouter();
   //  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
   //  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
@@ -31,6 +33,10 @@ const ProductId = (products, productFilters, fetchProduct) => {
   // const URL = window.location.pathname;
   useEffect(() => {
     setLoading(true);
+    getProductDetailsBySlug();
+  }, [router?.query?.slug]);
+
+  const getProductDetailsBySlug = () => {
     if (router?.query?.slug) {
       let payload = {
         seo: `${router?.locale}/${router?.query?.slug}`,
@@ -46,6 +52,7 @@ const ProductId = (products, productFilters, fetchProduct) => {
         ).then((response) => {
           if (res?.data?.type == "product") {
             setProduct(response?.data);
+            getProductReviewed(response?.data);
           } else if (res?.data?.type == "manufacturer") {
             setManufacturer(response?.data);
           }
@@ -53,7 +60,8 @@ const ProductId = (products, productFilters, fetchProduct) => {
         });
       });
     }
-  }, [router?.query?.slug]);
+  };
+
   // router?.query?.slug add in useefect hook dependency for referesh page when user clicks on related product
   //  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
   //  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
@@ -64,6 +72,8 @@ const ProductId = (products, productFilters, fetchProduct) => {
   const [productTotal, setProductTotal] = useState([]);
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy, setSortBy] = useState("default");
+  const [showReviewForm, setShowReviewForm] = useState(false);
   const cratePagination = () => {
     let arr = new Array(Math.ceil(productTotal / limit))
       .fill()
@@ -79,6 +89,10 @@ const ProductId = (products, productFilters, fetchProduct) => {
 
   const next = () => {
     setCurrentPage((page) => page + 1);
+  };
+
+  const handleChangeSortBy = (changedSortBy) => {
+    setSortBy(changedSortBy);
   };
 
   const prev = () => {
@@ -97,6 +111,8 @@ const ProductId = (products, productFilters, fetchProduct) => {
     let payload = {
       limit: limit,
       offset: currentPage,
+      min: productFilters?.min,
+      max: productFilters?.max,
       sort_by: productFilters?.featured,
       manufacturer_id: router?.query?.slug,
     };
@@ -107,10 +123,37 @@ const ProductId = (products, productFilters, fetchProduct) => {
     setProductsData(allProducts?.products);
   };
 
+  const getProductReviewed = async (product) => {
+    const token = localStorage.getItem("token");
+    console.log(token);
+    if (token) {
+      const response = await axios.get(
+        `${API_BASE_URL}customer/order/purchased-product/${product.id}`,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            "X-localization": intl.locale == "eng" ? "en" : "ja",
+          },
+        }
+      );
+      const data = await response.data;
+
+      if (data.purchased && !data.reviewed) {
+        setShowReviewForm(true);
+      } else {
+        setShowReviewForm(false);
+      }
+    } else {
+      setShowReviewForm(false);
+    }
+  };
+
   useEffect(() => {
     getAllProduct();
     cratePagination();
-  }, [productFilters?.featured, limit, currentPage]);
+  }, [productFilters, productFilters?.featured, limit, currentPage]);
 
   useEffect(() => {
     if (
@@ -143,7 +186,13 @@ const ProductId = (products, productFilters, fetchProduct) => {
                   description={product?.meta_tag_description}
                   keywords={product?.meta_tag_keywords}
                 />
-                <ProductDetails intl={intl} product={product} />
+                <ProductDetails
+                  intl={intl}
+                  product={product}
+                  showReviewForm={showReviewForm}
+                  setShowReviewForm={setShowReviewForm}
+                  getProductDetailsBySlug={getProductDetailsBySlug}
+                />
               </>
             )}
           </div>

@@ -8,8 +8,16 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import Link from "next/link";
 import { auth } from "../../lib/auth/auth";
-import {  useIntl } from "react-intl";
-const ProductTab = ({ description, review, id, total_reviews}) => {
+import { useIntl } from "react-intl";
+const ProductTab = ({
+  description,
+  review,
+  id,
+  total_reviews,
+  showReviewForm,
+  setShowReviewForm,
+  getProductDetailsBySlug,
+}) => {
   const intl = useIntl();
   const [activeIndex, setActiveIndex] = useState(1);
   const [isLoggedIn, setIsloggedIn] = useState(false);
@@ -20,8 +28,12 @@ const ProductTab = ({ description, review, id, total_reviews}) => {
     setRating(newRating);
   };
   const validationSchema = Yup.object().shape({
-    usernameOrEmail: Yup.string().required("Username or Email is required"),
-    currentpassword: Yup.string().required("Password is required"),
+    usernameOrEmail: Yup.string().required(
+      intl.formatMessage({ id: "Username or Email is required" })
+    ),
+    currentpassword: Yup.string().required(
+      intl.formatMessage({ id: "Password is required" })
+    ),
   });
   const handleOnClick = (index) => {
     setActiveIndex(index);
@@ -48,6 +60,8 @@ const ProductTab = ({ description, review, id, total_reviews}) => {
       toast.success("reviews successfully submitted");
       setReviewText("");
       setRating(0);
+      await getProductDetailsBySlug();
+      setShowReviewForm(false);
     }
   };
   const handleSubmit = (values) => {
@@ -97,7 +111,7 @@ const ProductTab = ({ description, review, id, total_reviews}) => {
               data-bs-toggle="tab"
               onClick={() => handleOnClick(1)}
             >
-              {intl.formatMessage({ id: 'Description' })}
+              {intl.formatMessage({ id: "Description" })}
             </a>
           </li>
 
@@ -108,7 +122,8 @@ const ProductTab = ({ description, review, id, total_reviews}) => {
               data-bs-toggle="tab"
               onClick={() => handleOnClick(4)}
             >
-              {intl.formatMessage({ id: 'Reviews' })} {`(${total_reviews ? total_reviews : 0})`}
+              {intl.formatMessage({ id: "Reviews" })}{" "}
+              {`(${total_reviews ? total_reviews : 0})`}
             </a>
           </li>
         </ul>
@@ -131,7 +146,9 @@ const ProductTab = ({ description, review, id, total_reviews}) => {
             <div className="comments-area">
               <div className="row">
                 <div className="col-lg-8">
-                  <h4 className="mb-30">{intl.formatMessage({ id: 'Customer questions & answers' })}</h4>
+                  <h4 className="mb-30">
+                    {intl.formatMessage({ id: "Customer questions & answers" })}
+                  </h4>
                   <div className="comment-list">
                     {review?.map((ITM) => {
                       return (
@@ -178,7 +195,9 @@ const ProductTab = ({ description, review, id, total_reviews}) => {
                   </div>
                 </div>
                 <div className="col-lg-4">
-                  <h4 className="mb-30">{intl.formatMessage({ id: 'Customer reviews' })}</h4>
+                  <h4 className="mb-30">
+                    {intl.formatMessage({ id: "Customer reviews" })}
+                  </h4>
                   <div className="d-flex mb-30">
                     <div className="product-rate d-inline-block mr-15">
                       <div
@@ -306,7 +325,7 @@ const ProductTab = ({ description, review, id, total_reviews}) => {
               </div>
             </div>
 
-            {isLoggedIn ? (
+            {showReviewForm ? (
               <div className="comment-form">
                 <h4 className="mb-15">Add a review</h4>
                 <div className="mb-3">
@@ -357,93 +376,97 @@ const ProductTab = ({ description, review, id, total_reviews}) => {
                 </div>
               </div>
             ) : (
-              <div className="row">
-                <div className="col-xl-8 col-lg-10 col-md-12 m-auto">
+              <>
+                {!isLoggedIn && (
                   <div className="row">
-                    {/* <div className="col-lg-6 pr-30 d-none d-lg-block">
+                    <div className="col-xl-8 col-lg-10 col-md-12 m-auto">
+                      <div className="row">
+                        {/* <div className="col-lg-6 pr-30 d-none d-lg-block">
                       <img
                         className="border-radius-15"
                         src="assets/imgs/page/login-1.png"
                         alt="nest"
                       />
                     </div> */}
-                    <div className="col-lg-6 col-md-8">
-                      <div className="login_wrap widget-taber-content background-white">
-                        <div className="padding_eight_all bg-white">
-                          <div className="heading_s1">
-                            <h3 className="mb-5">
-                              To add a review login first{" "}
-                            </h3>
-                            <p className="mb-30">
-                              Don't have an account?{" "}
-                              <Link href="/page-register">Create here</Link>
-                            </p>
+                        <div className="col-lg-6 col-md-8">
+                          <div className="login_wrap widget-taber-content background-white">
+                            <div className="padding_eight_all bg-white">
+                              <div className="heading_s1">
+                                <h3 className="mb-5">
+                                  To add a review login first{" "}
+                                </h3>
+                                <p className="mb-30">
+                                  Don't have an account?{" "}
+                                  <Link href="/page-register">Create here</Link>
+                                </p>
+                              </div>
+                              <Formik
+                                initialValues={{
+                                  usernameOrEmail: "",
+                                  currentpassword: "",
+                                }}
+                                validationSchema={validationSchema}
+                                onSubmit={async (values, { setSubmitting }) => {
+                                  // Prevent default form submission behavior
+                                  setSubmitting(false);
+
+                                  // Your custom submission logic goes here
+                                  await handleSubmit(values);
+
+                                  // Optionally reset the form
+                                  // resetForm();
+                                }}
+                              >
+                                {({ isSubmitting, handleSubmit }) => (
+                                  <Form onSubmit={handleSubmit}>
+                                    <div className="form-group">
+                                      <Field
+                                        type="text"
+                                        name="usernameOrEmail"
+                                        placeholder="Username or Email *"
+                                        className="form-control"
+                                      />
+                                      <ErrorMessage
+                                        name="usernameOrEmail"
+                                        component="div"
+                                        style={{ color: "red" }}
+                                      />
+                                    </div>
+                                    <div className="form-group">
+                                      <Field
+                                        type="password"
+                                        name="currentpassword"
+                                        placeholder="Your password *"
+                                        className="form-control"
+                                      />
+                                      <ErrorMessage
+                                        name="currentpassword"
+                                        component="div"
+                                        style={{ color: "red" }}
+                                      />
+                                    </div>
+
+                                    <div className="form-group">
+                                      <button
+                                        type="submit"
+                                        className="btn btn-heading btn-block hover-up"
+                                        name="login"
+                                        disabled={isSubmitting} // Disable the button while submitting
+                                      >
+                                        Log in
+                                      </button>
+                                    </div>
+                                  </Form>
+                                )}
+                              </Formik>
+                            </div>
                           </div>
-                          <Formik
-                            initialValues={{
-                              usernameOrEmail: "",
-                              currentpassword: "",
-                            }}
-                            validationSchema={validationSchema}
-                            onSubmit={async (values, { setSubmitting }) => {
-                              // Prevent default form submission behavior
-                              setSubmitting(false);
-
-                              // Your custom submission logic goes here
-                              await handleSubmit(values);
-
-                              // Optionally reset the form
-                              // resetForm();
-                            }}
-                          >
-                            {({ isSubmitting, handleSubmit }) => (
-                              <Form onSubmit={handleSubmit}>
-                                <div className="form-group">
-                                  <Field
-                                    type="text"
-                                    name="usernameOrEmail"
-                                    placeholder="Username or Email *"
-                                    className="form-control"
-                                  />
-                                  <ErrorMessage
-                                    name="usernameOrEmail"
-                                    component="div"
-                                    style={{ color: "red" }}
-                                  />
-                                </div>
-                                <div className="form-group">
-                                  <Field
-                                    type="password"
-                                    name="currentpassword"
-                                    placeholder="Your password *"
-                                    className="form-control"
-                                  />
-                                  <ErrorMessage
-                                    name="currentpassword"
-                                    component="div"
-                                    style={{ color: "red" }}
-                                  />
-                                </div>
-
-                                <div className="form-group">
-                                  <button
-                                    type="submit"
-                                    className="btn btn-heading btn-block hover-up"
-                                    name="login"
-                                    disabled={isSubmitting} // Disable the button while submitting
-                                  >
-                                    Log in
-                                  </button>
-                                </div>
-                              </Form>
-                            )}
-                          </Formik>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                )}
+              </>
             )}
           </div>
         </div>

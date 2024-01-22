@@ -18,15 +18,20 @@ function ResetPassword() {
 
   // const validationSchema = Yup.object().shape({
   //   password: Yup.string()
-  //     .min(8, "Password must be at least 8 characters")
-  //     .required("Password is required"),
+  //     .min(8, intl.formatMessage("Password must be at least 8 characters"))
+  //     .required(intl.formatMessage({ id: "Password is required" })),
   //   confirmPassword: Yup.string()
   //     .oneOf([Yup.ref("password"), null], "Passwords must match")
   //     .required("Confirm password is required"),
   // });
   const validationSchema = Yup.object().shape({
     password: Yup.string()
-      .min(8, intl.formatMessage({ id: "Password must be at least 8 characters" }))
+      .min(
+        8,
+        intl.formatMessage({
+          id: "Password must be at least 8 characters",
+        })
+      )
       .required(intl.formatMessage({ id: "Password is required" })),
     confirmPassword: Yup.string()
       .oneOf(
@@ -162,7 +167,11 @@ function ResetPassword() {
                                 disabled={isLoading}
                               >
                                 {intl.formatMessage({
-                                  id: `${isLoading ?  intl.formatMessage({ id: "Requesting" }) : intl.formatMessage({ id: "Reset" })}`,
+                                  id: `${
+                                    isLoading
+                                      ? intl.formatMessage({ id: "Requesting" })
+                                      : intl.formatMessage({ id: "Reset" })
+                                  }`,
                                 })}
                                 {isLoading && "..."}
                               </button>

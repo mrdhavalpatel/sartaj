@@ -47,21 +47,27 @@ function Account() {
   };
 
   const validationSchema = yup.object().shape({
-    f_name: yup.string().required("First Name is required"),
-    l_name: yup.string().required("Last Name is required"),
+    f_name: yup
+      .string()
+      .required(intl.formatMessage({ id: "First name is required" })),
+    l_name: yup
+      .string()
+      .required(intl.formatMessage({ id: "Last name is required" })),
     email: yup
       .string()
-      .email("Invalid email address")
-      .required("Email is required"),
+      .email(intl.formatMessage({ id: "Invalid email address" }))
+      .required(intl.formatMessage({ id: "Email is required" })),
   });
 
   const validationSchema2 = yup.object().shape({
-    current_password: yup.string().required("Current Password is required"),
-    new_password: yup.string().required("New Password is required"),
+    current_password: yup
+      .string()
+      .required({ id: "Current Password is required" }),
+    new_password: yup.string().required({ id: "New Password is required" }),
     confirm_password: yup
       .string()
-      .oneOf([yup.ref("new_password"), null], "Passwords must match")
-      .required("Confirm "),
+      .oneOf([yup.ref("new_password"), null], { id: "Passwords must match" })
+      .required({ id: "Confirm password is required" }),
   });
 
   const handleViewOrder = (url) => {

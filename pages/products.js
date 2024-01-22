@@ -65,6 +65,7 @@ const Products = ({ productFilters }) => {
     setMaxPrice(res?.data?.max_price);
     getFilteredProduct(Router.query?.catId);
   };
+
   useEffect(() => {
     getmaxPrice();
   }, [
@@ -72,6 +73,7 @@ const Products = ({ productFilters }) => {
     currentPage,
     pages,
     limit,
+    productFilters,
     productFilters?.featured,
     productFilters?.actual_price?.min,
     productFilters?.actual_price?.max,
@@ -92,7 +94,6 @@ const Products = ({ productFilters }) => {
     let res = await ApiCall("post", intl, "products/all", payload);
     setProducts(res?.data?.products);
     setProductTotal(res?.data?.total_size);
-    return res;
   };
 
   // useEffect(() => {
@@ -133,11 +134,13 @@ const Products = ({ productFilters }) => {
             <div className="col-lg-4-5">
               <div className="shop-product-fillter">
                 <div className="totall-product">
-              {products.length ==0 ? null :    <p>
-                    {intl.formatMessage({ id: "We found" })}
-                    <strong className="text-brand">{products?.length}</strong>
-                    {intl.formatMessage({ id: "items for you!" })}
-                  </p>}
+                  {products.length == 0 ? null : (
+                    <p>
+                      {intl.formatMessage({ id: "We found" })}
+                      <strong className="text-brand">{products?.length}</strong>
+                      {intl.formatMessage({ id: "items for you!" })}
+                    </p>
+                  )}
                 </div>
                 <div className="sort-by-product-area">
                   <div className="sort-by-cover mr-10">

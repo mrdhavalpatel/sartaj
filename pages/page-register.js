@@ -7,28 +7,51 @@ import { auth } from "../lib/auth/auth";
 import { toast } from "react-toastify";
 import DateInput from "../components/customDatePicker/DateInput";
 import { useIntl } from "react-intl";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+
 function Privacy() {
   const router = useRouter();
   const intl = useIntl();
   const validationSchema = Yup.object().shape({
-    f_name: Yup.string().required("First name is required"),
-    l_name: Yup.string().required("Last name is required"),
+    f_name: Yup.string().required(
+      intl.formatMessage({ id: "First name is required" })
+    ),
+    l_name: Yup.string().required(
+      intl.formatMessage({ id: "Last name is required" })
+    ),
     email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required"),
+      .email(intl.formatMessage({ id: "Invalid email address" }))
+      .required(intl.formatMessage({ id: "Email is required" })),
     termsConditions: Yup.boolean()
-      .oneOf([true], "Terms & Conditions are required")
-      .required("Terms & Conditions are required"),
+      .oneOf(
+        [true],
+        intl.formatMessage({ id: "Terms & Conditions are required" })
+      )
+      .required(intl.formatMessage({ id: "Terms & Conditions are required" })),
     phone: Yup.string()
-      .required("Phone number is required")
-      .matches(/^\d{9}$/, "Phone number must be 9 digits"),
+      .required(intl.formatMessage({ id: "Phone number is required" }))
+      .matches(
+        /^\+\d{1,3}\d{9}$/,
+        intl.formatMessage({
+          id: "Phone number must include country code and be 9 digits long",
+        })
+      ),
     password: Yup.string()
-      .min(8, "Password must be at least 8 characters")
-      .required("Password is required"),
+      .min(
+        8,
+        intl.formatMessage({ id: "Password must be at least 8 characters" })
+      )
+      .required(intl.formatMessage({ id: "Password is required" })),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
-      .required("Confirm Password is required"),
-    dob: Yup.date().nullable().required("Date of Birth is required"),
+      .oneOf(
+        [Yup.ref("password"), null],
+        intl.formatMessage({ id: "Passwords must match" })
+      )
+      .required(intl.formatMessage({ id: "Confirm password is required" })),
+    dob: Yup.date()
+      .nullable()
+      .required(intl.formatMessage({ id: "Date of Birth is required" })),
   });
   const handleSubmit = (values) => {
     const payload = {
@@ -49,47 +72,48 @@ function Privacy() {
   };
 
   return (
-    <>
-      <Layout parent="Home" sub="Pages" subChild="Privacy">
-        <div className="page-content pt-150 pb-150">
-          <div className="container">
-            <div className="row">
-              <div className="col-xl-8 col-lg-10 col-md-12 m-auto">
-                <div className="row">
-                  <div className="col-lg-6 col-md-8">
-                    <div className="login_wrap widget-taber-content background-white">
-                      <div className="padding_eight_all bg-white">
-                        <div className="heading_s1 mb-50">
-                          <h1 className="mb-5">
-                            {intl.formatMessage({ id: "Create an Account" })}
-                          </h1>
-                          <p>
-                            {intl.formatMessage({
-                              id: "Already have an account?",
-                            })}{" "}
-                            <Link href="/page-login">
-                              {intl.formatMessage({ id: "Log in instead!" })}
-                            </Link>
-                          </p>
-                        </div>
+    <Layout parent="Home" sub="Pages" subChild="Privacy">
+      <div className="page-content pt-150 pb-150">
+        <div className="container">
+          <div className="row">
+            <div className="col-xl-8 col-lg-10 col-md-12 m-auto">
+              <div className="row">
+                <div className="col-lg-6 col-md-8">
+                  <div className="login_wrap widget-taber-content background-white">
+                    <div className="padding_eight_all bg-white">
+                      <div className="heading_s1 mb-50">
+                        <h1 className="mb-5">
+                          {intl.formatMessage({ id: "Create an Account" })}
+                        </h1>
+                        <p>
+                          {intl.formatMessage({
+                            id: "Already have an account?",
+                          })}{" "}
+                          <Link href="/page-login">
+                            {intl.formatMessage({ id: "Log in instead!" })}
+                          </Link>
+                        </p>
+                      </div>
 
-                        <Formik
-                          initialValues={{
-                            f_name: "",
-                            l_name: "",
-                            email: "",
-                            password: "",
-                            confirmPassword: "",
-                            termsConditions: "",
-                            dob: "",
-                          }}
-                          validationSchema={validationSchema}
-                          onSubmit={(values, { setSubmitting }) => {
-                            // Handle form submission here
-                            handleSubmit(values);
-                            setSubmitting(false);
-                          }}
-                        >
+                      <Formik
+                        initialValues={{
+                          f_name: "",
+                          l_name: "",
+                          email: "",
+                          password: "",
+                          confirmPassword: "",
+                          termsConditions: "",
+                          dob: "",
+                          phone: "",
+                        }}
+                        validationSchema={validationSchema}
+                        onSubmit={(values, { setSubmitting }) => {
+                          // Handle form submission here
+                          handleSubmit(values);
+                          setSubmitting(false);
+                        }}
+                      >
+                        {({ setFieldValue, values }) => (
                           <Form>
                             <div className="form-group">
                               <Field
@@ -137,18 +161,25 @@ function Privacy() {
                               />
                             </div>
                             <div className="form-group">
-                              <Field
-                                type="number"
+                              <PhoneInput
+                                international
+                                defaultCountry="JP"
+                                value={values.phone}
                                 name="phone"
-                                placeholder={intl.formatMessage({ id: "phone no." })}
-                                className="form-control no-spinners" // Add a custom class for styling
+                                onChange={(value) =>
+                                  setFieldValue("phone", value)
+                                }
+                                className="no-spinners"
+                                placeholder={intl.formatMessage({
+                                  id: "phone no.",
+                                })}
                               />
                               <ErrorMessage
                                 name="phone"
                                 component="div"
                                 style={{ color: "red" }}
                               />
-                            </div>  
+                            </div>
                             <Field
                               name="dob"
                               label="Date of Birth"
@@ -196,7 +227,7 @@ function Privacy() {
                                     type="checkbox"
                                     name="termsConditions"
                                     id="exampleCheckbox12"
-                                  // value=""
+                                    // value=""
                                   />
                                   <label
                                     className="form-check-label"
@@ -236,11 +267,13 @@ function Privacy() {
                               className="btn btn-fill-out btn-block hover-up font-weight-bold"
                               name="login"
                             >
-                              {intl.formatMessage({ id: "Submit & Register" })}
+                              {intl.formatMessage({
+                                id: "Submit & Register",
+                              })}
                             </button>
                           </Form>
-                        </Formik>
-                      </div>
+                        )}
+                      </Formik>
                     </div>
                   </div>
                 </div>
@@ -248,8 +281,8 @@ function Privacy() {
             </div>
           </div>
         </div>
-      </Layout>
-    </>
+      </div>
+    </Layout>
   );
 }
 

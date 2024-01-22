@@ -8,7 +8,7 @@ import { api } from "../../lib/api";
 SwiperCore.use([Navigation]);
 
 const RelatedSliderBySlug = ({ slug }) => {
-  const intl = useIntl()
+  const intl = useIntl();
   const [related, setRelated] = useState([]);
   useEffect(() => {
     fetchProducts();
@@ -16,10 +16,11 @@ const RelatedSliderBySlug = ({ slug }) => {
 
   const fetchProducts = async () => {
     try {
-      const request = await api.get(`${"product_seo"}/${slug}`,{  headers: {
-        "X-localization": intl.locale === "eng" ? "en" : "ja",
-      },});
-      {console.log("related product api", request)}
+      const request = await api.get(`${"product_seo"}/${slug}`, {
+        headers: {
+          "X-localization": intl.locale === "eng" ? "en" : "ja",
+        },
+      });
       const allProducts = await request?.data?.related_products;
       setRelated(allProducts);
     } catch (error) {

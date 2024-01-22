@@ -80,11 +80,11 @@ const Cart = ({
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
           intl,
+          "X-localization": intl.locale == "eng" ? "en" : "ja",
         },
       })
       .then((res) => {
         setCartProducts(res?.data?.cartProducts);
-        console.log("cart response", res?.data);
         setCartTotal(res?.data);
       })
       .catch((error) => {
@@ -92,8 +92,12 @@ const Cart = ({
       });
   };
   const validationSchema = Yup.object().shape({
-    usernameOrEmail: Yup.string().required("Username or Email is required"),
-    currentpassword: Yup.string().required("Password is required"),
+    usernameOrEmail: Yup.string().required(
+      intl.formatMessage({ id: "Username or Email is required" })
+    ),
+    currentpassword: Yup.string().required(
+      intl.formatMessage({ id: "Password is required" })
+    ),
   });
   const handleSubmit = (values) => {
     const payload = {
@@ -116,15 +120,21 @@ const Cart = ({
     clearCart();
     setCartProducts([]);
   };
-  useEffect(() => {
-    let Token = storage.get("token");
-    if (Token) {
-      getCartData(Token);
-      setIsLoggedIn(Token);
+
+  const getProductName = (item) => {
+    if (item?.name) {
+      return item.name;
     } else {
-      setCartProducts(cartItems);
+      if (intl.locale !== "eng" && item?.product?.translations?.length > 0) {
+        const index = item?.product?.translations.findIndex(
+          (translation) => translation.key === "name"
+        );
+
+        return item?.product?.translations[index].value;
+      }
+      return item?.product?.name;
     }
-  }, [isLoggedIn]);
+  };
 
   useEffect(() => {
     let Token = storage.get("token");
@@ -226,7 +236,7 @@ const Cart = ({
                                     }`
                               }
                             >
-                              {item?.name ? item?.name : item?.product?.name}
+                              {getProductName(item)}
                             </Link>
                           </h6>
                           <div className="product-rate-cover">

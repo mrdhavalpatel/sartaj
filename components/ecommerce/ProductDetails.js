@@ -24,6 +24,9 @@ const ProductDetails = ({
   increaseQuantity,
   decreaseQuantity,
   quickView,
+  showReviewForm = false,
+  setShowReviewForm = () => {},
+  getProductDetailsBySlug = (product) => {},
 }) => {
   console.log(
     "data.........................................",
@@ -183,8 +186,8 @@ const ProductDetails = ({
                           className="button button-add-to-cart"
                         >
                           {product?.out_of_stock_status !== "in stock"
-                            ?  intl.formatMessage({ id: 'Out of stock' })
-                            :  intl.formatMessage({ id: 'Add to cart' })}
+                            ? intl.formatMessage({ id: "Out of stock" })
+                            : intl.formatMessage({ id: "Add to cart" })}
                         </button>
 
                         <a
@@ -209,15 +212,16 @@ const ProductDetails = ({
                         <a href="#">{product?.sku ? product?.sku : "--"}</a>
                       </li>
                       <li className="mb-5">
-                      {intl.formatMessage({ id: 'Tags' })}:
+                        {intl.formatMessage({ id: "Tags" })}:
                         <a href="#" rel="tag" className="me-1">
                           {product?.product_tag ? product?.product_tag : "--"}
                         </a>
                       </li>
                       <li>
-                      {intl.formatMessage({ id: 'Availability' })}:
+                        {intl.formatMessage({ id: "Availability" })}:
                         <span className="in-stock text-success ml-5">
-                          {product?.stock} {intl.formatMessage({ id: 'Items In Stock' })}
+                          {product?.stock}{" "}
+                          {intl.formatMessage({ id: "Items In Stock" })}
                         </span>
                       </li>
                     </ul>
@@ -232,13 +236,15 @@ const ProductDetails = ({
                     total_reviews={product?.total_reviews}
                     description={product?.description}
                     review={product?.active_reviews}
+                    showReviewForm={showReviewForm}
+                    setShowReviewForm={setShowReviewForm}
+                    getProductDetailsBySlug={getProductDetailsBySlug}
                   />
                   {product?.related_products?.length > 0 ? (
                     <div className="row mt-60">
                       <div className="col-12">
                         <h3 className="section-title style-1 mb-30">
-                        {intl.formatMessage({ id: 'Related products' })}
-                          
+                          {intl.formatMessage({ id: "Related products" })}
                         </h3>
                       </div>
                       <div className="col-12">

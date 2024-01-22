@@ -33,28 +33,21 @@ const Header = ({
     switchLanguage(newLanguage);
     setDLang(newLanguage);
 
-    const currentSlug = router.query.slug || "";
+    const pathWithoutLanguage = router.pathname;
 
-    const pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
-
-    const newUrl = `/${newLanguage}/${pathWithoutLanguage}`;
+    const newUrl = `/${newLanguage}/${pathWithoutLanguage
+      .replace("/eng", "")
+      .replace("/jp", "")
+      .replace("/[slug]", "")}`;
     const currentToken = router.query.token || "";
-    if (router.pathname.includes("shop-compare")) {
-      window.location.replace(`/${newLanguage}/shop-compare`);
-    } else if (router.pathname.includes("shop-wishlist")) {
-      window.location.replace(`/${newLanguage}/shop-wishlist`);
-    } else if (router.pathname.includes("shop-fullwidth")) {
-      window.location.replace(`/${newLanguage}/shop-fullwidth`);
-    } else if (router.pathname.includes("shop-cart")) {
-      window.location.replace(`/${newLanguage}/shop-cart`);
-    }
-      else if (router.pathname.includes("page-reset-password")) {
-        window.location.replace(`/${newLanguage}/page-reset-password?token=${currentToken}`);
-      }
-      else if (router.pathname.includes("page-login")) {
-        window.location.replace(`/${newLanguage}/page-login`);
-      }
-     else {
+    const slug = router.query?.slug;
+    if (router.pathname.includes("page-reset-password")) {
+      window.location.replace(
+        `/${newLanguage}/page-reset-password?token=${currentToken}`
+      );
+    } else if (slug) {
+      window.location.replace(`${newUrl}/${slug}`);
+    } else {
       window.location.replace(newUrl);
     }
   };
