@@ -632,6 +632,7 @@ const Cart = ({
                       "No Products"
                     )}
                     <div className="divider-2 mb-30"></div>
+                    <div className="heading_s1 mb-3"><h4>Cart Totals</h4></div>
                     {cartTotal.cartProducts?.length > 0 ? (
                       <table
                         style={{
@@ -645,7 +646,7 @@ const Cart = ({
                           <td
                             style={{
                               border: "1px solid #bababa",
-                              padding: "5px",
+                              padding: "5px 15px",
                             }}
                           >
                             <strong>
@@ -655,17 +656,17 @@ const Cart = ({
                           <td
                             style={{
                               border: "1px solid #bababa",
-                              padding: "5px",
+                              padding: "5px 15px",
                             }}
-                          >
-                            ¥{cartTotal?.total_sub_amt}
+                          ><span className="font-lg fw-900 text-brand">
+                            ¥{cartTotal?.total_sub_amt}</span>
                           </td>
                         </tr>
                         <tr>
                           <td
                             style={{
                               border: "1px solid #bababa",
-                              padding: "5px",
+                              padding: "5px 15px",
                             }}
                           >
                             <strong>
@@ -677,10 +678,10 @@ const Cart = ({
                           <td
                             style={{
                               border: "1px solid #bababa",
-                              padding: "5px",
+                              padding: "5px 15px",
                             }}
-                          >
-                            ¥{cartTotal?.delivery_charge}
+                          ><span className="font-lg fw-900 text-brand">
+                            ¥{cartTotal?.delivery_charge}</span>
                           </td>
                         </tr>
                         {cartTotal?.eight_percent ? (
@@ -688,7 +689,7 @@ const Cart = ({
                             <td
                               style={{
                                 border: "1px solid #bababa",
-                                padding: "5px",
+                                padding: "5px 15px",
                               }}
                             >
                               <strong>
@@ -699,10 +700,10 @@ const Cart = ({
                             <td
                               style={{
                                 border: "1px solid #bababa",
-                                padding: "5px",
+                                padding: "5px 15px",
                               }}
-                            >
-                              ¥{cartTotal?.eight_percent}
+                            ><span className="font-lg fw-900 text-brand">
+                              ¥{cartTotal?.eight_percent}</span>
                             </td>
                           </tr>
                         ) : null}
@@ -711,7 +712,7 @@ const Cart = ({
                             <td
                               style={{
                                 border: "1px solid #bababa",
-                                padding: "5px",
+                                padding: "5px 15px",
                               }}
                             >
                               <strong>
@@ -725,13 +726,13 @@ const Cart = ({
                             <td
                               style={{
                                 border: "1px solid #bababa",
-                                padding: "5px",
+                                padding: "5px 15px",
                               }}
-                            >
+                            ><span className="font-lg fw-900 text-brand">
                               ¥
                               {cartTotal?.ten_percent
                                 ? cartTotal?.ten_percent
-                                : 0}
+                                : 0}</span>
                             </td>
                           </tr>
                         ) : null}
@@ -740,7 +741,7 @@ const Cart = ({
                             <td
                               style={{
                                 border: "1px solid #bababa",
-                                padding: "5px",
+                                padding: "5px 15px",
                               }}
                             >
                               <strong>
@@ -751,10 +752,10 @@ const Cart = ({
                             <td
                               style={{
                                 border: "1px solid #bababa",
-                                padding: "5px",
+                                padding: "5px 15px",
                               }}
-                            >
-                              ¥{coupanRes?.discount_price}
+                            ><span className="font-lg fw-900 text-brand">
+                              ¥{coupanRes?.discount_price}</span>
                             </td>
                           </tr>
                         ) : null}
@@ -762,7 +763,7 @@ const Cart = ({
                           <td
                             style={{
                               border: "1px solid #bababa",
-                              padding: "5px",
+                              padding: "5px 15px",
                             }}
                           >
                             <strong>
@@ -772,28 +773,27 @@ const Cart = ({
                           <td
                             style={{
                               border: "1px solid #bababa",
-                              padding: "5px",
+                              padding: "5px 15px",
                             }}
-                          >
+                          ><span className="font-lg fw-900 text-brand">
                             ¥
                             {coupanRes
                               ? coupanRes?.orderAmount
-                              : cartTotal?.total_amt}
+                              : cartTotal?.total_amt}</span>
                           </td>
                         </tr>
                       </table>
                     ) : null}
                   </div>
                   <div className="delivery_time_div">
-                  <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
-                    <h8>Delivery time</h8>
-                  </div>
+                    <div className="divider-2 mb-30"></div>
+                    <div className="heading_s1 mb-3"><h4>Delivery time</h4></div>
 
                   {timeSlot?.map((Item, index) => {
                     const radioId = Item?.id;
 
                     return (
-                      <div key={radioId} className="custom-radio">
+                      <div key={radioId} className="custome-radio">
                         <input
                           className="form-check-input"
                           required=""
@@ -819,10 +819,10 @@ const Cart = ({
                     );
                   })}
                   </div>
-                  <div className="payment_method">
-                    <div className="mb-25">
-                      <h5>{intl.formatMessage({ id: "Payment" })}</h5>
-                    </div>
+                  <div className="payment_method mt-30">
+                    <div className="divider-2 mb-30"></div>
+                    <div className="heading_s1 mb-3"><h4>{intl.formatMessage({ id: "Payment" })}</h4></div>
+
                     <div className="payment_option">
                       <div className="custome-radio">
                         <input

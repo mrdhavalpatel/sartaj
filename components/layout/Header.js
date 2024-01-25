@@ -138,13 +138,17 @@ const Header = ({
   return (
     <header className="header-area header-style-1 header-height-2">
       <div className="mobile-promotion">
-        <span>
-          {intl.formatMessage({ id: "Grand opening" })},{" "}
-          <strong>{intl.formatMessage({ id: "up to 15%" })}</strong>{" "}
-          {intl.formatMessage({ id: "off all items. Only" })}{" "}
-          <strong>3 {intl.formatMessage({ id: "days" })}</strong>{" "}
-          {intl.formatMessage({ id: "left" })}
-        </span>
+        <label htmlFor="languageDropdown" className="sr-only">
+          {intl.formatMessage({ id: "Select Language" })}
+        </label>
+        <select
+          id="languageDropdown"
+          onChange={(e) => handleLanguageSwitch(e.target.value)}
+          value={DLang}
+        >
+          <option value="eng">English</option>
+          <option value="jp">日本語</option>
+        </select>
       </div>
       <div className="header-top header-top-ptb-1 d-none d-lg-block">
         <div className="container">
@@ -170,7 +174,7 @@ const Header = ({
               <div className="header-info header-info-right">
                 <ul>
                   <li>
-                    {intl.formatMessage({ id: "Need help? Call Us" })}:&nbsp;'
+                    {intl.formatMessage({ id: "Need help? Call Us" })}:&nbsp;
                     <a href="tel:0727511975">
                       <strong className="text-brand">072-751-1975</strong>
                     </a>

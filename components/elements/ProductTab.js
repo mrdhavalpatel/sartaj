@@ -100,6 +100,13 @@ const ProductTab = ({
       getProductRatingDetails(token);
     }
   }, []);
+
+  const decodeHtml = (html) => {
+    let txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+  };
+
   return (
     <div className="product-info">
       <div className="tab-style3">
@@ -134,7 +141,10 @@ const ProductTab = ({
             }
             id="Description"
           >
-            <div className="">{description}</div>
+            <div
+              className=""
+              dangerouslySetInnerHTML={{ __html: decodeHtml(description) }}
+            />
           </div>
 
           <div

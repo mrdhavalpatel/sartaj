@@ -102,9 +102,8 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                   <span className="fi-rs-apps"></span> Browse Categories
                 </Link>
                 <div
-                  className={`categori-dropdown-wrap categori-dropdown-active-small ${
-                    isMenuOpen ? "active" : ""
-                  }`}
+                  className={`categori-dropdown-wrap categori-dropdown-active-small ${isMenuOpen ? "active" : ""
+                    }`}
                 >
                   <ul>
                     {categories?.map((itm) => {
@@ -123,366 +122,38 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
 
               <nav>
                 <ul className="mobile-menu" ref={domNode}>
-                  <li
-                    className={
-                      isActive.key == 1
-                        ? "menu-item-has-children active"
-                        : "menu-item-has-children"
-                    }
-                  >
-                    {/* <span
-                      className="menu-expand"
-                      onClick={() => handleToggle(1)}
-                    >
-                      <i className="fi-rs-angle-small-down"></i>
-                    </span> */}
-                    <Link href="/">Home</Link>
-                    {/* <ul className={isActive.key == 1 ? "dropdown" : "d-none"}>
-                                            <li>
-                                                <Link href="/index">Home 1</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/index-2">Home 2</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/index-3">Home 3</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/index-4">Home 4</Link>
-                                            </li>
-                                        </ul> */}
-                  </li>
-                  <li
-                    className={
-                      isActive.key == 2
-                        ? "menu-item-has-children active"
-                        : "menu-item-has-children"
-                    }
-                  >
-                    {/* <span
-                      className="menu-expand"
-                      onClick={() => handleToggle(2)}
-                    >
-                      <i className="fi-rs-angle-small-down"></i>
-                    </span> */}
-                    <Link href={`/${intl.locale}/shop-fullwidth`}>shop</Link>
-                    {/* <ul className={isActive.key == 2 ? "dropdown" : "d-none"}>
-                      <li>
-                        <Link href={`/${intl.locale}/shop-fullwidth`}>
-                          Shop Grid – Right Sidebar
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/shop-grid-left">
-                          Shop Grid – Left Sidebar
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/shop-list-right">
-                          Shop List – Right Sidebar
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/shop-list-left">
-                          Shop List – Left Sidebar
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href={`/${intl.locale}/shop-fullwidth`}>Shop - Wide</Link>
-                      </li>
-                      <li>
-                        <Link href="/shop-filter">Shop – Filter</Link>
-                      </li>
-                      <li>
-                        <Link href="/shop-wishlist">Shop – Wishlist</Link>
-                      </li>
-                      <li>
-                        <Link href="/shop-cart">Shop – Cart</Link>
-                      </li>
-                      <li>
-                        <Link href="/shop-checkout">Shop – Checkout</Link>
-                      </li>
-                      <li>
-                        <Link href="/shop-compare">Shop – Compare</Link>
-                      </li>
-                    </ul> */}
-                  </li>
-                  {/* <li
-                    className={
-                      isActive.key == 3
-                        ? "menu-item-has-children active"
-                        : "menu-item-has-children"
-                    }
-                  >
-                    <span
-                      className="menu-expand"
-                      onClick={() => handleToggle(3)}
-                    >
-                      <i className="fi-rs-angle-small-down"></i>
-                    </span>
-                    <Link href="#">Mega menu</Link>
-                    <ul className={isActive.key == 3 ? "dropdown" : "d-none"}>
-                      <li className="menu-item-has-children">
-                        <span className="menu-expand"></span>
-                        <Link href="#">Women's Fashion</Link>
-                        <ul className="dropdown">
-                          <li>
-                            <Link href="/shop-product-right">Dresses</Link>
-                          </li>
-                          <li>
-                            <Link href="/shop-product-right">
-                              Blouses & Shirts
-                            </Link>
-                          </li>
-                          <li>
-                            <Link href="/shop-product-right">
-                              Hoodies & Sweatshirts
-                            </Link>
-                          </li>
-                          <li>
-                            <Link href="/shop-product-right">Women's Sets</Link>
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="menu-item-has-children">
-                        <span className="menu-expand"></span>
-                        <Link href="#">Men's Fashion</Link>
-                        <ul className="dropdown">
-                          <li>
-                            <Link href="/shop-product-right">Jackets</Link>
-                          </li>
-                          <li>
-                            <Link href="/shop-product-right">
-                              Casual Faux Leather
-                            </Link>
-                          </li>
-                          <li>
-                            <Link href="/shop-product-right">
-                              Genuine Leather
-                            </Link>
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="menu-item-has-children">
-                        <span className="menu-expand"></span>
-                        <Link href="#">Technology</Link>
-                        <ul className="dropdown">
-                          <li>
-                            <Link href="/shop-product-right">
-                              Gaming Laptops
-                            </Link>
-                          </li>
-                          <li>
-                            <Link href="/shop-product-right">
-                              Ultraslim Laptops
-                            </Link>
-                          </li>
-                          <li>
-                            <Link href="/shop-product-right">Tablets</Link>
-                          </li>
-                          <li>
-                            <Link href="/shop-product-right">
-                              Laptop Accessories
-                            </Link>
-                          </li>
-                          <li>
-                            <Link href="/shop-product-right">
-                              Tablet Accessories
-                            </Link>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li> */}
-                  {/* <li
-                    className={
-                      isActive.key == 4
-                        ? "menu-item-has-children active"
-                        : "menu-item-has-children"
-                    }
-                  >
-                    <span
-                      className="menu-expand"
-                      onClick={() => handleToggle(4)}
-                    >
-                      <i className="fi-rs-angle-small-down"></i>
-                    </span>
-                    <Link href="/blog-category-fullwidth">Blog</Link>
-                    <ul className={isActive.key == 4 ? "dropdown" : "d-none"}>
-                      <li>
-                        <Link href="/blog-category-grid">
-                          Blog Category Grid
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/blog-category-list">
-                          Blog Category List
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/blog-category-big">Blog Category Big</Link>
-                      </li>
-                      <li>
-                        <Link href="/blog-category-fullwidth">
-                          Blog Category Wide
-                        </Link>
-                      </li>
-                      <li className="menu-item-has-children">
-                        <span className="menu-expand"></span>
-                        <Link href="#">Single Product Layout</Link>
-                        <ul className="dropdown">
-                          <li>
-                            <Link href="/blog-post-left">Left Sidebar</Link>
-                          </li>
-                          <li>
-                            <Link href="/blog-post-right">Right Sidebar</Link>
-                          </li>
-                          <li>
-                            <Link href="/blog-post-fullwidth">No Sidebar</Link>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li> */}
-                  {/* <li
-                    className={
-                      isActive.key == 5
-                        ? "menu-item-has-children active"
-                        : "menu-item-has-children"
-                    }
-                  >
-                    <span
-                      className="menu-expand"
-                      onClick={() => handleToggle(5)}
-                    >
-                      <i className="fi-rs-angle-small-down"></i>
-                    </span>
-                    <Link href="#">Pages</Link>
-                    <ul className={isActive.key == 5 ? "dropdown" : "d-none"}>
-                      <li>
-                        <Link href="/page-about">About Us</Link>
-                      </li>
-                      <li>
-                        <Link href="/page-contact">Contact</Link>
-                      </li>
-                      <li>
-                        <Link href="/page-account">My Account</Link>
-                      </li>
-                      <li>
-                        <Link href="/page-login-register">login/register</Link>
-                      </li>
-                      <li>
-                        <Link href="/page-purchase-guide">Purchase Guide</Link>
-                      </li>
-                      <li>
-                        <Link href="/page-privacy-policy">Privacy Policy</Link>
-                      </li>
-                      <li>
-                        <Link href="/page-terms">Terms of Service</Link>
-                      </li>
-                      <li>
-                        <Link href="/page-404">404 Page</Link>
-                      </li>
-                    </ul>
-                  </li> */}
-                  <li
-                    className={
-                      isActive.key == 6
-                        ? "menu-item-has-children active"
-                        : "menu-item-has-children"
-                    }
-                  >
-                    {/* <span
-                      className="menu-expand"
-                      onClick={() => handleToggle(6)}
-                    >
-                      <i className="fi-rs-angle-small-down"></i>
-                    </span> */}
-                    <Link href="/page-contact">Contact</Link>
-                    {/* <ul className={isActive.key == 6 ? "dropdown" : "d-none"}>
-                      <li>
-                        <Link href="#">English</Link>
-                      </li>
-                      <li>
-                        <Link href="#">French</Link>
-                      </li>
-                      <li>
-                        <Link href="#">German</Link>
-                      </li>
-                      <li>
-                        <Link href="#">Spanish</Link>
-                      </li>
-                    </ul> */}
-                  </li>
-                  <li
-                    className={
-                      isActive.key == 5
-                        ? "menu-item-has-children active"
-                        : "menu-item-has-children"
-                    }
-                  >
-                    <Link href="/page-purchase-guide">
-                      Delivery Information
+                  <li>
+                    <Link href="/" className="active">
+                      {intl.formatMessage({ id: "Home" })}
                     </Link>
                   </li>
-                  <li
-                    className={
-                      isActive.key == 3
-                        ? "menu-item-has-children active"
-                        : "menu-item-has-children"
-                    }
-                  >
-                    <Link href="/page-faqs">FAQs</Link>
+                  <li>
+                    <Link href="/page-about">
+                      {intl.formatMessage({ id: "About" })}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href={`/${intl.locale}/shop-fullwidth`}>
+                      {intl.formatMessage({ id: "Shop" })}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/page-contact">
+                      {intl.formatMessage({ id: "Contact" })}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/page-purchase-guide">
+                      {intl.formatMessage({ id: "Delivery Information" })}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/page-faqs">
+                      {intl.formatMessage({ id: "FAQs" })}
+                    </Link>
                   </li>
                 </ul>
               </nav>
-            </div>
-            <div className="mobile-header-info-wrap mobile-header-border">
-              <div className="single-mobile-header-info mt-30">
-                <Link href="/page-contact">Our location</Link>
-              </div>
-              <div className="single-mobile-header-info">
-                <Link href="/page-register">Sign Up</Link>
-              </div>
-              <div className="single-mobile-header-info">
-                <Link href="/page-login">Log In</Link>
-              </div>
-              <div className="single-mobile-header-info">
-                <Link href="#">(+01) - 2345 - 6789</Link>
-              </div>
-            </div>
-            <div className="mobile-social-icon">
-              <h5 className="mb-15 text-grey-4">Follow Us</h5>
-              <Link href="#">
-                <img
-                  src="/assets/imgs/theme/icons/icon-facebook.svg"
-                  alt="nest"
-                />
-              </Link>
-              <Link href="#">
-                <img
-                  src="/assets/imgs/theme/icons/icon-twitter.svg"
-                  alt="nest"
-                />
-              </Link>
-              <Link href="#">
-                <img
-                  src="/assets/imgs/theme/icons/icon-instagram.svg"
-                  alt="nest"
-                />
-              </Link>
-              <Link href="#">
-                <img
-                  src="/assets/imgs/theme/icons/icon-pinterest.svg"
-                  alt="nest"
-                />
-              </Link>
-              <Link href="#">
-                <img
-                  src="/assets/imgs/theme/icons/icon-youtube.svg"
-                  alt="nest"
-                />
-              </Link>
             </div>
           </div>
         </div>

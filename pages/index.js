@@ -99,7 +99,7 @@ function Index2() {
           </div>
         </section>
 
-        <section className="product-tabs section-padding position-relative">
+        <section className="home_producttab product-tabs section-padding position-relative">
           <div className="container">
             <div className="row">
               <div className="col-lg-12">

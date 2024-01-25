@@ -134,7 +134,7 @@ const SingleProduct = ({
             </span>
           </div>
 
-          <div>
+          <div className="comapny_name">
             <span className="font-small text-muted">
             {intl.formatMessage({ id: 'By' })}{" "}
               <Link

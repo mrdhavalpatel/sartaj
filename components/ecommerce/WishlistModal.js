@@ -65,7 +65,7 @@ const WishlistModal = ({
                     <td>¥{product.actual_price}</td>
                     <td style={{ width: "200px" }}>
                       <span onClick={(e) => handleCart(product)}>
-                        Add To Cart
+                        {intl.formatMessage({ id: "Add to cart" })}
                       </span>
                     </td>
                     <td style={{ width: "50px" }} className="text-center">

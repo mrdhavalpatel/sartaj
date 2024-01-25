@@ -40,7 +40,11 @@ const SingleProduct2 = ({
       <div className="product-cart-wrap mb-30">
         <div className="product-img-action-wrap">
           <div className="product-img product-img-zoom">
-            <Link href={`/${product?.seo_en}`}>
+            <Link
+              href={`/${
+                intl.locale === "eng" ? product?.seo_en : product?.seo_ja
+              }`}
+            >
               <img className="default-img" src={product?.image} alt="nest" />
               <img className="hover-img" src={product?.image} alt="nest" />
             </Link>
@@ -86,7 +90,13 @@ const SingleProduct2 = ({
             <Link href="/products">{product?.brand}</Link>
           </div> */}
           <h2>
-            <Link href={`/${product?.seo_en}`}>{product?.name}</Link>
+            <Link
+              href={`/${
+                intl.locale === "eng" ? product?.seo_en : product?.seo_ja
+              }`}
+            >
+              {product?.name}
+            </Link>
           </h2>
 
           <div className="product-rate d-inline-block">
@@ -169,8 +179,8 @@ const SingleProduct2 = ({
           >
             <i className="fi-rs-shopping-cart mr-5"></i>{" "}
             {product?.out_of_stock_status !== "in stock"
-              ? "Out of stock"
-              : "Add To Cart"}{" "}
+              ? intl.formatMessage({ id: "Out of stock" })
+              : intl.formatMessage({ id: "Add to cart" })}{" "}
           </button>
         </div>
       </div>

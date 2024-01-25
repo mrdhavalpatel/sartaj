@@ -6,6 +6,7 @@ import { addToCart } from "../../redux/action/cart";
 import { addToCompare } from "../../redux/action/compareAction";
 import { openQuickView } from "../../redux/action/quickViewAction";
 import { addToWishlist } from "../../redux/action/wishlistAction";
+import { useIntl } from "react-intl";
 
 const SingleProductList = ({
   product,
@@ -14,6 +15,7 @@ const SingleProductList = ({
   addToWishlist,
   openQuickView,
 }) => {
+  const intl = useIntl();
   const handleCart = (product) => {
     product = {
       ...product,
@@ -129,7 +131,7 @@ const SingleProductList = ({
                 onClick={(e) => handleCart(product)}
               >
                 <i className="fi-rs-shopping-bag-add"></i>
-                Add to Cart
+                {intl.formatMessage({ id: "Add to cart" })}
               </a>
               <a
                 onClick={(e) => handleCompare(product)}

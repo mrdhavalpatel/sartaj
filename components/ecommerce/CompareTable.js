@@ -142,8 +142,8 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                     >
                       <i className="fi-rs-shopping-bag mr-5"></i>
                       {product?.out_of_stock_status !== "in stock"
-                        ? "Out of stock"
-                        : "Add to cart"}
+                        ? intl.formatMessage({ id: "Out of stock" })
+                        : intl.formatMessage({ id: "Add to cart" })}
                     </button>
                   ) : (
                     <Link
