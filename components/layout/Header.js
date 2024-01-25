@@ -136,8 +136,12 @@ const Header = ({
   const handleToggle = () => setToggled(!isToggled);
 
   return (
-    <header className="header-area header-style-1 header-height-2">
-      <div className="mobile-promotion">
+    <header className={
+      scroll
+        ? "header-area header-style-1 header-height-2 stick"
+        : "header-area header-style-1 header-height-2"
+    }>
+      <div className="mobile-promotion" >
         <label htmlFor="languageDropdown" className="sr-only">
           {intl.formatMessage({ id: "Select Language" })}
         </label>
