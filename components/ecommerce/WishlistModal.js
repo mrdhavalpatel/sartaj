@@ -7,7 +7,7 @@ import {
   closeWishlistModal,
   deleteFromWishlist,
 } from "../../redux/action/wishlistAction";
-
+import { useIntl } from "react-intl";
 const WishlistModal = ({
   wishlist,
   clearWishlist,
@@ -15,6 +15,7 @@ const WishlistModal = ({
   deleteFromWishlist,
   addToCart,
 }) => {
+  const intl = useIntl();
   const handleCart = (product) => {
     product = {
       ...product,
