@@ -2,6 +2,8 @@ import { connect } from "react-redux";
 import { Modal } from "react-responsive-modal";
 import { addToCart } from "../../redux/action/cart";
 import { toast } from "react-toastify";
+import { useIntl } from "react-intl";
+
 import {
   clearWishlist,
   closeWishlistModal,
@@ -23,6 +25,7 @@ const WishlistModal = ({
     addToCart(product);
     toast("Product added to Cart !");
   };
+  const intl = useIntl();
 
   return (
     <>
