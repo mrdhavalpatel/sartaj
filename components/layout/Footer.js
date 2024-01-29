@@ -6,18 +6,15 @@ import { toast } from "react-toastify";
 import { useIntl } from "react-intl";
 
 const Footer = () => {
-const [isLoggin, setIsLoggin] = useState(false);
+  const [isLoggin, setIsLoggin] = useState(false);
 
   useEffect(() => {
     let token = localStorage.getItem("token");
     if (token) {
-      
       setIsLoggin(true);
     } else {
-      
       setIsLoggin(false);
     }
-   
   }, []);
   const [footerData, setFooterData] = useState([]);
   const intl = useIntl();
@@ -70,8 +67,12 @@ const [isLoggin, setIsLoggin] = useState(false);
                       {intl.formatMessage({ id: "needs from our shop" })}
                     </h2>
                     <p className="mb-45">
-                      {intl.formatMessage({ id: "Start You'r Daily Shopping with" })}{" "}
-                      <span className="text-brand">{intl.formatMessage({ id: "Sartaj" })}</span>
+                      {intl.formatMessage({
+                        id: "Start You'r Daily Shopping with",
+                      })}{" "}
+                      <span className="text-brand">
+                        {intl.formatMessage({ id: "Sartaj" })}
+                      </span>
                     </p>
                     {/* <form className="form-subcriber d-flex">
                       <input type="email" placeholder="Your emaill address" />
@@ -90,7 +91,9 @@ const [isLoggin, setIsLoggin] = useState(false);
                           required
                           type="email"
                           name="email"
-                          placeholder={intl.formatMessage({ id: "Your email address" })}
+                          placeholder={intl.formatMessage({
+                            id: "Your email address",
+                          })}
                           className="form-control"
                         />
 
@@ -121,7 +124,9 @@ const [isLoggin, setIsLoggin] = useState(false);
                     <img src="/assets/imgs/theme/icons/icon-1.svg" alt="nest" />
                   </div>
                   <div className="banner-text">
-                    <h3 className="icon-box-title">{intl.formatMessage({ id: "Best prices & offers" })}</h3>
+                    <h3 className="icon-box-title">
+                      {intl.formatMessage({ id: "Best prices & offers" })}
+                    </h3>
                     <p>{intl.formatMessage({ id: "Orders $50 or more" })}</p>
                   </div>
                 </div>
@@ -135,7 +140,9 @@ const [isLoggin, setIsLoggin] = useState(false);
                     <img src="/assets/imgs/theme/icons/icon-2.svg" alt="nest" />
                   </div>
                   <div className="banner-text">
-                    <h3 className="icon-box-title">{intl.formatMessage({ id: "Free delivery" })}</h3>
+                    <h3 className="icon-box-title">
+                      {intl.formatMessage({ id: "Free delivery" })}
+                    </h3>
                     <p>{intl.formatMessage({ id: "24/7 amazing services" })}</p>
                   </div>
                 </div>
@@ -149,7 +156,9 @@ const [isLoggin, setIsLoggin] = useState(false);
                     <img src="/assets/imgs/theme/icons/icon-3.svg" alt="nest" />
                   </div>
                   <div className="banner-text">
-                    <h3 className="icon-box-title">{intl.formatMessage({ id: "Great daily deal" })}</h3>
+                    <h3 className="icon-box-title">
+                      {intl.formatMessage({ id: "Great daily deal" })}
+                    </h3>
                     <p>{intl.formatMessage({ id: "When you sign up" })}</p>
                   </div>
                 </div>
@@ -163,7 +172,9 @@ const [isLoggin, setIsLoggin] = useState(false);
                     <img src="/assets/imgs/theme/icons/icon-4.svg" alt="nest" />
                   </div>
                   <div className="banner-text">
-                    <h3 className="icon-box-title">{intl.formatMessage({ id: "Wide assortment" })}</h3>
+                    <h3 className="icon-box-title">
+                      {intl.formatMessage({ id: "Wide assortment" })}
+                    </h3>
                     <p>{intl.formatMessage({ id: "Mega Discounts" })}</p>
                   </div>
                 </div>
@@ -177,7 +188,9 @@ const [isLoggin, setIsLoggin] = useState(false);
                     <img src="/assets/imgs/theme/icons/icon-5.svg" alt="nest" />
                   </div>
                   <div className="banner-text">
-                    <h3 className="icon-box-title">{intl.formatMessage({ id: "Easy returns" })}</h3>
+                    <h3 className="icon-box-title">
+                      {intl.formatMessage({ id: "Easy returns" })}
+                    </h3>
                     <p>{intl.formatMessage({ id: "Within 30 days" })}</p>
                   </div>
                 </div>
@@ -191,7 +204,9 @@ const [isLoggin, setIsLoggin] = useState(false);
                     <img src="/assets/imgs/theme/icons/icon-6.svg" alt="nest" />
                   </div>
                   <div className="banner-text">
-                    <h3 className="icon-box-title">{intl.formatMessage({ id: "Safe delivery" })}</h3>
+                    <h3 className="icon-box-title">
+                      {intl.formatMessage({ id: "Safe delivery" })}
+                    </h3>
                     <p>{intl.formatMessage({ id: "Within 30 days" })}</p>
                   </div>
                 </div>
@@ -255,22 +270,35 @@ const [isLoggin, setIsLoggin] = useState(false);
                 className="footer-link-widget col  wow animate__animated animate__fadeInUp"
                 data-wow-delay=".1s"
               >
-                <h4 className="widget-title">{intl.formatMessage({ id: "Company" })}</h4>
+                <h4 className="widget-title">
+                  {intl.formatMessage({ id: "Company" })}
+                </h4>
                 <ul className="footer-list  mb-sm-5 mb-md-0">
                   <li>
-                    <a href="/page-about">{intl.formatMessage({ id: "About Us" })}</a>
+                    <a href="/about-sartaj">
+                      {intl.formatMessage({ id: "About Us" })}
+                    </a>
                   </li>
                   <li>
-                    <a href="/page-purchase-guide">{intl.formatMessage({ id: "Delivery Information" })}</a>
+                    <a href="/delivery_Information">
+                      {intl.formatMessage({ id: "Delivery Information" })}
+                    </a>
                   </li>
                   <li>
-                    <a href="/page-privacy-policy">{intl.formatMessage({ id: "Privacy Policy" })}</a>
+                    <a href="/page-privacy-policy">
+                      {intl.formatMessage({ id: "Privacy Policy" })}
+                    </a>
                   </li>
                   <li>
-                    <a href="/page-terms">{intl.formatMessage({ id: "Terms" })} &amp; {intl.formatMessage({ id: "Conditions" })}</a>
+                    <a href="/terms_conditions">
+                      {intl.formatMessage({ id: "Terms" })} &amp;{" "}
+                      {intl.formatMessage({ id: "Conditions" })}
+                    </a>
                   </li>
                   <li>
-                    <a href="/page-contact">{intl.formatMessage({ id: "Contact Us" })}</a>
+                    <a href="/contacts">
+                      {intl.formatMessage({ id: "Contact Us" })}
+                    </a>
                   </li>
                   {/* <li>
                     <a href="#">Support Center</a>
@@ -284,22 +312,35 @@ const [isLoggin, setIsLoggin] = useState(false);
                 className="footer-link-widget col  wow animate__animated animate__fadeInUp"
                 data-wow-delay=".2s"
               >
-                <h4 className="widget-title ">{intl.formatMessage({ id: "Account" })}</h4>
+                <h4 className="widget-title ">
+                  {intl.formatMessage({ id: "Account" })}
+                </h4>
                 <ul className="footer-list  mb-sm-5 mb-md-0">
-
-                  {isLoggin ? (<li>
-                    <a href="/page-login">{intl.formatMessage({ id: "Sign Out" })}</a>
-                  </li>) : (<li>
-                    <a href="/page-login">{intl.formatMessage({ id: "Sign In" })}</a>
-                  </li>)}
+                  {isLoggin ? (
+                    <li>
+                      <a href="/page-login">
+                        {intl.formatMessage({ id: "Sign Out" })}
+                      </a>
+                    </li>
+                  ) : (
+                    <li>
+                      <a href="/page-login">
+                        {intl.formatMessage({ id: "Sign In" })}
+                      </a>
+                    </li>
+                  )}
                   {/* <li>
                     <a href="/page-login">{intl.formatMessage({ id: "Sign In" })}</a>
                   </li> */}
                   <li>
-                    <a href="/shop-cart">{intl.formatMessage({ id: "View Cart" })}</a>
+                    <a href="/shop-cart">
+                      {intl.formatMessage({ id: "View Cart" })}
+                    </a>
                   </li>
                   <li>
-                    <a href={`/${intl.locale}/shop-wishlist`}>{intl.formatMessage({ id: "My Wishlist" })}</a>
+                    <a href={`/${intl.locale}/shop-wishlist`}>
+                      {intl.formatMessage({ id: "My Wishlist" })}
+                    </a>
                   </li>
                   {/* <li>
                     <a href="#">Track My Order</a>
@@ -308,7 +349,9 @@ const [isLoggin, setIsLoggin] = useState(false);
                     <a href="#">Help Ticket</a>
                   </li> */}
                   <li>
-                    <a href="/page-account">{intl.formatMessage({ id: "Shipping Details" })}</a>
+                    <a href="/page-account">
+                      {intl.formatMessage({ id: "Shipping Details" })}
+                    </a>
                   </li>
                   <li>
                     <a href={`/${intl?.locale}/shop-compare`}>
@@ -321,8 +364,12 @@ const [isLoggin, setIsLoggin] = useState(false);
                 className="footer-link-widget widget-install-app col  wow animate__animated animate__fadeInUp"
                 data-wow-delay=".5s"
               >
-                <h4 className="widget-title ">{intl.formatMessage({ id: "Install App" })}</h4>
-                <p className="">{intl.formatMessage({ id: "From App Store or Google Play" })}</p>
+                <h4 className="widget-title ">
+                  {intl.formatMessage({ id: "Install App" })}
+                </h4>
+                <p className="">
+                  {intl.formatMessage({ id: "From App Store or Google Play" })}
+                </p>
                 <div className="download-app ">
                   <a href="#" className="hover-up mb-sm-2 mb-lg-0">
                     <img
@@ -335,7 +382,9 @@ const [isLoggin, setIsLoggin] = useState(false);
                     <img src="/assets/imgs/theme/google-play.jpg" alt="nest" />
                   </a>
                 </div>
-                <p className="mb-20 ">{intl.formatMessage({ id: "Secured Payment Gateways" })}</p>
+                <p className="mb-20 ">
+                  {intl.formatMessage({ id: "Secured Payment Gateways" })}
+                </p>
                 <img
                   className=""
                   src="/assets/imgs/theme/payment-method.png"
@@ -355,7 +404,10 @@ const [isLoggin, setIsLoggin] = useState(false);
             </div>
             <div className="col-xl-6 col-lg-6 col-md-6">
               <p className="font-sm mb-0">
-                {intl.formatMessage({ id: "Copyright" })} &copy; {intl.formatMessage({ id: "2024 , by Sartaj Foods All Rights Reserved." })}
+                {intl.formatMessage({ id: "Copyright" })} &copy;{" "}
+                {intl.formatMessage({
+                  id: "2024 , by Sartaj Foods All Rights Reserved.",
+                })}
               </p>
             </div>
             <div className="col-xl-6 col-lg-6 col-md-6 text-end d-none d-md-block">

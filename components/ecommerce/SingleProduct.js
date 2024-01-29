@@ -100,7 +100,7 @@ const SingleProduct = ({
               {product?.manufacturer?.name}
             </Link>
           </div>
-          <h2>
+          <h2 className="ellipsis-title">
             <Link
               href={`/${
                 intl.locale === "eng" ? product?.seo_en : product?.seo_ja
@@ -110,10 +110,10 @@ const SingleProduct = ({
               }`}
             >
               {intl.locale === "eng"
-      ? product?.name
-      : product?.translations?.length > 0
-      ? product?.translations[0]?.value
-      : product?.name}
+                ? product?.name
+                : product?.translations?.length > 0
+                ? product?.translations[0]?.value
+                : product?.name}
             </Link>
           </h2>
 
@@ -136,7 +136,7 @@ const SingleProduct = ({
 
           <div className="comapny_name">
             <span className="font-small text-muted">
-            {intl.formatMessage({ id: 'By' })}{" "}
+              {intl.formatMessage({ id: "By" })}{" "}
               <Link
                 href={`/${
                   intl.locale === "eng"
@@ -185,8 +185,8 @@ const SingleProduct = ({
               >
                 <i className="fi-rs-shopping-cart mr-5"></i>{" "}
                 {product?.out_of_stock_status !== "in stock"
-                  ? intl.formatMessage({ id: 'Out of stock' })
-                  : intl.formatMessage({ id: 'Add' })}
+                  ? intl.formatMessage({ id: "Out of stock" })
+                  : intl.formatMessage({ id: "Add" })}
               </button>
             </div>
           </div>

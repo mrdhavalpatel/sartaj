@@ -18,6 +18,7 @@ import SingleProduct from "../components/ecommerce/SingleProduct";
 import Link from "next/link";
 import axios from "axios";
 import { API_BASE_URL } from "../lib/api";
+import { Spinner } from "react-bootstrap";
 
 const ProductId = ({ products, productFilters, fetchProduct }) => {
   const router = useRouter();
@@ -68,12 +69,13 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
   //  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
   const [productsData, setProductsData] = useState([]);
   const [pagination, setPagination] = useState([]);
-  const [limit, setLimit] = useState(12);
+  const [limit, setLimit] = useState(10);
   const [productTotal, setProductTotal] = useState([]);
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState("default");
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const cratePagination = () => {
     let arr = new Array(Math.ceil(productTotal / limit))
       .fill()
@@ -108,24 +110,32 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
     setCurrentPage(1);
   };
   const getAllProduct = async () => {
+    setIsLoading(true);
     let payload = {
       limit: limit,
       offset: currentPage,
       min: productFilters?.min,
       max: productFilters?.max,
       sort_by: productFilters?.featured,
-      manufacturer_id: router?.query?.slug,
     };
+
+    if (router?.query?.catId && router?.query?.catId !== "") {
+      payload.category_id = router?.query?.catId;
+    } else {
+      payload.manufacturer_id = router?.query?.slug;
+    }
 
     const request = await ApiCall("post", intl, "products/all", payload);
     const allProducts = await request?.data;
+    console.log(allProducts);
     setProductTotal(allProducts?.total_size);
     setProductsData(allProducts?.products);
+    setIsLoading(false);
+    cratePagination();
   };
 
   const getProductReviewed = async (product) => {
     const token = localStorage.getItem("token");
-    console.log(token);
     if (token) {
       const response = await axios.get(
         `${API_BASE_URL}customer/order/purchased-product/${product.id}`,
@@ -152,8 +162,13 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
 
   useEffect(() => {
     getAllProduct();
-    cratePagination();
-  }, [productFilters, productFilters?.featured, limit, currentPage]);
+  }, [
+    productFilters,
+    productFilters?.featured,
+    limit,
+    currentPage,
+    router.query?.catId,
+  ]);
 
   useEffect(() => {
     if (
@@ -163,12 +178,16 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
     ) {
       let currentSlug = router.query.slug || "";
       let pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
-      router.push(`/${"eng"}/${pathWithoutLanguage}`);
+      router.push(`/${"eng"}/${pathWithoutLanguage}${window.location.search}`);
     } else {
       if (router?.pathname?.includes("shop-compare")) {
-        router.push(`/${intl.locale}/${router?.pathname}`);
+        router.push(
+          `/${intl.locale}/${router?.pathname}${window.location.search}`
+        );
       } else if (router.pathname.includes("shop-wishlist")) {
-        router.push(`/${intl.locale}/${router?.pathname}`);
+        router.push(
+          `/${intl.locale}/${router?.pathname}${window.location.search}`
+        );
       }
     }
   }, []);
@@ -205,19 +224,19 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
                 <div className="col-lg-4-5">
                   <div className="shop-product-fillter">
                     <div className="totall-product">
-                      <p>
-                        {intl.formatMessage({ id: "We found" })}
-                        <strong className="text-brand">
-                          {productsData?.length}
-                        </strong>
-                        {intl.formatMessage({ id: "items for you!" })}
-                      </p>
+                      {!isLoading && (
+                        <p>
+                          {intl.formatMessage({ id: "We found" })}
+                          <strong className="text-brand">{productTotal}</strong>
+                          {intl.formatMessage({ id: "items for you!" })}
+                        </p>
+                      )}
                     </div>
                     <div className="sort-by-product-area">
                       <div className="sort-by-cover mr-10">
                         <ShowSelect
                           selectChange={selectChange}
-                          showLimit={12}
+                          showLimit={10}
                         />
                       </div>
                       <div className="sort-by-cover">
@@ -225,23 +244,33 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="row product-grid">
-                    {getPaginatedProducts?.length === 0 && (
-                      <h3>
-                        {intl.formatMessage({ id: "No Products Found" })}{" "}
-                      </h3>
-                    )}
+                  {isLoading ? (
+                    <div
+                      style={{ height: "60vh" }}
+                      className="d-flex justify-content-center align-items-center"
+                    >
+                      <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </Spinner>
+                    </div>
+                  ) : (
+                    <div className="row product-grid">
+                      {getPaginatedProducts?.length === 0 && (
+                        <h3>
+                          {intl.formatMessage({ id: "No Products Found" })}{" "}
+                        </h3>
+                      )}
 
-                    {getPaginatedProducts?.map((item, i) => (
-                      <div
-                        className="col-lg-1-5 col-md-4 col-12 col-sm-6"
-                        key={i}
-                      >
-                        <SingleProduct product={item} />
-                      </div>
-                    ))}
-                  </div>
-
+                      {getPaginatedProducts?.map((item, i) => (
+                        <div
+                          className="col-lg-1-5 col-md-4 col-12 col-sm-6"
+                          key={i}
+                        >
+                          <SingleProduct product={item} />
+                        </div>
+                      ))}
+                    </div>
+                  )}
                   <div className="pagination-area mt-15 mb-sm-5 mb-lg-0">
                     <nav aria-label="Page navigation example">
                       <Pagination

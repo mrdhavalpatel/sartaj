@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import CategoryProduct2 from "../ecommerce/Filter/CategoryProduct2";
 import CategoryProduct3 from "../ecommerce/Filter/CategoryProduct3";
@@ -29,6 +29,8 @@ const Header = ({
   const { language, switchLanguage } = useLanguage();
   const router = useRouter();
   const [isLoggin, setIsLoggin] = useState(false);
+  const dropdownRef = useRef(null);
+
   const handleLanguageSwitch = (newLanguage) => {
     switchLanguage(newLanguage);
     setDLang(newLanguage);
@@ -46,9 +48,9 @@ const Header = ({
         `/${newLanguage}/page-reset-password?token=${currentToken}`
       );
     } else if (slug) {
-      window.location.replace(`${newUrl}/${slug}`);
+      window.location.replace(`${newUrl}/${slug}${window.location.search}`);
     } else {
-      window.location.replace(newUrl);
+      window.location.replace(`${newUrl}${window.location.search}`);
     }
   };
 
@@ -124,19 +126,40 @@ const Header = ({
     ) {
       let currentSlug = router.query.slug || "";
       let pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
-      router.push(`/${"eng"}/${pathWithoutLanguage}`);
+      router.push(`/${"eng"}/${pathWithoutLanguage}${window.location.search}`);
     } else {
       if (router.pathname.includes("shop-compare")) {
         router.push(`/${intl.locale}/${router.pathname}`);
       } else if (router.pathname.includes("shop-wishlist")) {
-        router.push(`/${intl.locale}/${router.pathname}`);
+        router.push(
+          `/${intl.locale}/${router.pathname}${window.location.search}`
+        );
       }
     }
   }, []);
   const handleToggle = () => setToggled(!isToggled);
 
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setToggled(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <header className="header-area header-style-1 header-height-2">
+    <header
+      className={
+        scroll
+          ? "header-area header-style-1 header-height-2 stick"
+          : "header-area header-style-1 header-height-2"
+      }
+    >
       <div className="mobile-promotion">
         <label htmlFor="languageDropdown" className="sr-only">
           {intl.formatMessage({ id: "Select Language" })}
@@ -373,6 +396,7 @@ const Header = ({
                 </a>
 
                 <div
+                  ref={dropdownRef}
                   className={
                     isToggled
                       ? "categories-dropdown-wrap categories-dropdown-active-large font-heading open"
@@ -394,7 +418,7 @@ const Header = ({
                       </Link>
                     </li>
                     <li>
-                      <Link href="/page-about">
+                      <Link href="/about-sartaj">
                         {intl.formatMessage({ id: "About" })}
                       </Link>
                     </li>
@@ -404,13 +428,19 @@ const Header = ({
                       </Link>
                     </li>
                     <li>
-                      <Link href="/page-contact">
+                      <Link href="/contacts">
                         {intl.formatMessage({ id: "Contact" })}
                       </Link>
                     </li>
                     <li>
-                      <Link href="/page-purchase-guide">
+                      <Link href="/delivery_Information">
                         {intl.formatMessage({ id: "Delivery Information" })}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/terms_conditions">
+                        {intl.formatMessage({ id: "Terms" })} &amp;{" "}
+                        {intl.formatMessage({ id: "Conditions" })}
                       </Link>
                     </li>
                     <li>

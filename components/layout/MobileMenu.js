@@ -102,8 +102,9 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                   <span className="fi-rs-apps"></span> Browse Categories
                 </Link>
                 <div
-                  className={`categori-dropdown-wrap categori-dropdown-active-small ${isMenuOpen ? "active" : ""
-                    }`}
+                  className={`categori-dropdown-wrap categori-dropdown-active-small ${
+                    isMenuOpen ? "active" : ""
+                  }`}
                 >
                   <ul>
                     {categories?.map((itm) => {
@@ -128,7 +129,7 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/page-about">
+                    <Link href="/about-sartaj">
                       {intl.formatMessage({ id: "About" })}
                     </Link>
                   </li>
@@ -138,15 +139,21 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/page-contact">
+                    <Link href="/contacts">
                       {intl.formatMessage({ id: "Contact" })}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/page-purchase-guide">
+                    <Link href="/delivery_Information">
                       {intl.formatMessage({ id: "Delivery Information" })}
                     </Link>
                   </li>
+                  <li>
+                      <Link href="/terms_conditions">
+                        {intl.formatMessage({ id: "Terms" })} &amp;{" "}
+                        {intl.formatMessage({ id: "Conditions" })}
+                      </Link>
+                    </li>
                   <li>
                     <Link href="/page-faqs">
                       {intl.formatMessage({ id: "FAQs" })}

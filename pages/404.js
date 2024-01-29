@@ -31,7 +31,7 @@ function Custom404() {
                       <span> {intl.formatMessage({ id: "Homepage" })}</span>
                     </Link>
                     {intl.formatMessage({ id: "or" })}{" "}
-                    <Link href="/page-contact">
+                    <Link href="/contacts">
                       <span>{intl.formatMessage({ id: "Contact us" })}</span>
                     </Link>
                     {intl.formatMessage({ id: "about the problem" })}

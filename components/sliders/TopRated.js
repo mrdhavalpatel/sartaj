@@ -35,7 +35,7 @@ const TopRatedSlider = ({ intl }) => {
             </Link>
           </figure>
           <div className="col-md-8 mb-0">
-            <h6>
+            <h6 className="ellipsis-title">
               <Link
                 href={`/${
                   intl.locale == "eng" ? product.seo_en : product.seo_ja

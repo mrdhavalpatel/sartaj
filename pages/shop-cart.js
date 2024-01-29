@@ -22,6 +22,7 @@ import { Form } from "react-bootstrap";
 import * as Yup from "yup";
 import { auth } from "../lib/auth/auth";
 import { findProductIndexById } from "../util/util";
+import { ApiCall } from "../lib/other/other";
 
 const Cart = ({
   cartItems,
@@ -136,6 +137,11 @@ const Cart = ({
     }
   };
 
+  const updateProductDetails = async () => {
+    const response = await ApiCall("post", intl, "products/all", {});
+    console.log(await response.data.products.length);
+  };
+
   useEffect(() => {
     let Token = storage.get("token");
     const fetchData = () => {
@@ -143,6 +149,9 @@ const Cart = ({
         getCartData(Token);
         setIsLoggedIn(Token);
       } else {
+        if (intl.locale !== "eng") {
+          updateProductDetails();
+        }
         setCartProducts(cartItems);
       }
     };

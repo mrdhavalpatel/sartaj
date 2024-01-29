@@ -11,6 +11,16 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
     };
     addToCart(product);
   };
+
+  const decodeHtml = (html) => {
+    let txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    let txt2 = document.createElement("textarea");
+    txt2.innerHTML = txt.value;
+    const value = txt2.value;
+    return value;
+  };
+
   return (
     <table className="table text-center">
       <tbody>
@@ -107,7 +117,11 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                 </td>
               ) : feature == "description" ? (
                 <td className="row_text font-xs">
-                  <p>{product?.description}</p>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: decodeHtml(product?.description),
+                    }}
+                  ></p>
                 </td>
               ) : feature == "stock" ? (
                 <td className="row_stock">

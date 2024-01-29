@@ -128,4 +128,3 @@ function Pagination({ prev, currentPage, getPaginationGroup, next, pages, handle
 
 export default Pagination;
 
-

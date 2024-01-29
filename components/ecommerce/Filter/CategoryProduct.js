@@ -21,7 +21,7 @@ const CategoryProduct = ({ updateProductCategory }) => {
     // removeSearchTerm();
     updateProductCategory(category);
     router.push({
-      pathname: "/products",
+      pathname: window.location.pathname,
       query: {
         cat: category,
         catId: catId,

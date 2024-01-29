@@ -36,7 +36,7 @@ const Deals1 = ({ product, addToCart }) => {
             <Timer endDateTime={product?.sale_end_date} />
           </div>
           <div className="deals-content">
-            <h2>
+            <h2 className="ellipsis-title">
               <Link href={`/${product?.seo_en}`}>{product.name}</Link>
             </h2>
             <div className="product-rate-cover">

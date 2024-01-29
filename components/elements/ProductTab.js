@@ -104,7 +104,10 @@ const ProductTab = ({
   const decodeHtml = (html) => {
     let txt = document.createElement("textarea");
     txt.innerHTML = html;
-    return txt.value;
+    let txt2 = document.createElement("textarea");
+    txt2.innerHTML = txt.value;
+    const value = txt2.value;
+    return value;
   };
 
   return (
@@ -143,7 +146,9 @@ const ProductTab = ({
           >
             <div
               className=""
-              dangerouslySetInnerHTML={{ __html: decodeHtml(description) }}
+              dangerouslySetInnerHTML={{
+                __html: decodeHtml(description),
+              }}
             />
           </div>
 
