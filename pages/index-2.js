@@ -36,10 +36,7 @@ function Index2() {
                         {intl.formatMessage({ id: "home" })}
                       </span>
                     </h2>
-                    <Link
-                      href={`/${intl.locale}/shop-fullwidth`}
-                      className="btn btn-xs"
-                    >
+                    <Link href={`/${intl.locale}/shop`} className="btn btn-xs">
                       {intl.formatMessage({ id: "Shop Now" })}{" "}
                       <i className="fi-rs-arrow-small-right"></i>
                     </Link>
@@ -88,10 +85,7 @@ function Index2() {
               <h3 className="">
                 {intl.formatMessage({ id: "Deals Of The Day" })}
               </h3>
-              <Link
-                href={`/${intl.locale}/shop-fullwidth`}
-                className="show-all"
-              >
+              <Link href={`/${intl.locale}/shop`} className="show-all">
                 {intl.formatMessage({ id: "All Deals" })}
                 <i className="fi-rs-angle-right"></i>
               </Link>
@@ -105,10 +99,7 @@ function Index2() {
             <div className="section-title">
               <div className="title">
                 <h3>{intl.formatMessage({ id: "Shop by Categories" })}</h3>
-                <Link
-                  href={`/${intl.locale}/shop-fullwidth`}
-                  className="show-all"
-                >
+                <Link href={`/${intl.locale}/shop`} className="show-all">
                   {intl.formatMessage({ id: "All Categories" })}
                   <i className="fi-rs-angle-right"></i>
                 </Link>

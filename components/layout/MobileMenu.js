@@ -110,9 +110,11 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                     {categories?.map((itm) => {
                       return (
                         <li onClick={(e) => selectCategory(e, itm?.id)}>
-                          <Link href={`/${intl.locale}/shop-fullwidth`}>
+                          <Link href={`/${intl.locale}/shop`}>
                             <i className="evara-font-dress"></i>
-                            {itm?.name}
+                            <span
+                              dangerouslySetInnerHTML={{ __html: itm?.name }}
+                            />
                           </Link>
                         </li>
                       );
@@ -134,7 +136,7 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                     </Link>
                   </li>
                   <li>
-                    <Link href={`/${intl.locale}/shop-fullwidth`}>
+                    <Link href={`/${intl.locale}/shop`}>
                       {intl.formatMessage({ id: "Shop" })}
                     </Link>
                   </li>
@@ -149,13 +151,7 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                     </Link>
                   </li>
                   <li>
-                      <Link href="/terms_conditions">
-                        {intl.formatMessage({ id: "Terms" })} &amp;{" "}
-                        {intl.formatMessage({ id: "Conditions" })}
-                      </Link>
-                    </li>
-                  <li>
-                    <Link href="/page-faqs">
+                    <Link href="/faqs">
                       {intl.formatMessage({ id: "FAQs" })}
                     </Link>
                   </li>

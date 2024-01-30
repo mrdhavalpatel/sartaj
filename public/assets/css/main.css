@@ -13203,4 +13203,5 @@ td.product-des.product-name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
+  line-height: "5px";
 }

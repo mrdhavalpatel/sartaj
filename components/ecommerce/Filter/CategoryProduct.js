@@ -42,7 +42,7 @@ const CategoryProduct = ({ updateProductCategory }) => {
             <li onClick={(e) => selectCategory(e, Itm?.name, Itm?.id)}>
               <a>
                 <img src={Itm?.image} alt="nest" />
-                {Itm?.name}
+                <span dangerouslySetInnerHTML={{ __html: Itm?.name }} />
               </a>
               <span className="count">{Itm?.total_produts}</span>
             </li>

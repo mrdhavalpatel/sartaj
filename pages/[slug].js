@@ -32,10 +32,10 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
   const [loading, setLoading] = useState(true);
   const intl = useIntl();
   // const URL = window.location.pathname;
-  useEffect(() => {
-    setLoading(true);
-    getProductDetailsBySlug();
-  }, [router?.query?.slug]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   getProductDetailsBySlug();
+  // }, [router?.query?.slug]);
 
   const getProductDetailsBySlug = () => {
     if (router?.query?.slug) {
@@ -127,7 +127,6 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
 
     const request = await ApiCall("post", intl, "products/all", payload);
     const allProducts = await request?.data;
-    console.log(allProducts);
     setProductTotal(allProducts?.total_size);
     setProductsData(allProducts?.products);
     setIsLoading(false);
@@ -161,13 +160,16 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
   };
 
   useEffect(() => {
+    setLoading(true);
+    getProductDetailsBySlug();
     getAllProduct();
+    setLoading(false);
   }, [
     productFilters,
     productFilters?.featured,
     limit,
     currentPage,
-    router.query?.catId,
+    router.query?.slug,
   ]);
 
   useEffect(() => {

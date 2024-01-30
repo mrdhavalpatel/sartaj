@@ -285,7 +285,7 @@ const Footer = () => {
                     </a>
                   </li>
                   <li>
-                    <a href="/page-privacy-policy">
+                    <a href="/privacy-policy">
                       {intl.formatMessage({ id: "Privacy Policy" })}
                     </a>
                   </li>
@@ -318,19 +318,19 @@ const Footer = () => {
                 <ul className="footer-list  mb-sm-5 mb-md-0">
                   {isLoggin ? (
                     <li>
-                      <a href="/page-login">
+                      <a href="/sign-in">
                         {intl.formatMessage({ id: "Sign Out" })}
                       </a>
                     </li>
                   ) : (
                     <li>
-                      <a href="/page-login">
+                      <a href="/sign-in">
                         {intl.formatMessage({ id: "Sign In" })}
                       </a>
                     </li>
                   )}
                   {/* <li>
-                    <a href="/page-login">{intl.formatMessage({ id: "Sign In" })}</a>
+                    <a href="/sign-in">{intl.formatMessage({ id: "Sign In" })}</a>
                   </li> */}
                   <li>
                     <a href="/shop-cart">
@@ -349,7 +349,7 @@ const Footer = () => {
                     <a href="#">Help Ticket</a>
                   </li> */}
                   <li>
-                    <a href="/page-account">
+                    <a href="/my-account">
                       {intl.formatMessage({ id: "Shipping Details" })}
                     </a>
                   </li>

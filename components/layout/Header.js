@@ -180,7 +180,7 @@ const Header = ({
               <div className="header-info">
                 <ul>
                   <li>
-                    <Link href="/page-account">
+                    <Link href="/my-account">
                       {intl.formatMessage({ id: "My Account" })}
                     </Link>
                   </li>
@@ -326,7 +326,7 @@ const Header = ({
                     <div className="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                       <ul>
                         <li>
-                          <Link href="/page-account">
+                          <Link href="/my-account">
                             <i className="fi fi-rs-user mr-10"></i>
                             {intl.formatMessage({ id: "My Account" })}
                           </Link>
@@ -342,7 +342,7 @@ const Header = ({
                         {isLoggin ? (
                           <li>
                             <Link
-                              href="/page-login"
+                              href="/sign-in"
                               onClick={() => {
                                 localStorage.removeItem("token");
                                 logout();
@@ -355,7 +355,7 @@ const Header = ({
                           </li>
                         ) : (
                           <li>
-                            <Link href="/page-login">
+                            <Link href="/sign-in">
                               <i className="fi fi-rs-sign-out mr-10"></i>
                               {intl.formatMessage({ id: "Sign In" })}
                             </Link>
@@ -423,7 +423,7 @@ const Header = ({
                       </Link>
                     </li>
                     <li>
-                      <Link href={`/${intl.locale}/shop-fullwidth`}>
+                      <Link href={`/${intl.locale}/shop`}>
                         {intl.formatMessage({ id: "Shop" })}
                       </Link>
                     </li>
@@ -444,7 +444,7 @@ const Header = ({
                       </Link>
                     </li>
                     <li>
-                      <Link href="/page-faqs">
+                      <Link href="/faqs">
                         {intl.formatMessage({ id: "FAQs" })}
                       </Link>
                     </li>

@@ -214,7 +214,11 @@ const Products = ({ productFilters }) => {
                             href="/products/[slug]"
                             as={`/products/${newProducts?.id}`}
                           >
-                            {newProducts?.name}
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: newProducts?.name,
+                              }}
+                            />
                           </Link>
                         </h5>
                         <p className="price mb-0 mt-5">¥{newProducts?.price}</p>

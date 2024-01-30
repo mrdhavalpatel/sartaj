@@ -35,10 +35,7 @@ function Test() {
                   <h3 className="">
                     {intl.formatMessage({ id: "Deals Of The Day" })}
                   </h3>
-                  <Link
-                    href={`/${intl.locale}/shop-fullwidth`}
-                    className="show-all"
-                  >
+                  <Link href={`/${intl.locale}/shop`} className="show-all">
                     {intl.formatMessage({ id: "All Deals" })}
                     <i className="fi-rs-angle-right"></i>
                   </Link>
@@ -170,10 +167,7 @@ function Test() {
             <div className="section-title">
               <div className="title">
                 <h3>Shop by Categories</h3>
-                <Link
-                  href={`/${intl.locale}/shop-fullwidth`}
-                  className="show-all"
-                >
+                <Link href={`/${intl.locale}/shop`} className="show-all">
                   All Categories
                   <i className="fi-rs-angle-right"></i>
                 </Link>

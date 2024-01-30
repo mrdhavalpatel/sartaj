@@ -32,7 +32,7 @@ const CategoryProduct3 = ({ updateProductCategory, data }) => {
             <li onClick={(e) => selectCategory(e, Item?.name, Item?.id)}>
               <a>
                 <img src={Item?.image} alt="nest" />
-                {Item?.name}
+                <span dangerouslySetInnerHTML={{ __html: Item?.name }} />
               </a>
             </li>
           );

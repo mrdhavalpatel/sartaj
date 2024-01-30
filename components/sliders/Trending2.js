@@ -38,10 +38,10 @@ const TrendingSlider = ({ intl }) => {
             <h6>
               <Link
                 href={`/${
-                  intl.locale == "en" ? product.seo_en : product.seo_ja
+                  intl.locale == "eng" ? product.seo_en : product.seo_ja
                 }`}
               >
-                {product?.name}
+                <span dangerouslySetInnerHTML={{ __html: product?.name }} />
               </Link>
             </h6>
             <div className="product-rate-cover">

@@ -61,12 +61,13 @@ const Search = () => {
             {intl.formatMessage({ id: "All Categories" })}
           </option>
           {categories?.map((itm) => (
-            <option key={itm.id} value={itm.id}>
-              {itm.name}
-            </option>
+            <option
+              key={itm.id}
+              value={itm.id}
+              dangerouslySetInnerHTML={{ __html: itm.name }}
+            ></option>
           ))}
         </select>
-        {console.log("search =====>",searchTerm)}
         <input
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -105,9 +106,8 @@ const Search = () => {
                   href={`/${
                     intl.locale == "eng" ? result?.seo_en : result?.seo_ja
                   }`}
-                >
-                  {result?.name}
-                </a>
+                  dangerouslySetInnerHTML={{ __html: result?.name }}
+                ></a>
               </li>
             ))}
           </ul>

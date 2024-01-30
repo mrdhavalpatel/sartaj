@@ -3,67 +3,42 @@ import Layout from "../components/layout/Layout";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { auth } from "../lib/auth/auth";
-import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import { useAuth } from "../components/context/AuthContext";
 import { connect } from "react-redux";
-import { API_BASE_URL } from "../lib/api";
-import axios from "axios";
 import { useIntl } from "react-intl";
+import { useState } from "react";
 
-function Login({ cartItems }) {
-  const router = useRouter();
-  const { login } = useAuth();
+function ForgotPassword() {
+  const [isLoading, setIsLoading] = useState(false);
   const intl = useIntl();
-  const addCurrenItems = (token) => {
-    if (cartItems?.length > 0) {
-      let FCart = cartItems?.map((item) => ({
-        product_id: item?.id,
-        qty: item?.quantity,
-      }));
 
-      let payload = {
-        cart: FCart,
-      };
-      const response = axios
-        .post(`${API_BASE_URL}customer/cart/add-items`, payload, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .catch((error) => {
-          console.log("error", error?.code === "ERR_NETWORK");
-        });
-    }
-  };
   const validationSchema = Yup.object().shape({
     usernameOrEmail: Yup.string().required(
       intl.formatMessage({ id: "Username or Email is required" })
     ),
-    password: Yup.string().required({ id: "Password is required" }),
   });
+
   const handleSubmit = (values) => {
     const payload = {
       email_or_phone: values?.usernameOrEmail,
-      password: values?.password,
     };
-    auth("post", "auth/login", payload).then((res) => {
-      if (res?.response?.data?.errors) {
-        toast.error(res?.response?.data?.errors?.[0]?.message);
-      } else {
-        localStorage.setItem("token", res.token);
-        addCurrenItems(res.token);
-
-        login(res.token);
-        router.push("/");
-      }
-    });
+    setIsLoading(true);
+    auth("post", "auth/forgot-password", payload)
+      .then((res) => {
+        if (res?.response?.data?.errors) {
+          toast.error(res?.response?.data?.errors?.[0]?.message);
+        } else {
+          toast.success(res?.message);
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
+
   return (
     <>
-      <Layout parent="Home" sub="Pages" subChild="Login & Register">
+      <Layout parent="Home" sub="Pages" subChild="Forgot password">
         <div className="page-content pt-150 pb-150">
           <div className="container">
             <div className="row">
@@ -81,14 +56,14 @@ function Login({ cartItems }) {
                       <div className="padding_eight_all bg-white">
                         <div className="heading_s1">
                           <h1 className="mb-5">
-                            {intl.formatMessage({ id: "Login" })}
+                            {intl.formatMessage({ id: "Forgot password" })}
                           </h1>
                           <p className="mb-30">
                             {intl.formatMessage({
-                              id: "Don't have an account?",
+                              id: "Already have an account?",
                             })}{" "}
-                            <Link href="/page-register">
-                              {intl.formatMessage({ id: "Create here" })}
+                            <Link href="/sign-in">
+                              {intl.formatMessage({ id: "Log in instead!" })}
                             </Link>
                           </p>
                         </div>
@@ -120,33 +95,18 @@ function Login({ cartItems }) {
                                 style={{ color: "red" }}
                               />
                             </div>
-                            <div className="form-group">
-                              <Field
-                                type="password"
-                                name="password"
-                                placeholder={intl.formatMessage({
-                                  id: "Your password *",
-                                })}
-                                className="form-control"
-                              />
-                              <ErrorMessage
-                                name="password"
-                                component="div"
-                                style={{ color: "red" }}
-                              />
-                            </div>
-                            <p className="mb-30">
-                              <Link href="/page-forgotpassword">
-                                {intl.formatMessage({ id: "Forgot password" })}
-                              </Link>
-                            </p>
+
                             <div className="form-group">
                               <button
                                 type="submit"
                                 className="btn btn-heading btn-block hover-up"
                                 name="login"
+                                disabled={isLoading}
                               >
-                                {intl.formatMessage({ id: "Login" })}
+                                {intl.formatMessage({
+                                  id: `${isLoading ? "Requesting" : "Request"}`,
+                                })}
+                                {isLoading && "..."}
                               </button>
                             </div>
                           </Form>
@@ -165,16 +125,5 @@ function Login({ cartItems }) {
 }
 const mapStateToProps = (state) => ({
   cartItems: state.cart,
-  activeCart: state.counter,
 });
-// const mapDispatchToProps = {
-//   closeCart,
-//   increaseQuantity,
-//   getCartItems,
-//   decreaseQuantity,
-//   deleteFromCart,
-//   openCart,
-//   clearCart,
-// };
-// export default Login;
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(ForgotPassword);

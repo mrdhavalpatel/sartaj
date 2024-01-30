@@ -66,7 +66,7 @@ function Privacy() {
       if (res?.response?.data?.errors) {
         toast.error(res?.response?.data?.errors?.[0]?.message);
       } else {
-        router.push("/page-login");
+        router.push("/sign-in");
       }
     });
   };
@@ -89,7 +89,7 @@ function Privacy() {
                           {intl.formatMessage({
                             id: "Already have an account?",
                           })}{" "}
-                          <Link href="/page-login">
+                          <Link href="/sign-in">
                             {intl.formatMessage({ id: "Log in instead!" })}
                           </Link>
                         </p>
@@ -248,7 +248,7 @@ function Privacy() {
                                   style={{ color: "red" }}
                                 />
                               </div>
-                              <Link href="/page-privacy-policy">
+                              <Link href="/privacy-policy">
                                 <i className="fi-rs-book-alt mr-5 text-muted"></i>
                                 {intl.formatMessage({ id: "Lean more" })}
                               </Link>

@@ -90,7 +90,10 @@ const ProductDetails = ({
                       </div>
                     </div>
 
-                    <h2 className="title-detail">{product?.name}</h2>
+                    <h2
+                      className="title-detail"
+                      dangerouslySetInnerHTML={{ __html: product?.name }}
+                    ></h2>
                     <div className="product-detail-rating">
                       <div className="product-rate-cover text-end">
                         <div className="product-rate d-inline-block">

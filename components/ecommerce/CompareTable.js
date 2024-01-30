@@ -47,7 +47,9 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                           : product?.seo_ja
                       }`}
                     >
-                      {product?.name}
+                      <span
+                        dangerouslySetInnerHTML={{ __html: product?.name }}
+                      />
                     </Link>
                   </h5>
                 </td>

@@ -165,23 +165,29 @@ const OrderReceived = ({ cartItems }) => {
                   {shippingData?.details?.map((item, i) => (
                     <tr>
                       <td class="text-left">
-                      <Link
-                              href={
-                                intl.locale == "eng"
-                                  ? `${
-                                      item?.seo_en
-                                        ? item?.seo_en
-                                        : item?.product?.seo_en
-                                    }`
-                                  : `${
-                                      item?.seo_ja
-                                        ? item?.seo_ja
-                                        : item?.product?.seo_ja
-                                    }`
-                              }
-                            >
-                              {item?.name ? item?.name : item?.product?.name}
-                            </Link>
+                        <Link
+                          href={
+                            intl.locale == "eng"
+                              ? `${
+                                  item?.seo_en
+                                    ? item?.seo_en
+                                    : item?.product?.seo_en
+                                }`
+                              : `${
+                                  item?.seo_ja
+                                    ? item?.seo_ja
+                                    : item?.product?.seo_ja
+                                }`
+                          }
+                        >
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html: item?.name
+                                ? item?.name
+                                : item?.product?.name,
+                            }}
+                          />
+                        </Link>
                       </td>
                       <td class="text-left">{item?.product.model}</td>
                       <td class="text-right"> {item?.quantity}</td>

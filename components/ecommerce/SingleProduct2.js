@@ -95,7 +95,7 @@ const SingleProduct2 = ({
                 intl.locale === "eng" ? product?.seo_en : product?.seo_ja
               }`}
             >
-              {product?.name}
+              <span dangerouslySetInnerHTML={{ __html: product?.name }} />
             </Link>
           </h2>
 

@@ -109,11 +109,16 @@ const SingleProduct = ({
                 intl.locale === "eng" ? product?.seo_en : product?.seo_ja
               }`}
             >
-              {intl.locale === "eng"
-                ? product?.name
-                : product?.translations?.length > 0
-                ? product?.translations[0]?.value
-                : product?.name}
+              <span
+                dangerouslySetInnerHTML={{
+                  __html:
+                    intl.locale === "eng"
+                      ? product?.name
+                      : product?.translations?.length > 0
+                      ? product?.translations[0]?.value
+                      : product?.name,
+                }}
+              />
             </Link>
           </h2>
 

@@ -68,9 +68,15 @@ function Index2() {
                   }}
                 >
                   <div className="banner-text mt-50">
-                    <h2 className="mb-30">{ intl.locale === "eng" ? adBanner?.[0]?.title : adBanner?.[0]?.title_ja }</h2>
+                    <h2 className="mb-30">
+                      {intl.locale === "eng"
+                        ? adBanner?.[0]?.title
+                        : adBanner?.[0]?.title_ja}
+                    </h2>
                     <h5 className="mb-30 fw-300">
-                      {intl.locale === "eng" ? adBanner?.[0]?.description : adBanner?.[0]?.description_ja }
+                      {intl.locale === "eng"
+                        ? adBanner?.[0]?.description
+                        : adBanner?.[0]?.description_ja}
                     </h5>
 
                     {/* <Link
@@ -124,10 +130,7 @@ function Index2() {
               <h3 className="">
                 {intl.formatMessage({ id: "Deals Of The Day" })}
               </h3>
-              <Link
-                href={`/${intl.locale}/shop-fullwidth`}
-                className="show-all"
-              >
+              <Link href={`/${intl.locale}/shop`} className="show-all">
                 {intl.formatMessage({ id: "All Deals" })}
                 <i className="fi-rs-angle-right"></i>
               </Link>
@@ -141,10 +144,7 @@ function Index2() {
             <div className="section-title">
               <div className="title">
                 <h3>{intl.formatMessage({ id: "Shop by Categories" })}</h3>
-                <Link
-                  href={`/${intl.locale}/shop-fullwidth`}
-                  className="show-all"
-                >
+                <Link href={`/${intl.locale}/shop`} className="show-all">
                   {intl.formatMessage({ id: "All Categories" })}
                   <i className="fi-rs-angle-right"></i>
                 </Link>

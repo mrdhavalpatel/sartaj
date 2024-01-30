@@ -200,7 +200,7 @@ function Account() {
       getOrderList(encodedToken);
       getAddress(encodedToken);
     } else {
-      router.push("/page-login");
+      router.push("/sign-in");
     }
   }, [show]);
 
@@ -308,7 +308,7 @@ function Account() {
                         </li>
                         <li className="nav-item">
                           <Link
-                            href="/page-login"
+                            href="/sign-in"
                             onClick={() => handleLogout()}
                             className="nav-link"
                           >
@@ -654,7 +654,7 @@ function Account() {
                               {intl.formatMessage({
                                 id: "Already have an account?",
                               })}{" "}
-                              <Link href="/page-login">
+                              <Link href="/sign-in">
                                 {" "}
                                 {intl.formatMessage({ id: "Log in instead!" })}
                               </Link>

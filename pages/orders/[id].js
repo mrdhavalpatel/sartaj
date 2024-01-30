@@ -47,7 +47,11 @@ const OrderDetails = () => {
   return (
     <Layout parent="Home">
       <div className="container" style={{ maxWidth: "70%", marginTop: 20 }}>
-        <Button variant="primary" onClick={() => router.push(`/page-account?activeIndex=2`)} size="sm">
+        <Button
+          variant="primary"
+          onClick={() => router.push(`/my-account?activeIndex=2`)}
+          size="sm"
+        >
           Go back
         </Button>
         {isLoading ? (
@@ -155,7 +159,13 @@ const OrderDetails = () => {
                     return (
                       <>
                         <tr>
-                          <td class="text-left">{details.product.name}</td>
+                          <td class="text-left">
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: details.product.name,
+                              }}
+                            />
+                          </td>
                           <td class="text-right">{details?.quantity}</td>
                           <td class="text-right">
                             ¥{details?.product?.actual_price}

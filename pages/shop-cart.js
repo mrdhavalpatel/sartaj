@@ -424,7 +424,7 @@ const Cart = ({
                 </table>
               </div>
               <div className="cart-action text-end">
-                <a className="btn " href={`/${intl.locale}/shop-fullwidth`}>
+                <a className="btn " href={`/${intl.locale}/shop`}>
                   <i className="fi-rs-shopping-bag mr-10"></i>
                   {intl.formatMessage({ id: "Continue Shopping" })}
                 </a>

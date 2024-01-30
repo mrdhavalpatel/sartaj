@@ -58,7 +58,7 @@ function ResetPassword() {
           toast.error(res?.response?.data?.errors?.[0]?.message);
         } else {
           toast.success(res?.message);
-          router.push("/page-login");
+          router.push("/sign-in");
         }
       })
       .finally(() => {
@@ -92,7 +92,7 @@ function ResetPassword() {
                             {intl.formatMessage({
                               id: "Already have an account?",
                             })}{" "}
-                            <Link href="/page-login">
+                            <Link href="/sign-in">
                               {intl.formatMessage({ id: "Log in instead!" })}
                             </Link>
                           </p>

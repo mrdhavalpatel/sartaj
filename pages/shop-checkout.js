@@ -52,9 +52,12 @@ const Cart = ({
     setSelectedRadioId(id);
   };
   const calculateAmountToAdd = () => {
-    return Math.round(cartTotal.minOrderAmount - (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0));
+    return Math.round(
+      cartTotal.minOrderAmount -
+        (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
+    );
   };
-  console.log(cartTotal)
+  console.log(cartTotal);
   const getUserDetails = async (encodedToken) => {
     try {
       const response = await api.get("customer/info", {
@@ -92,8 +95,7 @@ const Cart = ({
               setCoupanDetails(
                 `${response?.data?.discount}% discount applied sucessfully`
               );
-            }
-            else if (response.data.discount_type == "amount") {
+            } else if (response.data.discount_type == "amount") {
               setCoupanDetails(
                 `${response?.data?.discount} ¥ discount applied sucessfully`
               );
@@ -110,7 +112,7 @@ const Cart = ({
       toast.error("Please enter valid coupan");
     }
   };
-  console.log("cart prodyct detail", cartItemsData)
+  console.log("cart prodyct detail", cartItemsData);
   const placeOrder = async () => {
     try {
       let token = localStorage.getItem("token");
@@ -205,7 +207,7 @@ const Cart = ({
           : selectedAddressData?.full_name,
       road:
         values?.billing_address2 != undefined ||
-          values?.billing_address2 != null
+        values?.billing_address2 != null
           ? values?.billing_address2
           : selectedAddressData?.billing_address2,
       house:
@@ -307,7 +309,6 @@ const Cart = ({
                 name="full_name"
                 placeholder={intl.formatMessage({ id: "Full Name*" })}
               />
-
             </div>
 
             <div className="form-group">
@@ -546,15 +547,19 @@ const Cart = ({
                   >
                     {address?.billing_address?.map((option) => (
                       <option key={option.id} value={option.id}>
-                        {`${option?.full_name !== null
+                        {`${
+                          option?.full_name !== null
                             ? option.full_name + ","
                             : ""
-                          } ${option?.address !== null ? option.address + "," : ""
-                          }${option?.road !== null ? option.road + "," : ""}${option?.post_code !== null
+                        } ${
+                          option?.address !== null ? option.address + "," : ""
+                        }${option?.road !== null ? option.road + "," : ""}${
+                          option?.post_code !== null
                             ? option?.post_code + ","
                             : ""
-                          }${option?.city !== null ? option?.city + "," : ""}${option?.state !== null ? option?.state + "," : ""
-                          }`}
+                        }${option?.city !== null ? option?.city + "," : ""}${
+                          option?.state !== null ? option?.state + "," : ""
+                        }`}
                       </option>
                     ))}
                   </select>
@@ -582,25 +587,31 @@ const Cart = ({
                               </td>
                               <td>
                                 <h6 className="w-160 mb-5">
-                                  <a>{item?.product?.name}</a>
+                                  <a
+                                    dangerouslySetInnerHTML={{
+                                      __html: item?.product?.name,
+                                    }}
+                                  ></a>
                                   <div className="product-rate-cover">
                                     <div className="product-rate d-inline-block">
                                       <div
                                         className="product-rating"
                                         style={{
-                                          width: `${item?.product?.overall_rating
+                                          width: `${
+                                            item?.product?.overall_rating
                                               ? item?.product?.overall_rating
                                               : 0
-                                            }%`,
+                                          }%`,
                                         }}
                                       ></div>
                                     </div>
                                     <span className="font-small ml-5 text-muted">
                                       {`(
-                                    ${item?.product?.total_reviews
-                                          ? item?.product?.total_reviews
-                                          : 0
-                                        }
+                                    ${
+                                      item?.product?.total_reviews
+                                        ? item?.product?.total_reviews
+                                        : 0
+                                    }
                                     )`}
                                     </span>
                                   </div>
@@ -617,11 +628,11 @@ const Cart = ({
                                   {/* {(item.quantity ? item.quantity : 1) *
                                     item.price} */}
                                   {(item?.quantity ? item?.quantity : 1) *
-                                    item?.actual_price
+                                  item?.actual_price
                                     ? item?.actual_price
                                     : item?.product.actual_price
-                                      ? item?.product.actual_price
-                                      : 0}
+                                    ? item?.product.actual_price
+                                    : 0}
                                 </h4>
                               </td>
                             </tr>
@@ -632,7 +643,9 @@ const Cart = ({
                       "No Products"
                     )}
                     <div className="divider-2 mb-30"></div>
-                    <div className="heading_s1 mb-3"><h4>Cart Totals</h4></div>
+                    <div className="heading_s1 mb-3">
+                      <h4>Cart Totals</h4>
+                    </div>
                     {cartTotal.cartProducts?.length > 0 ? (
                       <table
                         style={{
@@ -658,8 +671,10 @@ const Cart = ({
                               border: "1px solid #bababa",
                               padding: "5px 15px",
                             }}
-                          ><span className="font-lg fw-900 text-brand">
-                            ¥{cartTotal?.total_sub_amt}</span>
+                          >
+                            <span className="font-lg fw-900 text-brand">
+                              ¥{cartTotal?.total_sub_amt}
+                            </span>
                           </td>
                         </tr>
                         <tr>
@@ -680,8 +695,10 @@ const Cart = ({
                               border: "1px solid #bababa",
                               padding: "5px 15px",
                             }}
-                          ><span className="font-lg fw-900 text-brand">
-                            ¥{cartTotal?.delivery_charge}</span>
+                          >
+                            <span className="font-lg fw-900 text-brand">
+                              ¥{cartTotal?.delivery_charge}
+                            </span>
                           </td>
                         </tr>
                         {cartTotal?.eight_percent ? (
@@ -702,8 +719,10 @@ const Cart = ({
                                 border: "1px solid #bababa",
                                 padding: "5px 15px",
                               }}
-                            ><span className="font-lg fw-900 text-brand">
-                              ¥{cartTotal?.eight_percent}</span>
+                            >
+                              <span className="font-lg fw-900 text-brand">
+                                ¥{cartTotal?.eight_percent}
+                              </span>
                             </td>
                           </tr>
                         ) : null}
@@ -728,11 +747,13 @@ const Cart = ({
                                 border: "1px solid #bababa",
                                 padding: "5px 15px",
                               }}
-                            ><span className="font-lg fw-900 text-brand">
-                              ¥
-                              {cartTotal?.ten_percent
-                                ? cartTotal?.ten_percent
-                                : 0}</span>
+                            >
+                              <span className="font-lg fw-900 text-brand">
+                                ¥
+                                {cartTotal?.ten_percent
+                                  ? cartTotal?.ten_percent
+                                  : 0}
+                              </span>
                             </td>
                           </tr>
                         ) : null}
@@ -754,8 +775,10 @@ const Cart = ({
                                 border: "1px solid #bababa",
                                 padding: "5px 15px",
                               }}
-                            ><span className="font-lg fw-900 text-brand">
-                              ¥{coupanRes?.discount_price}</span>
+                            >
+                              <span className="font-lg fw-900 text-brand">
+                                ¥{coupanRes?.discount_price}
+                              </span>
                             </td>
                           </tr>
                         ) : null}
@@ -775,11 +798,13 @@ const Cart = ({
                               border: "1px solid #bababa",
                               padding: "5px 15px",
                             }}
-                          ><span className="font-lg fw-900 text-brand">
-                            ¥
-                            {coupanRes
-                              ? coupanRes?.orderAmount
-                              : cartTotal?.total_amt}</span>
+                          >
+                            <span className="font-lg fw-900 text-brand">
+                              ¥
+                              {coupanRes
+                                ? coupanRes?.orderAmount
+                                : cartTotal?.total_amt}
+                            </span>
                           </td>
                         </tr>
                       </table>
@@ -787,41 +812,45 @@ const Cart = ({
                   </div>
                   <div className="delivery_time_div">
                     <div className="divider-2 mb-30"></div>
-                    <div className="heading_s1 mb-3"><h4>Delivery time</h4></div>
+                    <div className="heading_s1 mb-3">
+                      <h4>Delivery time</h4>
+                    </div>
 
-                  {timeSlot?.map((Item, index) => {
-                    const radioId = Item?.id;
+                    {timeSlot?.map((Item, index) => {
+                      const radioId = Item?.id;
 
-                    return (
-                      <div key={radioId} className="custome-radio">
-                        <input
-                          className="form-check-input"
-                          required=""
-                          type="radio"
-                          name="timeslot"
-                          id={radioId}
-                          checked={
-                            radioId === selectedRadioId ||
-                            (index === 0 && selectedRadioId === null)
-                          }
-                          onChange={(e) => handleRadioChange(radioId)}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor={radioId}
-                          data-bs-toggle="collapse"
-                          data-target="#timeslot"
-                          aria-controls="timeslot"
-                        >
-                          {Item?.start_time} - {Item?.end_time}
-                        </label>
-                      </div>
-                    );
-                  })}
+                      return (
+                        <div key={radioId} className="custome-radio">
+                          <input
+                            className="form-check-input"
+                            required=""
+                            type="radio"
+                            name="timeslot"
+                            id={radioId}
+                            checked={
+                              radioId === selectedRadioId ||
+                              (index === 0 && selectedRadioId === null)
+                            }
+                            onChange={(e) => handleRadioChange(radioId)}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={radioId}
+                            data-bs-toggle="collapse"
+                            data-target="#timeslot"
+                            aria-controls="timeslot"
+                          >
+                            {Item?.start_time} - {Item?.end_time}
+                          </label>
+                        </div>
+                      );
+                    })}
                   </div>
                   <div className="payment_method mt-30">
                     <div className="divider-2 mb-30"></div>
-                    <div className="heading_s1 mb-3"><h4>{intl.formatMessage({ id: "Payment" })}</h4></div>
+                    <div className="heading_s1 mb-3">
+                      <h4>{intl.formatMessage({ id: "Payment" })}</h4>
+                    </div>
 
                     <div className="payment_option">
                       <div className="custome-radio">

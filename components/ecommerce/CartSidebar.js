@@ -61,7 +61,10 @@ const CartSidebar = ({
                       alt="nest"
                     />
                     <div>
-                      <h6 className="mb-0">{item.name}</h6>
+                      <h6
+                        className="mb-0"
+                        dangerouslySetInnerHTML={{ __html: item.name }}
+                      ></h6>
                       <p className="mb-0">
                         <span>${item.actual_price} </span> x
                         <span>{item.quantity}</span>
