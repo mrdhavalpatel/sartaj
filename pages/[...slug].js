@@ -50,7 +50,7 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
       };
       ApiCall("post", intl, `seo_type_check`, payload).then((res) => {
         setSeoType(res?.data?.type);
-
+        console.log(res?.data?.type);
         if (res?.data?.type !== "category") {
           ApiCall(
             "get",
@@ -122,7 +122,6 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
   };
   const getAllProduct = async () => {
     setIsLoading(true);
-    console.log("slug=====>",router?.query?.slug)
     if (seoType !== "category" && router?.query?.slug) {
       let payload = {
         limit: limit,
@@ -130,7 +129,7 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
         min: productFilters?.min,
         max: productFilters?.max,
         sort_by: productFilters?.featured,
-        manufacturer_id: router?.query?.slug.join("/").replace(",", "/" ), 
+        manufacturer_id: router?.query?.slug.join("/").replace(",", "/"),
       };
 
       const request = await ApiCall("post", intl, "products/all", payload);
@@ -194,8 +193,6 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
               .replace(",", "/")
               .replace("[...slug]", "")
           : router.query.slug) || "";
-          console.log("fdsfsdfsd" , router.query.slug)
-          
       let pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
       router.push(`/${"eng"}/${pathWithoutLanguage}${window.location.search}`);
     } else {
@@ -236,7 +233,7 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
         </div>
       </Layout>
     );
-  } else if (seoType === "manufacture") {
+  } else if (seoType === "manufacturer") {
     return (
       <Layout parent="Home" sub="Store  " subChild="About">
         <section className="mt-50 mb-50">

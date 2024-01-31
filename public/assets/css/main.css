@@ -13102,7 +13102,7 @@ td.product-des.product-name {
 
   .product-cart-wrap .product-content-wrap h2 {
     font-size: 13px;
-    line-height: 1.7;
+    line-height: 1.5;
   }
 
   .product-cart-wrap .product-content-wrap .product-price {
@@ -13203,5 +13203,5 @@ td.product-des.product-name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
-  line-height: 1.7;
+  line-height: "5px";
 }

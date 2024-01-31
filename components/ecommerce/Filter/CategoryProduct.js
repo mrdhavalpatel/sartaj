@@ -23,9 +23,9 @@ const CategoryProduct = ({ updateProductCategory }) => {
     console.log(window.location.pathname);
     router.push({
       pathname: `${
-        intl?.locale === "eng"
-          ? item?.seo_en?.replace("/eng", "")
-          : item?.seo_ja?.replace("/jp", "")
+        intl.locale === "eng"
+          ? item.seo_en.replace("/eng", "")
+          : item.seo_ja.replace("/jp", "")
       }`,
     });
   };

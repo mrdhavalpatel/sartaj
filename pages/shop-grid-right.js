@@ -210,7 +210,6 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                         {allProducts?.length}
                       </strong>
                       {intl.formatMessage({ id: "items for you!" })}
-
                     </p>
                   </div>
                   <div className="sort-by-product-area">

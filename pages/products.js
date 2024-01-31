@@ -19,23 +19,23 @@ const Products = ({ productFilters }) => {
   const [products, setProducts] = useState([]);
   const [newProducts, setNewProducts] = useState([]);
   const [pagination, setPagination] = useState([]);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(12);
   const [productTotal, setProductTotal] = useState([]);
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
 
   const Router = useRouter();
 
-  const cratePagination = async() => {
+  const cratePagination = () => {
     // set pagination
     let arr = new Array(
-      Math.ceil((productTotal ? productTotal : []) / (limit ? limit : 10))
+      Math.ceil((productTotal ? productTotal : []) / (limit ? limit : 12))
     )
       .fill()
       .map((_, idx) => idx + 1);
 
-   setPagination(arr);
-   setPages(Math.ceil(productTotal / limit));
+    setPagination(arr);
+    setPages(Math.ceil(productTotal / limit));
   };
 
   const startIndex = (currentPage - 1) * limit;
@@ -134,12 +134,11 @@ const Products = ({ productFilters }) => {
             <div className="col-lg-4-5">
               <div className="shop-product-fillter">
                 <div className="totall-product">
-                  {products?.length == 0 ? null : (
+                  {products.length == 0 ? null : (
                     <p>
                       {intl.formatMessage({ id: "We found" })}
-                      <strong className="text-brand">{productTotal}</strong>
+                      <strong className="text-brand">{products?.length}</strong>
                       {intl.formatMessage({ id: "items for you!" })}
-
                     </p>
                   )}
                 </div>

@@ -77,12 +77,10 @@ const ProductsFullWidth = ({ products, productFilters, fetchProduct }) => {
                   <div className="totall-product">
                     <p>
                       {intl.formatMessage({ id: "We found" })}
-                   
                       <strong className="text-brand">
                         {products.items.length}
                       </strong>
                       {intl.formatMessage({ id: "items for you!" })}
-
                     </p>
                   </div>
                   <div className="sort-by-product-area">

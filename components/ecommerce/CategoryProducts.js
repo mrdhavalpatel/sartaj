@@ -36,7 +36,6 @@ const CategoryProducts = ({ productFilters }) => {
       .map((_, idx) => idx + 1);
 
     setPagination(arr);
-    console.log("Pagination no", arr)
     setPages(Math.ceil(productTotal / limit));
   };
 
@@ -85,7 +84,6 @@ const CategoryProducts = ({ productFilters }) => {
 
       const request = await ApiCall("post", intl, "products/all", payload);
       const allProducts = await request?.data;
-      console.log("total products ==========>",allProducts?.total_size)
       setProductTotal(allProducts?.total_size);
       setProductsData(allProducts?.products);
 
@@ -117,7 +115,6 @@ const CategoryProducts = ({ productFilters }) => {
                       {intl.formatMessage({ id: "We found" })}
                       <strong className="text-brand">{productTotal}</strong>
                       {intl.formatMessage({ id: "items for you!" })}
-
                     </p>
                   )}
                 </div>
