@@ -16,16 +16,17 @@ const CategoryProduct = ({ updateProductCategory }) => {
 
     setCategories(allCategories?.data);
   };
-  const selectCategory = (e, category, catId) => {
+  const selectCategory = (e, item) => {
     e.preventDefault();
     // removeSearchTerm();
-    updateProductCategory(category);
+    updateProductCategory(item?.name);
+    console.log(window.location.pathname);
     router.push({
-      pathname: window.location.pathname,
-      query: {
-        cat: category,
-        catId: catId,
-      },
+      pathname: `${
+        intl?.locale === "eng"
+          ? item?.seo_en?.replace("/eng", "")
+          : item?.seo_ja?.replace("/jp", "")
+      }`,
     });
   };
   useEffect(() => {
@@ -39,7 +40,7 @@ const CategoryProduct = ({ updateProductCategory }) => {
         </li>
         {categories?.map((Itm) => {
           return (
-            <li onClick={(e) => selectCategory(e, Itm?.name, Itm?.id)}>
+            <li onClick={(e) => selectCategory(e, Itm)}>
               <a>
                 <img src={Itm?.image} alt="nest" />
                 <span dangerouslySetInnerHTML={{ __html: Itm?.name }} />

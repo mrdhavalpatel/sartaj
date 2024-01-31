@@ -8,6 +8,7 @@ import { openQuickView } from "../../redux/action/quickViewAction";
 import { addToWishlist } from "../../redux/action/wishlistAction";
 import QuickView from "./QuickView";
 import { useIntl } from "react-intl";
+import { translatedItemDetails } from "../../util/util";
 
 const SingleProduct = ({
   product,
@@ -98,6 +99,7 @@ const SingleProduct = ({
               }`}
             >
               {product?.manufacturer?.name}
+           
             </Link>
           </div>
           <h2 className="ellipsis-title">
@@ -111,12 +113,7 @@ const SingleProduct = ({
             >
               <span
                 dangerouslySetInnerHTML={{
-                  __html:
-                    intl.locale === "eng"
-                      ? product?.name
-                      : product?.translations?.length > 0
-                      ? product?.translations[0]?.value
-                      : product?.name,
+                  __html: translatedItemDetails("name", intl, product),
                 }}
               />
             </Link>
@@ -149,7 +146,9 @@ const SingleProduct = ({
                     : product?.manufacturer?.seo_ja
                 }`}
               >
-                {product?.manufacturer?.name}
+          
+                  {product?.manufacturer?.name}
+            
               </Link>
             </span>
           </div>

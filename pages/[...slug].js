@@ -19,6 +19,7 @@ import Link from "next/link";
 import axios from "axios";
 import { API_BASE_URL } from "../lib/api";
 import { Spinner } from "react-bootstrap";
+import CategoryProducts from "../components/ecommerce/CategoryProducts";
 
 const ProductId = ({ products, productFilters, fetchProduct }) => {
   const router = useRouter();
@@ -30,6 +31,7 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
   const [seoType, setSeoType] = useState("");
   const [manufacturer, setManufacturer] = useState({});
   const [loading, setLoading] = useState(true);
+  const [category, setCategory] = useState({});
   const intl = useIntl();
   // const URL = window.location.pathname;
   // useEffect(() => {
@@ -40,25 +42,34 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
   const getProductDetailsBySlug = () => {
     if (router?.query?.slug) {
       let payload = {
-        seo: `${router?.locale}/${router?.query?.slug}`,
+        seo: `${router?.locale}/${
+          Array.isArray(router?.query?.slug)
+            ? router?.query?.slug.join("/").replace(",", "/")
+            : router?.query?.slug
+        }`,
       };
       ApiCall("post", intl, `seo_type_check`, payload).then((res) => {
         setSeoType(res?.data?.type);
-        ApiCall(
-          "get",
-          intl,
-          res?.data?.type == "product"
-            ? `product_seo/${router?.query?.slug}`
-            : `manufacture_seo/${router?.query?.slug}`
-        ).then((response) => {
-          if (res?.data?.type == "product") {
-            setProduct(response?.data);
-            getProductReviewed(response?.data);
-          } else if (res?.data?.type == "manufacturer") {
-            setManufacturer(response?.data);
-          }
-          setLoading(false);
-        });
+
+        if (res?.data?.type !== "category") {
+          ApiCall(
+            "get",
+            intl,
+            res?.data?.type == "product"
+              ? `product_seo/${router?.query?.slug.join("/").replace(",", "/")}`
+              : `manufacture_seo/${router?.query?.slug
+                  .join("/")
+                  .replace(",", "/")}`
+          ).then((response) => {
+            if (res?.data?.type == "product") {
+              setProduct(response?.data);
+              getProductReviewed(response?.data);
+            } else if (res?.data?.type == "manufacturer") {
+              setManufacturer(response?.data);
+            }
+            setLoading(false);
+          });
+        }
       });
     }
   };
@@ -111,26 +122,24 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
   };
   const getAllProduct = async () => {
     setIsLoading(true);
-    let payload = {
-      limit: limit,
-      offset: currentPage,
-      min: productFilters?.min,
-      max: productFilters?.max,
-      sort_by: productFilters?.featured,
-    };
+    console.log("slug=====>",router?.query?.slug)
+    if (seoType !== "category" && router?.query?.slug) {
+      let payload = {
+        limit: limit,
+        offset: currentPage,
+        min: productFilters?.min,
+        max: productFilters?.max,
+        sort_by: productFilters?.featured,
+        manufacturer_id: router?.query?.slug.join("/").replace(",", "/" ), 
+      };
 
-    if (router?.query?.catId && router?.query?.catId !== "") {
-      payload.category_id = router?.query?.catId;
-    } else {
-      payload.manufacturer_id = router?.query?.slug;
+      const request = await ApiCall("post", intl, "products/all", payload);
+      const allProducts = await request?.data;
+      setProductTotal(allProducts?.total_size);
+      setProductsData(allProducts?.products);
+      setIsLoading(false);
+      cratePagination();
     }
-
-    const request = await ApiCall("post", intl, "products/all", payload);
-    const allProducts = await request?.data;
-    setProductTotal(allProducts?.total_size);
-    setProductsData(allProducts?.products);
-    setIsLoading(false);
-    cratePagination();
   };
 
   const getProductReviewed = async (product) => {
@@ -172,13 +181,21 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
     router.query?.slug,
   ]);
 
-  useEffect(() => {
+  const currentSlug = useEffect(() => {
     if (
       !window.location.pathname.includes("eng/") &&
       !window.location.pathname.includes("jp/") &&
       router.query.slug
     ) {
-      let currentSlug = router.query.slug || "";
+      let currentSlug =
+        (Array.isArray(router.query.slug)
+          ? router?.query?.slug
+              .join("/")
+              .replace(",", "/")
+              .replace("[...slug]", "")
+          : router.query.slug) || "";
+          console.log("fdsfsdfsd" , router.query.slug)
+          
       let pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
       router.push(`/${"eng"}/${pathWithoutLanguage}${window.location.search}`);
     } else {
@@ -193,6 +210,134 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
       }
     }
   }, []);
+
+  if (seoType === "product") {
+    return (
+      <Layout parent="Home" sub="Shop" subChild={product?.name}>
+        <div className="container">
+          {loading ? (
+            <Preloader />
+          ) : (
+            <>
+              <SEO
+                title={product?.meta_title}
+                description={product?.meta_tag_description}
+                keywords={product?.meta_tag_keywords}
+              />
+              <ProductDetails
+                intl={intl}
+                product={product}
+                showReviewForm={showReviewForm}
+                setShowReviewForm={setShowReviewForm}
+                getProductDetailsBySlug={getProductDetailsBySlug}
+              />
+            </>
+          )}
+        </div>
+      </Layout>
+    );
+  } else if (seoType === "manufacture") {
+    return (
+      <Layout parent="Home" sub="Store  " subChild="About">
+        <section className="mt-50 mb-50">
+          <div className="container mb-30">
+            <div className="row flex-row-reverse">
+              <div className="col-lg-4-5">
+                <div className="shop-product-fillter">
+                  <div className="totall-product">
+                    {!isLoading && (
+                      <p>
+                        {intl.formatMessage({ id: "We found" })}
+                        <strong className="text-brand">{productTotal}</strong>
+                        {intl.formatMessage({ id: "items for you!" })}
+                      </p>
+                    )}
+                  </div>
+                  <div className="sort-by-product-area">
+                    <div className="sort-by-cover mr-10">
+                      <ShowSelect selectChange={selectChange} showLimit={10} />
+                    </div>
+                    <div className="sort-by-cover">
+                      <SortSelect />
+                    </div>
+                  </div>
+                </div>
+                {isLoading ? (
+                  <div
+                    style={{ height: "60vh" }}
+                    className="d-flex justify-content-center align-items-center"
+                  >
+                    <Spinner animation="border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </div>
+                ) : (
+                  <div className="row product-grid">
+                    {getPaginatedProducts?.length === 0 && (
+                      <h3>
+                        {intl.formatMessage({ id: "No Products Found" })}{" "}
+                      </h3>
+                    )}
+
+                    {getPaginatedProducts?.map((item, i) => (
+                      <div
+                        className="col-lg-1-5 col-md-4 col-12 col-sm-6"
+                        key={i}
+                      >
+                        <SingleProduct product={item} />
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <div className="pagination-area mt-15 mb-sm-5 mb-lg-0">
+                  <nav aria-label="Page navigation example">
+                    <Pagination
+                      getPaginationGroup={getPaginationGroup}
+                      currentPage={currentPage}
+                      pages={pages}
+                      next={next}
+                      prev={prev}
+                      handleActive={handleActive}
+                    />
+                  </nav>
+                </div>
+              </div>
+              <div className="col-lg-1-5 primary-sidebar sticky-sidebar">
+                <div className="sidebar-widget widget-category-2 mb-30">
+                  <h5 className="section-title style-1 mb-30">
+                    {intl.formatMessage({ id: "Category" })}
+                  </h5>
+                  <CategoryProduct />
+                </div>
+
+                <div className="sidebar-widget price_range range mb-30">
+                  <h5 className="section-title style-1 mb-30">
+                    {intl.formatMessage({ id: "Fill by price" })}
+                  </h5>
+
+                  <div className="price-filter">
+                    <div className="price-filter-inner">
+                      <br />
+                      <PriceRangeSlider />
+
+                      <br />
+                    </div>
+                  </div>
+
+                  <br />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <QuickView />
+      </Layout>
+    );
+  } else if (seoType === "category") {
+    return <CategoryProducts productFilters={productFilters} />;
+  }
+
   return (
     <>
       {seoType == "product" ? (

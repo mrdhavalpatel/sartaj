@@ -40,7 +40,7 @@ const Header = ({
     const newUrl = `/${newLanguage}/${pathWithoutLanguage
       .replace("/eng", "")
       .replace("/jp", "")
-      .replace("/[slug]", "")}`;
+      .replace("[...slug]", "")}`;
     const currentToken = router.query.token || "";
     const slug = router.query?.slug;
     if (router.pathname.includes("page-reset-password")) {
@@ -119,17 +119,26 @@ const Header = ({
   }, []);
 
   useEffect(() => {
+    console.log(router?.query?.slug);
     if (
       !window.location.pathname.includes("eng/") &&
       !window.location.pathname.includes("jp/") &&
       router.query.slug
     ) {
-      let currentSlug = router.query.slug || "";
-      let pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
+      let currentSlug =
+        (Array.isArray(router?.query?.slug)
+          ? router?.query?.slug.join("/").replace(",", "/")
+          : router?.query?.slug) || "";
+      let pathWithoutLanguage = currentSlug
+        .replace(/^\/[a-z]{2}\//, "")
+        .replace("[...slug]", "");
+        console.log("path==========>",pathWithoutLanguage)
       router.push(`/${"eng"}/${pathWithoutLanguage}${window.location.search}`);
     } else {
       if (router.pathname.includes("shop-compare")) {
-        router.push(`/${intl.locale}/${router.pathname}`);
+        router.push(
+          `/${intl.locale}/${router.pathname.replace("[...slug]", "")}`
+        );
       } else if (router.pathname.includes("shop-wishlist")) {
         router.push(
           `/${intl.locale}/${router.pathname}${window.location.search}`
