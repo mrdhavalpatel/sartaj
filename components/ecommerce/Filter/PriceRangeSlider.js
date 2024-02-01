@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
 import { updateProductFilters } from "../../../redux/action/productFiltersAction";
 
@@ -15,6 +15,26 @@ const PriceRangeSlider = ({ updateProductFilters }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [maxPrice, setMaxPrice] = useState(null);
   const [price, setPrice] = useState({ value: { min: 0, max: maxPrice } });
+  const [tempPrice, setTempPrice] = useState({ min: 0, max: maxPrice });
+
+  // Debounce function
+  const debounce = (func, wait) => {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  };
+
+  const debouncedSetPrice = useCallback(
+    debounce((newPrice) => setPrice(newPrice), 500),
+    []
+  );
+
   useEffect(() => {
     const filters = {
       price: price.value,
@@ -30,19 +50,17 @@ const PriceRangeSlider = ({ updateProductFilters }) => {
     setPrice(newPrice);
   }, [maxPrice]);
 
-  const [active, setActive] = useState(1);
-  const handleActive = (index) => {
-    setActive(index);
-  };
+  useEffect(() => {
+    getmaxPrice();
+  }, []);
+
   const getmaxPrice = async () => {
     setIsLoading(true);
     let res = await ApiCall("get", intl, "products/max-price");
     setMaxPrice(res?.data?.max_price);
     setIsLoading(false);
   };
-  useEffect(() => {
-    getmaxPrice();
-  }, []);
+
   return (
     <>
       {!isLoading && (
@@ -53,14 +71,15 @@ const PriceRangeSlider = ({ updateProductFilters }) => {
             defaultValue={[0, maxPrice]}
             min={0}
             max={maxPrice}
-            onChange={(value) =>
-              setPrice({ value: { min: value[0], max: value[1] } })
-            }
+            onChange={(value) => {
+              setTempPrice({ min: value[0], max: value[1] });
+              debouncedSetPrice({ value: { min: value[0], max: value[1] } });
+            }}
           />
 
           <div className="d-flex justify-content-between">
-            <span>{price.value.min}</span>
-            <span>{price.value.max}</span>
+            <span>{tempPrice.min}</span>
+            <span>{tempPrice.max || maxPrice}</span>
           </div>
         </>
       )}
@@ -72,8 +91,8 @@ const mapStateToProps = (state) => ({
   products: state.products.items,
 });
 
-const mapDidpatchToProps = {
+const mapDispatchToProps = {
   updateProductFilters,
 };
 
-export default connect(mapStateToProps, mapDidpatchToProps)(PriceRangeSlider);
+export default connect(mapStateToProps, mapDispatchToProps)(PriceRangeSlider);

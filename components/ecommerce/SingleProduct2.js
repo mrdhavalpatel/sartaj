@@ -8,6 +8,7 @@ import { openQuickView } from "../../redux/action/quickViewAction";
 import { addToWishlist } from "../../redux/action/wishlistAction";
 import QuickView from "./QuickView";
 import { useIntl } from "react-intl";
+import { translatedItemDetails } from "../../util/util";
 
 const SingleProduct2 = ({
   product,
@@ -95,7 +96,11 @@ const SingleProduct2 = ({
                 intl.locale === "eng" ? product?.seo_en : product?.seo_ja
               }`}
             >
-              <span dangerouslySetInnerHTML={{ __html: product?.name }} />
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: translatedItemDetails("name", intl, product),
+                }}
+              />
             </Link>
           </h2>
 

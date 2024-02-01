@@ -24,7 +24,22 @@ export const translatedItemDetails = (type, intl, item) => {
           (intl.locale === "eng" ? "en" : "ja") === translation.locale
         );
       });
+      return item?.translations[index]?.value || item?.name;
+    }
+    return item?.name;
+  }
 
+  if (type === "description") {
+    if (item?.translations?.length > 0) {
+      const index = item?.translations.findIndex((translation) => {
+        return (
+          translation.key === "description" &&
+          (intl.locale === "eng" ? "en" : "ja") === translation.locale
+        );
+      });
+      if (item.quantity) {
+        console.log(item.translations);
+      }
       return item?.translations[index]?.value || item?.name;
     }
     return item?.name;

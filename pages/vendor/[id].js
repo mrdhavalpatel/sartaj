@@ -91,7 +91,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                   </div>
                   <div className="sort-by-product-area">
                     <div className="sort-by-cover mr-10">
-                      <ShowSelect selectChange={selectChange} showLimit={12} />
+                      <ShowSelect selectChange={selectChange} showLimit={10} />
                     </div>
                     <div className="sort-by-cover">
                       <SortSelect />

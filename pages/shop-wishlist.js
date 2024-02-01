@@ -10,6 +10,7 @@ import {
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useIntl } from "react-intl";
+import { translatedItemDetails } from "../util/util";
 const Wishlist = ({
   wishlist,
   clearWishlist,
@@ -81,7 +82,11 @@ const Wishlist = ({
                                 >
                                   <span
                                     dangerouslySetInnerHTML={{
-                                      __html: item?.product?.name,
+                                      __html: translatedItemDetails(
+                                        "name",
+                                        intl,
+                                        product
+                                      ),
                                     }}
                                   />
                                 </a>

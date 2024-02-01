@@ -99,6 +99,7 @@ const SingleProduct = ({
               }`}
             >
               {product?.manufacturer?.name}
+           
             </Link>
           </div>
           <h2 className="ellipsis-title">
@@ -145,7 +146,9 @@ const SingleProduct = ({
                     : product?.manufacturer?.seo_ja
                 }`}
               >
-                {product?.manufacturer?.name}
+          
+                  {product?.manufacturer?.name}
+            
               </Link>
             </span>
           </div>

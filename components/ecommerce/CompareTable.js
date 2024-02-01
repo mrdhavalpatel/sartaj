@@ -2,6 +2,7 @@ import Link from "next/link";
 import { connect } from "react-redux";
 import { addToCart } from "../../redux/action/cart";
 import { useIntl } from "react-intl";
+import { translatedItemDetails } from "../../util/util";
 const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
   const intl = useIntl();
   const handleCart = (product) => {
@@ -48,7 +49,9 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                       }`}
                     >
                       <span
-                        dangerouslySetInnerHTML={{ __html: product?.name }}
+                        dangerouslySetInnerHTML={{
+                          __html: translatedItemDetails("name", intl, product),
+                        }}
                       />
                     </Link>
                   </h5>
@@ -80,7 +83,7 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                 <td className="product_price">
                   <span>
                     {product?.category_ids?.map((item) =>
-                      item.name ? `${item.name},` : null
+                      item.name ? `${decodeHtml(item.name)},` : null
                     )}
                   </span>
                 </td>
@@ -121,7 +124,9 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                 <td className="row_text font-xs">
                   <p
                     dangerouslySetInnerHTML={{
-                      __html: decodeHtml(product?.description),
+                      __html: decodeHtml(
+                        translatedItemDetails("description", intl, product)
+                      ),
                     }}
                   ></p>
                 </td>

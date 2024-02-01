@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { updateProductCategory } from "../../redux/action/productFiltersAction";
 import { connect } from "react-redux";
 import { useIntl } from "react-intl";
+import { translatedItemDetails } from "../../util/util";
 
 SwiperCore.use([Navigation, Autoplay]);
 
@@ -24,15 +25,16 @@ const CategorySlider2 = ({ updateProductCategory }) => {
   useEffect(() => {
     getAllCategories();
   }, []);
-  const selectCategory = (e, category, catId) => {
+  const selectCategory = (e, item) => {
     e.preventDefault();
-    updateProductCategory(category);
+    updateProductCategory(item?.name);
+    console.log(window.location.pathname);
     router.push({
-      pathname: "/products",
-      query: {
-        cat: category,
-        catId: catId,
-      },
+      pathname: `${
+        intl.locale === "eng"
+          ? item.seo_en.replace("/eng", "")
+          : item.seo_ja.replace("/jp", "")
+      }`,
     });
   };
   return (
@@ -62,20 +64,21 @@ const CategorySlider2 = ({ updateProductCategory }) => {
         className="custom-class"
       >
         {categories?.map((item, i) => (
-          <SwiperSlide key={i}>
-            <div
-              className="card-1"
-              onClick={(e) => selectCategory(e, item?.name, item?.id)}
-            >
+          <SwiperSlide key={item.id}>
+            <div className="card-1" onClick={(e) => selectCategory(e, item)}>
               <figure className=" img-hover-scale overflow-hidden">
-                <Link href={`/${intl.locale}/shop`}>
+                <div style={{ cursor: "pointer" }}>
                   <img src={item?.image} alt={item?.name} />
-                </Link>
+                </div>
               </figure>
               <h6>
-                <Link href={`/${intl.locale}/shop`}>
-                  <span dangerouslySetInnerHTML={{ __html: item?.name }} />
-                </Link>
+                <div style={{ cursor: "pointer" }}>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: translatedItemDetails("name", intl, item),
+                    }}
+                  />
+                </div>
               </h6>
               <span className="count">{`(${item?.total_produts} items)`}</span>
               {/* <span>{"26 item"}</span> */}

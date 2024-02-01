@@ -50,7 +50,7 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
       };
       ApiCall("post", intl, `seo_type_check`, payload).then((res) => {
         setSeoType(res?.data?.type);
-        console.log(res?.data?.type);
+
         if (res?.data?.type !== "category") {
           ApiCall(
             "get",
@@ -87,14 +87,6 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
   const [sortBy, setSortBy] = useState("default");
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const cratePagination = () => {
-    let arr = new Array(Math.ceil(productTotal / limit))
-      .fill()
-      .map((_, idx) => idx + 1);
-
-    setPagination(arr);
-    setPages(Math.ceil(productTotal / limit));
-  };
 
   const getPaginatedProducts = productsData;
 
@@ -136,8 +128,13 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
       const allProducts = await request?.data;
       setProductTotal(allProducts?.total_size);
       setProductsData(allProducts?.products);
+      let arr = new Array(Math.ceil(productTotal / limit))
+        .fill()
+        .map((_, idx) => idx + 1);
+
+      setPagination(arr);
+      setPages(Math.ceil(productTotal / limit));
       setIsLoading(false);
-      cratePagination();
     }
   };
 
@@ -193,6 +190,8 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
               .replace(",", "/")
               .replace("[...slug]", "")
           : router.query.slug) || "";
+      console.log("fdsfsdfsd", router.query.slug);
+
       let pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
       router.push(`/${"eng"}/${pathWithoutLanguage}${window.location.search}`);
     } else {
@@ -233,7 +232,7 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
         </div>
       </Layout>
     );
-  } else if (seoType === "manufacturer") {
+  } else if (seoType === "manufacture") {
     return (
       <Layout parent="Home" sub="Store  " subChild="About">
         <section className="mt-50 mb-50">
