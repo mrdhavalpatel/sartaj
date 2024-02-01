@@ -39,7 +39,7 @@ const NewArrival2 = ({ intl }) => {
                   intl.locale == "eng" ? product.seo_en : product.seo_ja
                 }`}
               >
-                <span dangerouslySetInnerHTML={{ __html: product?.name }} />
+                <span dangerouslySetInnerHTML={{ __html:   intl.locale === "eng" ? product?.name : product?.translations && product?.translations[0]?.value }} />
               </Link>
             </h6>
             <div className="product-rate-cover">
