@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { ApiCall } from "../../lib/other/other";
 import { useIntl } from "react-intl";
+import { translatedItemDetails } from "../../util/util";
 const Search = () => {
   const intl = useIntl();
   const [searchTerm, setSearchTerm] = useState("");
@@ -64,7 +65,7 @@ const Search = () => {
             <option
               key={itm.id}
               value={itm.id}
-              dangerouslySetInnerHTML={{ __html: itm.name }}
+              dangerouslySetInnerHTML={{ __html: translatedItemDetails("name", intl,itm) }}
             ></option>
           ))}
         </select>

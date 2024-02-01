@@ -6,6 +6,7 @@ import { updateProductCategory } from "../../redux/action/productFiltersAction";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
 import { useIntl } from "react-intl";
+import { translatedItemDetails } from "../../util/util";
 
 const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
   const [isActive, setIsActive] = useState({
@@ -113,7 +114,9 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                           <Link href={`/${intl.locale}/shop`}>
                             <i className="evara-font-dress"></i>
                             <span
-                              dangerouslySetInnerHTML={{ __html: itm?.name }}
+                              dangerouslySetInnerHTML={{
+                                __html: translatedItemDetails("name", intl,itm)
+                              }}
                             />
                           </Link>
                         </li>
