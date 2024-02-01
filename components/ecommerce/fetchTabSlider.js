@@ -1,18 +1,13 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 // import { fetchByCatagory } from "../../redux/action/product";
-import { server } from "../../config/index";
 import FeaturedSlider from "../sliders/Featured";
-import NewArrivalTabSlider from "../sliders/NewArrivalTab";
-import TrendingSlider from "../sliders/Trending";
 import { ApiCall } from "../../lib/other/other";
 import { useIntl } from "react-intl";
 function FeatchTabSlider({ banners }) {
   const intl = useIntl();
   const [active, setActive] = useState("1");
   const [featured, setFeatured] = useState([]);
-  const [trending, setTrending] = useState([]);
-  const [newArrival, setNewArrival] = useState([]);
 
   const featuredProduct = async () => {
     const request = await ApiCall("get", intl, "products/trending");
@@ -21,23 +16,6 @@ function FeatchTabSlider({ banners }) {
     setFeatured(allProducts?.data?.products);
     setActive("1");
   };
-
-  // const trendingProduct = async () => {
-  //   const request = await fetch(`${server}/static/product.json`);
-  //   const allProducts = await request.json();
-  //   const trendingItem = allProducts.filter((item) => item.trending);
-  //   setTrending(trendingItem);
-  //   setActive("2");
-  // };
-  // const newArrivalProduct = async () => {
-  //   const request = await fetch(`${server}/static/product.json`);
-  //   const allProducts = await request.json();
-  //   const newArrivalItem = allProducts.sort(function (a, b) {
-  //     return a.created > b.created ? -1 : 1;
-  //   });
-  //   setNewArrival(newArrivalItem);
-  //   setActive("3");
-  // };
 
   useEffect(() => {
     featuredProduct();

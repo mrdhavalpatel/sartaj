@@ -30,15 +30,6 @@ const CategoryProducts = ({ productFilters }) => {
   const [sortBy, setSortBy] = useState("default");
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const cratePagination = () => {
-    let arr = new Array(Math.ceil(productTotal / limit))
-      .fill()
-      .map((_, idx) => idx + 1);
-
-    setPagination(arr);
-    console.log("Pagination no", arr)
-    setPages(Math.ceil(productTotal / limit));
-  };
 
   const getPaginatedProducts = productsData;
 
@@ -85,11 +76,15 @@ const CategoryProducts = ({ productFilters }) => {
 
       const request = await ApiCall("post", intl, "products/all", payload);
       const allProducts = await request?.data;
-      console.log("total products ==========>",allProducts?.total_size)
       setProductTotal(allProducts?.total_size);
       setProductsData(allProducts?.products);
 
-      cratePagination();
+      let arr = new Array(Math.ceil(allProducts?.total_size / limit))
+        .fill()
+        .map((_, idx) => idx + 1);
+
+      setPagination(arr);
+      setPages(Math.ceil(allProducts?.total_size / limit));
       setIsLoading(false);
     });
   };
@@ -117,7 +112,6 @@ const CategoryProducts = ({ productFilters }) => {
                       {intl.formatMessage({ id: "We found" })}
                       <strong className="text-brand">{productTotal}</strong>
                       {intl.formatMessage({ id: "items for you!" })}
-
                     </p>
                   )}
                 </div>
@@ -148,7 +142,7 @@ const CategoryProducts = ({ productFilters }) => {
                   {getPaginatedProducts?.map((item, i) => (
                     <div
                       className="col-lg-1-5 col-md-4 col-12 col-sm-6"
-                      key={i}
+                      key={item.id}
                     >
                       <SingleProduct product={item} />
                     </div>

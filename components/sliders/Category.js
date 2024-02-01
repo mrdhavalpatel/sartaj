@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import SwiperCore, { Autoplay, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { updateProductCategory } from "./../../redux/action/productFiltersAction";
+import { useIntl } from "react-intl";
+import { translatedItemDetails } from "../../util/util";
 
 SwiperCore.use([Navigation, Autoplay]);
 const data = [
@@ -78,16 +80,19 @@ const data = [
 ];
 const CategorySlider = () => {
   const router = useRouter();
+  const intl = useIntl();
 
   const selectCategory = (e, category) => {
     e.preventDefault();
     // removeSearchTerm();
-    updateProductCategory(category);
+    updateProductCategory(item?.name);
+    console.log(window.location.pathname);
     router.push({
-      pathname: "/products",
-      query: {
-        cat: category, //
-      },
+      pathname: `${
+        intl.locale === "eng"
+          ? item.seo_en.replace("/eng", "")
+          : item.seo_ja.replace("/jp", "")
+      }`,
     });
   };
 
@@ -122,7 +127,7 @@ const CategorySlider = () => {
           <SwiperSlide key={i}>
             <div
               className={`card-2 ${item.bg} wow animate__animated animate__fadeInUp`}
-              onClick={(e) => selectCategory(e, item.slug)}
+              onClick={(e) => selectCategory(e, item)}
             >
               <figure className=" img-hover-scale overflow-hidden">
                 <a>
@@ -130,7 +135,7 @@ const CategorySlider = () => {
                 </a>
               </figure>
               <h6>
-                <a>{item.title}</a>
+                <a>{translatedItemDetails(item)}</a>
               </h6>
               <span>26 items</span>
             </div>

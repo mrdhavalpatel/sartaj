@@ -21,7 +21,7 @@ import { ErrorMessage, Field, Formik } from "formik";
 import { Form } from "react-bootstrap";
 import * as Yup from "yup";
 import { auth } from "../lib/auth/auth";
-import { findProductIndexById } from "../util/util";
+import { findProductIndexById, translatedItemDetails } from "../util/util";
 import { ApiCall } from "../lib/other/other";
 
 const Cart = ({
@@ -245,7 +245,11 @@ const Cart = ({
                                     }`
                               }
                             >
-                              {getProductName(item)}
+                              {translatedItemDetails(
+                                "name",
+                                intl,
+                                item.product ? item.product : item
+                              )}
                             </Link>
                           </h6>
                           <div className="product-rate-cover">

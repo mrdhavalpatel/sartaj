@@ -4,6 +4,7 @@ import { updateProductCategory } from "../../../redux/action/productFiltersActio
 import { useEffect, useState } from "react";
 import { ApiCall } from "../../../lib/other/other";
 import { useIntl } from "react-intl";
+import { translatedItemDetails } from "../../../util/util";
 
 const CategoryProduct = ({ updateProductCategory }) => {
   const router = useRouter();
@@ -21,6 +22,7 @@ const CategoryProduct = ({ updateProductCategory }) => {
     // removeSearchTerm();
     updateProductCategory(item?.name);
     console.log(window.location.pathname);
+
     router.push({
       pathname: `${
         intl?.locale === "eng"
@@ -35,15 +37,16 @@ const CategoryProduct = ({ updateProductCategory }) => {
   return (
     <>
       <ul>
-        <li onClick={(e) => selectCategory(e, "")}>
-          <a>All</a>
-        </li>
         {categories?.map((Itm) => {
           return (
             <li onClick={(e) => selectCategory(e, Itm)}>
               <a>
                 <img src={Itm?.image} alt="nest" />
-                <span dangerouslySetInnerHTML={{ __html: Itm?.name }} />
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: translatedItemDetails("name", intl, Itm),
+                  }}
+                />
               </a>
               <span className="count">{Itm?.total_produts}</span>
             </li>

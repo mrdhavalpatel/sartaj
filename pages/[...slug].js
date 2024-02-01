@@ -87,14 +87,6 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
   const [sortBy, setSortBy] = useState("default");
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const cratePagination = () => {
-    let arr = new Array(Math.ceil(productTotal / limit))
-      .fill()
-      .map((_, idx) => idx + 1);
-
-    setPagination(arr);
-    setPages(Math.ceil(productTotal / limit));
-  };
 
   const getPaginatedProducts = productsData;
 
@@ -122,7 +114,6 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
   };
   const getAllProduct = async () => {
     setIsLoading(true);
-    console.log("slug=====>",router?.query?.slug)
     if (seoType !== "category" && router?.query?.slug) {
       let payload = {
         limit: limit,
@@ -130,15 +121,20 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
         min: productFilters?.min,
         max: productFilters?.max,
         sort_by: productFilters?.featured,
-        manufacturer_id: router?.query?.slug.join("/").replace(",", "/" ), 
+        manufacturer_id: router?.query?.slug.join("/").replace(",", "/"),
       };
 
       const request = await ApiCall("post", intl, "products/all", payload);
       const allProducts = await request?.data;
       setProductTotal(allProducts?.total_size);
       setProductsData(allProducts?.products);
+      let arr = new Array(Math.ceil(productTotal / limit))
+        .fill()
+        .map((_, idx) => idx + 1);
+
+      setPagination(arr);
+      setPages(Math.ceil(productTotal / limit));
       setIsLoading(false);
-      cratePagination();
     }
   };
 
@@ -194,8 +190,8 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
               .replace(",", "/")
               .replace("[...slug]", "")
           : router.query.slug) || "";
-          console.log("fdsfsdfsd" , router.query.slug)
-          
+      console.log("fdsfsdfsd", router.query.slug);
+
       let pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
       router.push(`/${"eng"}/${pathWithoutLanguage}${window.location.search}`);
     } else {
