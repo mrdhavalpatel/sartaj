@@ -89,10 +89,13 @@ const ProductDetails = ({
                         })}
                       </div>
                     </div>
-
-                    <h2
+                    {/* <h2
                       className="title-detail"
                       dangerouslySetInnerHTML={{ __html: product?.name }}
+                    ></h2> */}
+                    <h2
+                      className="title-detail"
+                      dangerouslySetInnerHTML={{ __html:   intl.locale === "eng" ? product?.name : product?.translations && product?.translations[0]?.value }}
                     ></h2>
                     <div className="product-detail-rating">
                       <div className="product-rate-cover text-end">
