@@ -82,7 +82,7 @@ function FeatchTabSlider({ banners }) {
             /> */}
           </div>
         </div>
-        <div className="col-lg-9 col-md-12">
+        <div className="col-lg-9 col-md-12 px-0 product_slider">
           <div className="tab-content wow fadeIn animated" id="myTabContent">
             <div
               className={

@@ -18,6 +18,10 @@ const FeaturedSlider = ({ products }) => {
         }}
         className="custom-class"
         breakpoints={{
+          0: {
+            slidesPerView: 2,
+            spaceBetween: 0,
+          },
           480: {
             slidesPerView: 2,
           },

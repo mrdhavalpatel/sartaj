@@ -166,7 +166,7 @@ const SingleProduct2 = ({
           </div>
 
           <button
-            className="btn w-100 hover-up"
+            className="add_to_cart_btn btn w-100 hover-up"
             style={{
               border: "none",
               backgroundColor: `${
