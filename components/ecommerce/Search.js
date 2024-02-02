@@ -27,6 +27,22 @@ const Search = () => {
     return res;
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    router.push(
+      `${intl.locale}/shop${
+        searchTerm.length > 0 || categoriesValue ? "?" : ""
+      }${searchTerm.length > 0 ? `search=${searchTerm}` : ""}${
+        categoriesValue
+          ? searchTerm.length > 0
+            ? `&catId=${categoriesValue}`
+            : `catId=${categoriesValue}`
+          : ""
+      }`
+    );
+    setProductsSuggestions([]);
+  };
+
   useEffect(() => {
     if (searchTerm.length > 0) {
       handleInput();
@@ -45,6 +61,7 @@ const Search = () => {
           display: "flex",
           alignItems: "center",
         }}
+        onSubmit={handleSubmit}
       >
         <select
           className="select-active"
@@ -65,7 +82,9 @@ const Search = () => {
             <option
               key={itm.id}
               value={itm.id}
-              dangerouslySetInnerHTML={{ __html: translatedItemDetails("name", intl,itm) }}
+              dangerouslySetInnerHTML={{
+                __html: translatedItemDetails("name", intl, itm),
+              }}
             ></option>
           ))}
         </select>
@@ -96,7 +115,7 @@ const Search = () => {
           >
             {productsSuggestions?.map((result, index) => (
               <li
-                key={index}
+                key={result?.name + index}
                 style={{
                   padding: "8px",
                   borderBottom: "1px solid #ddd",

@@ -41,7 +41,7 @@ const SingleProductList = ({
           <div className="product-img-action-wrap">
             <div className="product-img product-img-zoom">
               <div className="product-img-inner">
-                <Link href="/[id]" as={`/${product.id}`}>
+                <Link href="/[id]" as={`/${product?.id}`}>
                   <img
                     className="default-img"
                     src={product?.images?.[0]?.img}

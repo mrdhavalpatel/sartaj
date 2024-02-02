@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import Link from "next/link";
 import { auth } from "../../lib/auth/auth";
 import { useIntl } from "react-intl";
+import { translatedItemDetails } from "../../util/util";
 const ProductTab = ({
   description,
   review,
@@ -145,15 +146,17 @@ const ProductTab = ({
             id="Description"
           >
             <div
-              className=""
-              dangerouslySetInnerHTML={{
-                __html: decodeHtml(description),
-              }}
+              className="description"
+            
             />
+            <h4 className="description"  dangerouslySetInnerHTML={{ __html:  translatedItemDetails("description", intl, description) ,
+              }}>
+
+            </h4>
           </div>
 
           <div
-            className={
+            classdescription={
               activeIndex === 4 ? "tab-pane fade show active" : "tab-pane fade"
             }
             id="Reviews"

@@ -13,6 +13,7 @@ import ProductTab from "../elements/ProductTab";
 import RelatedSlider from "../sliders/Related";
 import ThumbSlider from "../sliders/Thumb";
 import RelatedSliderBySlug from "../sliders/RelatedSliderBySlug";
+import { translatedItemDetails } from "../../util/util";
 
 const ProductDetails = ({
   intl,
@@ -95,7 +96,7 @@ const ProductDetails = ({
                     ></h2> */}
                     <h2
                       className="title-detail"
-                      dangerouslySetInnerHTML={{ __html:   intl.locale === "eng" ? product?.name : product?.translations && product?.translations[0]?.value }}
+                      dangerouslySetInnerHTML={{ __html:   translatedItemDetails("name", intl, product) }}
                     ></h2>
                     <div className="product-detail-rating">
                       <div className="product-rate-cover text-end">
@@ -146,7 +147,7 @@ const ProductDetails = ({
                       </div>
                     </div>
                     <div className="short-desc mb-30">
-                      <p className="font-lg">{product?.desc}</p>
+                      <p className="font-lg" >{product?.desc}</p>
                     </div>
                     <div className="bt-1 border-color-1 mt-30 mb-30"></div>
                     <div className="detail-extralink">
@@ -240,7 +241,7 @@ const ProductDetails = ({
                   <ProductTab
                     id={product?.id}
                     total_reviews={product?.total_reviews}
-                    description={product?.description}
+                    description={product}
                     review={product?.active_reviews}
                     showReviewForm={showReviewForm}
                     setShowReviewForm={setShowReviewForm}

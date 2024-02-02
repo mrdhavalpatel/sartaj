@@ -14,6 +14,7 @@ import { ApiCall } from "../lib/other/other";
 import { useIntl } from "react-intl";
 const ProductsFullWidth = ({ products, productFilters }) => {
   const intl = useIntl();
+  const router = useRouter();
   const [productsData, setProductsData] = useState([]);
   const [pagination, setPagination] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -43,6 +44,15 @@ const ProductsFullWidth = ({ products, productFilters }) => {
       offset: currentPage,
       sort_by: productFilters?.featured,
     };
+
+    if (router?.query?.search) {
+      payload.search = router.query.search;
+    }
+
+    if (router?.query?.catId) {
+      payload.categoryId = router.query.catId.toString();
+    }
+
     const request = await ApiCall("post", intl, "products/all", payload);
     const allProducts = await request?.data;
     setProductTotal(allProducts?.total_size);
@@ -87,7 +97,10 @@ const ProductsFullWidth = ({ products, productFilters }) => {
                 )}
 
                 {productsData?.map((item, i) => (
-                  <div className="col-lg-1-5 col-md-4 col-6 col-sm-6" key={i}>
+                  <div
+                    className="col-lg-1-5 col-md-4 col-6 col-sm-6"
+                    key={item.id}
+                  >
                     <SingleProduct product={item} />
                     {/* <SingleProductList product={item}/> */}
                   </div>

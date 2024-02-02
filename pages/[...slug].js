@@ -142,7 +142,7 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
     const token = localStorage.getItem("token");
     if (token) {
       const response = await axios.get(
-        `${API_BASE_URL}customer/order/purchased-product/${product.id}`,
+        `${API_BASE_URL}customer/order/purchased-product/${product?.id}`,
         {
           headers: {
             "Access-Control-Allow-Origin": "*",

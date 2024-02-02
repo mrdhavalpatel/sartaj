@@ -99,7 +99,6 @@ const SingleProduct = ({
               }`}
             >
               {product?.manufacturer?.name}
-           
             </Link>
           </div>
           <h2 className="ellipsis-title">
@@ -119,22 +118,26 @@ const SingleProduct = ({
             </Link>
           </h2>
 
-          <div className="product-rate-cover">
-            <div className="product-rate d-inline-block">
-              <div
-                className="product-rating"
-                style={{
-                  width: `${
-                    product?.overall_rating ? product.overall_rating : 0
-                  }%`,
-                }}
-              ></div>
+          {product?.overall_rating ? (
+            <div className="product-rate-cover">
+              <div className="product-rate d-inline-block">
+                <div
+                  className="product-rating"
+                  style={{
+                    width: `${
+                      product?.overall_rating ? product.overall_rating : 0
+                    }%`,
+                  }}
+                ></div>
+              </div>
+              <span className="font-small ml-5 text-muted">
+                {" "}
+                {/* {product?.rating} */}
+              </span>
             </div>
-            <span className="font-small ml-5 text-muted">
-              {" "}
-              {/* {product?.rating} */}
-            </span>
-          </div>
+          ) : (
+            intl.formatMessage({ id: "No reviews available" })
+          )}
 
           <div className="comapny_name">
             <span className="font-small text-muted">
@@ -146,9 +149,7 @@ const SingleProduct = ({
                     : product?.manufacturer?.seo_ja
                 }`}
               >
-          
-                  {product?.manufacturer?.name}
-            
+                {product?.manufacturer?.name}
               </Link>
             </span>
           </div>
