@@ -31,22 +31,25 @@ export const translatedItemDetails = (type, intl, item) => {
 
   if (type === "description") {
     let desc = item?.description;
+    
     if (item?.translations?.length > 0) {
-      const index = item?.translations.findIndex((translation) => {
-        desc =
-          translation.key === "description" &&
-          (intl.locale === "eng" ? "en" : "ja") === translation.locale;
-      });
+        const translation = item.translations.find(translation => {
+            return translation.locale === (intl.locale === "eng" ? "en" : "ja") &&
+                   translation.key === "description";
+        });
 
-      desc = item?.translations[index]?.value || item?.description;
+        if (translation) {
+            desc = translation.value; 
+        }
     }
 
-    let txt = document.createElement("textarea");
-    txt.innerHTML = desc;
-    let txt2 = document.createElement("textarea");
-    txt2.innerHTML = txt.value;
-    const value = txt2.value;
+
+    let tempElement = document.createElement("div");
+    tempElement.innerHTML = desc;
+
+   
+    const value = tempElement.textContent || tempElement.innerText;
 
     return value;
-  }
+}
 };

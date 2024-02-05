@@ -153,13 +153,14 @@ const ProductDetails = ({
                       </div>
                     </div>
                     <div className="short-desc mb-30">
-                      <p className="font-lg">
-                        {product?.desc &&
-                          translatedItemDetails(
-                            "description",
-                            intl,
-                            product?.desc
-                          )}
+                      <p className="font-lg"  dangerouslySetInnerHTML={{
+                        __html: translatedItemDetails(
+                          "description",
+                          intl,
+                          product
+                        ),
+                      }}>
+                    
                       </p>
                     </div>
                     <div className="bt-1 border-color-1 mt-30 mb-30"></div>
