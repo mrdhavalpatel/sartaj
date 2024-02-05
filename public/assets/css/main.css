@@ -119,7 +119,7 @@ video {
   padding: 0;
   border: 0;
   font-size: 100%;
-  font: inherit;
+  font: 'Poppins';
   vertical-align: baseline;
 }
 
@@ -13283,4 +13283,39 @@ height: 82px !important;
   .ellipsis-title {
     /* min-height: 62px; */
   }
+}
+
+.ordetable  tbody tr {
+  box-shadow: 0px 0px 3px 0px #00000059;
+  border-radius: 5px;
+}
+
+table.ordetable.table {border-collapse: separate;border-spacing: 0 1em;}
+
+.table-responsive.ordetable_div {
+  padding: 0 10px;
+}
+table.ordetable.table td {
+  padding: 10px 20px;
+}
+
+table.ordetable.table td {
+  padding: 10px 20px;
+}
+
+button.ordertable_btn {
+  padding: 5px 10px;
+}
+
+.address_btn {
+  margin-top: 5px;
+  padding: 0;
+  color: rgb(62, 68, 147);
+  background-color: #ffffff !important;
+}
+
+.address_card {
+  padding: 20px;
+  box-shadow: 0px 0px 3px 0px #00000059;
+  border-radius: 5px;
 }

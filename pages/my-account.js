@@ -383,8 +383,8 @@ function Account() {
                             )}
                           </div>
                           <div className="card-body">
-                            <div className="table-responsive">
-                              <table className="table">
+                            <div className="table-responsive ordetable_div">
+                              <table className="ordetable table">
                                 <thead>
                                   <tr>
                                     <th>
@@ -430,14 +430,15 @@ function Account() {
                                             // }}
                                             href={`orders/${Item?.id}`}
                                             className="btn-small d-block"
-                                            // target="_blank" // Add this attribute
-                                            // rel="noopener noreferrer" // For security reasons, also include rel="noopener noreferrer"
+                                          // target="_blank" // Add this attribute
+                                          // rel="noopener noreferrer" // For security reasons, also include rel="noopener noreferrer"
                                           >
                                             {intl.formatMessage({ id: "View" })}
                                           </Link>
                                           {Item?.order_status === "pending" && (
                                             <Button
                                               variant="primary"
+                                              className="ordertable_btn"
                                               onClick={() => {
                                                 setOrderId(Item?.id);
                                                 setShowOrderCancel(true);
@@ -550,7 +551,7 @@ function Account() {
                         }
                       >
                         <div className="row">
-                          <div className="col-lg-6">
+                          <div className="col-lg-12">
                             <div className="card mb-3 mb-lg-0">
                               <div className="card-header">
                                 <h3 className="mb-0">
@@ -559,46 +560,51 @@ function Account() {
                                   })}
                                 </h3>
                               </div>
-                              <div className="card-body">
+                              <div className="address_row row">
                                 {address?.billing_address?.map((address) => (
-                                  <>
-                                    <address>
-                                      {address?.house
-                                        ? `${address?.house}, `
-                                        : null}
-                                      {address?.floor
-                                        ? `${address?.floor} `
-                                        : null}
-                                      <br />
-                                      {address?.address
-                                        ? `${address?.address} `
-                                        : null}
-                                      <br />
-                                      {address?.city
-                                        ? `${address?.city} - `
-                                        : null}{" "}
-                                      {address?.post_code
-                                        ? `${address?.post_code} `
-                                        : null}
-                                      <br />
-                                      {address?.state
-                                        ? `${address?.state} `
-                                        : null}
-                                      <br />
-                                    </address>
-                                    <Button
-                                      style={{
-                                        backgroundColor: "#3e4493",
-                                      }}
-                                      variant="primary"
-                                      onClick={() => {
-                                        setEditData(address);
-                                        handleShow();
-                                      }}
-                                    >
-                                      {intl.formatMessage({ id: "Edit" })}
-                                    </Button>{" "}
-                                  </>
+                                  <div className="card-body col-md-4">
+                                    <div className="address_card">
+                                      <>
+                                        <address>
+                                          {address?.house
+                                            ? `${address?.house}, `
+                                            : null}
+                                          {address?.floor
+                                            ? `${address?.floor} `
+                                            : null}
+                                          <br />
+                                          {address?.address
+                                            ? `${address?.address} `
+                                            : null}
+                                          <br />
+                                          {address?.city
+                                            ? `${address?.city} - `
+                                            : null}{" "}
+                                          {address?.post_code
+                                            ? `${address?.post_code} `
+                                            : null}
+                                          <br />
+                                          {address?.state
+                                            ? `${address?.state} `
+                                            : null}
+                                          <br />
+                                        </address>
+                                        <Button
+                                          style={{
+                                            backgroundColor: "#3e4493",
+                                          }}
+                                          className="address_btn"
+                                          variant="primary"
+                                          onClick={() => {
+                                            setEditData(address);
+                                            handleShow();
+                                          }}
+                                        >
+                                          {intl.formatMessage({ id: "Edit" })}
+                                        </Button>{" "}
+                                      </>
+                                    </div>
+                                  </div>
                                 ))}
                               </div>
                             </div>
