@@ -153,7 +153,7 @@ const ProductDetails = ({
                       </div>
                     </div>
                     <div className="short-desc mb-30">
-                      <p className="font-lg"  dangerouslySetInnerHTML={{
+                      {/* <p className="font-lg"  dangerouslySetInnerHTML={{
                         __html: translatedItemDetails(
                           "description",
                           intl,
@@ -161,7 +161,7 @@ const ProductDetails = ({
                         ),
                       }}>
                     
-                      </p>
+                      </p> */}
                     </div>
                     <div className="bt-1 border-color-1 mt-30 mb-30"></div>
                     <div className="detail-extralink">
