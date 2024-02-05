@@ -87,7 +87,7 @@ function Login({ cartItems }) {
                             {intl.formatMessage({
                               id: "Don't have an account?",
                             })}{" "}
-                            <Link href="/page-register">
+                            <Link href="/register">
                               {intl.formatMessage({ id: "Create here" })}
                             </Link>
                           </p>

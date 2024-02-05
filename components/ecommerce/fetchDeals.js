@@ -22,7 +22,7 @@ function FeatchDeals() {
     <>
       <div className="row">
         {deals?.slice(0, 4).map((product, i) => (
-          <div className="col-xl-3 col-lg-4 col-md-6" key={i}>
+          <div className="col-xl-4 col-lg-4 col-md-6" key={i}>
             <Deals1 product={product} />
           </div>
         ))}

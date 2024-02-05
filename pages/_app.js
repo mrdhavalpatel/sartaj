@@ -19,17 +19,54 @@ import { LanguageProvider } from "../components/context/LanguageContext";
 
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
-  const { router, locale = "eng" } = useRouter();
+  const { locale = "eng" } = useRouter();
+  const router = useRouter();
+
   const messages = {
     eng: eng,
     jp: jp,
   };
 
+  function checkAuth() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      if (router.pathname.includes("my-account")) {
+        return router.replace("/sign-in");
+      }
+    } else {
+      if (router.pathname.includes("/sign-in")) {
+        return window.location.replace("/");
+      } else if (router.pathname.includes("/register")) {
+        return window.location.replace("/");
+      } else if (router.pathname.includes("/forgot-password")) {
+        return window.location.replace("/");
+      }
+    }
+  }
+  const handleLoading = (status) => {
+    setLoading(status);
+  };
+
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    checkAuth();
+  }, []);
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      checkAuth();
+    };
+
+    router.events.on("routeChangeStart", handleRouteChange);
+    router.events.on("routeChangeStart", () => handleLoading(true));
+    router.events.on("routeChangeComplete", () => handleLoading(false));
+    router.events.on("routeChangeError", () => handleLoading(false));
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+      router.events.off("routeChangeStart", () => handleLoading(true));
+      router.events.off("routeChangeComplete", () => handleLoading(false));
+      router.events.off("routeChangeError", () => handleLoading(false));
+    };
   }, []);
 
   return (

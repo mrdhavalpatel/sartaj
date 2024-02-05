@@ -4,9 +4,14 @@ import { ApiCall } from "../../lib/other/other";
 import { Formik, Field, Form } from "formik";
 import { toast } from "react-toastify";
 import { useIntl } from "react-intl";
+import { useAuth } from "../context/AuthContext";
+import { useDispatch } from "react-redux";
+import { clearCart } from "../../redux/action/cart";
 
 const Footer = () => {
   const [isLoggin, setIsLoggin] = useState(false);
+  const { logout } = useAuth();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let token = localStorage.getItem("token");
@@ -318,7 +323,14 @@ const Footer = () => {
                 <ul className="footer-list  mb-sm-5 mb-md-0">
                   {isLoggin ? (
                     <li>
-                      <a href="/sign-in">
+                      <a
+                        href="/sign-in"
+                        onClick={() => {
+                          localStorage.removeItem("token");
+                          logout();
+                          dispatch(clearCart());
+                        }}
+                      >
                         {intl.formatMessage({ id: "Sign Out" })}
                       </a>
                     </li>

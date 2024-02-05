@@ -39,22 +39,26 @@ const Deals1 = ({ product, addToCart }) => {
             <h2 className="ellipsis-title">
               <Link href={`/${product?.seo_en}`}>{product.name}</Link>
             </h2>
-            <div className="product-rate-cover">
-              <div className="product-rate d-inline-block">
-                <div
-                  className="product-rating"
-                  style={{
-                    width: `${
-                      product?.overall_rating ? product.overall_rating : 0
-                    }%`,
-                  }}
-                ></div>
+            {product?.total_reviews > 0 ? (
+              <div className="product-rate-cover">
+                <div className="product-rate d-inline-block">
+                  <div
+                    className="product-rating"
+                    style={{
+                      width: `${
+                        product?.overall_rating ? product.overall_rating : 0
+                      }%`,
+                    }}
+                  ></div>
+                </div>
+                <span className="font-small ml-5 text-muted">
+                  {" "}
+                  {`(${product?.total_reviews ? product?.total_reviews : 0})`}
+                </span>
               </div>
-              <span className="font-small ml-5 text-muted">
-                {" "}
-                {`(${product?.total_reviews ? product?.total_reviews : 0})`}
-              </span>
-            </div>
+            ) : (
+              intl.formatMessage({ id: "No reviews available" })
+            )}
             <div>
               <span className="font-small text-muted">
                 By{" "}

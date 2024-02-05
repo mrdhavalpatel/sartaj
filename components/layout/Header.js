@@ -43,9 +43,9 @@ const Header = ({
       .replace("[...slug]", "")}`;
     const currentToken = router.query.token || "";
     const slug = router.query?.slug;
-    if (router.pathname.includes("page-reset-password")) {
+    if (router.pathname.includes("reset-password")) {
       window.location.replace(
-        `/${newLanguage}/page-reset-password?token=${currentToken}`
+        `/${newLanguage}/reset-password?token=${currentToken}`
       );
     } else if (slug) {
       window.location.replace(`${newUrl}/${slug}${window.location.search}`);
@@ -132,7 +132,7 @@ const Header = ({
       let pathWithoutLanguage = currentSlug
         .replace(/^\/[a-z]{2}\//, "")
         .replace("[...slug]", "");
-        console.log("path==========>",pathWithoutLanguage)
+      console.log("path==========>", pathWithoutLanguage);
       router.push(`/${"eng"}/${pathWithoutLanguage}${window.location.search}`);
     } else {
       if (router.pathname.includes("shop-compare")) {

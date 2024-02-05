@@ -11,9 +11,9 @@ import { auth } from "../../lib/auth/auth";
 import { useIntl } from "react-intl";
 import { translatedItemDetails } from "../../util/util";
 const ProductTab = ({
-  description,
   review,
   id,
+  product,
   total_reviews,
   showReviewForm,
   setShowReviewForm,
@@ -145,14 +145,13 @@ const ProductTab = ({
             }
             id="Description"
           >
-            <div
+            <div className="description" />
+            <h4
               className="description"
-            
-            />
-            <h4 className="description"  dangerouslySetInnerHTML={{ __html:  translatedItemDetails("description", intl, description) ,
-              }}>
-
-            </h4>
+              dangerouslySetInnerHTML={{
+                __html: translatedItemDetails("description", intl, product),
+              }}
+            ></h4>
           </div>
 
           <div
@@ -216,126 +215,132 @@ const ProductTab = ({
                   <h4 className="mb-30">
                     {intl.formatMessage({ id: "Customer reviews" })}
                   </h4>
-                  <div className="d-flex mb-30">
-                    <div className="product-rate d-inline-block mr-15">
-                      <div
-                        className="product-rating"
-                        style={{
-                          width: `${
-                            productRating?.overall_rating
-                              ? (productRating?.overall_rating * 100) / 5
-                              : 0
-                          }%`,
-                        }}
-                      ></div>
-                    </div>
-                    <h6>{productRating?.overall_rating} of 5</h6>
-                  </div>
-                  <div className="progress">
-                    <span>5 star</span>
-                    <div
-                      className="progress-bar"
-                      role="progressbar"
-                      style={{
-                        width: `${
-                          productRating.ratings_details?.["5"]
+                  {productRating?.overall_rating > 0 ? (
+                    <>
+                      <div className="d-flex mb-30">
+                        <div className="product-rate d-inline-block mr-15">
+                          <div
+                            className="product-rating"
+                            style={{
+                              width: `${
+                                productRating?.overall_rating
+                                  ? (productRating?.overall_rating * 100) / 5
+                                  : 0
+                              }%`,
+                            }}
+                          ></div>
+                        </div>
+                        <h6>{productRating?.overall_rating} of 5</h6>
+                      </div>
+                      <div className="progress">
+                        <span>5 star</span>
+                        <div
+                          className="progress-bar"
+                          role="progressbar"
+                          style={{
+                            width: `${
+                              productRating.ratings_details?.["5"]
+                                ? productRating.ratings_details?.["5"]
+                                : 0
+                            }%`,
+                          }}
+                          aria-valuenow={productRating.ratings_details?.["5"]}
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        >
+                          {(productRating.ratings_details?.["5"]
                             ? productRating.ratings_details?.["5"]
-                            : 0
-                        }%`,
-                      }}
-                      aria-valuenow={productRating.ratings_details?.["5"]}
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    >
-                      {(productRating.ratings_details?.["5"]
-                        ? productRating.ratings_details?.["5"]
-                        : 0) + "%"}
-                    </div>
-                  </div>
-                  <div className="progress">
-                    <span>4 star</span>
-                    <div
-                      className="progress-bar"
-                      role="progressbar"
-                      style={{
-                        width: `${
-                          productRating?.ratings_details?.["4"]
+                            : 0) + "%"}
+                        </div>
+                      </div>
+                      <div className="progress">
+                        <span>4 star</span>
+                        <div
+                          className="progress-bar"
+                          role="progressbar"
+                          style={{
+                            width: `${
+                              productRating?.ratings_details?.["4"]
+                                ? productRating?.ratings_details?.["4"]
+                                : 0
+                            }%`,
+                          }}
+                          aria-valuenow={productRating?.ratings_details?.["4"]}
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        >
+                          {(productRating?.ratings_details?.["4"]
                             ? productRating?.ratings_details?.["4"]
-                            : 0
-                        }%`,
-                      }}
-                      aria-valuenow={productRating?.ratings_details?.["4"]}
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    >
-                      {(productRating?.ratings_details?.["4"]
-                        ? productRating?.ratings_details?.["4"]
-                        : 0) + "%"}
-                    </div>
-                  </div>
-                  <div className="progress">
-                    <span>3 star</span>
-                    <div
-                      className="progress-bar"
-                      role="progressbar"
-                      style={{
-                        width: `${
-                          productRating?.ratings_details?.["3"]
+                            : 0) + "%"}
+                        </div>
+                      </div>
+                      <div className="progress">
+                        <span>3 star</span>
+                        <div
+                          className="progress-bar"
+                          role="progressbar"
+                          style={{
+                            width: `${
+                              productRating?.ratings_details?.["3"]
+                                ? productRating?.ratings_details?.["3"]
+                                : 0
+                            }%`,
+                          }}
+                          aria-valuenow={productRating?.ratings_details?.["3"]}
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        >
+                          {(productRating?.ratings_details?.["3"]
                             ? productRating?.ratings_details?.["3"]
-                            : 0
-                        }%`,
-                      }}
-                      aria-valuenow={productRating?.ratings_details?.["3"]}
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    >
-                      {(productRating?.ratings_details?.["3"]
-                        ? productRating?.ratings_details?.["3"]
-                        : 0) + "%"}
-                    </div>
-                  </div>
-                  <div className="progress">
-                    <span>2 star</span>
-                    <div
-                      className="progress-bar"
-                      role="progressbar"
-                      style={{
-                        width: `${
-                          productRating?.ratings_details?.["2"]
+                            : 0) + "%"}
+                        </div>
+                      </div>
+                      <div className="progress">
+                        <span>2 star</span>
+                        <div
+                          className="progress-bar"
+                          role="progressbar"
+                          style={{
+                            width: `${
+                              productRating?.ratings_details?.["2"]
+                                ? productRating?.ratings_details?.["2"]
+                                : 0
+                            }%`,
+                          }}
+                          aria-valuenow={productRating?.ratings_details?.["2"]}
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        >
+                          {(productRating?.ratings_details?.["2"]
                             ? productRating?.ratings_details?.["2"]
-                            : 0
-                        }%`,
-                      }}
-                      aria-valuenow={productRating?.ratings_details?.["2"]}
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    >
-                      {(productRating?.ratings_details?.["2"]
-                        ? productRating?.ratings_details?.["2"]
-                        : 0) + "%"}
-                    </div>
-                  </div>
-                  <div className="progress mb-30">
-                    <span>1 star</span>
-                    <div
-                      className="progress-bar"
-                      role="progressbar"
-                      style={{
-                        width: `${
-                          productRating?.ratings_details?.["1"]
+                            : 0) + "%"}
+                        </div>
+                      </div>
+                      <div className="progress mb-30">
+                        <span>1 star</span>
+                        <div
+                          className="progress-bar"
+                          role="progressbar"
+                          style={{
+                            width: `${
+                              productRating?.ratings_details?.["1"]
+                                ? productRating?.ratings_details?.["1"]
+                                : 0
+                            }%`,
+                          }}
+                          aria-valuenow={productRating?.ratings_details?.["1"]}
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        >
+                          {(productRating?.ratings_details?.["1"]
                             ? productRating?.ratings_details?.["1"]
-                            : 0
-                        }%`,
-                      }}
-                      aria-valuenow={productRating?.ratings_details?.["1"]}
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    >
-                      {(productRating?.ratings_details?.["1"]
-                        ? productRating?.ratings_details?.["1"]
-                        : 0) + "%"}
-                    </div>
-                  </div>
+                            : 0) + "%"}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    intl.formatMessage({ id: "No reviews available" })
+                  )}
                   {/* <a href="#" className="font-xs text-muted">
                     How are ratings calculated?
                   </a> */}
@@ -415,7 +420,7 @@ const ProductTab = ({
                                 </h3>
                                 <p className="mb-30">
                                   Don't have an account?{" "}
-                                  <Link href="/page-register">Create here</Link>
+                                  <Link href="/register">Create here</Link>
                                 </p>
                               </div>
                               <Formik

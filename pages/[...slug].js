@@ -49,6 +49,10 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
         }`,
       };
       ApiCall("post", intl, `seo_type_check`, payload).then((res) => {
+        if (!res?.data?.type || res?.data?.type === "") {
+          router.replace("/404");
+        }
+
         setSeoType(res?.data?.type);
 
         if (res?.data?.type !== "category") {
@@ -190,7 +194,6 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
               .replace(",", "/")
               .replace("[...slug]", "")
           : router.query.slug) || "";
-      console.log("fdsfsdfsd", router.query.slug);
 
       let pathWithoutLanguage = currentSlug.replace(/^\/[a-z]{2}\//, "");
       router.push(`/${"eng"}/${pathWithoutLanguage}${window.location.search}`);

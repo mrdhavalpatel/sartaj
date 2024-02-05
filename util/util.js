@@ -30,18 +30,23 @@ export const translatedItemDetails = (type, intl, item) => {
   }
 
   if (type === "description") {
+    let desc = item?.description;
     if (item?.translations?.length > 0) {
       const index = item?.translations.findIndex((translation) => {
-        return (
+        desc =
           translation.key === "description" &&
-          (intl.locale === "eng" ? "en" : "ja") === translation.locale
-        );
+          (intl.locale === "eng" ? "en" : "ja") === translation.locale;
       });
-      if (item.quantity) {
-        console.log(item.translations);
-      }
-      return item?.translations[index]?.value || item?.name;
+
+      desc = item?.translations[index]?.value || item?.description;
     }
-    return item?.name;
+
+    let txt = document.createElement("textarea");
+    txt.innerHTML = desc;
+    let txt2 = document.createElement("textarea");
+    txt2.innerHTML = txt.value;
+    const value = txt2.value;
+
+    return value;
   }
 };

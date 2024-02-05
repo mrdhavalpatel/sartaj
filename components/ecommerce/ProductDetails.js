@@ -96,28 +96,34 @@ const ProductDetails = ({
                     ></h2> */}
                     <h2
                       className="title-detail"
-                      dangerouslySetInnerHTML={{ __html:   translatedItemDetails("name", intl, product) }}
+                      dangerouslySetInnerHTML={{
+                        __html: translatedItemDetails("name", intl, product),
+                      }}
                     ></h2>
-                    <div className="product-detail-rating">
-                      <div className="product-rate-cover text-end">
-                        <div className="product-rate d-inline-block">
-                          <div
-                            className="product-rating"
-                            style={{
-                              width: `${
-                                product?.overall_rating
-                                  ? product?.overall_rating
-                                  : 0
-                              }%`,
-                            }}
-                          ></div>
+                    {product?.overall_rating > 0 ? (
+                      <div className="product-detail-rating">
+                        <div className="product-rate-cover text-end">
+                          <div className="product-rate d-inline-block">
+                            <div
+                              className="product-rating"
+                              style={{
+                                width: `${
+                                  product?.overall_rating
+                                    ? product?.overall_rating
+                                    : 0
+                                }%`,
+                              }}
+                            ></div>
+                          </div>
+                          <span className="font-small ml-5 text-muted">
+                            {" "}
+                            {`(${product?.total_reviews})`}
+                          </span>
                         </div>
-                        <span className="font-small ml-5 text-muted">
-                          {" "}
-                          {`(${product?.total_reviews})`}
-                        </span>
                       </div>
-                    </div>
+                    ) : (
+                      intl.formatMessage({ id: "No reviews available" })
+                    )}
                     <div className="clearfix product-price-cover">
                       <div className="product-price primary-color float-left">
                         <div className="product-price">
@@ -147,7 +153,14 @@ const ProductDetails = ({
                       </div>
                     </div>
                     <div className="short-desc mb-30">
-                      <p className="font-lg" >{product?.desc}</p>
+                      <p className="font-lg">
+                        {product?.desc &&
+                          translatedItemDetails(
+                            "description",
+                            intl,
+                            product?.desc
+                          )}
+                      </p>
                     </div>
                     <div className="bt-1 border-color-1 mt-30 mb-30"></div>
                     <div className="detail-extralink">
@@ -240,8 +253,8 @@ const ProductDetails = ({
                 <>
                   <ProductTab
                     id={product?.id}
+                    product={product}
                     total_reviews={product?.total_reviews}
-                    description={product}
                     review={product?.active_reviews}
                     showReviewForm={showReviewForm}
                     setShowReviewForm={setShowReviewForm}
