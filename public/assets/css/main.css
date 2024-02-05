@@ -13318,4 +13318,8 @@ button.ordertable_btn {
   padding: 20px;
   box-shadow: 0px 0px 3px 0px #00000059;
   border-radius: 5px;
-} 
+}
+.product-info #Description,.product-info #Description ul,.product-info #Description ul li .single_product_list_text{
+  font-family: 'Poppins' !important;
+  font-weight: 500;
+}
