@@ -562,7 +562,7 @@ function Account() {
                               </div>
                               <div className="address_row row">
                                 {address?.billing_address?.map((address) => (
-                                  <div className="card-body col-md-4">
+                                  <div className="mb-3 col-md-4">
                                     <div className="address_card">
                                       <>
                                         <address>

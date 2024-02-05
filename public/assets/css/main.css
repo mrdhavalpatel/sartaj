@@ -4328,7 +4328,9 @@ table .product-thumbnail img {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  margin-top: 15px;
+  border-top: 1px solid #ececec;
+    padding-top: 10px;
+    margin-top: 10px;
 }
 
 .product-cart-wrap .product-card-bottom .add-cart {
@@ -4569,7 +4571,7 @@ table .product-thumbnail img {
   color: #3e4493;
   font-size: 18px;
   font-weight: 700;
-  margin-top: 10px;
+  margin-top: 0;
 }
 
 .product-list-small .product-price span.old-price {
@@ -12717,7 +12719,7 @@ footer .hotline img {
 }
 
 .product-cart-wrap .product-img-action-wrap .product-img a img {
-  height: 250px;
+  height: 190px;
   object-fit: contain;
   object-position: center;
 }
@@ -13319,7 +13321,22 @@ button.ordertable_btn {
   box-shadow: 0px 0px 3px 0px #00000059;
   border-radius: 5px;
 }
-.product-info #Description,.product-info #Description ul,.product-info #Description ul li .single_product_list_text{
+.product-info #Description,.product-info #Description ul,.product-info #Description ul li .single_product_list_text,.product-info #Description font{
   font-family: 'Poppins' !important;
   font-weight: 500;
+}
+
+.product-list-small article  .bottom_row_div{
+  box-shadow: 0px 0px 3px 0px #00000059;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 0;
+}
+
+.bottom_row_div h6 {
+  font-size: 13px;
+  line-height: 1.5;
+}
+span.reviews_bottom {
+  font-size: 11px;
 }
