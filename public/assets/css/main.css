@@ -28,6 +28,7 @@ TABLE CONTENT
  Custom amine
 ***/
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
 /*import vendors*/
 @import url(vendors/bootstrap.min.css);
 @import url(vendors/uicons-regular-straight.css);
@@ -793,7 +794,7 @@ h4 {
 /*TYPOGRAPHY*/
 body {
   color: #7e7e7e;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   font-size: 14px;
   line-height: 24px;
   font-style: normal;
@@ -810,7 +811,7 @@ h6,
 .display-1,
 .display-2,
 .heading-sm-1 {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   color: #253d4e;
   font-weight: 700;
   line-height: 1.2;
@@ -1066,7 +1067,7 @@ h5.widget-title {
   background-color: #3e4493;
   border-radius: 50px;
   padding: 13px 28px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
 }
 
 .btn-default i {
@@ -1110,7 +1111,7 @@ h5.widget-title {
 }
 
 .btn {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
 }
 
 .btn:hover {
@@ -1264,7 +1265,7 @@ button[type="submit"]:hover {
   border: 0;
   padding: 14px 80px 14px 65px;
   background-repeat: no-repeat;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
 }
 
 .btn.btn-brush i,
@@ -1389,7 +1390,7 @@ textarea:focus {
   line-height: 50px;
   font-size: 14px;
   padding: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   color: #253d4e;
 }
 
@@ -1510,7 +1511,7 @@ textarea:focus {
   border: none;
   background-color: #253d4e;
   border-radius: 10px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
 }
 
 .contact-from-area .contact-form-style button:hover {
@@ -2606,7 +2607,7 @@ label {
 }
 
 .account .card .table>thead {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   font-size: 17px;
 }
 
@@ -2620,7 +2621,7 @@ label {
 .card-login .social-login {
   font-size: 20px;
   font-weight: 700;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2688,7 +2689,7 @@ label {
   border-right-color: currentcolor;
   border-bottom-color: currentcolor;
   border-left-color: currentcolor;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   font-weight: 600;
   line-height: 1;
 }
@@ -2754,7 +2755,7 @@ label {
   font-size: 16px;
   color: #7e7e7e;
   padding: 15px 30px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   font-weight: 700;
 }
 
@@ -2791,7 +2792,7 @@ label {
 }
 
 .tab-header .view-more {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   font-size: 13px;
   font-weight: 700;
   display: -webkit-box;
@@ -2842,7 +2843,7 @@ label {
   height: 50px;
   line-height: 50px;
   text-align: center;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
 }
 
 .deals-countdown .countdown-section .countdown-period {
@@ -2989,7 +2990,7 @@ label {
   padding: 20px;
   background-color: #fff;
   border-bottom: 1px solid #ececec;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   display: none;
 }
 
@@ -4517,7 +4518,7 @@ table .product-thumbnail img {
 }
 
 .product-price {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
 }
 
 .product-list-small article:not(:last-child) {
@@ -5179,7 +5180,7 @@ table .product-thumbnail img {
   padding: 8px 12px;
   border-radius: 5px;
   margin-bottom: 20px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   font-size: 14px;
   font-weight: 700;
   line-height: 1;
@@ -5293,7 +5294,7 @@ table .product-thumbnail img {
   line-height: 50px;
   font-weight: 700;
   font-size: 16px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
 }
 
 .product-extra-link2 .button.button-add-to-cart i {
@@ -5318,7 +5319,7 @@ table .product-thumbnail img {
   padding: 13px 24px !important;
   text-align: center;
   font-weight: 700;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   text-transform: none;
   font-size: 17px;
   border-radius: 30px;
@@ -5491,7 +5492,7 @@ table .product-thumbnail img {
   border: 1px solid #ececec;
   font-size: 17px;
   font-weight: 700;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   -webkit-box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
   padding: 10px 20px;
@@ -5577,7 +5578,7 @@ table .product-thumbnail img {
 .shopping-summery table thead th {
   background-color: #ececec;
   padding: 18px 0;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   font-size: 17px;
   font-weight: 700;
   color: #253d4e;
@@ -5801,7 +5802,7 @@ table.no-border thead {
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
   padding: 10px 20px;
   border: 1px solid #ececec;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   font-size: 17px;
   font-weight: 700;
 }
@@ -7041,7 +7042,7 @@ h6.post-title {
   line-height: 1;
   padding: 10px 20px;
   background-color: #3e4493;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   border: 2px solid #3e4493;
 }
 
@@ -7723,7 +7724,7 @@ h6.post-title {
   color: #3e4493;
   font-size: 26px;
   font-weight: 700;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   display: block;
   line-height: 1;
 }
@@ -7731,7 +7732,7 @@ h6.post-title {
 .hotline p span {
   font-weight: 500;
   font-size: 12px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   color: #7e7e7e;
   display: block;
   letter-spacing: 0.9px;
@@ -7914,7 +7915,7 @@ h6.post-title {
   line-height: 44px;
   border-radius: 5px;
   padding: 0 20px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   font-size: 16px;
 }
 
@@ -7996,7 +7997,7 @@ span.fi-rs-apps {
   font-size: 16px;
   font-weight: 700;
   color: #253d4e;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
 }
 
 .main-menu>nav>ul>li>a i {
@@ -8591,7 +8592,7 @@ span.fi-rs-apps {
   color: #3e4493;
   position: relative;
   font-size: 13px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -8689,7 +8690,7 @@ span.fi-rs-apps {
   line-height: 40px;
   text-align: center;
   font-weight: 700;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Josefin Sans', cursive;
   font-size: 16px;
   background-color: #f2f3f4;
 }
