@@ -13,6 +13,7 @@ import "react-phone-number-input/style.css";
 function Privacy() {
   const router = useRouter();
   const intl = useIntl();
+  const allowedCountries = ["JP"];
   const validationSchema = Yup.object().shape({
     f_name: Yup.string().required(
       intl.formatMessage({ id: "First name is required" })
@@ -32,9 +33,9 @@ function Privacy() {
     phone: Yup.string()
       .required(intl.formatMessage({ id: "Phone number is required" }))
       .matches(
-        /^\+\d{1,3}\d{9}$/,
+        /^\d{10}$/,
         intl.formatMessage({
-          id: "Phone number must include country code and be 9 digits long",
+          id: "Phone number must be exactly 10 digits long",
         })
       ),
     password: Yup.string()
@@ -53,15 +54,18 @@ function Privacy() {
       .nullable()
       .required(intl.formatMessage({ id: "Date of Birth is required" })),
   });
+
   const handleSubmit = (values) => {
+   
     const payload = {
       f_name: values.f_name,
       l_name: values.l_name,
       email: values.email,
-      phone: values.phone,
+      phone: "+81"+ values.phone,
       password: values.confirmPassword,
       dob: values?.dob,
     };
+    // console.log(payload)
     auth("post", "/auth/register", payload).then((res) => {
       if (res?.response?.data?.errors) {
         toast.error(res?.response?.data?.errors?.[0]?.message);
@@ -160,26 +164,41 @@ function Privacy() {
                                 style={{ color: "red" }}
                               />
                             </div>
-                            <div className="form-group">
-                              <PhoneInput
-                                international
-                                defaultCountry="JP"
+                          
+                            <div className="form-group"
+                              style={{ display: "flex", alignItems: "center" }}
+                            >
+                              <input
+                                type="text"
+                                id="countryCode"
+                                name="countryCode"
+                                value="+81"
+                                disabled
+                                style={{ width: "70px", marginRight: "5px" }}
+                              />
+                              <Field
+                                type="number"
+                                id="phone"
+                                name="phone"
                                 value={values.phone}
-                                name="phone"
-                                onChange={(value) =>
-                                  setFieldValue("phone", value)
-                                }
-                                className="no-spinners"
-                                placeholder={intl.formatMessage({
-                                  id: "phone no.",
-                                })}
+                                onChange={(e) => {
+                                  const inputValue = e.target.value.slice(
+                                    0,
+                                    10
+                                  ); // Limit to 10 characters
+                                  setFieldValue("phone", inputValue);
+                                }}
                               />
-                              <ErrorMessage
-                                name="phone"
-                                component="div"
-                                style={{ color: "red" }}
-                              />
+                         
                             </div>
+                            <div>
+                            <ErrorMessage
+                              name="phone"
+                              component="div"
+                              style={{ color: "red" }}
+                            />
+                            </div>
+                        
                             <Field
                               name="dob"
                               label="Date of Birth"
@@ -235,7 +254,7 @@ function Privacy() {
                                   >
                                     <span>
                                       {intl.formatMessage({
-                                        id: "I agree to terms",
+                                        id: "I agree to Terms",
                                       })}{" "}
                                       &amp;{" "}
                                       {intl.formatMessage({ id: "Policy." })}
@@ -248,9 +267,9 @@ function Privacy() {
                                   style={{ color: "red" }}
                                 />
                               </div>
-                              <Link href="/privacy-policy">
+                              <Link href="/faqs">
                                 <i className="fi-rs-book-alt mr-5 text-muted"></i>
-                                {intl.formatMessage({ id: "Lean more" })}
+                                {intl.formatMessage({ id: "Learn more" })}
                               </Link>
                             </div>
 
