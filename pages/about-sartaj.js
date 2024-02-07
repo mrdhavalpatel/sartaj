@@ -9,7 +9,13 @@ function About() {
   const getAboutUsData = async () => {
     const request = await ApiCall("get", intl, "config");
     const aboutUsData = await request;
-    setAboutData(aboutUsData?.data?.about_us);
+    if(intl.locale === "eng"){
+
+    setAboutData(aboutUsData?.data?.about_us);}
+    else {
+      setAboutData(aboutUsData?.data?.japanese_about_us);}
+
+    
   };
   useEffect(() => {
     getAboutUsData();

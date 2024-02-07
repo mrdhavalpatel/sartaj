@@ -290,9 +290,14 @@ const Footer = () => {
                     </a>
                   </li>
                   <li>
-                    <a href="/privacy-policy">
-                      {intl.formatMessage({ id: "Privacy Policy" })}
-                    </a>
+                    {intl.locale == "eng" ?
+                     <a href="/privacy-policy">
+                     {intl.formatMessage({ id: "Privacy Policy" })}
+                   </a> :
+                    <a href="/jp/privacy-policy">
+                    {intl.formatMessage({ id: "Privacy Policy" })}
+                  </a> }
+                  
                   </li>
                   <li>
                     <a href="/terms_conditions">

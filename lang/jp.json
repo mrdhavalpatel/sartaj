@@ -150,6 +150,8 @@
   "Confirm password": "パスワードを確認",
   "Confirm password *": "パスワードを確認*",
   "I agree to Terms": "利用規約に同意する",
+  "I agree to" :"同意します",
+  "Terms & Conditions": "同意します",
   "Policy.": "ポリシー。",
   "Learn more": "詳しく知る",
   "Note:": "注意:",
@@ -298,7 +300,7 @@
   "Email is required": "Eメールは必須",
   "Terms & Conditions are required": "利用規約が必要",
   "Phone number is required": "電話番号は必須",
-  "Phone number must be 9 digits": "電話番号は9桁であること",
+  "Phone number must be 10 digits": "電話番号は10桁であること",
   "Date of Birth is required": "生年月日が必要",
   "No reviews available": "レビューはありません"
 }

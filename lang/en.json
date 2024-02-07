@@ -150,6 +150,8 @@
   "Password": "Password",
   "Confirm password": "Confirm password",
   "I agree to Terms": "I agree to Terms",
+  "I agree to": "I agree to",
+  "Terms & Conditions":"Terms & Conditions",
   "Policy.": "Policy.",
   "Learn more": "Learn more",
   "Note:": "Note:",
@@ -297,7 +299,7 @@
   "Email is required": "Email is required",
   "Terms & Conditions are required": "Terms & Conditions are required",
   "Phone number is required": "Phone number is required",
-  "Phone number must be 9 digits": "Phone number must be 9 digits",
+  "Phone number must be 10 digits": "Phone number must be 10 digits",
   "Date of Birth is required": "Date of Birth is required",
   "No reviews available": "No reviews available"
 }

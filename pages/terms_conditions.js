@@ -11,7 +11,13 @@ function Terms() {
   const getTermsData = async () => {
     const request = await ApiCall("get", intl, "config");
     const privacyPolicyData = await request;
-    setTermsData(privacyPolicyData?.data?.privacy_policy);
+    if(intl.locale === "eng"){
+
+    setTermsData(privacyPolicyData?.data?.privacy_policy);}
+    else{
+      setTermsData(privacyPolicyData?.data?.japanese_privacy_policy);}
+
+    
   };
   useEffect(() => {
     getTermsData();

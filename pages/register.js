@@ -35,7 +35,7 @@ function Privacy() {
       .matches(
         /^\d{10}$/,
         intl.formatMessage({
-          id: "Phone number must be exactly 10 digits long",
+          id: "Phone number must be 10 digits",
         })
       ),
     password: Yup.string()
@@ -56,12 +56,11 @@ function Privacy() {
   });
 
   const handleSubmit = (values) => {
-   
     const payload = {
       f_name: values.f_name,
       l_name: values.l_name,
       email: values.email,
-      phone: "+81"+ values.phone,
+      phone: "+81" + values.phone,
       password: values.confirmPassword,
       dob: values?.dob,
     };
@@ -164,8 +163,9 @@ function Privacy() {
                                 style={{ color: "red" }}
                               />
                             </div>
-                          
-                            <div className="form-group"
+
+                            <div
+                              className="form-group"
                               style={{ display: "flex", alignItems: "center" }}
                             >
                               <input
@@ -189,16 +189,15 @@ function Privacy() {
                                   setFieldValue("phone", inputValue);
                                 }}
                               />
-                         
                             </div>
                             <div>
-                            <ErrorMessage
-                              name="phone"
-                              component="div"
-                              style={{ color: "red" }}
-                            />
+                              <ErrorMessage
+                                name="phone"
+                                component="div"
+                                style={{ color: "red" }}
+                              />
                             </div>
-                        
+
                             <Field
                               name="dob"
                               label="Date of Birth"
@@ -254,10 +253,26 @@ function Privacy() {
                                   >
                                     <span>
                                       {intl.formatMessage({
-                                        id: "I agree to Terms",
+                                        id: "I agree to",
                                       })}{" "}
-                                      &amp;{" "}
-                                      {intl.formatMessage({ id: "Policy." })}
+                                      {intl.locale =="eng" ?
+                                         <a
+                                         href="/terms_conditions"
+                                         target="_blank"
+                                       >
+                                         {intl.formatMessage({
+                                           id: "Terms & Conditions",
+                                         })}
+                                       </a>:
+                                          <a
+                                          href="/jp/terms_conditions"
+                                          target="_blank"
+                                        >
+                                          {intl.formatMessage({
+                                            id: "Terms & Conditions",
+                                          })}
+                                        </a>}
+                                   
                                     </span>
                                   </label>
                                 </div>

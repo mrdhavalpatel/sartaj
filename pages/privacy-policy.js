@@ -10,7 +10,12 @@ function Guide() {
   const getPrivacyPolicy = async () => {
     const request = await ApiCall("get", intl, "config");
     const privacyPolicyData = await request;
-    setPrivacyData(privacyPolicyData?.data?.privacy_policy);
+    if(intl.locale === "eng"){
+    setPrivacyData(privacyPolicyData?.data?.privacy_policy);}
+    else{
+    setPrivacyData(privacyPolicyData?.data?.japanese_privacy_policy);}
+
+    
   };
   useEffect(() => {
     getPrivacyPolicy();

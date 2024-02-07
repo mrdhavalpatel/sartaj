@@ -10,7 +10,15 @@ function Guide() {
   const getFaqData = async () => {
     const request = await ApiCall("get", intl, "config");
     const faqData = await request;
-    setFaqData(faqData?.data?.faq);
+    console.log("intl in faq", intl.locale)
+if(intl.locale === "eng"){
+  setFaqData(faqData?.data?.faq);
+
+}else{
+  setFaqData(faqData?.data?.japanese_faq);
+
+}
+
   };
   useEffect(() => {
     getFaqData();
