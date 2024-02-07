@@ -54,7 +54,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const handleRouteChange = () => {
       checkAuth();
-    };
+    }
 
     router.events.on("routeChangeStart", handleRouteChange);
     router.events.on("routeChangeStart", () => handleLoading(true));

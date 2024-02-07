@@ -282,10 +282,7 @@ function Privacy() {
                                   style={{ color: "red" }}
                                 />
                               </div>
-                              <Link href="/faqs">
-                                <i className="fi-rs-book-alt mr-5 text-muted"></i>
-                                {intl.formatMessage({ id: "Learn more" })}
-                              </Link>
+                             
                             </div>
 
                             <p className="font-xs text-muted">
