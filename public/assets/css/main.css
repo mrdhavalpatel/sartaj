@@ -12756,20 +12756,26 @@ td.product-des.product-name {
   .product-price.primary-color.float-left {
     margin-bottom: 0;
   }
+
   .related-products .product-cart-wrap {
     border-top: 1px solid #000;
-}
+  }
 
-.related-products .swiper-slide .product-cart-wrap {
+  .related-products .swiper-slide .product-cart-wrap {
     border-right: 0;
-}
+  }
 
-.related-products .swiper-slide:nth-child(2n) .product-cart-wrap {
+  .related-products .swiper-slide:nth-child(2n) .product-cart-wrap {
     border-right: 1px solid #000;
-}
-.related-products .swiper.swiper-initialized.swiper-horizontal.swiper-ios.swiper-backface-hidden.custom-class {
-  padding: 0;
-}
+  }
+
+  .related-products .swiper.swiper-initialized.swiper-horizontal.swiper-ios.swiper-backface-hidden.custom-class {
+    padding: 0;
+  }
+
+  .row.related-products.position-relative, .row.related-products.position-relative .swiper {
+    padding: 0 !important;
+  }
 
 }
 
