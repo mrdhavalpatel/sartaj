@@ -296,6 +296,7 @@
   "High To Low": "High To Low",
   "Username or Email is required": "Username or Email is required",
   "First name is required": "First name is required",
+  "Subject is required":"Subject is required",
   "Last name is required": "Last name is required",
   "Invalid email address": "Invalid email address",
   "Email is required": "Email is required",
@@ -303,5 +304,6 @@
   "Phone number is required": "Phone number is required",
   "Phone number must be 10 digits": "Phone number must be 10 digits",
   "Date of Birth is required": "Date of Birth is required",
-  "No reviews available": "No reviews available"
+  "No reviews available": "No reviews available",
+  "Message is required": "Message is required"
 }

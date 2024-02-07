@@ -297,12 +297,14 @@
   "High To Low": "高から低へ",
   "Username or Email is required": "ユーザー名またはメールアドレスが必要です。",
   "First name is required": "ユーザー名またはメールアドレスが必要です。",
+  "Subject is required":"件名は必須です",
   "Last name is required": "姓は必須",
-  "Invalid email address": "無効なメールアドレス",
-  "Email is required": "Eメールは必須",
+  "Invalid email address": "無効なメ``ールアドレス",
+  "Email is required": "メールアドレスは必須です",
   "Terms & Conditions are required": "利用規約が必要",
   "Phone number is required": "電話番号は必須",
   "Phone number must be 10 digits": "電話番号は10桁であること",
   "Date of Birth is required": "生年月日が必要",
-  "No reviews available": "レビューはありません"
+  "No reviews available": "レビューはありません",
+  "Message is required":"メッセージは必須です"
 }

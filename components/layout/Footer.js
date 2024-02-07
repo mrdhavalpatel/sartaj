@@ -12,6 +12,7 @@ const Footer = () => {
   const [isLoggin, setIsLoggin] = useState(false);
   const { logout } = useAuth();
   const dispatch = useDispatch();
+  // const checkoutUrl = intl.locale === "eng" ? "/shop-checkout" : "/jp/shop-checkout";
 
   useEffect(() => {
     let token = localStorage.getItem("token");
