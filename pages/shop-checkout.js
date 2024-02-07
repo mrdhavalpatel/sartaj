@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { ApiCall } from "../lib/other/other";
 import { useIntl } from "react-intl";
+import { translatedItemDetails } from "../util/util";
 
 const Cart = ({
   openCart,
@@ -420,7 +421,7 @@ const Cart = ({
           <div className="container">
             <div className="row">
               <div className="col-lg-8 mb-40">
-                <h1 className="heading-2 mb-10">Checkout</h1>
+                <h1 className="heading-2 mb-10">{intl.formatMessage({ id: "Checkout" })}t</h1>
                 <div className="d-flex justify-content-between">
                   <h6 className="text-body">
                     {intl.formatMessage({
@@ -587,9 +588,14 @@ const Cart = ({
                               </td>
                               <td>
                                 <h6 className="w-160 mb-5">
-                                  <a
+                                  {/* <a
                                     dangerouslySetInnerHTML={{
                                       __html: item?.product?.name,
+                                    }}
+                                  ></a> */}
+                                      <a
+                                    dangerouslySetInnerHTML={{
+                                      __html:translatedItemDetails("name", intl, item?.product),
                                     }}
                                   ></a>
                                   <div className="product-rate-cover">
@@ -644,7 +650,7 @@ const Cart = ({
                     )}
                     <div className="divider-2 mb-30"></div>
                     <div className="heading_s1 mb-3">
-                      <h4>Cart Totals</h4>
+                      <h4>{intl.formatMessage({ id: "Cart Totals" })}</h4>
                     </div>
                     {cartTotal.cartProducts?.length > 0 ? (
                       <table
@@ -813,7 +819,7 @@ const Cart = ({
                   <div className="delivery_time_div">
                     <div className="divider-2 mb-30"></div>
                     <div className="heading_s1 mb-3">
-                      <h4>Delivery time</h4>
+                      <h4>{intl.formatMessage({ id: "Delivery time" })}</h4>
                     </div>
 
                     {timeSlot?.map((Item, index) => {

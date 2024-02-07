@@ -36,14 +36,18 @@ const Cart = ({
   const [cartDataUpdated, setCartDataUpdated] = useState(false);
   const [cartTotal, setCartTotal] = useState([]);
   const [cartProducts, setCartProducts] = useState([]);
-
+  const checkoutUrl = intl.locale === "eng" ? "/shop-checkout" : "/jp/shop-checkout";
   const proceedToCheckout = () => {
     if (cartProducts?.length > 0) {
       return (
-        <a href="/shop-checkout" className="btn" aria-disabled>
-          <i className="fi-rs-box-alt mr-10"></i>
-          {intl.formatMessage({ id: "Proceed To CheckOut" })}
-        </a>
+      
+        <a href={checkoutUrl} className="btn" aria-disabled>
+        <i className="fi-rs-box-alt mr-10"></i>
+        {intl.formatMessage({ id: "Proceed To CheckOut" })}
+      </a>
+     
+        
+     
       );
     } else {
       <a className="btn" aria-disabled>
