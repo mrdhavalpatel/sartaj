@@ -42,7 +42,9 @@ function Login({ cartItems }) {
     usernameOrEmail: Yup.string().required(
       intl.formatMessage({ id: "Username or Email is required" })
     ),
-    password: Yup.string().required({ id: "Password is required" }),
+    password: Yup.string().required(
+      intl.formatMessage({ id: "Password is required" })
+    ),
   });
   const handleSubmit = (values) => {
     const payload = {
@@ -62,96 +64,94 @@ function Login({ cartItems }) {
     });
   };
   return (
-    <>
-      <Layout parent="Home" sub="Pages" subChild="Login & Register">
-        <div className="page-content pt-150 pb-150">
-          <div className="container">
-            <div className="row">
-              <div className="col-xl-8 col-lg-10 col-md-12 m-auto">
-                <div className="row">
-                  <div className="col-lg-6 pr-30 d-none d-lg-block">
-                    <img
-                      className="border-radius-15"
-                      src="assets/imgs/page/login-1.png"
-                      alt="nest"
-                    />
-                  </div>
-                  <div className="col-lg-6 col-md-8">
-                    <div className="login_wrap widget-taber-content background-white">
-                      <div className="padding_eight_all bg-white">
-                        <div className="heading_s1">
-                          <h1 className="mb-5">
-                            {intl.formatMessage({ id: "Login" })}
-                          </h1>
+    <Layout parent="Home" sub="Pages" subChild="Login & Register">
+      <div className="page-content pt-150 pb-150">
+        <div className="container">
+          <div className="row">
+            <div className="col-xl-8 col-lg-10 col-md-12 m-auto">
+              <div className="row">
+                <div className="col-lg-6 pr-30 d-none d-lg-block">
+                  <img
+                    className="border-radius-15"
+                    src="assets/imgs/page/login-1.png"
+                    alt="nest"
+                  />
+                </div>
+                <div className="col-lg-6 col-md-8">
+                  <div className="login_wrap widget-taber-content background-white">
+                    <div className="padding_eight_all bg-white">
+                      <div className="heading_s1">
+                        <h1 className="mb-5">
+                          {intl.formatMessage({ id: "Login" })}
+                        </h1>
+                        <p className="mb-30">
+                          {intl.formatMessage({
+                            id: "Don't have an account?",
+                          })}{" "}
+                          <Link href="/register">
+                            {intl.formatMessage({ id: "Create here" })}
+                          </Link>
+                        </p>
+                      </div>
+                      <Formik
+                        initialValues={{
+                          usernameOrEmail: "",
+                          password: "",
+                        }}
+                        validationSchema={validationSchema}
+                        onSubmit={(values, { setSubmitting }) => {
+                          // Handle form submission here
+                          handleSubmit(values);
+                          setSubmitting(false);
+                        }}
+                      >
+                        <Form>
+                          <div className="form-group">
+                            <Field
+                              type="text"
+                              name="usernameOrEmail"
+                              placeholder={intl.formatMessage({
+                                id: "Username or Email *",
+                              })}
+                              className="form-control"
+                            />
+                            <ErrorMessage
+                              name="usernameOrEmail"
+                              component="div"
+                              style={{ color: "red" }}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <Field
+                              type="password"
+                              name="password"
+                              placeholder={intl.formatMessage({
+                                id: "Your password *",
+                              })}
+                              className="form-control"
+                            />
+                            <ErrorMessage
+                              name="password"
+                              component="div"
+                              style={{ color: "red" }}
+                            />
+                          </div>
                           <p className="mb-30">
-                            {intl.formatMessage({
-                              id: "Don't have an account?",
-                            })}{" "}
-                            <Link href="/register">
-                              {intl.formatMessage({ id: "Create here" })}
+                            <Link href="/forgot-password">
+                              {intl.formatMessage({ id: "Forgot password" })}
                             </Link>
                           </p>
-                        </div>
-                        <Formik
-                          initialValues={{
-                            usernameOrEmail: "",
-                            password: "",
-                          }}
-                          validationSchema={validationSchema}
-                          onSubmit={(values, { setSubmitting }) => {
-                            // Handle form submission here
-                            handleSubmit(values);
-                            setSubmitting(false);
-                          }}
-                        >
-                          <Form>
-                            <div className="form-group">
-                              <Field
-                                type="text"
-                                name="usernameOrEmail"
-                                placeholder={intl.formatMessage({
-                                  id: "Username or Email *",
-                                })}
-                                className="form-control"
-                              />
-                              <ErrorMessage
-                                name="usernameOrEmail"
-                                component="div"
-                                style={{ color: "red" }}
-                              />
-                            </div>
-                            <div className="form-group">
-                              <Field
-                                type="password"
-                                name="password"
-                                placeholder={intl.formatMessage({
-                                  id: "Your password *",
-                                })}
-                                className="form-control"
-                              />
-                              <ErrorMessage
-                                name="password"
-                                component="div"
-                                style={{ color: "red" }}
-                              />
-                            </div>
-                            <p className="mb-30">
-                              <Link href="/forgot-password">
-                                {intl.formatMessage({ id: "Forgot password" })}
-                              </Link>
-                            </p>
-                            <div className="form-group">
-                              <button
-                                type="submit"
-                                className="btn btn-heading btn-block hover-up"
-                                name="login"
-                              >
-                                {intl.formatMessage({ id: "Login" })}
-                              </button>
-                            </div>
-                          </Form>
-                        </Formik>
-                      </div>
+                          <div className="form-group">
+                            <button
+                              type="submit"
+                              className="btn btn-heading btn-block hover-up"
+                              name="login"
+                            >
+                              {intl.formatMessage({ id: "Login" })}
+                            </button>
+                          </div>
+                        </Form>
+                      </Formik>
                     </div>
                   </div>
                 </div>
@@ -159,8 +159,8 @@ function Login({ cartItems }) {
             </div>
           </div>
         </div>
-      </Layout>
-    </>
+      </div>
+    </Layout>
   );
 }
 const mapStateToProps = (state) => ({

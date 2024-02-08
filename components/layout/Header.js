@@ -119,7 +119,6 @@ const Header = ({
   }, []);
 
   useEffect(() => {
-    console.log(router?.query?.slug);
     if (
       !window.location.pathname.includes("eng/") &&
       !window.location.pathname.includes("jp/") &&
@@ -137,11 +136,11 @@ const Header = ({
     } else {
       if (router.pathname.includes("shop-compare")) {
         router.push(
-          `/${intl.locale}/${router.pathname.replace("[...slug]", "")}`
+          `/${intl.locale}${router.pathname.replace("[...slug]", "")}`
         );
       } else if (router.pathname.includes("shop-wishlist")) {
         router.push(
-          `/${intl.locale}/${router.pathname}${window.location.search}`
+          `/${intl.locale}${router.pathname}${window.location.search}`
         );
       }
     }
