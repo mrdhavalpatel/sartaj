@@ -55,7 +55,7 @@ const Cart = ({
   const calculateAmountToAdd = () => {
     return Math.round(
       cartTotal.minOrderAmount -
-        (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
+      (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
     );
   };
   console.log(cartTotal);
@@ -208,7 +208,7 @@ const Cart = ({
           : selectedAddressData?.full_name,
       road:
         values?.billing_address2 != undefined ||
-        values?.billing_address2 != null
+          values?.billing_address2 != null
           ? values?.billing_address2
           : selectedAddressData?.billing_address2,
       house:
@@ -539,6 +539,7 @@ const Cart = ({
                   </label>
                   <select
                     as="select"
+                    className="selectedAddress"
                     name="selectedAddress"
                     value={selectedAddressDropdown}
                     onChange={(e) => {
@@ -548,19 +549,15 @@ const Cart = ({
                   >
                     {address?.billing_address?.map((option) => (
                       <option key={option.id} value={option.id}>
-                        {`${
-                          option?.full_name !== null
-                            ? option.full_name + ","
-                            : ""
-                        } ${
-                          option?.address !== null ? option.address + "," : ""
-                        }${option?.road !== null ? option.road + "," : ""}${
-                          option?.post_code !== null
+                        {`${option?.full_name !== null
+                          ? option.full_name + ","
+                          : ""
+                          } ${option?.address !== null ? option.address + "," : ""
+                          }${option?.road !== null ? option.road + "," : ""}${option?.post_code !== null
                             ? option?.post_code + ","
                             : ""
-                        }${option?.city !== null ? option?.city + "," : ""}${
-                          option?.state !== null ? option?.state + "," : ""
-                        }`}
+                          }${option?.city !== null ? option?.city + "," : ""}${option?.state !== null ? option?.state + "," : ""
+                          }`}
                       </option>
                     ))}
                   </select>
@@ -568,7 +565,7 @@ const Cart = ({
                 {formikFormData(selectedAddressData)}
               </div>
               <div className="col-lg-5">
-                <div className="border p-40 cart-totals ml-30 mb-50">
+                <div className="border p-40 cart-totals ml-30 mb-50 checkout_box mt-30">
                   <div className="d-flex align-items-end justify-content-between mb-30">
                     <h4>{intl.formatMessage({ id: "Your Order" })}</h4>
                     <h6 className="text-muted">
@@ -593,9 +590,9 @@ const Cart = ({
                                       __html: item?.product?.name,
                                     }}
                                   ></a> */}
-                                      <a
+                                  <a
                                     dangerouslySetInnerHTML={{
-                                      __html:translatedItemDetails("name", intl, item?.product),
+                                      __html: translatedItemDetails("name", intl, item?.product),
                                     }}
                                   ></a>
                                   <div className="product-rate-cover">
@@ -603,21 +600,19 @@ const Cart = ({
                                       <div
                                         className="product-rating"
                                         style={{
-                                          width: `${
-                                            item?.product?.overall_rating
-                                              ? item?.product?.overall_rating
-                                              : 0
-                                          }%`,
+                                          width: `${item?.product?.overall_rating
+                                            ? item?.product?.overall_rating
+                                            : 0
+                                            }%`,
                                         }}
                                       ></div>
                                     </div>
                                     <span className="font-small ml-5 text-muted">
                                       {`(
-                                    ${
-                                      item?.product?.total_reviews
-                                        ? item?.product?.total_reviews
-                                        : 0
-                                    }
+                                    ${item?.product?.total_reviews
+                                          ? item?.product?.total_reviews
+                                          : 0
+                                        }
                                     )`}
                                     </span>
                                   </div>
@@ -634,11 +629,11 @@ const Cart = ({
                                   {/* {(item.quantity ? item.quantity : 1) *
                                     item.price} */}
                                   {(item?.quantity ? item?.quantity : 1) *
-                                  item?.actual_price
+                                    item?.actual_price
                                     ? item?.actual_price
                                     : item?.product.actual_price
-                                    ? item?.product.actual_price
-                                    : 0}
+                                      ? item?.product.actual_price
+                                      : 0}
                                 </h4>
                               </td>
                             </tr>
@@ -648,176 +643,191 @@ const Cart = ({
                     ) : (
                       "No Products"
                     )}
-                    <div className="divider-2 mb-30"></div>
-                    <div className="heading_s1 mb-3">
-                      <h4>{intl.formatMessage({ id: "Cart Totals" })}</h4>
-                    </div>
-                    {cartTotal.cartProducts?.length > 0 ? (
-                      <table
-                        style={{
-                          border: "1px solid #bababa",
-                          width: "100%",
-                          borderCollapse: "collapse",
-                        }}
-                        className="checkout_info_table"
-                      >
-                        <tr>
-                          <td
-                            style={{
-                              border: "1px solid #bababa",
-                              padding: "5px 15px",
-                            }}
-                          >
-                            <strong>
-                              {intl.formatMessage({ id: "Sub-Total:" })}
-                            </strong>
-                          </td>
-                          <td
-                            style={{
-                              border: "1px solid #bababa",
-                              padding: "5px 15px",
-                            }}
-                          >
-                            <span className="font-lg fw-900 text-brand">
-                              ¥{cartTotal?.total_sub_amt}
-                            </span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td
-                            style={{
-                              border: "1px solid #bababa",
-                              padding: "5px 15px",
-                            }}
-                          >
-                            <strong>
-                              {intl.formatMessage({
-                                id: "All Item in Dry Shipping:",
-                              })}
-                            </strong>
-                          </td>
-                          <td
-                            style={{
-                              border: "1px solid #bababa",
-                              padding: "5px 15px",
-                            }}
-                          >
-                            <span className="font-lg fw-900 text-brand">
-                              ¥{cartTotal?.delivery_charge}
-                            </span>
-                          </td>
-                        </tr>
-                        {cartTotal?.eight_percent ? (
-                          <tr>
-                            <td
-                              style={{
-                                border: "1px solid #bababa",
-                                padding: "5px 15px",
-                              }}
-                            >
-                              <strong>
-                                {intl.formatMessage({ id: "Consumption Tax" })}{" "}
-                                {cartTotal?.eight_percent ? 8 : 0}%
-                              </strong>
-                            </td>
-                            <td
-                              style={{
-                                border: "1px solid #bababa",
-                                padding: "5px 15px",
-                              }}
-                            >
-                              <span className="font-lg fw-900 text-brand">
-                                ¥{cartTotal?.eight_percent}
-                              </span>
-                            </td>
-                          </tr>
-                        ) : null}
-                        {cartTotal?.ten_percent ? (
-                          <tr>
-                            <td
-                              style={{
-                                border: "1px solid #bababa",
-                                padding: "5px 15px",
-                              }}
-                            >
-                              <strong>
-                                {" "}
-                                {intl.formatMessage({
-                                  id: "Consumption Tax",
-                                })}{" "}
-                                {cartTotal?.eight_percent ? 10 : 0}%
-                              </strong>
-                            </td>
-                            <td
-                              style={{
-                                border: "1px solid #bababa",
-                                padding: "5px 15px",
-                              }}
-                            >
-                              <span className="font-lg fw-900 text-brand">
-                                ¥
-                                {cartTotal?.ten_percent
-                                  ? cartTotal?.ten_percent
-                                  : 0}
-                              </span>
-                            </td>
-                          </tr>
-                        ) : null}
-                        {coupanRes ? (
-                          <tr>
-                            <td
-                              style={{
-                                border: "1px solid #bababa",
-                                padding: "5px 15px",
-                              }}
-                            >
-                              <strong>
-                                {" "}
-                                {intl.formatMessage({ id: "Discount price" })}
-                              </strong>
-                            </td>
-                            <td
-                              style={{
-                                border: "1px solid #bababa",
-                                padding: "5px 15px",
-                              }}
-                            >
-                              <span className="font-lg fw-900 text-brand">
-                                ¥{coupanRes?.discount_price}
-                              </span>
-                            </td>
-                          </tr>
-                        ) : null}
-                        <tr>
-                          <td
-                            style={{
-                              border: "1px solid #bababa",
-                              padding: "5px 15px",
-                            }}
-                          >
-                            <strong>
-                              {intl.formatMessage({ id: "Total:" })}
-                            </strong>
-                          </td>
-                          <td
-                            style={{
-                              border: "1px solid #bababa",
-                              padding: "5px 15px",
-                            }}
-                          >
-                            <span className="font-lg fw-900 text-brand">
-                              ¥
-                              {coupanRes
-                                ? coupanRes?.orderAmount
-                                : cartTotal?.total_amt}
-                            </span>
-                          </td>
-                        </tr>
-                      </table>
-                    ) : null}
                   </div>
+
+                </div>
+                <div className="border p-40 cart-totals ml-30 mb-50 checkout_box">
+                  <div className="heading_s1 mb-3">
+                    <h4>{intl.formatMessage({ id: "Cart Totals" })}</h4>
+                  </div>
+                  {cartTotal.cartProducts?.length > 0 ? (
+                    <table
+                      style={{
+                        border: "1px solid #bababa",
+                        width: "100%",
+                        borderCollapse: "collapse",
+                      }}
+                      className="checkout_info_table"
+                    >
+                      <tr>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px 15px",
+                          }}
+                          className="text-start"
+                        >
+                          <strong>
+                            {intl.formatMessage({ id: "Sub-Total:" })}
+                          </strong>
+                        </td>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px 15px",
+                          }}
+                          className="text-end"
+                        >
+                          <span className="fw-600">
+                            ¥{cartTotal?.total_sub_amt}
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px 15px",
+                          }}
+                          className="text-start"
+                        >
+                          <strong>
+                            {intl.formatMessage({
+                              id: "All Item in Dry Shipping:",
+                            })}
+                          </strong>
+                        </td>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px 15px",
+                          }}
+                          className="text-end"
+                        >
+                          <span className="fw-600">
+                            ¥{cartTotal?.delivery_charge}
+                          </span>
+                        </td>
+                      </tr>
+                      {cartTotal?.eight_percent ? (
+                        <tr>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px 15px",
+                            }}
+                            className="text-start"
+                          >
+                            <strong>
+                              {intl.formatMessage({ id: "Consumption Tax" })}{" "}
+                              {cartTotal?.eight_percent ? 8 : 0}%
+                            </strong>
+                          </td>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px 15px",
+                            }}
+                            className="text-end"
+                          >
+                            <span className="fw-600">
+                              ¥{cartTotal?.eight_percent}
+                            </span>
+                          </td>
+                        </tr>
+                      ) : null}
+                      {cartTotal?.ten_percent ? (
+                        <tr>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px 15px",
+                            }}
+                            className="text-start"
+                          >
+                            <strong>
+                              {" "}
+                              {intl.formatMessage({
+                                id: "Consumption Tax",
+                              })}{" "}
+                              {cartTotal?.eight_percent ? 10 : 0}%
+                            </strong>
+                          </td>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px 15px",
+                            }}
+                            className="text-end"
+                          >
+                            <span className="fw-600">
+                              ¥
+                              {cartTotal?.ten_percent
+                                ? cartTotal?.ten_percent
+                                : 0}
+                            </span>
+                          </td>
+                        </tr>
+                      ) : null}
+                      {coupanRes ? (
+                        <tr>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px 15px",
+                            }}
+                            className="text-start"
+                          >
+                            <strong>
+                              {" "}
+                              {intl.formatMessage({ id: "Discount price" })}
+                            </strong>
+                          </td>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px 15px",
+                            }}
+                            className="text-end"
+                          >
+                            <span className="fw-600">
+                              ¥{coupanRes?.discount_price}
+                            </span>
+                          </td>
+                        </tr>
+                      ) : null}
+                      <tr>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px 15px",
+                          }}
+                          className="text-start"
+                        >
+                          <strong>
+                            {intl.formatMessage({ id: "Total:" })}
+                          </strong>
+                        </td>
+                        <td
+                          style={{
+                            border: "1px solid #bababa",
+                            padding: "5px 15px",
+                          }}
+                          className="text-end"
+                        >
+                          <span className="font-lg fw-900 text-brand">
+                            ¥
+                            {coupanRes
+                              ? coupanRes?.orderAmount
+                              : cartTotal?.total_amt}
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  ) : null}
+                </div>
+                <div className="border p-40 cart-totals ml-30 mb-50 checkout_box">
                   <div className="delivery_time_div">
-                    <div className="divider-2 mb-30"></div>
                     <div className="heading_s1 mb-3">
                       <h4>{intl.formatMessage({ id: "Delivery time" })}</h4>
                     </div>
@@ -852,8 +862,9 @@ const Cart = ({
                       );
                     })}
                   </div>
-                  <div className="payment_method mt-30">
-                    <div className="divider-2 mb-30"></div>
+                </div>
+                <div className="border p-40 cart-totals ml-30 mb-50 checkout_box">
+                  <div className="payment_method">
                     <div className="heading_s1 mb-3">
                       <h4>{intl.formatMessage({ id: "Payment" })}</h4>
                     </div>
@@ -962,12 +973,14 @@ const Cart = ({
                       </h8>
                     )}
                   </div>
-                  <h6></h6>
+
+                </div>
+                <div className="px-40 ml-30 mb-50">
                   <button
                     onClick={() => {
                       placeOrder();
                     }}
-                    className="btn btn-fill-out btn-block mt-30"
+                    className="btn btn-fill-out btn-block"
                   >
                     {intl.formatMessage({ id: "Place Order" })}
                   </button>

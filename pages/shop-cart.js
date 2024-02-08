@@ -172,13 +172,13 @@ const Cart = ({
               <h1 className="heading-2 mb-10">
                 {intl.formatMessage({ id: "Your Cart" })}
               </h1>
-              <div className="d-flex justify-content-between">
-                <h6 className="text-body">
+              <div className="d-flex d-md-block justify-content-between">
+                <h6 className="text-body mb-3">
                   {intl.formatMessage({
                     id: "Carefully check the information before checkout",
                   })}
                 </h6>
-                <h6 className="text-body">
+                <h6 className="text-body text-md-end">
                   <a
                     className="text-muted"
                     onClick={() => {
@@ -198,7 +198,7 @@ const Cart = ({
                 {cartProducts.length <= 0 && "No Products"}
                 <table
                   className={
-                    cartProducts.length > 0 ? "table table-wishlist" : "d-none"
+                    cartProducts.length > 0 ? "table table-cart" : "d-none"
                   }
                 >
                   <thead>
