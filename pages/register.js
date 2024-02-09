@@ -93,7 +93,7 @@ function Privacy() {
                             id: "Already have an account?",
                           })}{" "}
                           <Link href="/sign-in">
-                            {intl.formatMessage({ id: "Log in instead!" })}
+                            <strong>{intl.formatMessage({ id: "Login instead!" })}</strong>
                           </Link>
                         </p>
                       </div>
@@ -285,14 +285,6 @@ function Privacy() {
                              
                             </div>
 
-                            <p className="font-xs text-muted">
-                              <strong>
-                                {intl.formatMessage({ id: "Note:" })}
-                              </strong>
-                              {intl.formatMessage({
-                                id: "Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy",
-                              })}
-                            </p>
                             <button
                               type="submit"
                               className="btn btn-fill-out btn-block hover-up font-weight-bold"
@@ -302,6 +294,15 @@ function Privacy() {
                                 id: "Submit & Register",
                               })}
                             </button>
+
+                            <p className="font-xs text-muted mt-3">
+                              <strong>
+                                {intl.formatMessage({ id: "Note:" })}
+                              </strong>
+                              {intl.formatMessage({
+                                id: " Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy",
+                              })}
+                            </p>
                           </Form>
                         )}
                       </Formik>

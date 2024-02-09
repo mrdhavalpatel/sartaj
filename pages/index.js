@@ -115,7 +115,7 @@ function Index2() {
           </div>
         </section>
 
-        <section className="section-padding pb-5">
+        <section className="dailybestsells_section section-padding pb-5">
           <div className="container">
             <FetchTabSlider banners={adBanner} />
           </div>

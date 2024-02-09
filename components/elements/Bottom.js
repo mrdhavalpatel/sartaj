@@ -13,7 +13,7 @@ const Bottom = () => {
         <div className="container">
           <div className="row">
             <div
-              className="col-xl-3 col-lg-4 col-md-6 mb-sm-5 mb-md-0 wow animate__animated animate__fadeInUp"
+              className="mt-30 col-xl-3 col-lg-4 col-md-6 mb-sm-5 mb-md-0 wow animate__animated animate__fadeInUp"
               data-wow-delay="0"
             >
               <h4 className="section-title style-1 mb-30  animated animated">
@@ -24,7 +24,7 @@ const Bottom = () => {
               </div>
             </div>
             <div
-              className="col-xl-3 col-lg-4 col-md-6 mb-md-0 wow animate__animated animate__fadeInUp"
+              className="mt-30 col-xl-3 col-lg-4 col-md-6 mb-md-0 wow animate__animated animate__fadeInUp"
               data-wow-delay=".1s"
             >
               <h4 className="section-title style-1 mb-30  animated animated">
@@ -35,7 +35,7 @@ const Bottom = () => {
               </div>
             </div>
             <div
-              className="col-xl-3 col-lg-4 col-md-6 mb-md-0 wow animate__animated animate__fadeInUp"
+              className="mt-30 col-xl-3 col-lg-4 col-md-6 mb-md-0 wow animate__animated animate__fadeInUp"
               data-wow-delay=".2s"
             >
               <h4 className="section-title style-1 mb-30  animated animated">
@@ -46,7 +46,7 @@ const Bottom = () => {
               </div>
             </div>
             <div
-              className="col-xl-3 col-lg-4 col-md-6 mb-md-0 wow animate__animated animate__fadeInUp"
+              className="mt-30 col-xl-3 col-lg-4 col-md-6 mb-md-0 wow animate__animated animate__fadeInUp"
               data-wow-delay=".3s"
             >
               <h4 className="section-title style-1 mb-30  animated animated">

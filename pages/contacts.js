@@ -84,78 +84,22 @@ function Contact() {
                   <div className="row mb-60">
                     <div className="col-md-4 mb-4 mb-md-0">
                       <h4 className="mb-15 text-brand">
-                        {intl.formatMessage({ id: "Office" })}
-                      </h4>
-                      {intl.formatMessage({
-                        id: "205 North Michigan Avenue, Suite 810",
-                      })}
-                      <br />
-                      {intl.formatMessage({ id: "Chicago, 60601, USA" })}
-                      <br />
-                      <abbr title="Phone">
-                        {intl.formatMessage({ id: "Phone" })}:
-                      </abbr>{" "}
-                      (123) 456-7890
-                      <br />
-                      <abbr title="Email">
-                        {intl.formatMessage({ id: "Email" })}:{" "}
-                      </abbr>
-                      {intl.formatMessage({ id: "contact@Evara.com" })}
-                      <br />
-                      <a className="btn btn-sm font-weight-bold text-white mt-20 border-radius-5 btn-shadow-brand hover-up">
-                        <i className="fi-rs-marker mr-5"></i>
-                        {intl.formatMessage({ id: "View map" })}
-                      </a>
-                    </div>
-                    <div className="col-md-4 mb-4 mb-md-0">
-                      <h4 className="mb-15 text-brand">
-                        {intl.formatMessage({ id: "Studio" })}
-                      </h4>
-                      {intl.formatMessage({
-                        id: "205 North Michigan Avenue, Suite 810",
-                      })}
-                      <br />
-                      {intl.formatMessage({ id: "Chicago, 60601, USA" })}
-                      <br />
-                      <abbr title="Phone">
-                        {intl.formatMessage({ id: "Phone" })}:
-                      </abbr>{" "}
-                      (123) 456-7890
-                      <br />
-                      <abbr title="Email">
-                        {intl.formatMessage({ id: "Email" })}:{" "}
-                      </abbr>
-                      {intl.formatMessage({ id: "contact@Evara.com" })}
-                      <br />
-                      <a className="btn btn-sm font-weight-bold text-white mt-20 border-radius-5 btn-shadow-brand hover-up">
-                        <i className="fi-rs-marker mr-5"></i>
-                        {intl.formatMessage({ id: "View map" })}
-                      </a>
-                    </div>
-                    <div className="col-md-4">
-                      <h4 className="mb-15 text-brand">
                         {intl.formatMessage({ id: "Shop" })}
                       </h4>
                       {intl.formatMessage({
-                        id: "205 North Michigan Avenue, Suite 810",
+                        id: "osaka-fu, ikeda-shi, koda 2-10-23",
                       })}
-                      <br />
-                      {intl.formatMessage({ id: "Chicago, 60601, USA" })}
                       <br />
                       <abbr title="Phone">
                         {intl.formatMessage({ id: "Phone" })}:
                       </abbr>{" "}
-                      (123) 456-7890
+                      072-751-1975
                       <br />
                       <abbr title="Email">
                         {intl.formatMessage({ id: "Email" })}:{" "}
                       </abbr>
-                      {intl.formatMessage({ id: "contact@Evara.com" })}
+                      {intl.formatMessage({ id: "info@sartajfoods.jp" })}
                       <br />
-                      <a className="btn btn-sm font-weight-bold text-white mt-20 border-radius-5 btn-shadow-brand hover-up">
-                        <i className="fi-rs-marker mr-5"></i>
-                        {intl.formatMessage({ id: "View map" })}
-                      </a>
                     </div>
                   </div>
                   <div className="row">
