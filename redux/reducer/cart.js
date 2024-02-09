@@ -95,7 +95,7 @@
 //               })
 //               .then((res) => {
 //                 if (res?.data?.status == 200) {
-//                   toast("Product added to Cart !");
+//                   toast("Product added to Cart !",{autoClose: 200,});
 //                 } else {
 //                   toast.error(res?.data?.error);
 //                 }
@@ -126,7 +126,7 @@
 //                 })
 //                 .then((res) => {
 //                   if (res?.data?.status == 200) {
-//                     toast("Product added to Cart !");
+//                     toast("Product added to Cart !",{autoClose: 200,});
 //                   } else {
 //                     toast.error(res?.data?.error);
 //                   }
@@ -152,7 +152,7 @@
 //                 })
 //                 .then((res) => {
 //                   if (res?.data?.status == 200) {
-//                     toast("Product added to Cart !");
+//                     toast("Product added to Cart !",{autoClose: 200,});
 //                   } else {
 //                     toast.error(res?.data?.error);
 //                   }
@@ -161,7 +161,7 @@
 //                   console.log("error", error?.code === "ERR_NETWORK");
 //                 });
 //             } else {
-//               toast("Product added to Cart !");
+//               toast("Product added to Cart !",{autoClose: 200,});
 //             }
 //           }
 //           storage.set("dokani_cart", [...state, action.payload.product]);
@@ -386,7 +386,7 @@ export default (state = [], action) => {
               })
               .then((res) => {
                 if (res?.data?.status == 200) {
-                  toast("Product added to Cart !");
+                  toast("Product added to Cart !",{autoClose: 200,});
                 } else {
                   toast.error(res?.data?.error);
                 }
@@ -395,7 +395,7 @@ export default (state = [], action) => {
                 console.log("error", error?.code === "ERR_NETWORK");
               });
           } else {
-            toast("Product added to Cart !");
+            toast("Product added to Cart !",{autoClose: 200,});
           }
 
           storage.set("dokani_cart", [...state]);
@@ -419,7 +419,7 @@ export default (state = [], action) => {
                 })
                 .then((res) => {
                   if (res?.data?.status == 200) {
-                    toast("Product added to Cart !");
+                    toast("Product added to Cart !",{autoClose: 200,});
                   } else {
                     toast.error(res?.data?.error);
                   }
@@ -445,7 +445,7 @@ export default (state = [], action) => {
                 })
                 .then((res) => {
                   if (res?.data?.status == 200) {
-                    toast("Product added to Cart !");
+                    toast("Product added to Cart !",{autoClose: 200,});
                   } else {
                     toast.error(res?.data?.error);
                   }
@@ -454,7 +454,7 @@ export default (state = [], action) => {
                   console.log("error", error?.code === "ERR_NETWORK");
                 });
             } else {
-              toast("Product added to Cart !");
+              toast("Product added to Cart !",{autoClose: 200,});
             }
           }
           storage.set("dokani_cart", [...state, action.payload.product]);

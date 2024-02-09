@@ -24,7 +24,7 @@ const SingleProduct2 = ({
       quantity: 1,
     };
     addToCart(product);
-    // toast("Product added to Cart !");
+    // toast("Product added to Cart !",{autoClose: 200,});
   };
 
   const handleCompare = (product) => {

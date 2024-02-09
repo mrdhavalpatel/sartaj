@@ -15,7 +15,7 @@ const Deals1 = ({ product, addToCart }) => {
       quantity: 1,
     };
     addToCart(product);
-    // toast("Product added to Cart !");
+    // toast("Product added to Cart !",{autoClose: 200,});
   };
   return (
     <>
