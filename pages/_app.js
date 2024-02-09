@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }) {
     const token = localStorage.getItem("token");
     if (!token) {
       if (router.pathname.includes("my-account")) {
-        return router.replace("/sign-in");
+        return window.location.replace("/sign-in");
       }
     } else {
       if (router.pathname.includes("/sign-in")) {
@@ -54,7 +54,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const handleRouteChange = () => {
       checkAuth();
-    }
+    };
 
     router.events.on("routeChangeStart", handleRouteChange);
     router.events.on("routeChangeStart", () => handleLoading(true));

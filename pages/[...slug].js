@@ -181,7 +181,7 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
     router.query?.slug,
   ]);
 
-  const currentSlug = useEffect(() => {
+  useEffect(() => {
     if (
       !window.location.pathname.includes("eng/") &&
       !window.location.pathname.includes("jp/") &&
@@ -200,11 +200,11 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
     } else {
       if (router?.pathname?.includes("shop-compare")) {
         router.push(
-          `/${intl.locale}/${router?.pathname}${window.location.search}`
+          `/${intl.locale}${router?.pathname}${window.location.search}`
         );
       } else if (router.pathname.includes("shop-wishlist")) {
         router.push(
-          `/${intl.locale}/${router?.pathname}${window.location.search}`
+          `/${intl.locale}${router?.pathname}${window.location.search}`
         );
       }
     }
