@@ -23,17 +23,17 @@ const SingleProduct2 = ({
       ...product,
       quantity: 1,
     };
-    addToCart(product);
-    // toast("Product added to Cart !",{autoClose: 200,});
+    addToCart(product ,intl);
+    // toast("Product added to Cart !");
   };
 
   const handleCompare = (product) => {
-    addToCompare(product);
+    addToCompare(product , intl);
     // toast("Added to Compare list !");
   };
 
   const handleWishlist = (product) => {
-    addToWishlist(product);
+    addToWishlist(product , intl);
     // toast("Added to Wishlist !");
   };
   return (
@@ -182,7 +182,8 @@ const SingleProduct2 = ({
               if (product?.out_of_stock_status == "in stock") {
                 handleCart(product);
               } else {
-                toast.error("product is out of stock");
+                toast.error( intl.formatMessage({ id:"product is out of stock"}));
+
               }
             }}
           >

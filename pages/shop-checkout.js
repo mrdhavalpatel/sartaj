@@ -55,7 +55,7 @@ const Cart = ({
   const calculateAmountToAdd = () => {
     return Math.round(
       cartTotal.minOrderAmount -
-      (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
+        (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
     );
   };
   console.log(cartTotal);
@@ -94,15 +94,22 @@ const Cart = ({
             setCoupenCodeDis(response?.data?.discount_price);
             if (response.data.discount_type == "percent") {
               setCoupanDetails(
-                `${response?.data?.discount}% discount applied sucessfully`
+                `${response?.data?.title} ${intl.formatMessage({ id: "coupon applied successfully" })},${intl.formatMessage({ id: "maximum discount" })} ${response?.data?.max_discount}¥`
               );
+              
             } else if (response.data.discount_type == "amount") {
               setCoupanDetails(
-                `${response?.data?.discount} ¥ discount applied sucessfully`
+                `${response?.data?.discount}¥ ` +
+                intl.formatMessage({
+                  id: "discount applied successfully",
+                }) 
               );
+              
             }
 
-            toast.success("Coupon applied successfully");
+            toast.success(
+              intl.formatMessage({ id: "coupon applied successfully" })
+            );
             // getCartData(token);
           }
         });
@@ -208,7 +215,7 @@ const Cart = ({
           : selectedAddressData?.full_name,
       road:
         values?.billing_address2 != undefined ||
-          values?.billing_address2 != null
+        values?.billing_address2 != null
           ? values?.billing_address2
           : selectedAddressData?.billing_address2,
       house:
@@ -421,7 +428,9 @@ const Cart = ({
           <div className="container">
             <div className="row">
               <div className="col-lg-8 mb-40">
-                <h1 className="heading-2 mb-10">{intl.formatMessage({ id: "Checkout" })}t</h1>
+                <h1 className="heading-2 mb-10">
+                  {intl.formatMessage({ id: "Checkout" })}
+                </h1>
                 <div className="d-flex justify-content-between">
                   <h6 className="text-body">
                     {intl.formatMessage({
@@ -435,36 +444,7 @@ const Cart = ({
               <div className="col-lg-7">
                 <div className="row mb-50">
                   <div className="col-lg-6 mb-sm-15 mb-lg-0 mb-md-3">
-                    <div className="">
-                      <form method="post" className="apply-coupon">
-                        <input
-                          type="text"
-                          onChange={(e) => {
-                            setCoupenCode(e?.target?.value);
-                          }}
-                          value={coupenCode}
-                          placeholder={intl.formatMessage({
-                            id: "Enter Coupon Code...",
-                          })}
-                        />
-                        <button
-                          className="btn  btn-md"
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleCoupencode();
-                          }}
-                        >
-                          {intl.formatMessage({ id: "Apply Coupon" })}
-                        </button>
-                      </form>
-
-                      <h6 style={{ color: "green" }}>{coupanDetails}</h6>
-                    </div>
+                 
                     <div
                       className="panel-collapse collapse login_form"
                       id="loginform"
@@ -549,15 +529,19 @@ const Cart = ({
                   >
                     {address?.billing_address?.map((option) => (
                       <option key={option.id} value={option.id}>
-                        {`${option?.full_name !== null
-                          ? option.full_name + ","
-                          : ""
-                          } ${option?.address !== null ? option.address + "," : ""
-                          }${option?.road !== null ? option.road + "," : ""}${option?.post_code !== null
+                        {`${
+                          option?.full_name !== null
+                            ? option.full_name + ","
+                            : ""
+                        } ${
+                          option?.address !== null ? option.address + "," : ""
+                        }${option?.road !== null ? option.road + "," : ""}${
+                          option?.post_code !== null
                             ? option?.post_code + ","
                             : ""
-                          }${option?.city !== null ? option?.city + "," : ""}${option?.state !== null ? option?.state + "," : ""
-                          }`}
+                        }${option?.city !== null ? option?.city + "," : ""}${
+                          option?.state !== null ? option?.state + "," : ""
+                        }`}
                       </option>
                     ))}
                   </select>
@@ -592,7 +576,11 @@ const Cart = ({
                                   ></a> */}
                                   <a
                                     dangerouslySetInnerHTML={{
-                                      __html: translatedItemDetails("name", intl, item?.product),
+                                      __html: translatedItemDetails(
+                                        "name",
+                                        intl,
+                                        item?.product
+                                      ),
                                     }}
                                   ></a>
                                   <div className="product-rate-cover">
@@ -600,19 +588,21 @@ const Cart = ({
                                       <div
                                         className="product-rating"
                                         style={{
-                                          width: `${item?.product?.overall_rating
-                                            ? item?.product?.overall_rating
-                                            : 0
-                                            }%`,
+                                          width: `${
+                                            item?.product?.overall_rating
+                                              ? item?.product?.overall_rating
+                                              : 0
+                                          }%`,
                                         }}
                                       ></div>
                                     </div>
                                     <span className="font-small ml-5 text-muted">
                                       {`(
-                                    ${item?.product?.total_reviews
-                                          ? item?.product?.total_reviews
-                                          : 0
-                                        }
+                                    ${
+                                      item?.product?.total_reviews
+                                        ? item?.product?.total_reviews
+                                        : 0
+                                    }
                                     )`}
                                     </span>
                                   </div>
@@ -629,11 +619,11 @@ const Cart = ({
                                   {/* {(item.quantity ? item.quantity : 1) *
                                     item.price} */}
                                   {(item?.quantity ? item?.quantity : 1) *
-                                    item?.actual_price
+                                  item?.actual_price
                                     ? item?.actual_price
                                     : item?.product.actual_price
-                                      ? item?.product.actual_price
-                                      : 0}
+                                    ? item?.product.actual_price
+                                    : 0}
                                 </h4>
                               </td>
                             </tr>
@@ -644,8 +634,37 @@ const Cart = ({
                       "No Products"
                     )}
                   </div>
-
                 </div>
+                <div className="ml-30 mb-50">
+                      <form method="post" className="apply-coupon">
+                        <input
+                          type="text"
+                          onChange={(e) => {
+                            setCoupenCode(e?.target?.value);
+                          }}
+                          value={coupenCode}
+                          placeholder={intl.formatMessage({
+                            id: "Enter Coupon Code...",
+                          })}
+                        />
+                        <button
+                          className="btn  btn-md"
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleCoupencode();
+                          }}
+                        >
+                          {intl.formatMessage({ id: "Apply Coupon" })}
+                        </button>
+                      </form>
+
+                      <h6 style={{ color: "green" , marginTop:"15px" }}>{coupanDetails}</h6>
+                    </div>
                 <div className="border p-40 cart-totals ml-30 mb-50 checkout_box">
                   <div className="heading_s1 mb-3">
                     <h4>{intl.formatMessage({ id: "Cart Totals" })}</h4>
@@ -826,6 +845,7 @@ const Cart = ({
                     </table>
                   ) : null}
                 </div>
+               
                 <div className="border p-40 cart-totals ml-30 mb-50 checkout_box">
                   <div className="delivery_time_div">
                     <div className="heading_s1 mb-3">
@@ -973,7 +993,6 @@ const Cart = ({
                       </h8>
                     )}
                   </div>
-
                 </div>
                 <div className="px-40 ml-30 mb-50">
                   <button

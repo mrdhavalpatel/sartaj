@@ -13,10 +13,10 @@ export const closeCompareModal = (e) => (dispatch) => {
   });
 };
 
-export const addToCompare = (product) => (dispatch) => {
+export const addToCompare = (product , intl) => (dispatch) => {
   dispatch({
     type: Types.ADD_TO_COMPARE,
-    payload: { product },
+    payload: { product ,intl },
   });
 };
 

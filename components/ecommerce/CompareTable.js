@@ -10,7 +10,7 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
       ...product,
       quantity: 1,
     };
-    addToCart(product);
+    addToCart(product , intl);
   };
 
   const decodeHtml = (html) => {

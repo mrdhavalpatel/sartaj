@@ -62,14 +62,16 @@ function Account() {
   const validationSchema2 = yup.object().shape({
     current_password: yup
       .string()
-      .required({ id: "Current Password is required" }),
-    new_password: yup.string().required({ id: "New Password is required" }),
+      .required(intl.formatMessage({ id: 'Current Password is required' })),
+      new_password: yup
+      .string()
+      .min(8, intl.formatMessage({ id: 'New Password must be at least 8 characters' }))
+      .required(intl.formatMessage({ id: 'New Password is required' })),
     confirm_password: yup
       .string()
-      .oneOf([yup.ref("new_password"), null], { id: "Passwords must match" })
-      .required({ id: "Confirm password is required" }),
+      .oneOf([yup.ref('new_password'), null], intl.formatMessage({ id: 'Passwords must match' }))
+      .required(intl.formatMessage({ id: 'Confirm password is required' })),
   });
-
   const handleViewOrder = (url) => {
     setIsOrderPDFOpen(true);
     setOrderPDFURL(url);
@@ -91,12 +93,17 @@ function Account() {
           Authorization: `Bearer ${token}`,
         },
       }
-    );
-    if (response?.data?.status === 200) {
-      toast.success(response?.data?.meassge);
-    } else {
-      toast.error(response?.data?.meassge);
-    }
+    ).then(response => {
+      if (response?.data?.status === 200) {
+        toast.success(response?.data?.message);
+      } else {
+        toast.error(response?.data?.message);
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      toast.error('An error occurred while processing your request.');
+    });
   };
 
   const handleAccountDetailsSubmit = async (values) => {

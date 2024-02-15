@@ -14,8 +14,8 @@ const Deals1 = ({ product, addToCart }) => {
       ...product,
       quantity: 1,
     };
-    addToCart(product);
-    // toast("Product added to Cart !",{autoClose: 200,});
+    addToCart(product, intl);
+    // toast("Product added to Cart !");
   };
   return (
     <>
@@ -94,7 +94,9 @@ const Deals1 = ({ product, addToCart }) => {
                     if (product?.out_of_stock_status == "in stock") {
                       handleCart(product);
                     } else {
-                      toast.error("product is out of stock");
+                      toast.error(
+                        intl.formatMessage({ id: "product is out of stock" })
+                      );
                     }
                   }}
                 >

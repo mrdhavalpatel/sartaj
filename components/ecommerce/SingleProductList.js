@@ -21,17 +21,17 @@ const SingleProductList = ({
       ...product,
       quantity: 1,
     };
-    addToCart(product);
-    toast("Product added to Cart !",{autoClose: 200,});
+    addToCart(product , intl);
+    toast(intl.formatMessage({id:"Product added to Cart !"}));
   };
 
   const handleCompare = (product) => {
-    addToCompare(product);
+    addToCompare(product ,intl);
     // toast("Added to Compare list !");
   };
 
   const handleWishlist = (product) => {
-    addToWishlist(product);
+    addToWishlist(product , intl);
   };
 
   return (

@@ -18,42 +18,43 @@ import { ApiCall } from "../lib/other/other";
 import { useIntl } from "react-intl";
 const OrderReceived = ({ cartItems }) => {
   const intl = useIntl();
-  const [shippingData, setShippingData] = useState([]); // State to manage popup visibility
   const router = useRouter();
 
-  const getShippingDetails = async (token) => {
-    const response = await axios
-      .get(
-        `${API_BASE_URL}customer/order/shipping_list/${router.query.order_id}`,
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        setShippingData(response?.data?.data);
-        clearCart();
-      })
-      .catch((error) => {
-        console.log("error", error?.code === "ERR_NETWORK");
-      });
-  };
-  // useEffect(() => {
-  //   let encodedToken = localStorage.getItem("token");
-  //   getShippingDetails(encodedToken);
-  // }, []);
-  useEffect(() => {
+  const [shippingData, setShippingData] = useState([]); // State to manage popup visibility
+console.log("orderid slug",router?.query?.order_id)
+const getShippingDetails = async (token, orderId) => {
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}customer/order/shipping_list/${orderId}`,
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    setShippingData(response?.data?.data);
+    clearCart();
+  } catch (error) {
+    console.error("Error fetching shipping details:", error);
+  }
+};
+
+useEffect(() => {
+  const orderId = router?.query?.order_id;
+
+  // Check if orderId is defined before making the API call
+  if (orderId) {
     let encodedToken = localStorage.getItem("token");
-    getShippingDetails(encodedToken);
+    getShippingDetails(encodedToken, orderId);
 
     // Clear the cart when the component is unmounted or the user navigates away
     return () => {
       clearCart();
     };
-  }, [clearCart]);
+  }
+}, [router?.query?.order_id, clearCart]);
 
   // // Listen for changes in the browser's history
   // useEffect(() => {
@@ -259,7 +260,7 @@ const OrderReceived = ({ cartItems }) => {
                       </td>
                     </tr>
                   ) : null}
-                  {console.log("asda", shippingData?.couponPrice)}
+                  {/* {console.log("asda", shippingData?.couponPrice)} */}
                   {shippingData?.couponPrice ? (
                     <tr>
                       <td colspan="4" class="text-right">

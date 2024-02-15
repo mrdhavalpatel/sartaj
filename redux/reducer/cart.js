@@ -303,6 +303,7 @@ export default (state = [], action) => {
           });
       }
     case Types.ADD_TO_CART:
+      const lan =action?.payload?.intl?.locale
       index = findProductIndexById(state, action?.payload?.product?.id);
       const localCartItems = JSON.parse(localStorage.getItem("dokani_cart"));
       let localCartItemIndex = -1;
@@ -349,17 +350,30 @@ export default (state = [], action) => {
               : action?.payload?.product?.total_stock))
       ) {
         if (productQuantityAllowed < 1) {
-          toast.error(
-            `Maximum order quantity is ${
-              action?.payload?.product?.maximum_order_quantity
-                ? action?.payload?.product?.maximum_order_quantity
-                : action?.payload?.product?.total_stock
-            }`
-          );
+        toast.error(lan == "jp" ? `最大注文数量は ${
+          action?.payload?.product?.maximum_order_quantity
+            ? action?.payload?.product?.maximum_order_quantity
+            : action?.payload?.product?.total_stock
+        }`
+        
+        :
+        `Maximum order quantity is ${
+          action?.payload?.product?.maximum_order_quantity
+            ? action?.payload?.product?.maximum_order_quantity
+            : action?.payload?.product?.total_stock
+        }`);
+
+          // toast.error(
+          //   `Maximum order quantity is ${
+          //     action?.payload?.product?.maximum_order_quantity
+          //       ? action?.payload?.product?.maximum_order_quantity
+          //       : action?.payload?.product?.total_stock
+          //   }`
+          // );
           return [...state];
         }
-        toast.error(
-          `Maximum order quantity allowed now is ${productQuantityAllowed}`
+        toast.error(lan == "jp" ?
+          `現在許可されている最大注文数量は次のとおりです ${productQuantityAllowed}`:`Maximum order quantity allowed now is ${productQuantityAllowed}`
         );
         return [...state];
       }
@@ -386,7 +400,9 @@ export default (state = [], action) => {
               })
               .then((res) => {
                 if (res?.data?.status == 200) {
-                  toast("Product added to Cart !",{autoClose: 200,});
+        toast(lan == "jp" ?"製品がカートに追加されました!":"Product added to Cart !");
+
+                  // toast("Product added to Cart !");
                 } else {
                   toast.error(res?.data?.error);
                 }
@@ -395,7 +411,9 @@ export default (state = [], action) => {
                 console.log("error", error?.code === "ERR_NETWORK");
               });
           } else {
-            toast("Product added to Cart !",{autoClose: 200,});
+        toast(lan == "jp" ?"製品がカートに追加されました!":"Product added to Cart !");
+
+            // toast("Product added to Cart !");
           }
 
           storage.set("dokani_cart", [...state]);
@@ -419,7 +437,9 @@ export default (state = [], action) => {
                 })
                 .then((res) => {
                   if (res?.data?.status == 200) {
-                    toast("Product added to Cart !",{autoClose: 200,});
+        toast(lan == "jp" ?"製品がカートに追加されました!":"Product added to Cart !");
+
+                    // toast("Product added to Cart !");
                   } else {
                     toast.error(res?.data?.error);
                   }
@@ -445,7 +465,9 @@ export default (state = [], action) => {
                 })
                 .then((res) => {
                   if (res?.data?.status == 200) {
-                    toast("Product added to Cart !",{autoClose: 200,});
+        toast(lan == "jp" ?"製品がカートに追加されました!":"Product added to Cart !");
+
+                    // toast("Product added to Cart !");
                   } else {
                     toast.error(res?.data?.error);
                   }
@@ -454,7 +476,9 @@ export default (state = [], action) => {
                   console.log("error", error?.code === "ERR_NETWORK");
                 });
             } else {
-              toast("Product added to Cart !",{autoClose: 200,});
+        toast(lan == "jp" ?"製品がカートに追加されました!":"Product added to Cart !");
+
+              // toast("Product added to Cart !");
             }
           }
           storage.set("dokani_cart", [...state, action.payload.product]);

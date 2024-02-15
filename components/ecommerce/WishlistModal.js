@@ -21,8 +21,9 @@ const WishlistModal = ({
       ...product,
       quantity: 1,
     };
-    addToCart(product);
-    toast("Product added to Cart !",{autoClose: 200,});
+    addToCart(product , intl);
+    toast(intl.formatMessage({id:"Product added to Cart !"}));
+
   };
 
   return (

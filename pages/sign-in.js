@@ -73,7 +73,7 @@ function Login({ cartItems }) {
                 <div className="col-lg-6 pr-30 d-none d-lg-block">
                   <img
                     className="border-radius-15"
-                    src="assets/imgs/page/login-1.png"
+                    src="/assets/imgs/page/login-1.png"
                     alt="nest"
                   />
                 </div>

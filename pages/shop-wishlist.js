@@ -20,7 +20,7 @@ const Wishlist = ({
       ...product,
       quantity: 1,
     };
-    addToCart(product);
+    addToCart(product, intl);
   };
 
   return (
@@ -174,8 +174,9 @@ const Wishlist = ({
                                 onClick={(e) => handleCart(product)}
                               >
                                 {product?.out_of_stock_status !== "in stock"
-                                  ? "Out of stock"
-                                  : "Add to cart"}
+                                  ? 
+                                  intl.formatMessage({ id: "Out of stock" })
+                                  :  intl.formatMessage({ id: "Add to cart" })}
                               </button>
                             )}
                           </td>

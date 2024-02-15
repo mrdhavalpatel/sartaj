@@ -37,12 +37,12 @@ const ProductDetails = ({
   const [quantity, setQuantity] = useState(1);
 
   const handleCompare = (product) => {
-    addToCompare(product);
+    addToCompare(product , intl);
     // +toast("Added to Compare list !");
   };
 
   const handleWishlist = (product) => {
-    addToWishlist(product);
+    addToWishlist(product , intl);
   };
 
   return (
@@ -195,7 +195,7 @@ const ProductDetails = ({
                               ...product,
                               quantity: quantity || 1,
                             };
-                            addToCart(p);
+                            addToCart(p , intl);
                           }}
                           style={{
                             backgroundColor: `${

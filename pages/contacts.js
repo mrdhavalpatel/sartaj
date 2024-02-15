@@ -33,7 +33,7 @@ function Contact() {
     }).then((res)=>{
       console.log("res",res.data.message);
   if(res.data.message =="Inquiry sent successfully"){
-    toast("Message sent successfully");
+    toast(intl.formatMessage({ id:"Message sent successfully"}));
   }
     })
     .catch((error) => {

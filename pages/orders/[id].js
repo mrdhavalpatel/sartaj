@@ -9,10 +9,11 @@ const OrderDetails = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [orderDetails, setOrderDetails] = useState(null);
+  console.log("orderid slug id", router?.query?.id);
 
   const getOrderDetails = async () => {
     try {
-      const orderId = router.query.id;
+      const orderId = router?.query?.id;
       let encodedToken = localStorage.getItem("token");
       const response = await api.get(
         `customer/order/shipping_list/${orderId}`,

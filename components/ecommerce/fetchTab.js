@@ -45,6 +45,7 @@ function FeatchTab() {
         <>
             <div className="section-title style-2 wow animate__animated animate__fadeIn">
             <h3>{intl.formatMessage({ id: "Popular Products" })}</h3>
+
                 <ul className="nav nav-tabs links" id="myTab" role="tablist">
                     <li className="nav-item" role="presentation">
                         <button

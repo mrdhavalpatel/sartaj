@@ -36,18 +36,15 @@ const Cart = ({
   const [cartDataUpdated, setCartDataUpdated] = useState(false);
   const [cartTotal, setCartTotal] = useState([]);
   const [cartProducts, setCartProducts] = useState([]);
-  const checkoutUrl = intl.locale === "eng" ? "/shop-checkout" : "/jp/shop-checkout";
+  const checkoutUrl =
+    intl.locale === "eng" ? "/shop-checkout" : "/jp/shop-checkout";
   const proceedToCheckout = () => {
     if (cartProducts?.length > 0) {
       return (
-      
         <a href={checkoutUrl} className="btn" aria-disabled>
-        <i className="fi-rs-box-alt mr-10"></i>
-        {intl.formatMessage({ id: "Proceed To CheckOut" })}
-      </a>
-     
-        
-     
+          <i className="fi-rs-box-alt mr-10"></i>
+          {intl.formatMessage({ id: "Proceed To CheckOut" })}
+        </a>
       );
     } else {
       <a className="btn" aria-disabled>
@@ -351,7 +348,9 @@ const Cart = ({
 
                                     if (productQuantityAllowed <= 0) {
                                       toast.error(
-                                        `Maximum order quantity allowed now is ${item?.product?.total_stock}`
+                                        intl.formatMessage({
+                                          id: `Maximum order quantity allowed now is `,
+                                        })`${item?.product?.total_stock}`
                                       );
                                       return;
                                     }
@@ -360,8 +359,13 @@ const Cart = ({
                                         item?.quantity + 1 >
                                         item?.product?.total_stock
                                       ) {
+                                        // toast.error(
+                                        //   `Maximum order quantity is ${item?.product?.total_stock}`
+                                        // );
                                         toast.error(
-                                          `Maximum order quantity is ${item?.product?.total_stock}`
+                                          intl.formatMessage({
+                                            id: `Maximum order quantity is`,
+                                          })`${item?.product?.total_stock}`
                                         );
                                       } else {
                                         increaseQuantity(item?.product_id);
@@ -372,8 +376,15 @@ const Cart = ({
                                         item?.quantity + 1 >
                                         item?.total_stock
                                       ) {
+                                        // toast.error(
+                                        //   `Maximum order quantity is ${item?.total_stock}`
+                                        // );
                                         toast.error(
-                                          `Maximum order quantity is ${item?.total_stock}`
+                                          intl.formatMessage(
+                                            {
+                                              id: "Maximum order quantity is ",
+                                            }
+                                          )+ `${item?.total_stock}`
                                         );
                                       } else {
                                         increaseQuantity(item?.id);
@@ -381,13 +392,22 @@ const Cart = ({
                                       }
                                     }
                                   } else {
+                                    // toast.error(
+                                    //   `Maximum order quantity is ${
+                                    //     item?.maximum_order_quantity
+                                    //       ? item?.maximum_order_quantity
+                                    //       : item?.product
+                                    //           ?.maximum_order_quantity
+                                    //   }`
+                                    // );
                                     toast.error(
-                                      `Maximum order quantity is ${
-                                        item?.maximum_order_quantity
-                                          ? item?.maximum_order_quantity
-                                          : item?.product
-                                              ?.maximum_order_quantity
-                                      }`
+                                      intl.formatMessage({
+                                        id: "Maximum order quantity is ",
+                                      }) +
+                                        ` ${
+                                          item?.maximum_order_quantity ||
+                                          item?.product?.maximum_order_quantity
+                                        }`
                                     );
                                   }
                                 }}
@@ -528,7 +548,7 @@ const Cart = ({
                           <div className="col-lg-6 pr-30 d-none d-lg-block">
                             <img
                               className="border-radius-15"
-                              src="assets/imgs/page/login-1.png"
+                              src="/assets/imgs/page/login-1.png"
                               alt="nest"
                             />
                           </div>

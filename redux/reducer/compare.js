@@ -31,14 +31,17 @@ export default (state = initialState, action) => {
       };
 
     case Types.ADD_TO_COMPARE:
+      const lan =action?.payload?.intl?.locale
+
       index = findProductIndexById(state.items, action.payload.product.id);
       if (
         state.items.filter((item) => item.id === action.payload.product.id)
           .length > 0
       ) {
-        toast("Product already added to compare");
+        toast(lan == "jp" ?"比較対象にすでに製品が追加されています":"Product already added to compare");
       } else {
-        toast("Added to Compare !");
+        toast(lan == "jp" ? "比較に追加されました!" : "Added to Compare")
+        // toast("Added to Compare !");
       }
       if (index !== -1) return state;
 
