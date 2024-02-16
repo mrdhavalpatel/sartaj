@@ -31,6 +31,7 @@ const getShippingDetails = async (token, orderId) => {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
+          "X-localization": intl.locale == "eng" ? "en" : "ja",
         },
       }
     );

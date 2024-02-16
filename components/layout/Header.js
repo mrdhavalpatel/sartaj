@@ -43,11 +43,18 @@ const Header = ({
       .replace("[...slug]", "")}`;
     const currentToken = router.query.token || "";
     const slug = router.query?.slug;
+    console.log("query in heaqderssssssssss",router.query)
     if (router.pathname.includes("reset-password")) {
       window.location.replace(
         `/${newLanguage}/reset-password?token=${currentToken}`
       );
-    } else if (slug) {
+     
+    } else if (router.pathname.includes("orders")) {
+      window.location.replace(
+        `/${newLanguage}/orders/${router?.query?.id}`
+      );
+    }
+     else if (slug) {
       window.location.replace(`${newUrl}/${slug}${window.location.search}`);
     } else {
       window.location.replace(`${newUrl}${window.location.search}`);

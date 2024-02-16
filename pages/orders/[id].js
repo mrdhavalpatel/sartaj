@@ -1,11 +1,15 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
-import { api } from "../../lib/api";
+import { API_BASE_URL, api } from "../../lib/api";
 import { Button, Spinner } from "react-bootstrap";
+import { useIntl } from "react-intl";
+import { translatedItemDetails } from "../../util/util";
 
 const OrderDetails = () => {
   const router = useRouter();
+  const intl = useIntl();
+  const orderId = router?.query?.id;
 
   const [isLoading, setIsLoading] = useState(true);
   const [orderDetails, setOrderDetails] = useState(null);
@@ -13,15 +17,16 @@ const OrderDetails = () => {
 
   const getOrderDetails = async () => {
     try {
-      const orderId = router?.query?.id;
+      if (!orderId) return;
       let encodedToken = localStorage.getItem("token");
       const response = await api.get(
-        `customer/order/shipping_list/${orderId}`,
+        `${API_BASE_URL}customer/order/shipping_list/${orderId}`,
         {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
             Authorization: `Bearer ${encodedToken}`,
+            "X-localization": intl.locale == "eng" ? "en" : "ja",
           },
         }
       );
@@ -35,7 +40,7 @@ const OrderDetails = () => {
 
   useEffect(() => {
     getOrderDetails();
-  }, []);
+  }, [orderId]);
 
   const formatDate = function (unformatedDate) {
     const date = new Date(unformatedDate);
@@ -53,7 +58,7 @@ const OrderDetails = () => {
           onClick={() => router.push(`/my-account?activeIndex=2`)}
           size="sm"
         >
-          Go back
+          {intl.formatMessage({ id: "Go Back" })}
         </Button>
         {isLoading ? (
           <div
@@ -70,23 +75,22 @@ const OrderDetails = () => {
               <thead>
                 <tr>
                   <td class="text-left" colspan="2">
-                    Order Details
+                    {intl.formatMessage({ id: "Order Details" })}
                   </td>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="text-left" style={{ width: "50%" }}>
-                    {" "}
-                    <b>Order ID:</b> #{orderDetails?.id}
+                  <td className="text-left" style={{ width: "50%" }}>
+                    <b>{intl.formatMessage({ id: "Order ID" })}:</b> #
+                    {orderDetails?.id}
                     <br />
-                    <b>Date Added:</b> {formatDate(orderDetails.created_at)}
+                    <b>{intl.formatMessage({ id: "Date Added" })}:</b>{" "}
+                    {formatDate(orderDetails?.created_at)}
                   </td>
-                  <td class="text-left" style={{ width: "50%" }}>
-                    {" "}
-                    <b>Payment Method:</b> Cash On Delivery
-                    <br />
-                    <b>Shipping Method:</b> All Item in Dry Shipping
+                  <td className="text-left" style={{ width: "50%" }}>
+                    <b>{intl.formatMessage({ id: "Payment Method" })}:</b>{orderDetails?.payment_method =="cash_on_delivery" ? intl.formatMessage({ id: "Cash On Delivery" }) : intl.formatMessage({ id: "Online"})} <br />
+                    <b>{intl.formatMessage({ id: "Shipping Method" })}:</b>{intl.formatMessage({ id: "All Item in Dry Shipping"})}
                   </td>
                 </tr>
               </tbody>
@@ -98,49 +102,49 @@ const OrderDetails = () => {
                     class="text-left"
                     style={{ width: "50%", verticalAlign: "top" }}
                   >
-                    Payment Address
+                    {intl.formatMessage({ id: "Payment Address" })}
                   </td>
                   <td
                     class="text-left"
                     style={{ width: "50%", verticalAlign: "top" }}
                   >
-                    Shipping Address
+                    {intl.formatMessage({ id: "Shipping Address" })}
                   </td>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td class="text-left">
-                    {orderDetails.delivery_address.contact_person_name}
+                    {orderDetails?.delivery_address?.contact_person_name}
                     <br />
-                    {orderDetails.delivery_address.road}
+                    {orderDetails?.delivery_address?.road}
                     <br />
-                    {orderDetails.delivery_address.address}
+                    {orderDetails?.delivery_address?.address}
                     <br />
-                    {orderDetails.delivery_address.state}
-                    {orderDetails.delivery_address.country && (
+                    {orderDetails?.delivery_address?.state}
+                    {orderDetails?.delivery_address?.country && (
                       <>
-                        <br /> {orderDetails.delivery_address.country}{" "}
+                        <br /> {orderDetails?.delivery_address?.country}{" "}
                       </>
                     )}
                     <br />
-                    Postal code: {orderDetails.delivery_address.post_code}
+                    {intl.formatMessage({ id: "Postal code" })}: {orderDetails?.delivery_address?.post_code}
                   </td>
                   <td class="text-left">
-                    {orderDetails.delivery_address.contact_person_name}
+                    {orderDetails?.delivery_address?.contact_person_name}
                     <br />
-                    {orderDetails.delivery_address.road}
+                    {orderDetails?.delivery_address?.road}
                     <br />
-                    {orderDetails.delivery_address.address}
+                    {orderDetails?.delivery_address?.address}
                     <br />
-                    {orderDetails.delivery_address.state}
-                    {orderDetails.delivery_address.country && (
+                    {orderDetails?.delivery_address?.state}
+                    {orderDetails?.delivery_address?.country && (
                       <>
-                        <br /> {orderDetails.delivery_address.country}{" "}
+                        <br /> {orderDetails?.delivery_address?.country}{" "}
                       </>
                     )}
                     <br />
-                    Postal code: {orderDetails.delivery_address.post_code}
+                    Postal code: {orderDetails?.delivery_address?.post_code}
                   </td>
                 </tr>
               </tbody>
@@ -149,85 +153,83 @@ const OrderDetails = () => {
               <table class="table table-bordered table-hover">
                 <thead>
                   <tr>
-                    <td class="text-left">Product Name</td>
-                    <td class="text-right">Quantity</td>
-                    <td class="text-right">Price</td>
-                    <td class="text-right">Total</td>
+                    <td class="text-left">
+                      {intl.formatMessage({ id: "Product Name" })}
+                    </td>
+                    <td class="text-right">
+                      {intl.formatMessage({ id: "Quantity" })}
+                    </td>
+
+                    <td class="text-right">
+                      {intl.formatMessage({ id: "Price" })}
+                    </td>
+
+                    <td class="text-right">
+                      {intl.formatMessage({ id: "Total" })}
+                    </td>
                   </tr>
                 </thead>
                 <tbody>
-                  {orderDetails?.details?.map((details) => {
-                    return (
-                      <>
-                        <tr>
-                          <td class="text-left">
-                            <span
-                              dangerouslySetInnerHTML={{
-                                __html: details.product.name,
-                              }}
-                            />
-                          </td>
-                          <td class="text-right">{details?.quantity}</td>
-                          <td class="text-right">
-                            ¥{details?.product?.actual_price}
-                          </td>
-                          <td class="text-right">
-                            ¥{details?.product?.actual_price * details.quantity}
-                          </td>
-                        </tr>
-                      </>
-                    );
-                  })}
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td colspan="2"></td>
-                    <td class="text-right">
-                      <b>Sub-Total</b>
-                    </td>
-                    <td class="text-right">¥{orderDetails?.total_sub_amt}</td>
-                  </tr>
-                  {orderDetails?.delivery_charge && (
-                    <tr>
-                      <td colspan="2"></td>
-                      <td class="text-right">
-                        <b>All Item in Dry Shipping</b>
-                      </td>
-                      <td class="text-right">¥600</td>
-                    </tr>
-                  )}
-                  {orderDetails.eight_percent &&
-                  orderDetails.eight_percent !== 0 ? (
-                    <tr>
-                      <td colspan="2"></td>
-                      <td class="text-right">
-                        <b>Consumption Tax 8%</b>
-                      </td>
-                      <td class="text-right">¥{orderDetails.eight_percent}</td>
-                    </tr>
-                  ) : (
-                    ""
-                  )}
-                  {orderDetails.ten_percent &&
-                  orderDetails.ten_percent !== 0 ? (
-                    <tr>
-                      <td colspan="2"></td>
-                      <td class="text-right">
-                        <b>Consumption Tax 10%</b>
-                      </td>
-                      <td class="text-right">¥{orderDetails.ten_percent}</td>
-                    </tr>
-                  ) : (
-                    ""
-                  )}
-                  <tr>
-                    <td colspan="2"></td>
-                    <td class="text-right">
-                      <b>Total</b>
-                    </td>
-                    <td class="text-right">¥{orderDetails.total_amt}</td>
-                  </tr>
-                </tfoot>
+  {orderDetails?.details?.map((details) => {
+    return (
+      <tr key={details.product.id}>
+        <td className="text-left">
+          {/* <span dangerouslySetInnerHTML={{ __html: details.product.name }} /> */}
+         
+          <span dangerouslySetInnerHTML={{ __html: translatedItemDetails("name", intl, details.product) }} />
+
+        </td>
+        <td className="text-right">{details.quantity}</td>
+        <td className="text-right">¥{details.product.actual_price}</td>
+        <td className="text-right">¥{details.product.actual_price * details.quantity}</td>
+      </tr>
+    );
+  })}
+</tbody>
+<tfoot>
+  <tr>
+    <td colSpan="2"></td>
+    <td className="text-right">
+      <b>{intl.formatMessage({ id: "Sub-Total" })}</b>
+    </td>
+    <td className="text-right">¥{orderDetails?.total_sub_amt}</td>
+  </tr>
+  {orderDetails?.delivery_charge && (
+    <tr>
+      <td colSpan="2"></td>
+      <td className="text-right">
+        <b>{intl.formatMessage({ id: "All Item in Dry Shipping" })}</b>
+      </td>
+      <td className="text-right">¥600</td>
+    </tr>
+  )}
+  {orderDetails?.eight_percent && orderDetails?.eight_percent !== 0 ? (
+    <tr>
+      <td colSpan="2"></td>
+      <td className="text-right">
+        <b>{intl.formatMessage({ id: "Consumption Tax 8%" })}</b>
+      </td>
+      <td className="text-right">¥{orderDetails?.eight_percent}</td>
+    </tr>
+  ) : null}
+  {orderDetails?.ten_percent && orderDetails?.ten_percent !== 0 ? (
+    <tr>
+      <td colSpan="2"></td>
+      <td className="text-right">
+        <b>{intl.formatMessage({ id: "Consumption Tax 10%" })}</b>
+      </td>
+      <td className="text-right">¥{orderDetails?.ten_percent}</td>
+    </tr>
+  ) : null}
+  <tr>
+    <td colSpan="2"></td>
+    <td className="text-right">
+      <b>{intl.formatMessage({ id: "Total" })}</b>
+    </td>
+    <td className="text-right">¥{orderDetails?.total_amt}</td>
+  </tr>
+</tfoot>
+
               </table>
             </div>
           </div>

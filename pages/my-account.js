@@ -62,15 +62,21 @@ function Account() {
   const validationSchema2 = yup.object().shape({
     current_password: yup
       .string()
-      .required(intl.formatMessage({ id: 'Current Password is required' })),
-      new_password: yup
+      .required(intl.formatMessage({ id: "Current Password is required" })),
+    new_password: yup
       .string()
-      .min(8, intl.formatMessage({ id: 'New Password must be at least 8 characters' }))
-      .required(intl.formatMessage({ id: 'New Password is required' })),
+      .min(
+        8,
+        intl.formatMessage({ id: "New Password must be at least 8 characters" })
+      )
+      .required(intl.formatMessage({ id: "New Password is required" })),
     confirm_password: yup
       .string()
-      .oneOf([yup.ref('new_password'), null], intl.formatMessage({ id: 'Passwords must match' }))
-      .required(intl.formatMessage({ id: 'Confirm password is required' })),
+      .oneOf(
+        [yup.ref("new_password"), null],
+        intl.formatMessage({ id: "Passwords must match" })
+      )
+      .required(intl.formatMessage({ id: "Confirm password is required" })),
   });
   const handleViewOrder = (url) => {
     setIsOrderPDFOpen(true);
@@ -83,27 +89,25 @@ function Account() {
       new_password: values?.new_password,
       confirm_password: values?.confirm_password,
     };
-    const response = await axios.post(
-      `${API_BASE_URL}auth/reset-password`,
-      payload,
-      {
+    const response = await axios
+      .post(`${API_BASE_URL}auth/reset-password`, payload, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
-    ).then(response => {
-      if (response?.data?.status === 200) {
-        toast.success(response?.data?.message);
-      } else {
-        toast.error(response?.data?.message);
-      }
-    })
-    .catch(error => {
-      console.error(error);
-      toast.error('An error occurred while processing your request.');
-    });
+      })
+      .then((response) => {
+        if (response?.data?.status === 200) {
+          toast.success(response?.data?.message);
+        } else {
+          toast.error(response?.data?.message);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("An error occurred while processing your request.");
+      });
   };
 
   const handleAccountDetailsSubmit = async (values) => {
@@ -429,7 +433,7 @@ function Account() {
                                           {intl.formatMessage({ id: "item" })}
                                         </td>
                                         <td className="d-flex align-items-center justify-content-between">
-                                          <Link
+                                          {/* <Link
                                             // onClick={() => {
                                             //   handleViewOrder(
                                             //     Item?.invoice_link
@@ -441,7 +445,32 @@ function Account() {
                                           // rel="noopener noreferrer" // For security reasons, also include rel="noopener noreferrer"
                                           >
                                             {intl.formatMessage({ id: "View" })}
+                                          </Link> */}
+                                          <Link
+                                                 href={{
+                                                  pathname: '/orders/[id]',
+                                                  query: { id: Item?.id , locale :intl?.locale },
+                                                }}
+                                                as={`${intl.locale}/orders/${Item?.id}`}
+                                         
+                                          >
+                                            {intl.formatMessage({
+                                              id: "View",
+                                            })}
                                           </Link>
+                                          
+                                          {/* <Link
+                                            // onClick={() => {
+                                            //   handleViewOrder(Item?.invoice_link);
+                                            // }}
+                                            href={`/orders/[id]`}
+                                            as={`/orders/${Item?.id}`}
+                                            className="btn-small d-block"
+                                            // target="_blank" // If you want to open in a new tab
+                                            // rel="noopener noreferrer" // For security reasons, also include rel="noopener noreferrer"
+                                          >
+                                            {intl.formatMessage({ id: "View" })}
+                                          </Link> */}
                                           {Item?.order_status === "pending" && (
                                             <Button
                                               variant="primary"
