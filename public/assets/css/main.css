@@ -12942,3 +12942,23 @@ span.reviews_bottom {
 .related-products .slider-arrow.slider-arrow-2 .slider-btn.custom_next_n {
   right: -40px;
 }
+.pagination-button {
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  color: #333; /* Default color */
+  margin: 0 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+}
+
+.pagination-button.active {
+  background-color: #3e4493;
+  color: white;
+  justify-content: center;
+}
+.pagination-button.large {
+  font-size: 20px;
+}

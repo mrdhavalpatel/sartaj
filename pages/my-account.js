@@ -12,7 +12,7 @@ import AddressDialog from "../components/dialogs/AddressDialog";
 import { useRouter } from "next/router";
 import { useIntl } from "react-intl";
 import ViewOrderDetails from "../components/ecommerce/ViewOrderDetails";
-import { Spinner } from "react-bootstrap";
+import { Pagination, Spinner } from "react-bootstrap";
 import ConfirmationDialog from "../components/dialogs/ConfirmationDialog";
 function Account() {
   const intl = useIntl();
@@ -45,7 +45,55 @@ function Account() {
     new_password: "",
     confirm_password: "",
   };
+  const pageNumbers = [];
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = orderList.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(orderList.length / itemsPerPage);
+  const maxPageNumbers = 5;
+
+  let startPage = 1;
+  let endPage = totalPages;
+
+  if (totalPages > maxPageNumbers) {
+    const halfMaxPages = Math.floor(maxPageNumbers / 2);
+    if (currentPage <= halfMaxPages + 1) {
+      endPage = maxPageNumbers;
+    } else if (currentPage >= totalPages - halfMaxPages) {
+      startPage = totalPages - maxPageNumbers + 1;
+    } else {
+      startPage = currentPage - halfMaxPages;
+      endPage = currentPage + halfMaxPages;
+    }
+  }
+
+  if (startPage > 1) {
+    pageNumbers.push("<");
+  }
+  for (let i = startPage; i <= endPage; i++) {
+    pageNumbers.push(i);
+  }
+  if (endPage < totalPages) {
+    pageNumbers.push(">");
+  }
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+  // for (let i = 1; i <= Math.ceil(orderList.length / itemsPerPage); i++) {
+  //   pageNumbers.push(i);
+  // }
   const validationSchema = yup.object().shape({
     f_name: yup
       .string()
@@ -416,9 +464,9 @@ function Account() {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {orderList.map((Item) => {
+                                  {currentItems.map((Item) => {
                                     return (
-                                      <tr>
+                                      <tr key={Item?.id}>
                                         <td>#{Item?.id}</td>
                                         <td>
                                           {moment(Item?.created_at).format(
@@ -433,44 +481,20 @@ function Account() {
                                           {intl.formatMessage({ id: "item" })}
                                         </td>
                                         <td className="d-flex align-items-center justify-content-between">
-                                          {/* <Link
-                                            // onClick={() => {
-                                            //   handleViewOrder(
-                                            //     Item?.invoice_link
-                                            //   );
-                                            // }}
-                                            href={`orders/${Item?.id}`}
-                                            className="btn-small d-block"
-                                          // target="_blank" // Add this attribute
-                                          // rel="noopener noreferrer" // For security reasons, also include rel="noopener noreferrer"
-                                          >
-                                            {intl.formatMessage({ id: "View" })}
-                                          </Link> */}
                                           <Link
-                                                 href={{
-                                                  pathname: '/orders/[id]',
-                                                  query: { id: Item?.id , locale :intl?.locale },
-                                                }}
-                                                as={`${intl.locale}/orders/${Item?.id}`}
-                                         
+                                            href={{
+                                              pathname: "/orders/[id]",
+                                              query: {
+                                                id: Item?.id,
+                                                locale: intl?.locale,
+                                              },
+                                            }}
+                                            as={`${intl.locale}/orders/${Item?.id}`}
                                           >
                                             {intl.formatMessage({
                                               id: "View",
                                             })}
                                           </Link>
-                                          
-                                          {/* <Link
-                                            // onClick={() => {
-                                            //   handleViewOrder(Item?.invoice_link);
-                                            // }}
-                                            href={`/orders/[id]`}
-                                            as={`/orders/${Item?.id}`}
-                                            className="btn-small d-block"
-                                            // target="_blank" // If you want to open in a new tab
-                                            // rel="noopener noreferrer" // For security reasons, also include rel="noopener noreferrer"
-                                          >
-                                            {intl.formatMessage({ id: "View" })}
-                                          </Link> */}
                                           {Item?.order_status === "pending" && (
                                             <Button
                                               variant="primary"
@@ -492,6 +516,31 @@ function Account() {
                                 </tbody>
                               </table>
                             </div>
+                            <Pagination
+                              itemsPerPage={itemsPerPage}
+                              totalItems={orderList.length}
+                              paginate={setCurrentPage}
+                            />
+                            <ul className="pagination">
+                            {pageNumbers.map((pageNumber, index) => (
+            <span key={index}>
+                {pageNumber === '<' && (
+                    <button className="pagination-button large" onClick={handlePrevPage}>&lt;</button>
+                )}
+                {pageNumber === '>' && (
+                    <button className="pagination-button large" onClick={handleNextPage}>&gt;</button>
+                )}
+                {pageNumber !== '<' && pageNumber !== '>' && (
+                    <button
+                        onClick={() => setCurrentPage(pageNumber)}
+                        className={`pagination-button ${currentPage === pageNumber ? 'active' : ''}`}
+                    >
+                        {pageNumber}
+                    </button>
+                )}
+            </span>
+        ))}
+                            </ul>
                           </div>
                         </div>
                       </div>
