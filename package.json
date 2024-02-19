@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production node server.js",
+    "output": "export",
     "sass": "node-sass --watch public/assets/sass/main.scss public/assets/css/main.css --source-map public/assets/css/main.css.map"
   },
   "dependencies": {
