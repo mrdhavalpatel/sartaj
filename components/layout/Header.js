@@ -61,7 +61,7 @@ const Header = ({
     //   window.location.replace(`${newUrl}${window.location.search}`);
     // }
     else if (slug) {
-      let finalUrl = slug ? `${newUrlUpdated}/${slug}${window.location.search}` : newUrlUpdated;
+      let finalUrl = slug ? `${newUrl}/${slug}${window.location.search}` : newUrl;
       // Check for double slashes after language prefix and replace with single slash
       if (finalUrl.includes(`/${newLanguage}//`)) {
           finalUrl = finalUrl.replace(`/${newLanguage}//`, `/${newLanguage}/`);
@@ -70,10 +70,10 @@ const Header = ({
 
   } else {
       // Check for double slashes after language prefix and replace with single slash
-      if (newUrlUpdated.includes(`/${newLanguage}//`)) {
-          newUrlUpdated = newUrlUpdated.replace(`/${newLanguage}//`, `/${newLanguage}/`);
+      if (newUrl.includes(`/${newLanguage}//`)) {
+          newUrl = newUrl.replace(`/${newLanguage}//`, `/${newLanguage}/`);
       }
-      window.location.replace(`${newUrlUpdated}${window.location.search}`);
+      window.location.replace(`${newUrl}${window.location.search}`);
   }
   };
 
