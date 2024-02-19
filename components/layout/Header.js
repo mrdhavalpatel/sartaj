@@ -39,7 +39,7 @@ const Header = ({
 
     const newUrl = `/${newLanguage}/${pathWithoutLanguage
       .replace("/eng", "")
-      .replace("/eng//", "/eng")
+      .replace(/^\/(eng|jp)/, '')
       .replace("/jp", "")
       .replace("[...slug]", "")}`;
     const currentToken = router.query.token || "";
