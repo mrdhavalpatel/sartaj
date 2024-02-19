@@ -38,8 +38,8 @@ const Header = ({
     const pathWithoutLanguage = router.pathname;
 
     const newUrl = `/${newLanguage}/${pathWithoutLanguage
-      .replace("/eng", "")
-      .replace("/jp", "")
+      .replace("eng", "")
+      .replace("jp", "")
       .replace("[...slug]", "")}`;
     const currentToken = router.query.token || "";
     const slug = router.query?.slug;
