@@ -56,7 +56,7 @@ function Index2() {
         console.log("Modified URL:", modifiedUrl);
         
         // If you want to navigate to the modified URL
-        // router.push(modifiedUrl);
+        router.push(modifiedUrl);
       }
     }
   }, []);
