@@ -44,6 +44,22 @@ function Index2() {
     };
   }, [currentURL, router]);
 
+  useEffect(() => {
+    if (router.locale === "eng") {
+      console.log("index ma ma", window?.location?.href);
+  
+      // Check if the current URL contains multiple slashes after "eng"
+      const engIndex = window.location.href.indexOf("/eng");
+      if (engIndex !== -1) {
+        const urlAfterEng = window.location.href.substring(engIndex + 4); // Get the URL after "/eng"
+        const modifiedUrl = window.location.origin + "/eng" + urlAfterEng.replace(/\/+/g, '/'); // Remove extra slashes
+        console.log("Modified URL:", modifiedUrl);
+        
+        // If you want to navigate to the modified URL
+        // router.push(modifiedUrl);
+      }
+    }
+  }, []);
   return (
     <>
       <IntroPopup />
