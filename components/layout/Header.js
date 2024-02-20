@@ -36,12 +36,10 @@ const Header = ({
     setDLang(newLanguage);
 
     const pathWithoutLanguage = router.pathname;
-
-    const newUrl = `/${newLanguage}/${pathWithoutLanguage
-      .replace("/eng", "")
-      .replace(/^\/(eng|jp)/, '')
-      .replace("/jp", "")
-      .replace("[...slug]", "")}`;
+    const newPathWithoutLanguage = pathWithoutLanguage
+    .replace(/^\/(eng|jp)\//, '/')  // Replace the language prefix with a single slash
+    .replace('/[...slug]', '');      // Remove the slug placeholder if present
+    var newUrl = `/${newLanguage}/${newPathWithoutLanguage}`;
     const currentToken = router.query.token || "";
     const slug = router.query?.slug;
     console.log("query in heaqderssssssssss",router.query)
@@ -55,11 +53,25 @@ const Header = ({
         `/${newLanguage}/orders/${router?.query?.id}`
       );
     }
-     else if (slug) {
-      window.location.replace(`${newUrl}/${slug}${window.location.search}`);
-    } else {
-      window.location.replace(`${newUrl}${window.location.search}`);
+    //  else if (slug) {
+    //   window.location.replace(`${newUrl}/${slug}${window.location.search}`);
+    // } else {
+    //   window.location.replace(`${newUrl}${window.location.search}`);
+    // }
+    else {
+      // Handle slug condition separately to avoid extra slashes
+      if (slug) {
+        newUrl += `/${slug}`;
+      }
+  
+      // Redirect to the new URL without double slashes
+      window.location.replace(newUrl.replace(/\/\//g, '/'));
     }
+
+
+
+
+
   //   else if (slug) {
   //     let finalUrl = slug ? `${newUrl}/${slug}${window.location.search}` : newUrl;
   //     // Check for double slashes after language prefix and replace with single slash
