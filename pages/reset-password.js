@@ -1,3 +1,4 @@
+import React, { memo } from 'react';
 import Link from "next/link";
 import Layout from "../components/layout/Layout";
 import { Formik, Field, Form, ErrorMessage } from "formik";
@@ -40,12 +41,29 @@ function ResetPassword() {
       )
       .required(intl.formatMessage({ id: "Confirm password is required" })),
   });
+  // useEffect(() => {
+  //   if (!router?.query?.token) {
+  //     console.log("query in passwprd" , router.query);
+  //     toast.error("Invalid Url");
+  //   }
+  // }, []);
   useEffect(() => {
-    if (!router?.query?.token) {
+    console.log("useEffect triggered");
+    // Get the entire search string including the '?' character
+    const searchParamsString = window.location.search;
+
+    // Parse the search string to get individual parameters
+    const searchParams = new URLSearchParams(searchParamsString);
+
+    // Get the value of the 'token' parameter
+    const token = searchParams.get("token");
+
+    // Use the token value as needed
+    // console.log('Token from URL:', token);
+    if (!token) {
       toast.error("Invalid Url");
     }
-  }, []);
-
+  }, [ ]);
   const handleSubmit = (values) => {
     const payload = {
       password: values?.password,
@@ -54,6 +72,7 @@ function ResetPassword() {
     setIsLoading(true);
     auth("post", "auth/reset-password-mail", payload)
       .then((res) => {
+        console.log("response in reset password" , res?.data)
         if (res?.response?.data?.errors) {
           toast.error(res?.response?.data?.errors?.[0]?.message);
         } else {
@@ -77,7 +96,7 @@ function ResetPassword() {
                   <div className="col-lg-6 pr-30 d-none d-lg-block">
                     <img
                       className="border-radius-15"
-                      src="assets/imgs/page/login-1.png"
+                      src="/assets/imgs/page/login-1.png"
                       alt="nest"
                     />
                   </div>
@@ -193,4 +212,4 @@ function ResetPassword() {
 const mapStateToProps = (state) => ({
   cartItems: state.cart,
 });
-export default connect(mapStateToProps)(ResetPassword);
+export default connect(mapStateToProps)(memo(ResetPassword));

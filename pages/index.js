@@ -62,7 +62,7 @@ function Index2() {
   // }, []);
   useEffect(() => {
     if (router.locale === "eng") {
-        console.log("index ma ma----", window?.location?.href);
+        // console.log("index ma ma----", window?.location?.href);
 
         // Check if the current URL contains multiple slashes after "eng"
         const engIndex = window.location.href.indexOf("/eng");
@@ -73,7 +73,7 @@ function Index2() {
             // Remove trailing slash if present
             modifiedUrl = modifiedUrl.replace(/\/$/, "");
 
-            console.log("Modified URL:", modifiedUrl);
+            // console.log("Modified URL:", modifiedUrl);
 
             // If the current URL does not match the modified URL, navigate to the modified URL
             if (window.location.href !== modifiedUrl) {

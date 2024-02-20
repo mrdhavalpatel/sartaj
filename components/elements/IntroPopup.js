@@ -15,16 +15,16 @@ const IntroPopup = () => {
       let res = await ApiCall("get", intl, "hot-deals");
       let data = res?.data;
   
-      console.log("API Response:", data);
+//      console.log("API Response:", data);
   
       // Assuming `data.start_date` and `data.end_date` are received correctly
       let startDate = new Date(data.start_date);
       let endDate = new Date(data.end_date);
       let currentDate = new Date();
   
-      console.log("Start Date:", startDate);
-      console.log("End Date:", endDate);
-      console.log("Current Date:", currentDate);
+//      console.log("Start Date:", startDate);
+//      console.log("End Date:", endDate);
+//      console.log("Current Date:", currentDate);
   
       // Check if the current date is between start and end dates
       if (startDate <= currentDate && currentDate <= endDate) {

@@ -21,7 +21,7 @@ const CategoryProduct = ({ updateProductCategory }) => {
     e.preventDefault();
     // removeSearchTerm();
     updateProductCategory(item?.name);
-    console.log(window.location.pathname);
+//    console.log(window.location.pathname);
 
     router.push({
       pathname: `${

@@ -30,7 +30,7 @@
 //             ];
 //           })
 //           .catch((error) => {
-//             console.log("error", error?.code === "ERR_NETWORK");
+////             console.log("error", error?.code === "ERR_NETWORK");
 //           });
 //       }
 //     case Types.ADD_TO_CART:
@@ -52,8 +52,8 @@
 //             localCartItems[localCartItemIndex]?.quantity ||
 //           action?.payload?.product?.total_stock;
 //       }
-//       console.log(productQuantityAllowed);
-//       console.log(action?.payload?.product);
+////       console.log(productQuantityAllowed);
+////       console.log(action?.payload?.product);
 
 //       if (
 //         productQuantityAllowed < action?.payload?.product?.quantity ||
@@ -101,7 +101,7 @@
 //                 }
 //               })
 //               .catch((error) => {
-//                 console.log("error", error?.code === "ERR_NETWORK");
+////                 console.log("error", error?.code === "ERR_NETWORK");
 //               });
 //           }
 
@@ -132,7 +132,7 @@
 //                   }
 //                 })
 //                 .catch((error) => {
-//                   console.log("error", error?.code === "ERR_NETWORK");
+////                   console.log("error", error?.code === "ERR_NETWORK");
 //                 });
 //             }
 //           } else {
@@ -158,7 +158,7 @@
 //                   }
 //                 })
 //                 .catch((error) => {
-//                   console.log("error", error?.code === "ERR_NETWORK");
+////                   console.log("error", error?.code === "ERR_NETWORK");
 //                 });
 //             } else {
 //               toast("Product added to Cart !",{autoClose: 200,});
@@ -185,7 +185,7 @@
 //             }
 //           )
 //           .catch((error) => {
-//             console.log("error", error?.code === "ERR_NETWORK");
+////             console.log("error", error?.code === "ERR_NETWORK");
 //           });
 //       }
 //       storage.set("dokani_cart", newCartItems);
@@ -209,10 +209,10 @@
 //               Authorization: `Bearer ${token}`,
 //             },
 //           })
-//           .then((res) => console.log("response when add cart", res))
+////           .then((res) => console.log("response when add cart", res))
 //           .catch((error) => {
-//             console.log("error when", error);
-//             console.log("error", error?.code === "ERR_NETWORK");
+////             console.log("error when", error);
+////             console.log("error", error?.code === "ERR_NETWORK");
 //           });
 //       }
 //       storage.set("dokani_cart", [...state]);
@@ -237,7 +237,7 @@
 //             },
 //           })
 //           .catch((error) => {
-//             console.log("error", error?.code === "ERR_NETWORK");
+////             console.log("error", error?.code === "ERR_NETWORK");
 //           });
 //       }
 
@@ -256,7 +256,7 @@
 //           })
 
 //           .catch((error) => {
-//             console.log("error", error?.code === "ERR_NETWORK");
+////             console.log("error", error?.code === "ERR_NETWORK");
 //           });
 //       }
 //       storage.set("dokani_cart", []);
@@ -299,7 +299,7 @@ export default (state = [], action) => {
             ];
           })
           .catch((error) => {
-            console.log("error", error?.code === "ERR_NETWORK");
+//            console.log("error", error?.code === "ERR_NETWORK");
           });
       }
     case Types.ADD_TO_CART:
@@ -408,7 +408,7 @@ export default (state = [], action) => {
                 }
               })
               .catch((error) => {
-                console.log("error", error?.code === "ERR_NETWORK");
+//                console.log("error", error?.code === "ERR_NETWORK");
               });
           } else {
         toast(lan == "jp" ?"製品がカートに追加されました!":"Product added to Cart !");
@@ -445,7 +445,7 @@ export default (state = [], action) => {
                   }
                 })
                 .catch((error) => {
-                  console.log("error", error?.code === "ERR_NETWORK");
+//                  console.log("error", error?.code === "ERR_NETWORK");
                 });
             }
           } else {
@@ -473,7 +473,7 @@ export default (state = [], action) => {
                   }
                 })
                 .catch((error) => {
-                  console.log("error", error?.code === "ERR_NETWORK");
+//                  console.log("error", error?.code === "ERR_NETWORK");
                 });
             } else {
         toast(lan == "jp" ?"製品がカートに追加されました!":"Product added to Cart !");
@@ -502,7 +502,7 @@ export default (state = [], action) => {
             }
           )
           .catch((error) => {
-            console.log("error", error?.code === "ERR_NETWORK");
+//            console.log("error", error?.code === "ERR_NETWORK");
           });
       }
       storage.set("dokani_cart", newCartItems);
@@ -526,10 +526,10 @@ export default (state = [], action) => {
               Authorization: `Bearer ${token}`,
             },
           })
-          .then((res) => console.log("response when add cart", res))
+//          .then((res) => console.log("response when add cart", res))
           .catch((error) => {
-            console.log("error when", error);
-            console.log("error", error?.code === "ERR_NETWORK");
+//            console.log("error when", error);
+//            console.log("error", error?.code === "ERR_NETWORK");
           });
       }
       storage.set("dokani_cart", [...state]);
@@ -554,7 +554,7 @@ export default (state = [], action) => {
             },
           })
           .catch((error) => {
-            console.log("error", error?.code === "ERR_NETWORK");
+//            console.log("error", error?.code === "ERR_NETWORK");
           });
       }
 
@@ -573,7 +573,7 @@ export default (state = [], action) => {
           })
 
           .catch((error) => {
-            console.log("error", error?.code === "ERR_NETWORK");
+//            console.log("error", error?.code === "ERR_NETWORK");
           });
       }
       storage.set("dokani_cart", []);

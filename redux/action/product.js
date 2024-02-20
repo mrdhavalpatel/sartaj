@@ -20,7 +20,7 @@ export const fetchProduct = (searchTerm, url, filters) => async (dispatch) => {
       payload: { products: filteredList },
     });
   } catch (error) {
-    console.log(error);
+//    console.log(error);
   }
 };
 
@@ -38,7 +38,7 @@ export const fetchMoreProduct = (url, total) => async (dispatch) => {
       payload: { products: data, total },
     });
   } catch (error) {
-    console.log(error);
+//    console.log(error);
   }
 };
 
@@ -52,6 +52,6 @@ export const fetchByCatagory = async (url, filters) => {
 
     return filteredList;
   } catch (error) {
-    console.log(error);
+//    console.log(error);
   }
 };

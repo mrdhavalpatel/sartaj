@@ -18,7 +18,7 @@ const CategoryProduct3 = ({ updateProductCategory, data }) => {
     e.preventDefault();
     // removeSearchTerm();
     updateProductCategory(item?.name);
-    console.log(window.location.pathname);
+//    console.log(window.location.pathname);
     router.push({
       pathname: `${
         intl.locale === "eng"

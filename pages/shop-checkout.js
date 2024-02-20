@@ -58,7 +58,7 @@ const Cart = ({
         (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
     );
   };
-  console.log(cartTotal);
+////  console.log(cartTotal);
   const getUserDetails = async (encodedToken) => {
     try {
       const response = await api.get("customer/info", {
@@ -70,7 +70,7 @@ const Cart = ({
       });
       setUserDetails(response?.data);
     } catch (error) {
-      console.error("API Error:", error);
+      // console.error("API Error:", error);
     }
   };
   const handleCoupencode = async () => {
@@ -120,7 +120,7 @@ const Cart = ({
       toast.error("Please enter valid coupan");
     }
   };
-  console.log("cart prodyct detail", cartItemsData);
+////  console.log("cart prodyct detail", cartItemsData);
   const placeOrder = async () => {
     try {
       let token = localStorage.getItem("token");
@@ -164,7 +164,7 @@ const Cart = ({
         const errorMessage = error.response.data.errors[0]?.message;
         toast.error(errorMessage + "¥");
       } else {
-        console.error("Error while placing order:", error);
+        // console.error("Error while placing order:", error);
         toast.error("An error occurred while placing the order");
       }
     }
@@ -195,7 +195,7 @@ const Cart = ({
         setCartTotal(res?.data);
       })
       .catch((error) => {
-        console.log("error", error?.code === "ERR_NETWORK");
+////        console.log("error", error?.code === "ERR_NETWORK");
       });
   };
 
@@ -253,7 +253,7 @@ const Cart = ({
         },
       })
       .then((response) => {
-        console.log("response", response);
+////        console.log("response", response);
         if (response.status == 200) {
           toast.success("address updated successfully");
         }

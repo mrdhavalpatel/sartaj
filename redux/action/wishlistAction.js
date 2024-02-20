@@ -15,8 +15,7 @@ export const closeWishlistModal = e => dispatch => {
 }
 
 export const addToWishlist =( product , intl) => dispatch => {
-    console.log("intl in wishlist===action" ,intl?.locale
-    )
+//    console.log("intl in wishlist===action" ,intl?.locale)
     const lan = intl?.locale
     dispatch({
         type: Types.ADD_TO_WISHLIST,

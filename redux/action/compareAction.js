@@ -44,7 +44,7 @@ export const updateCompareProducts = (intl) => async (dispatch, state) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

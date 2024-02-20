@@ -10,7 +10,7 @@ function Guide() {
   const getFaqData = async () => {
     const request = await ApiCall("get", intl, "config");
     const faqData = await request;
-    console.log("intl in faq", intl.locale)
+    // console.log("intl in faq", intl.locale)
 if(intl.locale === "eng"){
   setFaqData(faqData?.data?.faq);
 

@@ -21,7 +21,7 @@ const OrderReceived = ({ cartItems }) => {
   const router = useRouter();
 
   const [shippingData, setShippingData] = useState([]); // State to manage popup visibility
-console.log("orderid slug",router?.query?.order_id)
+//console.log("orderid slug",router?.query?.order_id)
 const getShippingDetails = async (token, orderId) => {
   try {
     const response = await axios.get(
@@ -153,7 +153,7 @@ useEffect(() => {
                         >
                           {item?.name}
                         </Link>
-                        {console.log("item",item)}
+//                        {console.log("item",item)}
                       </td>
                       <td class="text-left">{item?.model}</td>
                       <td class="text-right"> {item?.quantity}</td>
@@ -261,7 +261,7 @@ useEffect(() => {
                       </td>
                     </tr>
                   ) : null}
-                  {/* {console.log("asda", shippingData?.couponPrice)} */}
+//                  {/* {console.log("asda", shippingData?.couponPrice)} */}
                   {shippingData?.couponPrice ? (
                     <tr>
                       <td colspan="4" class="text-right">

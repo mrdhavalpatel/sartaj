@@ -29,11 +29,11 @@ const ProductDetails = ({
   setShowReviewForm = () => {},
   getProductDetailsBySlug = (product) => {},
 }) => {
-  console.log(
-    "data.........................................",
-    quickView,
-    intl.locale
-  );
+//  // console.log(
+  //   "data.........................................",
+  //   quickView,
+  //   intl.locale
+  // );
   const [quantity, setQuantity] = useState(1);
 
   const handleCompare = (product) => {

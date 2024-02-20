@@ -34,7 +34,7 @@ function Login({ cartItems }) {
           },
         })
         .catch((error) => {
-          console.log("error", error?.code === "ERR_NETWORK");
+          // console.log("error", error?.code === "ERR_NETWORK");
         });
     }
   };

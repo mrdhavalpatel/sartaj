@@ -42,7 +42,7 @@ const Header = ({
     var newUrl = `/${newLanguage}/${newPathWithoutLanguage}`;
     const currentToken = router.query.token || "";
     const slug = router.query?.slug;
-    console.log("query in heaqderssssssssss",router.query)
+//    console.log("query in heaqderssssssssss",router.query)
     if (router.pathname.includes("reset-password")) {
       window.location.replace(
         `/${newLanguage}/reset-password?token=${currentToken}`
@@ -114,14 +114,14 @@ const Header = ({
         setCartItemsCount(response?.data?.cartProducts?.length);
       })
       .catch((error) => {
-        console.log("error", error?.code === "ERR_NETWORK");
+//        console.log("error", error?.code === "ERR_NETWORK");
       });
   };
   const Jsonhandler = (data) => {
     try {
       JSON.parse(data);
     } catch (e) {
-      console.log("JSON parse error");
+//      console.log("JSON parse error");
     }
     return JSON.parse(data);
   };

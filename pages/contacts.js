@@ -31,13 +31,13 @@ function Contact() {
         "Content-Type": "application/json",
       },
     }).then((res)=>{
-      console.log("res",res.data.message);
+//      console.log("res",res.data.message);
   if(res.data.message =="Inquiry sent successfully"){
     toast(intl.formatMessage({ id:"Message sent successfully"}));
   }
     })
     .catch((error) => {
-      console.log("error", error?.code === "ERR_NETWORK");
+//      console.log("error", error?.code === "ERR_NETWORK");
     });
   } 
   const validationSchema = Yup.object().shape({
@@ -127,7 +127,7 @@ function Contact() {
                           }}
                           validationSchema={validationSchema}
                           onSubmit={(values, { resetForm }) => {
-                            // console.log(values);
+//                            // console.log(values);
                             handleContactform(values)
                             // Your form submission logic goes here
 

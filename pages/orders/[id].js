@@ -13,7 +13,7 @@ const OrderDetails = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [orderDetails, setOrderDetails] = useState(null);
-  console.log("orderid slug id", router?.query?.id);
+  // console.log("orderid slug id", router?.query?.id);
 
   const getOrderDetails = async () => {
     try {
@@ -32,7 +32,7 @@ const OrderDetails = () => {
       );
       setOrderDetails(response?.data?.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setIsLoading(false);
     }

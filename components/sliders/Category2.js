@@ -28,7 +28,7 @@ const CategorySlider2 = ({ updateProductCategory }) => {
   const selectCategory = (e, item) => {
     e.preventDefault();
     updateProductCategory(item?.name);
-    console.log(window.location.pathname);
+    // console.log(window.location.pathname);
     router.push({
       pathname: `${
         intl.locale === "eng"

@@ -24,7 +24,7 @@ const RelatedSliderBySlug = ({ slug }) => {
       const allProducts = await request?.data?.related_products;
       setRelated(allProducts);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 

@@ -71,7 +71,7 @@ const Cart = ({
         },
       })
       .catch((error) => {
-        console.log("error", error?.code === "ERR_NETWORK");
+//        console.log("error", error?.code === "ERR_NETWORK");
       });
   };
   const getCartData = (token) => {
@@ -90,7 +90,7 @@ const Cart = ({
         setCartTotal(res?.data);
       })
       .catch((error) => {
-        console.log("error", error?.code === "ERR_NETWORK");
+//        console.log("error", error?.code === "ERR_NETWORK");
       });
   };
   const validationSchema = Yup.object().shape({
@@ -140,7 +140,7 @@ const Cart = ({
 
   const updateProductDetails = async () => {
     const response = await ApiCall("post", intl, "products/all", {});
-    console.log(await response.data.products.length);
+//    console.log(await response.data.products.length);
   };
 
   useEffect(() => {
