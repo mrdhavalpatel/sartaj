@@ -22,7 +22,7 @@ const WishlistModal = ({
       quantity: 1,
     };
     addToCart(product , intl);
-    toast(intl.formatMessage({id:"Product added to Cart !"}));
+    toast(intl.formatMessage({ id: "Product added to Cart !" }), { autoClose: 1000 });
 
   };
 

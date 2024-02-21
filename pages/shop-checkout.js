@@ -130,7 +130,7 @@ const Cart = ({
           ? coupanRes?.orderAmount
           : cartTotal?.total_amt,
         payment_method: "cash_on_delivery",
-        delivery_address_id: address?.billing_address?.[0]?.id,
+        delivery_address_id: address?.billing_address?.[0]?.id ,
         order_type: "delivery",
         coupon_discount_amount: coupenCodeDis,
         cart: cartItemsData,
@@ -206,6 +206,7 @@ const Cart = ({
     setTimeSlot(data);
   };
   const handleAddressSubmit = async (values) => {
+    let encodedToken = localStorage.getItem("token");
     let token = localStorage.getItem("token");
     let payload = {
       address: values?.billing_address,
@@ -256,6 +257,7 @@ const Cart = ({
 ////        console.log("response", response);
         if (response.status == 200) {
           toast.success("address updated successfully");
+          getAddress(encodedToken)
         }
       });
   };

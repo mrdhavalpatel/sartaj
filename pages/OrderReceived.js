@@ -21,41 +21,41 @@ const OrderReceived = ({ cartItems }) => {
   const router = useRouter();
 
   const [shippingData, setShippingData] = useState([]); // State to manage popup visibility
-//console.log("orderid slug",router?.query?.order_id)
-const getShippingDetails = async (token, orderId) => {
-  try {
-    const response = await axios.get(
-      `${API_BASE_URL}customer/order/shipping_list/${orderId}`,
-      {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-          "X-localization": intl.locale == "eng" ? "en" : "ja",
-        },
-      }
-    );
-    setShippingData(response?.data?.data);
-    clearCart();
-  } catch (error) {
-    console.error("Error fetching shipping details:", error);
-  }
-};
-
-useEffect(() => {
-  const orderId = router?.query?.order_id;
-
-  // Check if orderId is defined before making the API call
-  if (orderId) {
-    let encodedToken = localStorage.getItem("token");
-    getShippingDetails(encodedToken, orderId);
-
-    // Clear the cart when the component is unmounted or the user navigates away
-    return () => {
+  //console.log("orderid slug",router?.query?.order_id)
+  const getShippingDetails = async (token, orderId) => {
+    try {
+      const response = await axios.get(
+        `${API_BASE_URL}customer/order/shipping_list/${orderId}`,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            "X-localization": intl.locale == "eng" ? "en" : "ja",
+          },
+        }
+      );
+      setShippingData(response?.data?.data);
       clearCart();
-    };
-  }
-}, [router?.query?.order_id, clearCart]);
+    } catch (error) {
+      console.error("Error fetching shipping details:", error);
+    }
+  };
+
+  useEffect(() => {
+    const orderId = router?.query?.order_id;
+
+    // Check if orderId is defined before making the API call
+    if (orderId) {
+      let encodedToken = localStorage.getItem("token");
+      getShippingDetails(encodedToken, orderId);
+
+      // Clear the cart when the component is unmounted or the user navigates away
+      return () => {
+        clearCart();
+      };
+    }
+  }, [router?.query?.order_id, clearCart]);
 
   // // Listen for changes in the browser's history
   // useEffect(() => {
@@ -261,7 +261,7 @@ useEffect(() => {
                       </td>
                     </tr>
                   ) : null}
-//                  {/* {console.log("asda", shippingData?.couponPrice)} */}
+
                   {shippingData?.couponPrice ? (
                     <tr>
                       <td colspan="4" class="text-right">

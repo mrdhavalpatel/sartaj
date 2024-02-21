@@ -131,7 +131,7 @@ function Account() {
     setOrderPDFURL(url);
   };
 
-  const handleChangePassword = async (values) => {
+  const handleChangePassword = async (values ,{resetForm}) => {
     let payload = {
       old_password: values?.current_password,
       new_password: values?.new_password,
@@ -148,6 +148,7 @@ function Account() {
       .then((response) => {
         if (response?.data?.status === 200) {
           toast.success(response?.data?.message);
+          resetForm()
         } else {
           toast.error(response?.data?.message);
         }
@@ -561,7 +562,11 @@ function Account() {
                             <Formik
                               initialValues={initialValues2}
                               validationSchema={validationSchema2}
-                              onSubmit={handleChangePassword}
+                              // onSubmit={(value)=>handleChangePassword(value,{resetForm})}
+                              onSubmit={(values, {  resetForm }) => {
+                                // Handle form submission here
+                                handleChangePassword(values , {resetForm});
+                                setSubmitting(false);}}
                             >
                               <Form>
                                 <div>
