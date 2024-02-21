@@ -9,9 +9,13 @@ import DateInput from "../components/customDatePicker/DateInput";
 import { useIntl } from "react-intl";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-
+import { useState } from "react";
+import Image from "next/image";
+import Sentsvg from "../public/assets/sentemail.svg";
+import CreateAccount from "../public/assets/createaccount.svg"
 function Privacy() {
   const intl = useIntl();
+  const [sent, setSent] = useState(false);
 
   const router = useRouter();
   const allowedCountries = ["JP"];
@@ -65,12 +69,13 @@ function Privacy() {
       password: values.confirmPassword,
       dob: values?.dob,
     };
-//    // console.log(payload)
+
     auth("post", "/auth/register", payload).then((res) => {
       if (res?.response?.data?.errors) {
         toast.error(res?.response?.data?.errors?.[0]?.message);
       } else {
-        router.push("/sign-in");
+        setSent(true);
+        window.scrollTo({ top: 10, behavior: "smooth" });
       }
     });
   };
@@ -82,44 +87,70 @@ function Privacy() {
           <div className="row">
             <div className="col-xl-8 col-lg-10 col-md-12 m-auto">
               <div className="row">
+                <div className="col-lg-6 pr-30 d-none d-lg-block">
+                  <Image
+                    priority
+                    src={sent ? Sentsvg:CreateAccount}
+                    alt="next"
+                    width={500}
+                    height={500}
+                  />
+                </div>
                 <div className="col-lg-6 col-md-8">
                   <div className="login_wrap widget-taber-content background-white">
-                    <div className="padding_eight_all bg-white">
-                      <div className="heading_s1 mb-50">
-                        <h1 className="mb-5">
-                          {intl.formatMessage({ id: "Create an Account" })}
+                    {sent ? (
+                      <div>
+                        <h1 className="mb-10">
+                          Account Verification Email Sent
                         </h1>
                         <p>
-                          {intl.formatMessage({
-                            id: "Already have an account?",
-                          })}{" "}
-                          <Link href="/sign-in">
-                            <strong>{intl.formatMessage({ id: "Login instead!" })}</strong>
-                          </Link>
+                          An email has been sent to verify your account. Please
+                          check your inbox and spam folder.
                         </p>
+                        <div className="mt-15">
+                          <Link href="/sign-in">
+                            <button className="btn btn-primary">Sign in</button>
+                          </Link>
+                        </div>
                       </div>
+                    ) : (
+                      <div className="padding_eight_all bg-white">
+                        <div className="heading_s1 mb-50">
+                          <h1 className="mb-5">
+                            {intl.formatMessage({ id: "Create an Account" })}
+                          </h1>
+                          <p>
+                            {intl.formatMessage({
+                              id: "Already have an account?",
+                            })}{" "}
+                            <Link href="/sign-in">
+                              <strong>
+                                {intl.formatMessage({ id: "Login instead!" })}
+                              </strong>
+                            </Link>
+                          </p>
+                        </div>
 
-                      <Formik
-                        initialValues={{
-                          f_name: "",
-                          l_name: "",
-                          email: "",
-                          password: "",
-                          confirmPassword: "",
-                          termsConditions: "",
-                          dob: "",
-                          phone: "",
-                        }}
-                        validationSchema={validationSchema}
-                        onSubmit={(values, { setSubmitting }) => {
-                          // Handle form submission here
-                          handleSubmit(values);
-                          setSubmitting(false);
-                        }}
-                      >
-                        {({ setFieldValue, values }) => (
-                          <Form>
-                            <div className="form-group">
+                        <Formik
+                          initialValues={{
+                            f_name: "",
+                            l_name: "",
+                            email: "",
+                            password: "",
+                            confirmPassword: "",
+                            termsConditions: "",
+                            dob: "",
+                            phone: "",
+                          }}
+                          validationSchema={validationSchema}
+                          onSubmit={(values, { setSubmitting }) => {
+                            handleSubmit(values);
+                            setSubmitting(false);
+                          }}
+                        >
+                          {({ setFieldValue, values }) => (
+                            <Form>
+                              <div className="form-group">
                               <Field
                                 type="text"
                                 name="f_name"
@@ -304,10 +335,11 @@ function Privacy() {
                                 id: "Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy",
                               })}
                             </p>
-                          </Form>
-                        )}
-                      </Formik>
-                    </div>
+                            </Form>
+                          )}
+                        </Formik>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

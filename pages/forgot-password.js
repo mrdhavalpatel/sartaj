@@ -10,6 +10,7 @@ import { useState } from "react";
 
 function ForgotPassword() {
   const [isLoading, setIsLoading] = useState(false);
+  const [sent,setSent]=useState(false)
   const intl = useIntl();
 
   const validationSchema = Yup.object().shape({
@@ -18,7 +19,7 @@ function ForgotPassword() {
     ),
   });
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values,{resetForm}) => {
     const payload = {
       email_or_phone: values?.usernameOrEmail,
     };
@@ -29,6 +30,8 @@ function ForgotPassword() {
           toast.error(res?.response?.data?.errors?.[0]?.message);
         } else {
           toast.success(res?.message);
+          resetForm()
+          setSent(true)
         }
       })
       .finally(() => {
@@ -53,7 +56,20 @@ function ForgotPassword() {
                   </div>
                   <div className="col-lg-6 col-md-8">
                     <div className="login_wrap widget-taber-content background-white">
-                      <div className="padding_eight_all bg-white">
+                     {sent ?
+                   <div>
+                   <h1 className="mb-10">Check your inbox</h1>
+                   <p>An email to reset your password has been sent.</p>
+                   <p>Please note, the link will be valid for 72 hours.</p>
+                   <div  className="mt-15">
+                   <Link href="/sign-in" >
+                     <button className="btn btn-primary">Sign in</button>
+                   </Link>
+                    </div>
+                 
+                 </div>
+                       :
+                       <div className="padding_eight_all bg-white">
                         <div className="heading_s1">
                           <h1 className="mb-5">
                             {intl.formatMessage({ id: "Forgot password" })}
@@ -73,9 +89,9 @@ function ForgotPassword() {
                             password: "",
                           }}
                           validationSchema={validationSchema}
-                          onSubmit={(values, { setSubmitting }) => {
+                          onSubmit={(values, { setSubmitting , resetForm }) => {
                             // Handle form submission here
-                            handleSubmit(values);
+                            handleSubmit(values , {resetForm});
                             setSubmitting(false);
                           }}
                         >
@@ -111,7 +127,7 @@ function ForgotPassword() {
                             </div>
                           </Form>
                         </Formik>
-                      </div>
+                      </div>}
                     </div>
                   </div>
                 </div>

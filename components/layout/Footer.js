@@ -378,7 +378,7 @@ const Footer = () => {
                   </li>
                 </ul>
               </div>
-              <div
+              {/* <div
                 className="footer-link-widget widget-install-app col  wow animate__animated animate__fadeInUp"
                 data-wow-delay=".5s"
               >
@@ -408,7 +408,7 @@ const Footer = () => {
                   src="/assets/imgs/theme/payment-method.png"
                   alt="nest"
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </section>
@@ -416,7 +416,7 @@ const Footer = () => {
           className="container pb-30  wow animate__animated animate__fadeInUp"
           data-wow-delay="0"
         >
-          <div className="row align-items-center">
+          <div className="row align-items-center justify-content-center">
             <div className="col-12 mb-30">
               <div className="footer-bottom"></div>
             </div>
