@@ -291,14 +291,15 @@ const Footer = () => {
                     </a>
                   </li>
                   <li>
-                    {intl.locale == "eng" ?
-                     <a href="/privacy-policy">
-                     {intl.formatMessage({ id: "Privacy Policy" })}
-                   </a> :
-                    <a href="/jp/privacy-policy">
-                    {intl.formatMessage({ id: "Privacy Policy" })}
-                  </a> }
-                  
+                    {intl.locale == "eng" ? (
+                      <a href="/privacy-policy">
+                        {intl.formatMessage({ id: "Privacy Policy" })}
+                      </a>
+                    ) : (
+                      <a href="/jp/privacy-policy">
+                        {intl.formatMessage({ id: "Privacy Policy" })}
+                      </a>
+                    )}
                   </li>
                   <li>
                     <a href="/terms_conditions">
@@ -344,6 +345,13 @@ const Footer = () => {
                     <li>
                       <a href="/sign-in">
                         {intl.formatMessage({ id: "Sign In" })}
+                      </a>
+                    </li>
+                  )}
+                  {isLoggin ? null : (
+                    <li>
+                      <a href="/register">
+                        {intl.formatMessage({ id: "Create account" })}
                       </a>
                     </li>
                   )}
@@ -420,7 +428,7 @@ const Footer = () => {
             <div className="col-12 mb-30">
               <div className="footer-bottom"></div>
             </div>
-            <div className="col-xl-6 col-lg-6 col-md-6">
+            <div className="col-xl-6 col-lg-6 col-md-6 text-end">
               <p className="font-sm mb-0">
                 {intl.formatMessage({ id: "Copyright" })} &copy;{" "}
                 {intl.formatMessage({
@@ -428,8 +436,8 @@ const Footer = () => {
                 })}
               </p>
             </div>
-            <div className="col-xl-6 col-lg-6 col-md-6 text-end d-none d-md-block">
-              <div className="mobile-social-icon">
+            <div className="col-xl- col-lg-6 col-md-6 text-end d-none d-md-block ">
+              <div className="mobile-social-icon  d-flex justify-content-start ">
                 <h6>{intl.formatMessage({ id: "Follow Us" })}</h6>
                 <a href="https://www.facebook.com/sartaj.foods" target="_blank">
                   <img
