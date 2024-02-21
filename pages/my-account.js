@@ -48,12 +48,12 @@ function Account() {
   const pageNumbers = [];
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const [itemsperpage, setItemsPerPage] = useState(5);
+  const indexOfLastItem = currentPage * itemsperpage;
+  const indexOfFirstItem = indexOfLastItem - itemsperpage;
   const currentItems = orderList.slice(indexOfFirstItem, indexOfLastItem);
 
-  const totalPages = Math.ceil(orderList.length / itemsPerPage);
+  const totalPages = Math.ceil(orderList.length / itemsperpage);
   const maxPageNumbers = 5;
 
   let startPage = 1;
@@ -91,7 +91,7 @@ function Account() {
       setCurrentPage(currentPage + 1);
     }
   };
-  // for (let i = 1; i <= Math.ceil(orderList.length / itemsPerPage); i++) {
+  // for (let i = 1; i <= Math.ceil(orderList.length / itemsperpage); i++) {
   //   pageNumbers.push(i);
   // }
   const validationSchema = yup.object().shape({
@@ -517,8 +517,8 @@ function Account() {
                               </table>
                             </div>
                             <Pagination
-                              itemsPerPage={itemsPerPage}
-                              totalItems={orderList.length}
+                              itemsperpage={itemsperpage}
+                              totalitems={orderList.length}
                               paginate={setCurrentPage}
                             />
                             <ul className="pagination">

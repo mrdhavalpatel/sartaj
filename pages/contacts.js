@@ -45,7 +45,7 @@ function Contact() {
       intl.formatMessage({ id: "First name is required" })
     ),
     email: Yup.string()
-      .email(intl.formatMessage({ id: "Invalid email" }))
+      .email(intl.formatMessage({ id: "Invalid email address" }))
       .required(intl.formatMessage({ id: "Email is required" })),
     telephone: Yup.string()
     .required(intl.formatMessage({ id: "Phone number is required" }))

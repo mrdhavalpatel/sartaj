@@ -23,17 +23,17 @@ const SingleProduct = ({
       ...product,
       quantity: 1,
     };
-    addToCart(product , intl);
+    addToCart(product, intl);
     // toast("Product added to Cart !");
   };
 
   const handleCompare = (product) => {
-    addToCompare(product , intl);
+    addToCompare(product, intl);
     // toast("Added to Compare list !");
   };
 
   const handleWishlist = (product) => {
-    addToWishlist(product ,intl);
+    addToWishlist(product, intl);
     // toast("Added to Wishlist !");
   };
   return (
@@ -47,8 +47,8 @@ const SingleProduct = ({
               }`}
             >
               {Array.isArray(product?.image) &&
-                product?.image?.map((itm) => {
-                  return <img className="default-img" src={itm} alt="nest" />;
+                product?.image?.map((itm , index) => {
+                  return <img  key={index} className="default-img" src={itm} alt="nest" />;
                 })}
             </Link>
           </div>
@@ -78,13 +78,13 @@ const SingleProduct = ({
           </div>
 
           <div className="product-badges product-badges-position product-badges-mrg">
-            {product?.badges?.map((Itm) => {
+            {product?.badges?.map((Itm, index) => {
               return (
-                <>
-                  {Itm == "new" && <span className="new">New</span>}
-                  {Itm == "hot" && <span className="hot">Hot</span>}
-                  {Itm == "sale" && <span className="sale">Sale</span>}
-                </>
+                <React.Fragment key={index}>
+                  {Itm === "new" && <span className="new">New</span>}
+                  {Itm === "hot" && <span className="hot">Hot</span>}
+                  {Itm === "sale" && <span className="sale">Sale</span>}
+                </React.Fragment>
               );
             })}
           </div>
@@ -184,7 +184,9 @@ const SingleProduct = ({
                   if (product?.out_of_stock_status == "in stock") {
                     handleCart(product);
                   } else {
-                    toast.error( intl.formatMessage({ id:"product is out of stock"}));
+                    toast.error(
+                      intl.formatMessage({ id: "product is out of stock" })
+                    );
                   }
                 }}
               >

@@ -13,9 +13,9 @@ function SelectOp({ selectChange }) {
         </div>
         <div className="sort-by-dropdown-wrap custom-select">
           {/* Assuming that selectChange is a prop function */}
-          <select onChange={selectChange}>
+          <select onChange={selectChange} defaultValue={10}>
             <option value={5}>5</option>
-            <option value={10} selected>
+            <option value={10} >
               10
             </option>
             <option value={25}>25</option>

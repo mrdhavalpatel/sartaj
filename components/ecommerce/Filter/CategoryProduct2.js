@@ -25,7 +25,7 @@ const CategoryProduct2 = ({ updateProductCategory, data }) => {
       <ul>
         {data?.map((Item) => {
           return (
-            <li onClick={(e) => selectCategory(e, Item)}>
+            <li key={Item?.id} onClick={(e) => selectCategory(e, Item)}>
               <a>
                 <img src={Item?.image} alt="nest" />
                 <span

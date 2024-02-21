@@ -40,7 +40,7 @@ const Intro2 = () => {
       >
         {banners?.map((banner) => {
           return (
-            <SwiperSlide>
+            <SwiperSlide key={banner?.id}>
               <div
                 className="single-hero-slider single-animation-wrap"
                 style={{

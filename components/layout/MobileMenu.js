@@ -110,7 +110,7 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                   <ul>
                     {categories?.map((itm) => {
                       return (
-                        <li onClick={(e) => selectCategory(e, itm?.id)}>
+                        <li key={itm?.id} onClick={(e) => selectCategory(e, itm?.id)}>
                           <Link href={`/${intl.locale}/shop`}>
                             <i className="evara-font-dress"></i>
                             <span

@@ -11,8 +11,9 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
 function Privacy() {
-  const router = useRouter();
   const intl = useIntl();
+
+  const router = useRouter();
   const allowedCountries = ["JP"];
   const validationSchema = Yup.object().shape({
     f_name: Yup.string().required(
@@ -64,7 +65,7 @@ function Privacy() {
       password: values.confirmPassword,
       dob: values?.dob,
     };
-    // console.log(payload)
+//    // console.log(payload)
     auth("post", "/auth/register", payload).then((res) => {
       if (res?.response?.data?.errors) {
         toast.error(res?.response?.data?.errors?.[0]?.message);
@@ -300,7 +301,7 @@ function Privacy() {
                                 {intl.formatMessage({ id: "Note:" })}
                               </strong>
                               {intl.formatMessage({
-                                id: " Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy",
+                                id: "Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy",
                               })}
                             </p>
                           </Form>
