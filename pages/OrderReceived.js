@@ -228,7 +228,9 @@ const OrderReceived = ({ cartItems }) => {
                     </td>
                     <td class="text-right">
                       {" "}
-                      ¥{shippingData?.delivery_charge}
+                      ¥
+                      {shippingData?.delivery_charge ||
+                        shippingData?.free_delivery_amount}
                     </td>
                   </tr>
                   {shippingData?.eight_percent != 0 ? (

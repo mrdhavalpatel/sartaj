@@ -29,7 +29,7 @@ const ProductDetails = ({
   setShowReviewForm = () => {},
   getProductDetailsBySlug = (product) => {},
 }) => {
-//  // console.log(
+  //  // console.log(
   //   "data.........................................",
   //   quickView,
   //   intl.locale
@@ -37,12 +37,12 @@ const ProductDetails = ({
   const [quantity, setQuantity] = useState(1);
 
   const handleCompare = (product) => {
-    addToCompare(product , intl);
+    addToCompare(product, intl);
     // +toast("Added to Compare list !");
   };
 
   const handleWishlist = (product) => {
-    addToWishlist(product , intl);
+    addToWishlist(product, intl);
   };
 
   return (
@@ -54,9 +54,9 @@ const ProductDetails = ({
               <div className="row mb-50  mt-30">
                 <div className="col-md-6 col-sm-12 col-xs-12 mb-md-0">
                   <div className="detail-gallery">
-                    <span className="zoom-icon">
+                    {/* <span className="zoom-icon">
                       <i className="fi-rs-search"></i>
-                    </span>
+                    </span> */}
 
                     <div className="product-image-slider">
                       <ThumbSlider product={product} />
@@ -195,7 +195,7 @@ const ProductDetails = ({
                               ...product,
                               quantity: quantity || 1,
                             };
-                            addToCart(p , intl);
+                            addToCart(p, intl);
                           }}
                           style={{
                             backgroundColor: `${
