@@ -8,7 +8,7 @@ import {
   increaseQuantity,
   openCart,
 } from "../redux/action/cart";
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useEffect, useState } from "react";
 import { API_BASE_URL, api } from "../lib/api";
 import axios from "axios";
@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import { ApiCall } from "../lib/other/other";
 import { useIntl } from "react-intl";
 import { translatedItemDetails } from "../util/util";
+import * as Yup from "yup";
 
 const Cart = ({
   openCart,
@@ -58,7 +59,7 @@ const Cart = ({
         (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
     );
   };
-////  console.log(cartTotal);
+  ////  console.log(cartTotal);
   const getUserDetails = async (encodedToken) => {
     try {
       const response = await api.get("customer/info", {
@@ -94,17 +95,19 @@ const Cart = ({
             setCoupenCodeDis(response?.data?.discount_price);
             if (response.data.discount_type == "percent") {
               setCoupanDetails(
-                `${response?.data?.title} ${intl.formatMessage({ id: "coupon applied successfully" })},${intl.formatMessage({ id: "maximum discount" })} ${response?.data?.max_discount}¥`
+                `${response?.data?.title} ${intl.formatMessage({
+                  id: "coupon applied successfully",
+                })},${intl.formatMessage({ id: "maximum discount" })} ${
+                  response?.data?.max_discount
+                }¥`
               );
-              
             } else if (response.data.discount_type == "amount") {
               setCoupanDetails(
                 `${response?.data?.discount}¥ ` +
-                intl.formatMessage({
-                  id: "discount applied successfully",
-                }) 
+                  intl.formatMessage({
+                    id: "discount applied successfully",
+                  })
               );
-              
             }
 
             toast.success(
@@ -120,7 +123,7 @@ const Cart = ({
       toast.error("Please enter valid coupan");
     }
   };
-////  console.log("cart prodyct detail", cartItemsData);
+  ////  console.log("cart prodyct detail", cartItemsData);
   const placeOrder = async () => {
     try {
       let token = localStorage.getItem("token");
@@ -130,7 +133,7 @@ const Cart = ({
           ? coupanRes?.orderAmount
           : cartTotal?.total_amt,
         payment_method: "cash_on_delivery",
-        delivery_address_id: address?.billing_address?.[0]?.id ,
+        delivery_address_id: address?.billing_address?.[0]?.id,
         order_type: "delivery",
         coupon_discount_amount: coupenCodeDis,
         cart: cartItemsData,
@@ -195,7 +198,7 @@ const Cart = ({
         setCartTotal(res?.data);
       })
       .catch((error) => {
-////        console.log("error", error?.code === "ERR_NETWORK");
+        ////        console.log("error", error?.code === "ERR_NETWORK");
       });
   };
 
@@ -254,10 +257,10 @@ const Cart = ({
         },
       })
       .then((response) => {
-////        console.log("response", response);
+        ////        console.log("response", response);
         if (response.status == 200) {
           toast.success("address updated successfully");
-          getAddress(encodedToken)
+          getAddress(encodedToken);
         }
       });
   };
@@ -293,11 +296,24 @@ const Cart = ({
   useEffect(() => {
     handlePrefillAddress();
   }, [address]);
-
+  const validationSchema = Yup.object().shape({
+    full_name: Yup.string().required(intl.formatMessage({ id: "Full Name is required" })),
+    billing_address: Yup.string().required(intl.formatMessage({ id: "Address is required" })),
+    city: Yup.string().required(intl.formatMessage({ id: "City / Town is required" })),
+    state: Yup.string().required(intl.formatMessage({ id: "State / County is required" })),
+    post_code: Yup.string().required(intl.formatMessage({ id: "Postcode / ZIP is required" })),
+    contact_person_name: Yup.string().required(intl.formatMessage({ id: "Contact Person Name is required" })),
+    contact_person_number: Yup.string()
+      .matches(/^\d{10}$/, intl.formatMessage({ id: "Contact Person Number must be 10 digits" }))
+      .required(intl.formatMessage({ id: "Contact Person Number is required" })),
+    password: Yup.string().required(intl.formatMessage({ id: "Password is required" })),
+  });
+  
   const formikFormData = (selectedAddressData) => {
     return (
       <Formik
         enableReinitialize
+        validationSchema={validationSchema}
         initialValues={{
           full_name: selectedAddressData?.full_name,
           billing_address: selectedAddressData?.address,
@@ -310,26 +326,40 @@ const Cart = ({
         }}
         onSubmit={(values) => handleAddressSubmit(values)}
       >
-        {({ setFieldValue, values, handleChange }) => (
+        {({ setFieldValue, values, handleChange, errors, touched }) => (
           <Form method="post">
-            <div className="form-group">
+            <div className="form-group mb-40">
               <Field
                 type="text"
                 required=""
                 name="full_name"
                 placeholder={intl.formatMessage({ id: "Full Name*" })}
               />
+              {errors.full_name && touched.full_name && (
+                <ErrorMessage
+                  name="full_name"
+                  component="div"
+                  style={{ color: "red", position: "absolute" }}
+                />
+              )}
             </div>
 
-            <div className="form-group">
+            <div className="form-group mb-40">
               <Field
                 type="text"
                 name="billing_address"
                 required=""
                 placeholder={intl.formatMessage({ id: "Address *" })}
               />
+              {errors.billing_address && touched.billing_address && (
+                <ErrorMessage
+                  name="billing_address"
+                  component="div"
+                  style={{ color: "red", position: "absolute" }}
+                />
+              )}
             </div>
-            <div className="form-group">
+            <div className="form-group mb-40">
               <Field
                 type="text"
                 name="billing_address2"
@@ -337,47 +367,97 @@ const Cart = ({
                 placeholder={intl.formatMessage({ id: "Address line2" })}
               />
             </div>
-            <div className="form-group">
+            <div className="form-group mb-40">
               <Field
                 required=""
                 type="text"
                 name="city"
                 placeholder={intl.formatMessage({ id: "City / Town *" })}
               />
+              {errors.city && touched.city && (
+                <ErrorMessage
+                  name="city"
+                  component="div"
+                  style={{ color: "red", position: "absolute" }}
+                />
+              )}
             </div>
-            <div className="form-group">
+            <div className="form-group mb-40">
               <Field
                 required=""
                 type="text"
                 name="state"
                 placeholder={intl.formatMessage({ id: "State / County *" })}
               />
+              {errors.state && touched.state && (
+                <ErrorMessage
+                  name="state"
+                  component="div"
+                  style={{ color: "red", position: "absolute" }}
+                />
+              )}
             </div>
-            <div className="form-group">
+            <div className="form-group mb-40">
               <Field
                 required=""
-                type="text"
+                type="number"
                 name="post_code"
+                onChange={(e) => {
+                  const inputValue = e.target.value.slice(
+                    0,
+                 6
+                  ); // Limit to 10 characters
+                  setFieldValue("post_code", inputValue);
+                }}
                 placeholder={intl.formatMessage({ id: "Postcode / ZIP *" })}
               />
+              {errors.post_code && touched.post_code && (
+                <ErrorMessage
+                  name="post_code"
+                  component="div"
+                  style={{ color: "red", position: "absolute" }}
+                />
+              )}
             </div>
-            <div className="form-group">
+            <div className="form-group mb-40">
               <Field
                 required=""
                 type="text"
                 name="contact_person_name"
                 placeholder={intl.formatMessage({ id: "Contact Person Name*" })}
               />
+              {errors.contact_person_name && touched.contact_person_name && (
+                <ErrorMessage
+                  name="contact_person_name"
+                  component="div"
+                  style={{ color: "red", position: "absolute" }}
+                />
+              )}
             </div>
-            <div className="form-group">
+            <div className="form-group mb-40">
               <Field
                 required=""
-                type="text"
+                type="number"
                 name="contact_person_number"
+                onChange={(e) => {
+                  const inputValue = e.target.value.slice(
+                    0,
+                    10
+                  ); // Limit to 10 characters
+                  setFieldValue("contact_person_number", inputValue);
+                }}
                 placeholder={intl.formatMessage({
                   id: "Contact Person Number*",
                 })}
               />
+              {errors.contact_person_number &&
+                touched.contact_person_number && (
+                  <ErrorMessage
+                    name="contact_person_number"
+                    component="div"
+                    style={{ color: "red", position: "absolute" }}
+                  />
+                )}
             </div>
 
             <div
@@ -391,7 +471,7 @@ const Cart = ({
                 name="password"
               />
             </div>
-            <div className="form-group">
+            <div className="form-group mb-40">
               <textarea
                 name="orderNotes"
                 as="textarea"
@@ -446,7 +526,6 @@ const Cart = ({
               <div className="col-lg-7">
                 <div className="row mb-50">
                   <div className="col-lg-6 mb-sm-15 mb-lg-0 mb-md-3">
-                 
                     <div
                       className="panel-collapse collapse login_form"
                       id="loginform"
@@ -638,35 +717,37 @@ const Cart = ({
                   </div>
                 </div>
                 <div className="ml-30 mb-50">
-                      <form method="post" className="apply-coupon">
-                        <input
-                          type="text"
-                          onChange={(e) => {
-                            setCoupenCode(e?.target?.value);
-                          }}
-                          value={coupenCode}
-                          placeholder={intl.formatMessage({
-                            id: "Enter Coupon Code...",
-                          })}
-                        />
-                        <button
-                          className="btn  btn-md"
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleCoupencode();
-                          }}
-                        >
-                          {intl.formatMessage({ id: "Apply Coupon" })}
-                        </button>
-                      </form>
+                  <form method="post" className="apply-coupon">
+                    <input
+                      type="text"
+                      onChange={(e) => {
+                        setCoupenCode(e?.target?.value);
+                      }}
+                      value={coupenCode}
+                      placeholder={intl.formatMessage({
+                        id: "Enter Coupon Code...",
+                      })}
+                    />
+                    <button
+                      className="btn  btn-md"
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleCoupencode();
+                      }}
+                    >
+                      {intl.formatMessage({ id: "Apply Coupon" })}
+                    </button>
+                  </form>
 
-                      <h6 style={{ color: "green" , marginTop:"15px" }}>{coupanDetails}</h6>
-                    </div>
+                  <h6 style={{ color: "green", marginTop: "15px" }}>
+                    {coupanDetails}
+                  </h6>
+                </div>
                 <div className="border p-40 cart-totals ml-30 mb-50 checkout_box">
                   <div className="heading_s1 mb-3">
                     <h4>{intl.formatMessage({ id: "Cart Totals" })}</h4>
@@ -847,7 +928,7 @@ const Cart = ({
                     </table>
                   ) : null}
                 </div>
-               
+
                 <div className="border p-40 cart-totals ml-30 mb-50 checkout_box">
                   <div className="delivery_time_div">
                     <div className="heading_s1 mb-3">
