@@ -4511,7 +4511,7 @@ table .product-thumbnail img {
 
 .product-cart-wrap.style-2 .product-content-wrap {
   position: relative;
-  margin-top: -90px;
+  margin-top: 0;
   z-index: 3;
   padding: 0;
   max-width: 86%;
@@ -12969,7 +12969,7 @@ img.compare-img {
 }
 
 .product-list-small h6 {
-  min-height: 57px;
+  min-height: 59px;
 }
 
 .card-product-small h2 {
@@ -13446,6 +13446,7 @@ button.ordertable_btn {
   border-radius: 5px;
   padding: 10px;
   margin: 0;
+  min-height: 129px;
 }
 
 .bottom_row_div h6 {
