@@ -72,7 +72,7 @@ function About() {
                       </h4>
                       <p>
                         {intl.formatMessage({
-                          id: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form",
+                          id: "At Sartaj Foods, we work hard to give our valued customers the greatest deals and discounts. Providing low rates is our commitment to ensuring that every purchase you make gets you exceptional value for your money. We also regularly update our special offers  to provide you fantastic bargains and savings on a variety of goods. ",
                         })}
                       </p>
                     </div>
@@ -86,7 +86,7 @@ function About() {
                       <h4>{intl.formatMessage({ id: "Wide Assortment" })}</h4>
                       <p>
                         {intl.formatMessage({
-                          id: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form",
+                          id: "At Sartaj Foods, we take pride in offering a wide assortment of products to cater to the diverse needs and preferences of our customers. Our extensive range includes a variety of spices, lentils, rice, snacks, ready-to-eat meals, and cosmetics sourced from trusted suppliers to ensure high quality and authenticity.",
                         })}
                       </p>
                     </div>
@@ -100,7 +100,7 @@ function About() {
                       <h4>{intl.formatMessage({ id: "Free Delivery" })}</h4>
                       <p>
                         {intl.formatMessage({
-                          id: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form",
+                          id: "We're delighted to offer free delivery services for orders worth  ¥6500/- (exclusive of tax) or more, excluding areas in Kyushu, Hokkaido, and Okinawa.",
                         })}
                       </p>
                     </div>
@@ -111,15 +111,15 @@ function About() {
                         src="/assets/imgs/theme/icons/icon-4.svg"
                         alt="nest"
                       />
-                      <h4>{intl.formatMessage({ id: "Easy Returns" })}</h4>
+                      <h4>{intl.formatMessage({ id: "Best Quality" })}</h4>
                       <p>
                         {intl.formatMessage({
-                          id: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form",
+                          id: "We are committed to providing our customers with the best quality and taste in every product we offer. Our dedication to excellence starts with sourcing the finest ingredients directly from trusted suppliers, ensuring that only the highest quality materials are used in our products. From aromatic spices to flavorful sauces, each item is carefully selected and rigorously inspected to meet our stringent quality standards.",
                         })}
                       </p>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-6 mb-24">
+                  {/* <div className="col-lg-4 col-md-6 mb-24">
                     <div className="featured-card">
                       <img
                         src="/assets/imgs/theme/icons/icon-5.svg"
@@ -132,17 +132,17 @@ function About() {
                         })}
                       </p>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="col-lg-4 col-md-6 mb-24">
                     <div className="featured-card">
                       <img
                         src="/assets/imgs/theme/icons/icon-6.svg"
                         alt="nest"
                       />
-                      <h4>{intl.formatMessage({ id: "Great Daily Deal" })}</h4>
+                      <h4>{intl.formatMessage({ id: "Great Weekly Deal" })}</h4>
                       <p>
                         {intl.formatMessage({
-                          id: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form",
+                          id: "We offer exclusive discounts and special offers on a variety of products every week. Customers can discover new deals on a range of items, including cosmetics, rice, and other products.",
                         })}
                       </p>
                     </div>
