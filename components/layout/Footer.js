@@ -121,7 +121,7 @@ const Footer = () => {
         <section className="featured  section-padding">
           <div className="container">
             <div className="row">
-              <div className="col-lg-1-5 col-md-4 col-12 col-sm-6 mb-md-4 mb-xl-0">
+              <div className="col-lg-3 col-md-3 col-12 col-sm-6 mb-md-4 mb-xl-0">
                 <div
                   className="banner-left-icon d-flex align-items-center  wow animate__animated animate__fadeInUp"
                   data-wow-delay="0"
@@ -133,11 +133,11 @@ const Footer = () => {
                     <h3 className="icon-box-title">
                       {intl.formatMessage({ id: "Best prices & offers" })}
                     </h3>
-                    <p>{intl.formatMessage({ id: "Orders $50 or more" })}</p>
+                    <p>{intl.formatMessage({ id: "Every week" })}</p>
                   </div>
                 </div>
               </div>
-              <div className="col-lg-1-5 col-md-4 col-12 col-sm-6">
+              <div className="col-lg-3 col-md-3 col-12 col-sm-6">
                 <div
                   className="banner-left-icon d-flex align-items-center  wow animate__animated animate__fadeInUp"
                   data-wow-delay=".1s"
@@ -149,11 +149,11 @@ const Footer = () => {
                     <h3 className="icon-box-title">
                       {intl.formatMessage({ id: "Free delivery" })}
                     </h3>
-                    <p>{intl.formatMessage({ id: "24/7 amazing services" })}</p>
+                    <p>{intl.formatMessage({ id: "On bulk quantity" })}</p>
                   </div>
                 </div>
               </div>
-              <div className="col-lg-1-5 col-md-4 col-12 col-sm-6">
+              <div className="col-lg-3 col-md-3 col-12 col-sm-6">
                 <div
                   className="banner-left-icon d-flex align-items-center  wow animate__animated animate__fadeInUp"
                   data-wow-delay=".2s"
@@ -163,45 +163,13 @@ const Footer = () => {
                   </div>
                   <div className="banner-text">
                     <h3 className="icon-box-title">
-                      {intl.formatMessage({ id: "Great daily deal" })}
+                      {intl.formatMessage({ id: "Great weekly deal" })}
                     </h3>
                     <p>{intl.formatMessage({ id: "When you sign up" })}</p>
                   </div>
                 </div>
               </div>
-              <div className="col-lg-1-5 col-md-4 col-12 col-sm-6">
-                <div
-                  className="banner-left-icon d-flex align-items-center  wow animate__animated animate__fadeInUp"
-                  data-wow-delay=".3s"
-                >
-                  <div className="banner-icon">
-                    <img src="/assets/imgs/theme/icons/icon-4.svg" alt="nest" />
-                  </div>
-                  <div className="banner-text">
-                    <h3 className="icon-box-title">
-                      {intl.formatMessage({ id: "Wide assortment" })}
-                    </h3>
-                    <p>{intl.formatMessage({ id: "Mega Discounts" })}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-1-5 col-md-4 col-12 col-sm-6">
-                <div
-                  className="banner-left-icon d-flex align-items-center  wow animate__animated animate__fadeInUp"
-                  data-wow-delay=".4s"
-                >
-                  <div className="banner-icon">
-                    <img src="/assets/imgs/theme/icons/icon-5.svg" alt="nest" />
-                  </div>
-                  <div className="banner-text">
-                    <h3 className="icon-box-title">
-                      {intl.formatMessage({ id: "Easy returns" })}
-                    </h3>
-                    <p>{intl.formatMessage({ id: "Within 30 days" })}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-1-5 col-md-4 col-12 col-sm-6 d-xl-none">
+              <div className="col-lg-3 col-md-3 col-12 col-sm-6">
                 <div
                   className="banner-left-icon d-flex align-items-center  wow animate__animated animate__fadeInUp"
                   data-wow-delay=".5s"
