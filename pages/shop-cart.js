@@ -528,7 +528,7 @@ const Cart = ({
                                 <td className="cart_total_amount">
                                   <strong>
                                     <span className="font-xl fw-900 text-brand">
-                                      ¥{cartTotal?.total_amt}
+                                      ¥{cartTotal?.total_amt -cartTotal.delivery_charge}
                                     </span>
                                   </strong>
                                 </td>
