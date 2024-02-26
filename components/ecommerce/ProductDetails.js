@@ -242,7 +242,9 @@ const ProductDetails = ({
                         {intl.formatMessage({ id: "Availability" })}:
                         <span className="in-stock text-success ml-5">
                           {product?.stock}{" "}
-                          {intl.formatMessage({ id: "Items In Stock" })}
+                          {product?.out_of_stock_status == "in stock"
+                            ? intl.formatMessage({ id: "Items In Stock" })
+                            : intl.formatMessage({ id: "Out of stock" })}
                         </span>
                       </li>
                     </ul>

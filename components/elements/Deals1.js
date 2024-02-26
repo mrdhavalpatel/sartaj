@@ -6,6 +6,7 @@ import { addToCart } from "../../redux/action/cart";
 import Timer from "./Timer";
 import QuickView from "../ecommerce/QuickView";
 import { useIntl } from "react-intl";
+import { translatedItemDetails } from "../../util/util";
 
 const Deals1 = ({ product, addToCart }) => {
   const intl = useIntl();
@@ -23,6 +24,10 @@ const Deals1 = ({ product, addToCart }) => {
         className="product-cart-wrap style-2 wow animate__animated animate__fadeInUp"
         data-wow-delay="0"
       >
+          <div className="deals-countdown-wrap d-flex justify-content-center align-items-center">
+            {/* timer */}
+            <Timer endDateTime={product?.sale_end_date} />
+          </div>
         <div className="product-img-action-wrap">
           <div className="product-img">
             <Link href={`/${product?.seo_en}`}>
@@ -30,14 +35,16 @@ const Deals1 = ({ product, addToCart }) => {
             </Link>
           </div>
         </div>
+       
         <div className="product-content-wrap">
-          <div className="deals-countdown-wrap">
-            {/* timer */}
-            <Timer endDateTime={product?.sale_end_date} />
-          </div>
+       
           <div className="deals-content">
             <h2 className="ellipsis-title">
-              <Link href={`/${product?.seo_en}`}>{product.name}</Link>
+              <Link href={`/${product?.seo_en}`}><span
+                        dangerouslySetInnerHTML={{
+                          __html: translatedItemDetails("name", intl, product),
+                        }}
+                      /></Link>
             </h2>
             {product?.total_reviews > 0 ? (
               <div className="product-rate-cover">

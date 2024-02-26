@@ -48,10 +48,16 @@ const Cart = ({
   const [selectedAddressData, setSelectedAddressData] = useState({});
 
   const [selectedAddressDropdown, setSelectedAddressDropdown] = useState("");
-  const [orderNotes, setorderNotes] = useState("");
+  const [orderNotes, setorderNotes] = useState();
+  const [religionData, setReligionData] = useState([]);
+  const [selectedregion, setSelectedRegion] = useState(-1);
+  const [citydata, setCityData] = useState([]);
+  const [selectedCity, setSelectedCity] = useState(-1);
   const intl = useIntl();
+
   const handleRadioChange = (id) => {
     setSelectedRadioId(id);
+    setorderNotes(id);
   };
   const calculateAmountToAdd = () => {
     return Math.round(
@@ -59,7 +65,7 @@ const Cart = ({
         (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
     );
   };
-  ////  console.log(cartTotal);
+  //  ////  console.log(cartTotal);
   const getUserDetails = async (encodedToken) => {
     try {
       const response = await api.get("customer/info", {
@@ -74,6 +80,61 @@ const Cart = ({
       // console.error("API Error:", error);
     }
   };
+  let objectToAdd = {
+    id: -1,
+    name: "Select your Region",
+  };
+  let objectToAdd1 = {
+    id: -1,
+    name: "Select your City",
+  };
+  const getRegionsdata = async (encodedToken) => {
+    try {
+      const response = await api.get("regions", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${encodedToken}`,
+        },
+      });
+      //      console.log("regions data:", response?.data?.regions);
+      let newArray = [objectToAdd].concat(response?.data?.regions);
+      setReligionData(
+        // { id: -1, value: "", name: "--Choose an option--", disabled: true },
+        newArray
+      );
+      //      console.log("Regions data update", newArray);
+    } catch (error) {
+      console.error("API Error in regions:", error);
+    }
+  };
+  const getCitydata = async (encodedToken) => {
+    if (!selectedregion || selectedregion.length === 0) {
+      return; // Don't make the API call if selectedregion is undefined or has a length of 0
+    }
+
+    //    console.log("id pass in city api", selectedregion);
+    try {
+      const response = await api.get(`city/${selectedregion}`, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${encodedToken}`,
+        },
+      });
+      //      console.log("response of city api", response?.data?.city);
+      let newArray = [objectToAdd1].concat(response?.data?.city);
+      setCityData(newArray);
+      // Update state or perform necessary actions based on response
+    } catch (error) {
+      console.error("API Error in regions:", error);
+    }
+  };
+  useEffect(() => {
+    let encodedToken = localStorage.getItem("token");
+
+    getCitydata(encodedToken);
+  }, [selectedregion]);
   const handleCoupencode = async () => {
     let token = localStorage.getItem("token");
     try {
@@ -123,7 +184,7 @@ const Cart = ({
       toast.error("Please enter valid coupan");
     }
   };
-  ////  console.log("cart prodyct detail", cartItemsData);
+  //  ////  console.log("cart prodyct detail", cartItemsData);
   const placeOrder = async () => {
     try {
       let token = localStorage.getItem("token");
@@ -144,6 +205,8 @@ const Cart = ({
         forwarded_ip: ip,
         user_agent: browserData?.userAgent,
         accept_language: browserData?.language,
+        delivery_charge:cartTotal?.delivery_charge
+
       };
 
       const response = await axios
@@ -184,9 +247,15 @@ const Cart = ({
     setAddress(response?.data);
   };
 
-  const getCartData = (token) => {
+  const getCartData = (token, data) => {
+    let url = `${API_BASE_URL}customer/cart`;
+
+    if (data?.length > 0) {
+      url += `/${data}`;
+    }
+
     const response = axios
-      .get(`${API_BASE_URL}customer/cart`, {
+      .get(url, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -198,7 +267,7 @@ const Cart = ({
         setCartTotal(res?.data);
       })
       .catch((error) => {
-        ////        console.log("error", error?.code === "ERR_NETWORK");
+        //        ////        console.log("error", error?.code === "ERR_NETWORK");
       });
   };
 
@@ -234,10 +303,10 @@ const Cart = ({
         values?.city != undefined || values?.city != null
           ? values?.city
           : selectedAddressData?.city,
-      state:
+      region_id:
         values?.state != undefined || values?.state != null
           ? values?.state
-          : selectedAddressData?.state,
+          : selectedAddressData?.region_id,
       post_code: values?.post_code
         ? values?.post_code
         : selectedAddressData?.post_code,
@@ -257,7 +326,7 @@ const Cart = ({
         },
       })
       .then((response) => {
-        ////        console.log("response", response);
+        //        ////        console.log("response", response);
         if (response.status == 200) {
           toast.success("address updated successfully");
           getAddress(encodedToken);
@@ -272,6 +341,7 @@ const Cart = ({
       getUserDetails(encodedToken);
       getAddress(encodedToken);
       getTimeSlot();
+      getRegionsdata(encodedToken);
     }
   }, []);
   const findElementById = async (id) => {
@@ -297,18 +367,41 @@ const Cart = ({
     handlePrefillAddress();
   }, [address]);
   const validationSchema = Yup.object().shape({
-    full_name: Yup.string().required(intl.formatMessage({ id: "Full Name is required" })),
-    billing_address: Yup.string().required(intl.formatMessage({ id: "Address is required" })),
-    city: Yup.string().required(intl.formatMessage({ id: "City / Town is required" })),
-    state: Yup.string().required(intl.formatMessage({ id: "State / County is required" })),
-    post_code: Yup.string().required(intl.formatMessage({ id: "Postcode / ZIP is required" })),
-    contact_person_name: Yup.string().required(intl.formatMessage({ id: "Contact Person Name is required" })),
+    full_name: Yup.string().required(
+      intl.formatMessage({ id: "Full Name is required" })
+    ),
+    billing_address: Yup.string().required(
+      intl.formatMessage({ id: "Address is required" })
+    ),
+    // city: Yup.string().when("state", {
+    //   is: (value) => value?.length > 1,
+    //   then: Yup.string().required(
+    //     intl.formatMessage({ id: "City / Town is required" })
+    //   ),
+    //   otherwise: Yup.string(),
+    // }),
+    // state: Yup.string().required(
+    //   intl.formatMessage({ id: "State / County is required" })
+    // ),
+    post_code: Yup.string().required(
+      intl.formatMessage({ id: "Postcode / ZIP is required" })
+    ),
+    contact_person_name: Yup.string().required(
+      intl.formatMessage({ id: "Contact Person Name is required" })
+    ),
     contact_person_number: Yup.string()
-      .matches(/^\d{10}$/, intl.formatMessage({ id: "Contact Person Number must be 10 digits" }))
-      .required(intl.formatMessage({ id: "Contact Person Number is required" })),
-    password: Yup.string().required(intl.formatMessage({ id: "Password is required" })),
+      .matches(
+        /^\d{10}$/,
+        intl.formatMessage({ id: "Contact Person Number must be 10 digits" })
+      )
+      .required(
+        intl.formatMessage({ id: "Contact Person Number is required" })
+      ),
+    // password: Yup.string().required(
+    //   intl.formatMessage({ id: "Password is required" })
+    // ),
   });
-  
+  //  console.log("selectedAddress",selectedAddressData.region_id  )
   const formikFormData = (selectedAddressData) => {
     return (
       <Formik
@@ -318,13 +411,27 @@ const Cart = ({
           full_name: selectedAddressData?.full_name,
           billing_address: selectedAddressData?.address,
           billing_address2: selectedAddressData?.road,
-          city: selectedAddressData?.city,
-          state: selectedAddressData?.state,
+          state: selectedAddressData.region_id,
+          city: selectedAddressData.city,
           post_code: selectedAddressData?.post_code,
           contact_person_number: selectedAddressData?.contact_person_number,
           contact_person_name: selectedAddressData?.contact_person_name,
         }}
-        onSubmit={(values) => handleAddressSubmit(values)}
+        onSubmit={(values, { setSubmitting }) => {
+          handleAddressSubmit(values);
+        }}
+        // onSubmit={(values, { setSubmitting, errors }) => {
+        //   handleAddressSubmit(values)
+        //     .then(() => {
+        //        //       console.log("Submission successful");
+        //       setSubmitting(false);
+        //     })
+        //     .catch((error) => {
+        //       console.error("Submission error:", error, errors);
+        //       // Handle the error here, set an error state, or display a message to the user
+        //       setSubmitting(false);
+        //     });
+        // }}
       >
         {({ setFieldValue, values, handleChange, errors, touched }) => (
           <Form method="post">
@@ -367,22 +474,8 @@ const Cart = ({
                 placeholder={intl.formatMessage({ id: "Address line2" })}
               />
             </div>
-            <div className="form-group mb-40">
-              <Field
-                required=""
-                type="text"
-                name="city"
-                placeholder={intl.formatMessage({ id: "City / Town *" })}
-              />
-              {errors.city && touched.city && (
-                <ErrorMessage
-                  name="city"
-                  component="div"
-                  style={{ color: "red", position: "absolute" }}
-                />
-              )}
-            </div>
-            <div className="form-group mb-40">
+
+            {/* <div className="form-group mb-40">
               <Field
                 required=""
                 type="text"
@@ -396,6 +489,80 @@ const Cart = ({
                   style={{ color: "red", position: "absolute" }}
                 />
               )}
+            </div> */}
+            <div className="form-group mb-40">
+              <div className="sort-by-dropdown-wrap custom-select mb-40">
+                <select
+                  as="select"
+                  className="selectedAddress"
+                  name="state"
+                  value={values.state}
+                  onChange={(e) => {
+                    // setSelectedAddressDropdown(e.target.value);
+                    // findElementById(e.target.value);
+                    let encodedToken = localStorage.getItem("token");
+                    //                    console.log("selected region", e.target.value);
+                    const data = e.target.value;
+                    setFieldValue("state", data);
+                    setFieldValue("city", "");
+                    setSelectedRegion(e.target.value);
+                    getCartData(encodedToken, data);
+                  }}
+                >
+                  {religionData?.map((option) => (
+                    <option
+                      key={option.id}
+                      value={option.id}
+                      disabled={option.id === -1 ? true : false}
+                      selected={option.id == values.region_id}
+                    >
+                      {option.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {/* <Field
+                required=""
+                type="text"
+                name="city"
+                placeholder={intl.formatMessage({ id: "City / Town *" })}
+              />
+              {errors.city && touched.city && (
+                <ErrorMessage
+                  name="city"
+                  component="div"
+                  style={{ color: "red", position: "absolute" }}
+                />
+              )} */}
+          
+              {citydata.length !== 1 ? (
+                <div className="sort-by-dropdown-wrap custom-select mb-40">
+                  <select
+                    as="select"
+                    className="selectedAddress"
+                    name="city"
+                    value={values.city}
+                    onChange={(e) => {
+                      // setSelectedAddressDropdown(e.target.value);
+                      // findElementById(e.target.value);
+                      //                      console.log("selected city", e.target.value);
+                      setFieldValue("city", e?.target?.value);
+
+                      setSelectedCity(e.target.value);
+                    }}
+                  >
+                    {citydata?.map((option) => (
+                      <option
+                        key={option.id}
+                        value={option.id}
+                        disabled={option.id === -1 ? true : false}
+                      >
+                        {option.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : null}
             </div>
             <div className="form-group mb-40">
               <Field
@@ -403,10 +570,7 @@ const Cart = ({
                 type="number"
                 name="post_code"
                 onChange={(e) => {
-                  const inputValue = e.target.value.slice(
-                    0,
-                 6
-                  ); // Limit to 10 characters
+                  const inputValue = e.target.value.slice(0, 6); // Limit to 10 characters
                   setFieldValue("post_code", inputValue);
                 }}
                 placeholder={intl.formatMessage({ id: "Postcode / ZIP *" })}
@@ -440,10 +604,7 @@ const Cart = ({
                 type="number"
                 name="contact_person_number"
                 onChange={(e) => {
-                  const inputValue = e.target.value.slice(
-                    0,
-                    10
-                  ); // Limit to 10 characters
+                  const inputValue = e.target.value.slice(0, 10); // Limit to 10 characters
                   setFieldValue("contact_person_number", inputValue);
                 }}
                 placeholder={intl.formatMessage({
@@ -460,7 +621,7 @@ const Cart = ({
                 )}
             </div>
 
-            <div
+            {/* <div
               id="collapsePassword"
               className="form-group create-account collapse in"
             >
@@ -470,17 +631,18 @@ const Cart = ({
                 placeholder={intl.formatMessage({ id: "Password" })}
                 name="password"
               />
-            </div>
-            <div className="form-group mb-40">
+            </div> */}
+            {/* <div className="form-group mb-40">
               <textarea
                 name="orderNotes"
                 as="textarea"
                 rows="5"
                 value={orderNotes}
+                disabled={true}
                 onChange={(e) => setorderNotes(e.target.value)}
-                placeholder={intl.formatMessage({ id: "Order notes" })}
+                placeholder={intl.formatMessage({ id: "Delivery time" })}
               />
-            </div>
+            </div> */}
             <div>
               <button type="submit">
                 {intl.formatMessage({ id: "Save Changes" })}
@@ -616,12 +778,12 @@ const Cart = ({
                             : ""
                         } ${
                           option?.address !== null ? option.address + "," : ""
-                        }${option?.road !== null ? option.road + "," : ""}${
+                        }${
                           option?.post_code !== null
                             ? option?.post_code + ","
                             : ""
                         }${option?.city !== null ? option?.city + "," : ""}${
-                          option?.state !== null ? option?.state + "," : ""
+                          option?.region_id !== null ? option?.region_id : ""
                         }`}
                       </option>
                     ))}
@@ -950,7 +1112,7 @@ const Cart = ({
                               radioId === selectedRadioId ||
                               (index === 0 && selectedRadioId === null)
                             }
-                            onChange={(e) => handleRadioChange(radioId)}
+                                                       onChange={(e) =>{ handleRadioChange(radioId)}}
                           />
                           <label
                             className="form-check-label"

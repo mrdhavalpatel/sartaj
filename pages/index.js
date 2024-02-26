@@ -47,14 +47,14 @@ function Index2() {
   // useEffect(() => {
   //   if (router.locale === "eng") {
   //     console.log("index ma ma----", window?.location?.href);
-  
+
   //     // Check if the current URL contains multiple slashes after "eng"
   //     const engIndex = window.location.href.indexOf("/eng");
   //     if (engIndex !== -1) {
   //       const urlAfterEng = window.location.href.substring(engIndex + 4); // Get the URL after "/eng"
   //       const modifiedUrl = window.location.origin + "/eng" + urlAfterEng.replace(/\/+/g, '/'); // Remove extra slashes
   //       console.log("Modified URL:", modifiedUrl);
-        
+
   //       // If you want to navigate to the modified URL
   //       router.push(modifiedUrl);
   //     }
@@ -62,27 +62,27 @@ function Index2() {
   // }, []);
   useEffect(() => {
     if (router.locale === "eng") {
-        // console.log("index ma ma----", window?.location?.href);
+      // console.log("index ma ma----", window?.location?.href);
 
-        // Check if the current URL contains multiple slashes after "eng"
-        const engIndex = window.location.href.indexOf("/eng");
-        if (engIndex !== -1) {
-            const urlAfterEng = window.location.href.substring(engIndex + 4); // Get the URL after "/eng"
-            let modifiedUrl = window.location.origin + "/eng" + urlAfterEng.replace(/\/+/g, '/'); // Remove extra slashes
-            
-            // Remove trailing slash if present
-            modifiedUrl = modifiedUrl.replace(/\/$/, "");
+      // Check if the current URL contains multiple slashes after "eng"
+      const engIndex = window.location.href.indexOf("/eng");
+      if (engIndex !== -1) {
+        const urlAfterEng = window.location.href.substring(engIndex + 4); // Get the URL after "/eng"
+        let modifiedUrl =
+          window.location.origin + "/eng" + urlAfterEng.replace(/\/+/g, "/"); // Remove extra slashes
 
-            // console.log("Modified URL:", modifiedUrl);
+        // Remove trailing slash if present
+        modifiedUrl = modifiedUrl.replace(/\/$/, "");
 
-            // If the current URL does not match the modified URL, navigate to the modified URL
-            if (window.location.href !== modifiedUrl) {
-                router.push(modifiedUrl);
-            }
+        // console.log("Modified URL:", modifiedUrl);
+
+        // If the current URL does not match the modified URL, navigate to the modified URL
+        if (window.location.href !== modifiedUrl) {
+          router.push(modifiedUrl);
         }
+      }
     }
-}, [router.locale]); // Add router.locale as a dependency
-
+  }, [router.locale]); // Add router.locale as a dependency
 
   return (
     <>
@@ -170,7 +170,7 @@ function Index2() {
               <h3 className="">
                 {intl.formatMessage({ id: "Deals Of The Day" })}
               </h3>
-              <Link href={`/${intl.locale}/shop`} className="show-all">
+              <Link href={`${intl.locale}/dealsoftheday`} className="show-all">
                 {intl.formatMessage({ id: "All Deals" })}
                 <i className="fi-rs-angle-right"></i>
               </Link>

@@ -71,12 +71,12 @@ const Cart = ({
         },
       })
       .catch((error) => {
-//        console.log("error", error?.code === "ERR_NETWORK");
+        //        console.log("error", error?.code === "ERR_NETWORK");
       });
   };
   const getCartData = (token) => {
     const response = axios
-      .get(`${API_BASE_URL}customer/cart`, {
+      .get(`${API_BASE_URL}customer/cart/1`, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -90,7 +90,7 @@ const Cart = ({
         setCartTotal(res?.data);
       })
       .catch((error) => {
-//        console.log("error", error?.code === "ERR_NETWORK");
+        //        console.log("error", error?.code === "ERR_NETWORK");
       });
   };
   const validationSchema = Yup.object().shape({
@@ -140,7 +140,7 @@ const Cart = ({
 
   const updateProductDetails = async () => {
     const response = await ApiCall("post", intl, "products/all", {});
-//    console.log(await response.data.products.length);
+    //    console.log(await response.data.products.length);
   };
 
   useEffect(() => {
@@ -380,11 +380,9 @@ const Cart = ({
                                         //   `Maximum order quantity is ${item?.total_stock}`
                                         // );
                                         toast.error(
-                                          intl.formatMessage(
-                                            {
-                                              id: "Maximum order quantity is ",
-                                            }
-                                          )+ `${item?.total_stock}`
+                                          intl.formatMessage({
+                                            id: "Maximum order quantity is ",
+                                          }) + `${item?.total_stock}`
                                         );
                                       } else {
                                         increaseQuantity(item?.id);
@@ -514,7 +512,7 @@ const Cart = ({
                                 </tr>
                               ) : null}
 
-                              <tr>
+                              {/* <tr>
                                 <td className="cart_total_label">
                                   {intl.formatMessage({ id: "Shipping" })}
                                 </td>
@@ -522,10 +520,10 @@ const Cart = ({
                                   <i className="ti-gift mr-5"></i>¥
                                   {cartTotal?.delivery_charge}
                                 </td>
-                              </tr>
+                              </tr> */}
                               <tr>
                                 <td className="cart_total_label">
-                                  {intl.formatMessage({ id: "Total" })}
+                                  {intl.formatMessage({ id: "Sub-Total" })}
                                 </td>
                                 <td className="cart_total_amount">
                                   <strong>
@@ -535,6 +533,18 @@ const Cart = ({
                                   </strong>
                                 </td>
                               </tr>
+                              <p  className="cart_total_label" >
+                                Shipping charges and delivery times vary based
+                                on the selected region during checkout.for more
+                                imformation visit
+                                <a
+                                  href="/delivery_Information"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >Delivery Information
+                                </a>
+                                .
+                              </p>
                             </tbody>
                           </table>
                         </div>
