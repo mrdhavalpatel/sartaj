@@ -13,11 +13,12 @@ import { useEffect, useState } from "react";
 import { API_BASE_URL, api } from "../lib/api";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { toast } from "react-toastify";
+import { toast, useToast } from "react-toastify";
 import { ApiCall } from "../lib/other/other";
 import { useIntl } from "react-intl";
 import { translatedItemDetails } from "../util/util";
 import * as Yup from "yup";
+import { Spinner } from "react-bootstrap";
 
 const Cart = ({
   openCart,
@@ -194,7 +195,7 @@ const Cart = ({
           ? coupanRes?.orderAmount
           : cartTotal?.total_amt,
         payment_method: "cash_on_delivery",
-        delivery_address_id:selectedAddressDropdown,
+        delivery_address_id: selectedAddressDropdown,
         order_type: "delivery",
         coupon_discount_amount: coupenCodeDis,
         cart: cartItemsData,
@@ -253,8 +254,10 @@ const Cart = ({
     setAddress(response?.data);
     // const region_id =()
   };
-
+  const [loading, setloading] = useState(true);
   const getCartData = (data) => {
+    setloading(true);
+
     console.log("is region id pass in get cart", data);
     let encodedToken = localStorage.getItem("token");
 
@@ -276,8 +279,11 @@ const Cart = ({
         setCartItemsData(res?.data?.cartProducts);
         setCartTotal(res?.data);
         console.log("cart data", res.data);
+        setloading(false);
       })
       .catch((error) => {
+        setloading(false);
+
         //        ////        console.log("error", error?.code === "ERR_NETWORK");
       });
   };
@@ -507,6 +513,7 @@ const Cart = ({
                   as="select"
                   className="selectedAddress"
                   name="state"
+                  style={{ color: 'black' }}
                   value={values.state}
                   onChange={(e) => {
                     // setSelectedAddressDropdown(e.target.value);
@@ -552,6 +559,8 @@ const Cart = ({
                     as="select"
                     className="selectedAddress"
                     name="city"
+                  style={{ color: 'black' }}
+
                     value={values.city}
                     onChange={(e) => {
                       // setSelectedAddressDropdown(e.target.value);
@@ -778,23 +787,27 @@ const Cart = ({
                     value={selectedAddressDropdown}
                     onChange={(e) => {
                       setSelectedAddressDropdown(e.target.value);
-                      console.log("on select id passed in api check============================", e.target.value)
-                      const selectedOption = address?.billing_address?.find(option => option.id === parseInt(e.target.value));
+                      console.log(
+                        "on select id passed in api check============================",
+                        e.target.value
+                      );
+                      const selectedOption = address?.billing_address?.find(
+                        (option) => option.id === parseInt(e.target.value)
+                      );
                       console.log("Selected option object:", selectedOption);
-                      console.log("seected options in address",selectedOption)
+                      console.log("seected options in address", selectedOption);
                       if (selectedOption) {
                         const regionId = selectedOption.region_id;
-                        getCartData(regionId)
+                        getCartData(regionId);
                         console.log("Selected address region id:", regionId);
                       }
 
                       // console.log("Selected address region id", address?.billing_address?.find(option => option.id === e.target.value)?.region_id);
-                 
+
                       findElementById(e.target.value);
                     }}
                   >
                     {address?.billing_address?.map((option) => (
-                   
                       <option key={option.id} value={option.id}>
                         {`${
                           option?.full_name !== null
@@ -806,8 +819,12 @@ const Cart = ({
                           option?.post_code !== null
                             ? option?.post_code + ","
                             : ""
-                        }${option?.city !== null ? option?.city + "," : ""}${
-                          option?.region_id !== null ? option?.region_id : ""
+                        }${
+                          option?.city_name !== null
+                            ? option?.city_name + ","
+                            : ""
+                        }${
+                          option?.state_name !== null ? option?.state_name : ""
                         }`}
                       </option>
                     ))}
@@ -824,83 +841,94 @@ const Cart = ({
                     </h6>
                   </div>
                   <div className="divider-2 mb-30"></div>
-                  <div className="table-responsive order_table">
-                    {cartItemsData.length <= 0 && "No Products"}
-                    {cartItemsData.length > 0 ? (
-                      <table className="table no-border">
-                        <tbody>
-                          {cartItemsData?.map((item, i) => (
-                            <tr key={i}>
-                              <td className="image product-thumbnail">
-                                <img src={item?.product?.image?.[0]} alt="#" />
-                              </td>
-                              <td>
-                                <h6 className="w-160 mb-5">
-                                  {/* <a
+                  {loading ? (
+                    <div class="d-flex justify-content-center align-items-center ">
+                      <Spinner animation="border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </Spinner>
+                    </div>
+                  ) : (
+                    <div className="table-responsive order_table">
+                      {cartItemsData.length <= 0 && "No Products"}
+                      {cartItemsData.length > 0 ? (
+                        <table className="table no-border">
+                          <tbody>
+                            {cartItemsData?.map((item, i) => (
+                              <tr key={i}>
+                                <td className="image product-thumbnail">
+                                  <img
+                                    src={item?.product?.image?.[0]}
+                                    alt="#"
+                                  />
+                                </td>
+                                <td>
+                                  <h6 className="w-160 mb-5">
+                                    {/* <a
                                     dangerouslySetInnerHTML={{
                                       __html: item?.product?.name,
                                     }}
                                   ></a> */}
-                                  <a
-                                    dangerouslySetInnerHTML={{
-                                      __html: translatedItemDetails(
-                                        "name",
-                                        intl,
-                                        item?.product
-                                      ),
-                                    }}
-                                  ></a>
-                                  <div className="product-rate-cover">
-                                    <div className="product-rate d-inline-block">
-                                      <div
-                                        className="product-rating"
-                                        style={{
-                                          width: `${
-                                            item?.product?.overall_rating
-                                              ? item?.product?.overall_rating
-                                              : 0
-                                          }%`,
-                                        }}
-                                      ></div>
-                                    </div>
-                                    <span className="font-small ml-5 text-muted">
-                                      {`(
+                                    <a
+                                      dangerouslySetInnerHTML={{
+                                        __html: translatedItemDetails(
+                                          "name",
+                                          intl,
+                                          item?.product
+                                        ),
+                                      }}
+                                    ></a>
+                                    <div className="product-rate-cover">
+                                      <div className="product-rate d-inline-block">
+                                        <div
+                                          className="product-rating"
+                                          style={{
+                                            width: `${
+                                              item?.product?.overall_rating
+                                                ? item?.product?.overall_rating
+                                                : 0
+                                            }%`,
+                                          }}
+                                        ></div>
+                                      </div>
+                                      <span className="font-small ml-5 text-muted">
+                                        {`(
                                     ${
                                       item?.product?.total_reviews
                                         ? item?.product?.total_reviews
                                         : 0
                                     }
                                     )`}
-                                    </span>
-                                  </div>
-                                </h6>{" "}
-                              </td>
-                              <td>
-                                <h6 className="text-muted pl-20 pr-20">
-                                  x {item.quantity}
-                                </h6>
-                              </td>
-                              <td>
-                                <h4 className="text-brand">
-                                  ¥
-                                  {/* {(item.quantity ? item.quantity : 1) *
+                                      </span>
+                                    </div>
+                                  </h6>{" "}
+                                </td>
+                                <td>
+                                  <h6 className="text-muted pl-20 pr-20">
+                                    x {item.quantity}
+                                  </h6>
+                                </td>
+                                <td>
+                                  <h4 className="text-brand">
+                                    ¥
+                                    {/* {(item.quantity ? item.quantity : 1) *
                                     item.price} */}
-                                  {(item?.quantity ? item?.quantity : 1) *
-                                  item?.actual_price
-                                    ? item?.actual_price
-                                    : item?.product.actual_price
-                                    ? item?.product.actual_price
-                                    : 0}
-                                </h4>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    ) : (
-                      "No Products"
-                    )}
-                  </div>
+                                    {(item?.quantity ? item?.quantity : 1) *
+                                    item?.actual_price
+                                      ? item?.actual_price
+                                      : item?.product.actual_price
+                                      ? item?.product.actual_price
+                                      : 0}
+                                  </h4>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      ) : (
+                        "No Products"
+                      )}
+                    </div>
+                  )}
                 </div>
                 <div className="ml-30 mb-50">
                   <form method="post" className="apply-coupon">
@@ -981,8 +1009,8 @@ const Cart = ({
                         >
                           <strong>
                             {intl.formatMessage({
-                              id: "All Item in Dry Shipping:",
-                            })}
+                              id: "All Item in Dry Shipping",
+                            })}:
                           </strong>
                         </td>
                         <td

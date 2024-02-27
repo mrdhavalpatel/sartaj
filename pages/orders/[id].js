@@ -117,11 +117,15 @@ const OrderDetails = () => {
                   <td class="text-left">
                     {orderDetails?.delivery_address?.contact_person_name}
                     <br />
-                    {orderDetails?.delivery_address?.road}
-                    <br />
+                
                     {orderDetails?.delivery_address?.address}
                     <br />
-                    {orderDetails?.delivery_address?.state}
+                    {orderDetails?.delivery_address?.road}
+                    <br />
+                    {orderDetails?.delivery_address?.city_name ? orderDetails?.delivery_address?.city_name + ", " : null}
+
+
+                    {orderDetails?.delivery_address?.state_name}
                     {orderDetails?.delivery_address?.country && (
                       <>
                         <br /> {orderDetails?.delivery_address?.country}{" "}
@@ -137,7 +141,9 @@ const OrderDetails = () => {
                     <br />
                     {orderDetails?.delivery_address?.address}
                     <br />
-                    {orderDetails?.delivery_address?.state}
+                    {orderDetails?.delivery_address?.city_name ? orderDetails?.delivery_address?.city_name + ", " : null}
+
+                    {orderDetails?.delivery_address?.state_name}
                     {orderDetails?.delivery_address?.country && (
                       <>
                         <br /> {orderDetails?.delivery_address?.country}{" "}

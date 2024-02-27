@@ -18,7 +18,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { API_BASE_URL } from "../lib/api";
 import { ErrorMessage, Field, Formik } from "formik";
-import { Form } from "react-bootstrap";
+import { Form, Spinner } from "react-bootstrap";
 import * as Yup from "yup";
 import { auth } from "../lib/auth/auth";
 import { findProductIndexById, translatedItemDetails } from "../util/util";
@@ -36,6 +36,7 @@ const Cart = ({
   const [cartDataUpdated, setCartDataUpdated] = useState(false);
   const [cartTotal, setCartTotal] = useState([]);
   const [cartProducts, setCartProducts] = useState([]);
+  const [loading, setLoading] = useState(true)
   const checkoutUrl =
     intl.locale === "eng" ? "/shop-checkout" : "/jp/shop-checkout";
   const proceedToCheckout = () => {
@@ -75,6 +76,7 @@ const Cart = ({
       });
   };
   const getCartData = (token) => {
+    setLoading(true)
     const response = axios
       .get(`${API_BASE_URL}customer/cart/1`, {
         headers: {
@@ -88,8 +90,11 @@ const Cart = ({
       .then((res) => {
         setCartProducts(res?.data?.cartProducts);
         setCartTotal(res?.data);
+        setLoading(false)
       })
       .catch((error) => {
+        setLoading(false)
+
         //        console.log("error", error?.code === "ERR_NETWORK");
       });
   };
@@ -191,7 +196,13 @@ const Cart = ({
           </div>
           <div className="row">
             <div className="col-lg-8">
-              <div className="table-responsive shopping-summery">
+         {loading ? 
+         <div class="d-flex justify-content-center align-items-center ">
+         <Spinner animation="border" role="status">
+           <span class="visually-hidden">Loading...</span>
+         </Spinner>
+       </div> :
+         <div className="table-responsive shopping-summery">
                 {cartProducts.length <= 0 && "No Products"}
                 <table
                   className={
@@ -448,7 +459,7 @@ const Cart = ({
                     ))}
                   </tbody>
                 </table>
-              </div>
+              </div>}
               <div className="cart-action text-end">
                 <a className="btn " href={`/${intl.locale}/shop`}>
                   <i className="fi-rs-shopping-bag mr-10"></i>
@@ -528,20 +539,25 @@ const Cart = ({
                                 <td className="cart_total_amount">
                                   <strong>
                                     <span className="font-xl fw-900 text-brand">
-                                      ¥{cartTotal?.total_amt -cartTotal.delivery_charge}
+                                      ¥
+                                      {cartTotal?.total_amt -
+                                        cartTotal.delivery_charge}
                                     </span>
                                   </strong>
                                 </td>
                               </tr>
-                              <p  className="cart_total_label" >
-                                Shipping charges and delivery times vary based
-                                on the selected region during checkout.for more
-                                imformation visit
+                              <p className="cart_total_label">
+                                {intl.formatMessage({
+                                  id: "Shipping charges and delivery times vary based on the selected region during checkout.for more information visit",
+                                })}
                                 <a
                                   href="/delivery_Information"
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                >Delivery Information
+                                >
+                                  {intl.formatMessage({
+                                    id: "Delivery Information",
+                                  })}
                                 </a>
                                 .
                               </p>
