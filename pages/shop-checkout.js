@@ -194,7 +194,7 @@ const Cart = ({
           ? coupanRes?.orderAmount
           : cartTotal?.total_amt,
         payment_method: "cash_on_delivery",
-        delivery_address_id: address?.billing_address?.[0]?.id,
+        delivery_address_id:selectedAddressDropdown,
         order_type: "delivery",
         coupon_discount_amount: coupenCodeDis,
         cart: cartItemsData,
@@ -778,7 +778,7 @@ const Cart = ({
                     value={selectedAddressDropdown}
                     onChange={(e) => {
                       setSelectedAddressDropdown(e.target.value);
-                      console.log("on select", address?.billing_address)
+                      console.log("on select id passed in api check============================", e.target.value)
                       const selectedOption = address?.billing_address?.find(option => option.id === parseInt(e.target.value));
                       console.log("Selected option object:", selectedOption);
                       console.log("seected options in address",selectedOption)
