@@ -205,8 +205,7 @@ const Cart = ({
         forwarded_ip: ip,
         user_agent: browserData?.userAgent,
         accept_language: browserData?.language,
-        delivery_charge:cartTotal?.delivery_charge
-
+        delivery_charge: cartTotal?.delivery_charge,
       };
 
       const response = await axios
@@ -244,27 +243,39 @@ const Cart = ({
         Authorization: `Bearer ${encodedToken}`,
       },
     });
+    console.log(
+      "address response in region id===============>",
+      response?.data.billing_address[0]?.region_id
+    );
+
+    getCartData(response?.data.billing_address[0]?.region_id);
+
     setAddress(response?.data);
+    // const region_id =()
   };
 
-  const getCartData = (token, data) => {
+  const getCartData = (data) => {
+    console.log("is region id pass in get cart", data);
+    let encodedToken = localStorage.getItem("token");
+
     let url = `${API_BASE_URL}customer/cart`;
 
-    if (data?.length > 0) {
+    if (data) {
       url += `/${data}`;
     }
-
+    console.log("url in get cart", url);
     const response = axios
       .get(url, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${encodedToken}`,
         },
       })
       .then((res) => {
         setCartItemsData(res?.data?.cartProducts);
         setCartTotal(res?.data);
+        console.log("cart data", res.data);
       })
       .catch((error) => {
         //        ////        console.log("error", error?.code === "ERR_NETWORK");
@@ -337,7 +348,7 @@ const Cart = ({
   useEffect(() => {
     let encodedToken = localStorage.getItem("token");
     if (encodedToken) {
-      getCartData(encodedToken);
+      // getCartData();
       getUserDetails(encodedToken);
       getAddress(encodedToken);
       getTimeSlot();
@@ -506,7 +517,7 @@ const Cart = ({
                     setFieldValue("state", data);
                     setFieldValue("city", "");
                     setSelectedRegion(e.target.value);
-                    getCartData(encodedToken, data);
+                    getCartData(data);
                   }}
                 >
                   {religionData?.map((option) => (
@@ -534,7 +545,7 @@ const Cart = ({
                   style={{ color: "red", position: "absolute" }}
                 />
               )} */}
-          
+
               {citydata.length !== 1 ? (
                 <div className="sort-by-dropdown-wrap custom-select mb-40">
                   <select
@@ -767,10 +778,23 @@ const Cart = ({
                     value={selectedAddressDropdown}
                     onChange={(e) => {
                       setSelectedAddressDropdown(e.target.value);
+                      console.log("on select", address?.billing_address)
+                      const selectedOption = address?.billing_address?.find(option => option.id === parseInt(e.target.value));
+                      console.log("Selected option object:", selectedOption);
+                      console.log("seected options in address",selectedOption)
+                      if (selectedOption) {
+                        const regionId = selectedOption.region_id;
+                        getCartData(regionId)
+                        console.log("Selected address region id:", regionId);
+                      }
+
+                      // console.log("Selected address region id", address?.billing_address?.find(option => option.id === e.target.value)?.region_id);
+                 
                       findElementById(e.target.value);
                     }}
                   >
                     {address?.billing_address?.map((option) => (
+                   
                       <option key={option.id} value={option.id}>
                         {`${
                           option?.full_name !== null
@@ -1112,7 +1136,9 @@ const Cart = ({
                               radioId === selectedRadioId ||
                               (index === 0 && selectedRadioId === null)
                             }
-                                                       onChange={(e) =>{ handleRadioChange(radioId)}}
+                            onChange={(e) => {
+                              handleRadioChange(radioId);
+                            }}
                           />
                           <label
                             className="form-check-label"
