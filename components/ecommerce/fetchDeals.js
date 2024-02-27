@@ -3,6 +3,8 @@ import { server } from "../../config/index";
 import Deals1 from "../elements/Deals1";
 import { ApiCall } from "../../lib/other/other";
 import { useIntl } from "react-intl";
+import SwiperCore, { Navigation } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 function FeatchDeals() {
   const [deals, setDeals] = useState([]);
@@ -20,12 +22,52 @@ function FeatchDeals() {
 
   return (
     <>
-      <div className="row">
+      <Swiper
+        spaceBetween={24}
+        grid={{
+          rows: 2,
+        }}
+        navigation={{
+          prevEl: ".custom_prev_d",
+          nextEl: ".custom_next_d",
+        }}
+        className="custom-class"
+        breakpoints={{
+          0: {
+            slidesPerView: 1,
+            spaceBetween: 0,
+          },
+          480: {
+            slidesPerView: 1,
+          },
+          640: {
+            slidesPerView: 1,
+          },
+          768: {
+            slidesPerView: 1,
+          },
+          1024: {
+            slidesPerView: 3,
+          },
+        }}
+      >
         {deals?.slice(0, 4).map((product, i) => (
-          <div className="col-xl-4 col-lg-4 col-md-6" key={i}>
+          <SwiperSlide key={i}>
             <Deals1 product={product} />
-          </div>
+          </SwiperSlide>
         ))}
+      </Swiper>
+
+      <div
+        className="slider-arrow slider-arrow-2 flex-right carausel-10-columns-arrow"
+        id="carausel-10-columns-arrows"
+      >
+        <span className="slider-btn slider-prev slick-arrow custom_prev_d">
+          <i className="fi-rs-arrow-small-left"></i>
+        </span>
+        <span className="slider-btn slider-next slick-arrow custom_next_d">
+          <i className="fi-rs-arrow-small-right"></i>
+        </span>
       </div>
     </>
   );

@@ -161,8 +161,8 @@ function Index2() {
           </div>
         </section>
 
-        <section className="section-padding pb-5">
-          <div className="container">
+        <section className="section-padding pb-5 deal_section">
+          <div className="container position-relative">
             <div
               className="section-title wow animate__animated animate__fadeIn"
               data-wow-delay="0"

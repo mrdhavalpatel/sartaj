@@ -4527,9 +4527,7 @@ table .product-thumbnail img {
   margin: 0 auto;
   background-color: #fff;
   border-radius: 10px;
-  -webkit-box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
-  padding: 25px 30px;
+
 }
 
 .product-cart-wrap.style-2 .product-content-wrap .deals-countdown-wrap {
@@ -13512,4 +13510,27 @@ span.reviews_bottom {
   width: 200px;
   height: 200px;
   border: 2px solid #fff;
+}
+
+.deal_section .slider-arrow.slider-arrow-2.flex-right {
+  top: 1%;
+  right: 7%;
+}
+
+@media only screen and (max-width: 480px) {
+  .deal_section .slider-arrow.slider-arrow-2.flex-right {
+    display: flex;
+  }
+}
+
+.deal_section .product-cart-wrap.style-2 {
+  box-shadow: 5px 5px 15px rgba(0,0,0,.05);
+  border: 1px solid;
+}
+.deals-countdown-wrap {
+  padding-top: 20px;
+}
+
+span.countdown-section {
+  background: #3e44930d !important;
 }
