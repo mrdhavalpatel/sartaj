@@ -400,7 +400,10 @@ const Cart = ({
     // state: Yup.string().required(
     //   intl.formatMessage({ id: "State / County is required" })
     // ),
-    post_code: Yup.string().required(
+    post_code: Yup.string().matches(
+      /^\d{7}$/,
+      intl.formatMessage({ id: "Postcode must be 7 digits" })
+    ).required(
       intl.formatMessage({ id: "Postcode / ZIP is required" })
     ),
     contact_person_name: Yup.string().required(
@@ -590,7 +593,7 @@ const Cart = ({
                 type="number"
                 name="post_code"
                 onChange={(e) => {
-                  const inputValue = e.target.value.slice(0, 6); // Limit to 10 characters
+                  const inputValue = e.target.value.slice(0, 7); // Limit to 10 characters
                   setFieldValue("post_code", inputValue);
                 }}
                 placeholder={intl.formatMessage({ id: "Postcode / ZIP *" })}
