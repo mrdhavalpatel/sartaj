@@ -518,6 +518,60 @@ const Header = ({
                     <span className="pro-count white">{totalCartItems}</span>
                   </Link>
                 </div>
+                <div className="header-action-icon-2">
+                    <Link href="/my-account">
+                      <img
+                        className="svgInject"
+                        alt="Nest"
+                        src="/assets/imgs/theme/icons/icon-user.svg"
+                      />
+                    </Link>
+                    <Link href="/">
+                      <span className="lable ml-0">
+                        {intl.formatMessage({ id: "Account" })}
+                      </span>
+                    </Link>
+                    <div className="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
+                      <ul>
+                        <li>
+                          <Link href="/my-account">
+                            <i className="fi fi-rs-user mr-10"></i>
+                            {intl.formatMessage({ id: "My Account" })}
+                          </Link>
+                        </li>
+
+                        <li>
+                          <Link href={`/${intl.locale}/shop-wishlist`}>
+                            <i className="fi fi-rs-heart mr-10"></i>
+                            {intl.formatMessage({ id: "My Wishlist" })}
+                          </Link>
+                        </li>
+
+                        {isLoggin ? (
+                          <li>
+                            <Link
+                              href="/sign-in"
+                              onClick={() => {
+                                localStorage.removeItem("token");
+                                logout();
+                                dispatch(clearCart());
+                              }}
+                            >
+                              <i className="fi fi-rs-sign-out mr-10"></i>
+                              {intl.formatMessage({ id: "Sign out" })}
+                            </Link>
+                          </li>
+                        ) : (
+                          <li>
+                            <Link href="/sign-in">
+                              <i className="fi fi-rs-sign-out mr-10"></i>
+                              {intl.formatMessage({ id: "Sign In" })}
+                            </Link>
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
