@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { useRouter } from "next/router";
 import { useIntl } from "react-intl";
 import { translatedItemDetails } from "../../util/util";
+import Search from "../ecommerce/Search";
 
 const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
   const [isActive, setIsActive] = useState({
@@ -74,6 +75,7 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                 <img src="/assets/imgs/theme/logo.svg" alt="logo" />
               </Link>
             </div>
+
             <div className="mobile-menu-close close-style-wrap close-style-position-inherit">
               <button
                 className="close-style search-close"
@@ -85,18 +87,18 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
             </div>
           </div>
           <div className="mobile-header-content-area">
-            <div className="mobile-search search-style-3 mobile-header-border">
+            {/* <div className="mobile-search search-style-3 mobile-header-border">
               <form action="#">
                 <input type="text" placeholder="Search for items…" />
                 <button type="submit">
                   <i className="fi-rs-search"></i>
                 </button>
               </form>
-            </div>
+            </div> */}
             <div className="mobile-menu-wrap mobile-header-border">
               <div className="main-categori-wrap mobile-header-border">
                 <Link
-                  href="#"
+                  href="javascript:"
                   className="categori-button-active-2"
                   onClick={handleToggleMenu}
                 >
@@ -110,12 +112,19 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                   <ul>
                     {categories?.map((itm) => {
                       return (
-                        <li key={itm?.id} onClick={(e) => selectCategory(e, itm?.id)}>
+                        <li
+                          key={itm?.id}
+                          onClick={(e) => selectCategory(e, itm?.id)}
+                        >
                           <Link href={`/${intl.locale}/shop`}>
                             <i className="evara-font-dress"></i>
                             <span
                               dangerouslySetInnerHTML={{
-                                __html: translatedItemDetails("name", intl,itm)
+                                __html: translatedItemDetails(
+                                  "name",
+                                  intl,
+                                  itm
+                                ),
                               }}
                             />
                           </Link>

@@ -4527,7 +4527,6 @@ table .product-thumbnail img {
   margin: 0 auto;
   background-color: #fff;
   border-radius: 10px;
-
 }
 
 .product-cart-wrap.style-2 .product-content-wrap .deals-countdown-wrap {
@@ -11228,6 +11227,9 @@ footer .hotline img {
   .totall-product h2 {
     font-size: 28px;
   }
+  .select-active {
+    display: none;
+  }
 
   .loop-grid.loop-list article .post-thumb {
     min-height: 220px;
@@ -11605,6 +11607,9 @@ footer .hotline img {
 
 /*Mobile landscape*/
 @media only screen and (min-width: 576px) and (max-width: 767px) {
+  .searchhide {
+    display: flex;
+  }
   .header-action .header-action-icon {
     margin-right: 20px;
   }
@@ -11655,6 +11660,9 @@ footer .hotline img {
 
 /*Tablet*/
 @media only screen and (min-width: 768px) and (max-width: 991px) {
+  .searchhide {
+    display: flex;
+  }
   .header-action .header-action-icon {
     margin-right: 33px;
   }
@@ -11710,6 +11718,9 @@ footer .hotline img {
 
 /*Desktop*/
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .searchhide {
+    display: none;
+  }
   .totall-product h2 {
     font-size: 28px;
   }
@@ -11874,6 +11885,10 @@ footer .hotline img {
 }
 
 @media (min-width: 992px) {
+  .searchhide {
+    display: flex;
+  }
+
   .col-md-1-5 {
     width: 20%;
   }
@@ -11903,6 +11918,9 @@ footer .hotline img {
 }
 
 @media only screen and (min-width: 1200px) {
+  .searchhide {
+    display: none;
+  }
   .container {
     max-width: 1610px;
   }
@@ -11943,12 +11961,20 @@ footer .hotline img {
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1365px) {
+  .searchhide {
+    display: none;
+  }
+
   .main-menu.main-menu-padding-1 > nav > ul > li {
     padding: 0 14px;
   }
 }
 
 @media only screen and (max-width: 1400px) {
+  .searchhide {
+    display: none;
+  }
+
   .product-cart-wrap.style-2 .product-content-wrap {
     max-width: 94%;
   }
@@ -12117,6 +12143,9 @@ footer .hotline img {
 
 /*small phone*/
 @media only screen and (max-width: 480px) {
+  .searchhide {
+    display: flex;
+  }
   .archive-header {
     padding: 30px;
   }
@@ -12649,6 +12678,9 @@ footer .hotline img {
 
 /*phone landscape*/
 @media only screen and (min-width: 480px) and (max-width: 667px) {
+  .searchhide {
+    display: flex;
+  }
   .header-height-2 {
     min-height: 40px;
   }
@@ -12668,6 +12700,9 @@ footer .hotline img {
 
 /*small phone*/
 @media only screen and (max-width: 375px) {
+  .searchhide {
+    display: flex;
+  }
   .entry-meta .hit-count,
   .entry-meta.meta-2 .font-xs {
     display: none;
@@ -12692,6 +12727,9 @@ footer .hotline img {
 }
 
 @media only screen and (min-width: 375px) and (max-width: 667px) {
+  .searchhide {
+    display: flex;
+  }
   .deal .product-title {
     max-width: 100%;
     font-size: 35px;
@@ -13524,7 +13562,7 @@ span.reviews_bottom {
 }
 
 .deal_section .product-cart-wrap.style-2 {
-  box-shadow: 5px 5px 15px rgba(0,0,0,.05);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
   border: 1px solid;
 }
 .deals-countdown-wrap {

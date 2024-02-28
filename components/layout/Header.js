@@ -518,8 +518,9 @@ const Header = ({
                     <span className="pro-count white">{totalCartItems}</span>
                   </Link>
                 </div>
+              
                 <div className="header-action-icon-2">
-                    <Link href="/my-account">
+                    <Link href="javascript:">
                       <img
                         className="svgInject"
                         alt="Nest"
@@ -574,8 +575,15 @@ const Header = ({
                   </div>
               </div>
             </div>
+       
           </div>
+
+          {/* search component test add */}
+          <div className="mobile-search search-style-3 mobile-header-border mt-10 searchhide">
+          <Search />
+            </div>
         </div>
+ 
       </div>
     </header>
   );

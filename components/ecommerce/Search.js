@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ApiCall } from "../../lib/other/other";
 import { useIntl } from "react-intl";
 import { translatedItemDetails } from "../../util/util";
+
 const Search = () => {
   const intl = useIntl();
   const [searchTerm, setSearchTerm] = useState("");
@@ -73,6 +74,7 @@ const Search = () => {
             marginRight: "10px",
             padding: "8px",
             borderRadius: "4px",
+       
           }}
         >
           <option value="">
@@ -92,10 +94,12 @@ const Search = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           type="text"
+          className="inputsearch"
           placeholder={intl.formatMessage({ id: "Search" })}
           style={{
             padding: "8px",
             borderRadius: "4px",
+        
           }}
         />
         {searchTerm?.length > 0 && (
