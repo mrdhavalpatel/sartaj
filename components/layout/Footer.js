@@ -343,7 +343,7 @@ const Footer = () => {
                     <a href="#">Help Ticket</a>
                   </li> */}
                   <li>
-                    <a href="/my-account">
+                    <a href="/delivery_Information">
                       {intl.formatMessage({ id: "Shipping Details" })}
                     </a>
                   </li>
