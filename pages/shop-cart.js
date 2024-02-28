@@ -189,6 +189,7 @@ const Cart = ({
                   >
                     <i className="fi-rs-trash mr-5"></i>
                     {intl.formatMessage({ id: "Clear Cart" })}
+                    
                   </a>
                 </h6>
               </div>
