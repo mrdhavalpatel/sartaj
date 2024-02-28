@@ -13069,7 +13069,7 @@ span.countdown-section {
   background: #3e44930d !important;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 700px) {
   .mobile-search form {
     width: 100%;
     margin-top: 10px;
@@ -13089,5 +13089,12 @@ span.countdown-section {
   .logo.logo-width-1 a img {
     width: 110px;
     min-width: 110px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .logo.logo-width-1 {
+    left: 40%;
+    transform: translateX(-50%);
   }
 }
