@@ -19,6 +19,7 @@ import { useIntl } from "react-intl";
 import { translatedItemDetails } from "../util/util";
 import * as Yup from "yup";
 import { Spinner } from "react-bootstrap";
+import moment from 'moment';
 
 const Cart = ({
   openCart,
@@ -58,7 +59,7 @@ const Cart = ({
 
   const handleRadioChange = (id) => {
     setSelectedRadioId(id);
-    setorderNotes(id);
+    // setorderNotes(id);
   };
   const calculateAmountToAdd = () => {
     return Math.round(
@@ -655,17 +656,7 @@ const Cart = ({
                 name="password"
               />
             </div> */}
-            {/* <div className="form-group mb-40">
-              <textarea
-                name="orderNotes"
-                as="textarea"
-                rows="5"
-                value={orderNotes}
-                disabled={true}
-                onChange={(e) => setorderNotes(e.target.value)}
-                placeholder={intl.formatMessage({ id: "Delivery time" })}
-              />
-            </div> */}
+    
             <div>
               <button type="submit">
                 {intl.formatMessage({ id: "Save Changes" })}
@@ -688,6 +679,7 @@ const Cart = ({
     // Call the browser detection function
     fnBrowserDetect();
   }, []);
+  
   return (
     <>
       <Layout parent="Home" sub="Shop" subChild="Checkout">
@@ -1178,7 +1170,9 @@ const Cart = ({
                             data-target="#timeslot"
                             aria-controls="timeslot"
                           >
-                            {Item?.start_time} - {Item?.end_time}
+                            {console.log("start time",Item.start_time)}
+
+                            {moment(Item.start_time, 'HH:mm:ss').format('h:mm A')} - {moment(Item?.end_time, 'HH:mm:ss').format('h:mm A')}
                           </label>
                         </div>
                       );
@@ -1296,6 +1290,17 @@ const Cart = ({
                     )}
                   </div>
                 </div>
+                <div className="px-40 ml-30 mb-40">
+              <textarea
+                name="orderNotes"
+                as="textarea"
+                rows="5"
+                value={orderNotes}
+                // disabled={true}
+                onChange={(e) => setorderNotes(e.target.value)}
+                placeholder={intl.formatMessage({ id: "Customer Comment" })}
+              />
+            </div>
                 <div className="px-40 ml-30 mb-50">
                   <button
                     onClick={() => {

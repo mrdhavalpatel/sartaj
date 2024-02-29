@@ -296,6 +296,11 @@ const Footer = () => {
                   {intl.formatMessage({ id: "Account" })}
                 </h4>
                 <ul className="footer-list  mb-sm-5 mb-md-0">
+         {  isLoggin ?     <li>
+                  <a href="/my-account">
+                        {intl.formatMessage({ id: "My Profile" })}
+                      </a>
+                  </li> : null}
                   {isLoggin ? (
                     <li>
                       <a
@@ -308,6 +313,7 @@ const Footer = () => {
                       >
                         {intl.formatMessage({ id: "Sign Out" })}
                       </a>
+                     
                     </li>
                   ) : (
                     <li>
@@ -323,6 +329,8 @@ const Footer = () => {
                       </a>
                     </li>
                   )}
+                
+                  
                   {/* <li>
                     <a href="/sign-in">{intl.formatMessage({ id: "Sign In" })}</a>
                   </li> */}

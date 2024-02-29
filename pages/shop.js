@@ -12,6 +12,7 @@ import Layout from "../components/layout/Layout";
 import { fetchProduct } from "../redux/action/product";
 import { ApiCall } from "../lib/other/other";
 import { useIntl } from "react-intl";
+import { Spinner } from "react-bootstrap";
 const ProductsFullWidth = ({ products, productFilters }) => {
   const intl = useIntl();
   const router = useRouter();
@@ -21,6 +22,7 @@ const ProductsFullWidth = ({ products, productFilters }) => {
   const [productTotal, setProductTotal] = useState([]);
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const next = () => {
     setCurrentPage((page) => page + 1);
@@ -39,6 +41,7 @@ const ProductsFullWidth = ({ products, productFilters }) => {
     setCurrentPage(1);
   };
   const getAllProduct = async () => {
+    setLoading(true);
     let payload = {
       limit: limit,
       offset: currentPage,
@@ -57,11 +60,13 @@ const ProductsFullWidth = ({ products, productFilters }) => {
     const allProducts = await request?.data;
     setProductTotal(allProducts?.total_size);
     setProductsData(allProducts?.products);
+
     let arr = new Array(Math.ceil(allProducts?.total_size / limit))
       .fill()
       .map((_, idx) => idx + 1);
     setPagination(arr);
     setPages(Math.ceil(allProducts?.total_size / limit));
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -75,14 +80,14 @@ const ProductsFullWidth = ({ products, productFilters }) => {
           <div className="row flex-row-reverse">
             <div className="col-lg-12">
               <div className="shop-product-fillter">
-                <div className="totall-product">
+          { loading ? null:     <div className="totall-product">
                   <p>
                     {intl.formatMessage({ id: "We found" })}
                     <strong className="text-brand">{productTotal}</strong>
                     {intl.formatMessage({ id: "items for you!" })}
                   </p>
-                </div>
-                <div className="sort-by-product-area">
+                </div>}
+                <div className="sort-by-product-area" style={{display: loading ? "none" :"flex"}}>
                   <div className="sort-by-cover mr-10">
                     <ShowSelect selectChange={selectChange} />
                   </div>
@@ -91,21 +96,32 @@ const ProductsFullWidth = ({ products, productFilters }) => {
                   </div>
                 </div>
               </div>
-              <div className="row product-grid-3">
-                {productsData?.length === 0 && (
-                  <h3>{intl.formatMessage({ id: "No Products Found" })} </h3>
-                )}
+              {loading ? (
+                <div
+                  style={{ height: "60vh" }}
+                  className="d-flex justify-content-center align-items-center"
+                >
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                </div>
+              ) : (
+                <div className="row product-grid-3">
+                  {productsData?.length === 0 && (
+                    <h3>{intl.formatMessage({ id: "No Products Found" })} </h3>
+                  )}
 
-                {productsData?.map((item, i) => (
-                  <div
-                    className="col-lg-1-5 col-md-4 col-6 col-sm-6"
-                    key={item.id}
-                  >
-                    <SingleProduct product={item} />
-                    {/* <SingleProductList product={item}/> */}
-                  </div>
-                ))}
-              </div>
+                  {productsData?.map((item, i) => (
+                    <div
+                      className="col-lg-1-5 col-md-4 col-6 col-sm-6"
+                      key={item.id}
+                    >
+                      <SingleProduct product={item} />
+                      {/* <SingleProductList product={item}/> */}
+                    </div>
+                  ))}
+                </div>
+              )}
               <div className="pagination-area mt-15 mb-sm-5 mb-lg-0">
                 <nav aria-label="Page navigation example">
                   {pages > 1 && (
