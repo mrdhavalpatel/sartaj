@@ -36,7 +36,7 @@ const Cart = ({
   const [cartDataUpdated, setCartDataUpdated] = useState(false);
   const [cartTotal, setCartTotal] = useState([]);
   const [cartProducts, setCartProducts] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const checkoutUrl =
     intl.locale === "eng" ? "/shop-checkout" : "/jp/shop-checkout";
   const proceedToCheckout = () => {
@@ -95,7 +95,7 @@ const Cart = ({
       .catch((error) => {
         setLoading(false)
 
-        //        console.log("error", error?.code === "ERR_NETWORK");
+               console.log("error", error?.code === "ERR_NETWORK");
       });
   };
   const validationSchema = Yup.object().shape({
