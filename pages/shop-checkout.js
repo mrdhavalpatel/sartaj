@@ -628,12 +628,19 @@ const Cart = ({
                 type="number"
                 name="contact_person_number"
                 onChange={(e) => {
-                  const inputValue = e.target.value.slice(0, 10); // Limit to 10 characters
-                  setFieldValue("contact_person_number", inputValue);
+                  let phoneNumber = e.target.value.slice(0, 10); // Limit to 10 characters
+                  // Remove non-numeric characters
+                  phoneNumber = phoneNumber.replace(/\D/g, '');
+                  // Check if the first character is zero and if so, remove it
+                  if (phoneNumber.charAt(0) === '0') {
+                  let  phoneNumber1 = phoneNumber.substring(1);
+                  setFieldValue("contact_person_number", phoneNumber1);
+
+                  }else{
+                    setFieldValue("contact_person_number", phoneNumber);
+
+                  }
                 }}
-                placeholder={intl.formatMessage({
-                  id: "Contact Person Number*",
-                })}
               />
               {errors.contact_person_number &&
                 touched.contact_person_number && (
