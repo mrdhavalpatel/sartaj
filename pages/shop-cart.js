@@ -72,7 +72,7 @@ const Cart = ({
         },
       })
       .catch((error) => {
-        //        console.log("error", error?.code === "ERR_NETWORK");
+               console.log("error", error?.code === "ERR_NETWORK");
       });
   };
   const getCartData = (token) => {
@@ -322,7 +322,7 @@ const Cart = ({
                                 }}
                                 className="qty-down"
                               >
-                                <i className="fi-rs-angle-small-down"></i>
+                                <i className="fi-rs-minus-small"></i>
                               </a>
                               <span className="qty-val">{item?.quantity}</span>
                               <a
@@ -423,7 +423,7 @@ const Cart = ({
                                 }}
                                 className="qty-up"
                               >
-                                <i className="fi-rs-angle-small-up"></i>
+                                <i className="fi-rs-plus-small"></i>
                               </a>
                             </div>
                           </div>

@@ -496,7 +496,7 @@ function Account() {
                                               id: "View",
                                             })}
                                           </Link>
-                                          {Item?.order_status === "pending" && (
+                                          {/* {Item?.order_status === "pending" && (
                                             <Button
                                               variant="primary"
                                               className="ordertable_btn"
@@ -509,7 +509,7 @@ function Account() {
                                                 id: "Cancel",
                                               })}
                                             </Button>
-                                          )}
+                                          )} */}
                                         </td>
                                       </tr>
                                     );

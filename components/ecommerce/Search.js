@@ -3,11 +3,15 @@ import React, { useEffect, useState } from "react";
 import { ApiCall } from "../../lib/other/other";
 import { useIntl } from "react-intl";
 import { translatedItemDetails } from "../../util/util";
-
+import Modal from "../elements/ModalAlcohole";
 const Search = () => {
   const intl = useIntl();
   const [searchTerm, setSearchTerm] = useState("");
   const [categories, setCategories] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalcustomvalue , setmodalcustomvalue]=useState(null)
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   const [categoriesValue, setCategoriesValue] = useState("");
   const [productsSuggestions, setProductsSuggestions] = useState([]);
   const router = useRouter();
@@ -43,8 +47,11 @@ const Search = () => {
     );
     setProductsSuggestions([]);
   };
-
-  useEffect(() => {
+const handleYesClick=()=>{
+  setCategoriesValue(modalcustomvalue)
+  setIsModalOpen(false)
+}
+ useEffect(() => {
     if (searchTerm.length > 0) {
       handleInput();
     }
@@ -56,6 +63,10 @@ const Search = () => {
 
   return (
     <>
+      <Modal isOpen={isModalOpen} onClose={closeModal} 
+      onYesClick={handleYesClick} 
+      />
+
       <form
         style={{
           position: "relative",
@@ -68,7 +79,14 @@ const Search = () => {
           className="select-active"
           value={categoriesValue}
           onChange={(e) => {
-            setCategoriesValue(e.target.value);
+            console.log("in search lock for alcohole" , e.target.value)
+            if(e.target.value == 66){
+              setIsModalOpen(true)
+              setmodalcustomvalue(e.target.value)
+            }else{
+              setCategoriesValue(e.target.value);
+
+            }
           }}
           style={{
             marginRight: "10px",

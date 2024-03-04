@@ -354,7 +354,7 @@ const Cart = ({
     //   intl.formatMessage({ id: "State / County is required" })
     // ),
     post_code: Yup.string().matches(
-      /^\d{7}$/,
+      /^[0-9]{7}$/,
       intl.formatMessage({ id: "Postcode must be 7 digits" })
     ).required(
       intl.formatMessage({ id: "Postcode / ZIP is required" })
@@ -545,10 +545,12 @@ const Cart = ({
             <div className="form-group mb-40">
               <Field
                 required=""
-                type="number"
+                type="string"
                 name="post_code"
+                // value={values.post_code}
                 onChange={(e) => {
-                  const inputValue = e.target.value.slice(0, 7); // Limit to 10 characters
+                  const inputValue = e.target.value.replace(/[-*\/]/g, '').slice(0, 7); // Limit to 10 characters
+                  console.log("postcodedeeeeee" , inputValue)
                   setFieldValue("post_code", inputValue);
                 }}
                 placeholder={intl.formatMessage({ id: "Postcode / ZIP *" })}

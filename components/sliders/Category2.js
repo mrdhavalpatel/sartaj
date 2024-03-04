@@ -8,11 +8,32 @@ import { updateProductCategory } from "../../redux/action/productFiltersAction";
 import { connect } from "react-redux";
 import { useIntl } from "react-intl";
 import { translatedItemDetails } from "../../util/util";
+import Modal from "../elements/ModalAlcohole";
 
 SwiperCore.use([Navigation, Autoplay]);
 
 const CategorySlider2 = ({ updateProductCategory }) => {
   const [categories, setCategories] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null); 
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  const handleYesClick = () => {
+    closeModal();
+
+    selectedEvent.preventDefault();
+    // removeSearchTerm();
+    updateProductCategory(selectedItem.name);
+//    console.log(window.location.pathname);
+    router.push({
+      pathname: `${
+        intl.locale === "eng"
+          ? selectedItem.seo_en.replace("/eng", "")
+          : selectedItem.seo_ja.replace("/jp", "")
+      }`,
+    });
+  };
   const router = useRouter();
   const intl = useIntl();
   const getAllCategories = async () => {
@@ -26,19 +47,31 @@ const CategorySlider2 = ({ updateProductCategory }) => {
     getAllCategories();
   }, []);
   const selectCategory = (e, item) => {
-    e.preventDefault();
-    updateProductCategory(item?.name);
-    // console.log(window.location.pathname);
-    router.push({
-      pathname: `${
-        intl.locale === "eng"
-          ? item.seo_en.replace("/eng", "")
-          : item.seo_ja.replace("/jp", "")
-      }`,
-    });
+    if (item.id == 66 )
+    {
+      setIsModalOpen(true)
+      setSelectedItem(item)
+      setSelectedEvent(e)
+ 
+      console.log("age verify required before open this cat")
+    }else {
+      e.preventDefault();
+      // removeSearchTerm();
+      updateProductCategory(item?.name);
+  //    console.log(window.location.pathname);
+      router.push({
+        pathname: `${
+          intl.locale === "eng"
+            ? item.seo_en.replace("/eng", "")
+            : item.seo_ja.replace("/jp", "")
+        }`,
+      });
+    }
   };
   return (
     <>
+      <Modal isOpen={isModalOpen} onClose={closeModal} onYesClick={handleYesClick} />
+
       <Swiper
         slidesPerView={8}
         spaceBetween={0}

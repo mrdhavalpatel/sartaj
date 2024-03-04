@@ -13,7 +13,7 @@ import { fetchProduct } from "../redux/action/product";
 import { ApiCall } from "../lib/other/other";
 import { useIntl } from "react-intl";
 import { Spinner } from "react-bootstrap";
-const ProductsFullWidth = ({ products, productFilters }) => {
+const ProductsFullWidth = ({ products, productFilters ,cartItems }) => {
   const intl = useIntl();
   const router = useRouter();
   const [productsData, setProductsData] = useState([]);
@@ -116,7 +116,7 @@ const ProductsFullWidth = ({ products, productFilters }) => {
                       className="col-lg-1-5 col-md-4 col-6 col-sm-6"
                       key={item.id}
                     >
-                      <SingleProduct product={item} />
+                      <SingleProduct product={item} cartItems={cartItems} />
                       {/* <SingleProductList product={item}/> */}
                     </div>
                   ))}
@@ -178,6 +178,7 @@ const ProductsFullWidth = ({ products, productFilters }) => {
 const mapStateToProps = (state) => ({
   products: state.products,
   productFilters: state.productFilters,
+  cartItems: state.cart,
 });
 
 const mapDidpatchToProps = {
