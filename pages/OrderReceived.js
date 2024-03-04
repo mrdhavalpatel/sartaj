@@ -284,14 +284,17 @@ const OrderReceived = ({ cartItems }) => {
                 <thead>
                   <tr>
                     <td>
-                      <b>{intl.formatMessage({ id: "Customer Comment" })}</b>
+                      <b>{intl.formatMessage({ id: "Customer Comment" })}: {shippingData.order_note ? shippingData.order_note : "No Comment"}</b>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <b>{intl.formatMessage({ id: "Selected time for Delivery" })}: {shippingData.time_slot}</b>
                     </td>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>{shippingData?.order_note}</td>
-                  </tr>
+                 
                 </tbody>
               </table>
             </div>

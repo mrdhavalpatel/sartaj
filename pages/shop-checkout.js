@@ -8,7 +8,7 @@ import {
   increaseQuantity,
   openCart,
 } from "../redux/action/cart";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik ,useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 import { API_BASE_URL, api } from "../lib/api";
 import axios from "axios";
@@ -56,7 +56,6 @@ const Cart = ({
   const [citydata, setCityData] = useState([]);
   const [selectedCity, setSelectedCity] = useState(-1);
   const intl = useIntl();
-
   const handleRadioChange = (id) => {
     setSelectedRadioId(id);
     // setorderNotes(id);
@@ -187,55 +186,7 @@ const Cart = ({
     }
   };
   //  ////  console.log("cart prodyct detail", cartItemsData);
-  const placeOrder = async () => {
-    try {
-      let token = localStorage.getItem("token");
-
-      let payload = {
-        order_amount: coupanRes?.orderAmount
-          ? coupanRes?.orderAmount
-          : cartTotal?.total_amt,
-        payment_method: "cash_on_delivery",
-        delivery_address_id: selectedAddressDropdown,
-        order_type: "delivery",
-        coupon_discount_amount: coupenCodeDis,
-        cart: cartItemsData,
-        time_slot_id: selectedRadioId,
-        order_note: orderNotes,
-        coupon_code: coupenCode,
-        ip_address: ip,
-        forwarded_ip: ip,
-        user_agent: browserData?.userAgent,
-        accept_language: browserData?.language,
-        delivery_charge: cartTotal?.delivery_charge,
-      };
-
-      const response = await axios
-        .post(`${API_BASE_URL}customer/order/place`, payload, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          if (response?.status === 200) {
-            router.push(`/OrderReceived?order_id=${response?.data?.order_id}`);
-          }
-        })
-        .then(() => {
-          clearCart();
-        });
-    } catch (error) {
-      if (error.response && error.response.data && error.response.data.errors) {
-        const errorMessage = error.response.data.errors[0]?.message;
-        toast.error(errorMessage + "¥");
-      } else {
-        // console.error("Error while placing order:", error);
-        toast.error("An error occurred while placing the order");
-      }
-    }
-  };
+ 
 
   const getAddress = async (encodedToken) => {
     const response = await api.get("customer/address/list", {
@@ -345,6 +296,7 @@ const Cart = ({
       })
       .then((response) => {
         //        ////        console.log("response", response);
+  
         if (response.status == 200) {
           toast.success("address updated successfully");
           getAddress(encodedToken);
@@ -423,7 +375,9 @@ const Cart = ({
     // ),
   });
   //  console.log("selectedAddress",selectedAddressData.region_id  )
+
   const formikFormData = (selectedAddressData) => {
+
     return (
       <Formik
         enableReinitialize
@@ -454,7 +408,7 @@ const Cart = ({
         //     });
         // }}
       >
-        {({ setFieldValue, values, handleChange, errors, touched }) => (
+        {({ setFieldValue, values, handleChange, errors, touched , dirty }) => (
           <Form method="post">
             <div className="form-group mb-40">
               <Field
@@ -634,10 +588,10 @@ const Cart = ({
                   // Check if the first character is zero and if so, remove it
                   if (phoneNumber.charAt(0) === '0') {
                   let  phoneNumber1 = phoneNumber.substring(1);
-                  setFieldValue("contact_person_number", phoneNumber1);
+                 setFieldValue("contact_person_number", phoneNumber1);
 
                   }else{
-                    setFieldValue("contact_person_number", phoneNumber);
+                 setFieldValue("contact_person_number", phoneNumber);
 
                   }
                 }}
@@ -686,7 +640,55 @@ const Cart = ({
     // Call the browser detection function
     fnBrowserDetect();
   }, []);
-  
+  const placeOrder = async () => {
+    try {
+      let token = localStorage.getItem("token");
+
+      let payload = {
+        order_amount: coupanRes?.orderAmount
+          ? coupanRes?.orderAmount
+          : cartTotal?.total_amt,
+        payment_method: "cash_on_delivery",
+        delivery_address_id: selectedAddressDropdown,
+        order_type: "delivery",
+        coupon_discount_amount: coupenCodeDis,
+        cart: cartItemsData,
+        time_slot_id: selectedRadioId,
+        order_note: orderNotes,
+        coupon_code: coupenCode,
+        ip_address: ip,
+        forwarded_ip: ip,
+        user_agent: browserData?.userAgent,
+        accept_language: browserData?.language,
+        delivery_charge: cartTotal?.delivery_charge,
+      };
+
+      const response = await axios
+        .post(`${API_BASE_URL}customer/order/place`, payload, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          if (response?.status === 200) {
+            router.push(`/OrderReceived?order_id=${response?.data?.order_id}`);
+          }
+        })
+        .then(() => {
+          clearCart();
+        });
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.errors) {
+        const errorMessage = error.response.data.errors[0]?.message;
+        toast.error(errorMessage + "¥");
+      } else {
+        // console.error("Error while placing order:", error);
+        toast.error("An error occurred while placing the order");
+      }
+    }
+  };
   return (
     <>
       <Layout parent="Home" sub="Shop" subChild="Checkout">
@@ -818,15 +820,15 @@ const Cart = ({
                         } ${
                           option?.address !== null ? option.address + "," : ""
                         }${
-                          option?.post_code !== null
-                            ? option?.post_code + ","
-                            : ""
-                        }${
                           option?.city_name !== null
                             ? option?.city_name + ","
                             : ""
                         }${
-                          option?.state_name !== null ? option?.state_name : ""
+                          option?.state_name !== null ? option?.state_name +"," : ""
+                        }${
+                          option?.post_code !== null
+                            ? option?.post_code 
+                            : ""
                         }`}
                       </option>
                     ))}
