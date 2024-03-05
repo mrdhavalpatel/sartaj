@@ -13120,3 +13120,13 @@ span.countdown-section {
 button {
   margin: 5px;
 }
+input[type="radio"] {
+  width: 20px; 
+  height: 20px; 
+  margin-right: 5px;
+  justify-content:center;
+
+}
+input[type="radio"]:checked {
+  background-color: #333;
+}

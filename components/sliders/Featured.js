@@ -1,10 +1,12 @@
 import SwiperCore, { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SingleProduct2 from "./../ecommerce/SingleProduct2";
+import { connect } from "react-redux";
+import { fetchProduct } from "../../redux/action/product";
 
 SwiperCore.use([Navigation]);
 
-const FeaturedSlider = ({ products }) => {
+const FeaturedSlider = ({ products , cartItems }) => {
   return (
     <>
       <Swiper
@@ -38,7 +40,7 @@ const FeaturedSlider = ({ products }) => {
       >
         {products?.map((product, i) => (
           <SwiperSlide key={i}>
-            <SingleProduct2 product={product} />
+            <SingleProduct2 product={product} cartItems={cartItems} />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -54,5 +56,14 @@ const FeaturedSlider = ({ products }) => {
     </>
   );
 };
-
-export default FeaturedSlider;
+const mapStateToProps = (state) => ({
+  productFilters: state.productFilters,
+  cartItems: state.cart,
+});
+const mapDidpatchToProps = {
+  // openCart,
+  fetchProduct,
+  // fetchMoreProduct,
+};
+export default connect(mapStateToProps, mapDidpatchToProps)(FeaturedSlider);
+// export default FeaturedSlider;

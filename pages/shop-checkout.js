@@ -42,8 +42,7 @@ const Cart = ({
   const [cartItemsData, setCartItemsData] = useState([]);
   const [timeSlot, setTimeSlot] = useState([]);
   const [selectedRadioId, setSelectedRadioId] = useState(timeSlot?.[0]?.id);
-  const [selectedAddressPrefillData, setSelectedAddressPrefillData] = useState(
-    []
+  const [selectedAddressdisplay, setSelectedAddressdisplay] = useState(
   );
   const [ip, setIp] = useState("");
   const [browserData, setBrowserData] = useState([]);
@@ -55,6 +54,7 @@ const Cart = ({
   const [selectedregion, setSelectedRegion] = useState(-1);
   const [citydata, setCityData] = useState([]);
   const [selectedCity, setSelectedCity] = useState(-1);
+  const [addressformOpen,setAddressFormOpen]=useState(false)
   const intl = useIntl();
   const handleRadioChange = (id) => {
     setSelectedRadioId(id);
@@ -202,7 +202,7 @@ const Cart = ({
     );
 
     getCartData(response?.data.billing_address[0]?.region_id);
-
+    setSelectedAddressdisplay(response?.data.billing_address[0])
     setAddress(response?.data);
     // const region_id =()
   };
@@ -246,6 +246,7 @@ const Cart = ({
     const data = res.data;
     setTimeSlot(data);
   };
+
   const handleAddressSubmit = async (values) => {
     let encodedToken = localStorage.getItem("token");
     let token = localStorage.getItem("token");
@@ -300,6 +301,7 @@ const Cart = ({
         if (response.status == 200) {
           toast.success("address updated successfully");
           getAddress(encodedToken);
+          setAddressFormOpen(false)
         }
       });
   };
@@ -624,6 +626,9 @@ const Cart = ({
               <button type="submit">
                 {intl.formatMessage({ id: "Save Changes" })}
               </button>
+              <button onClick={()=>setAddressFormOpen(false)} class="submit">
+                {intl.formatMessage({ id: "Close" })}
+              </button>
             </div>
           </Form>
         )}
@@ -783,25 +788,26 @@ const Cart = ({
                   <h4>{intl.formatMessage({ id: "Billing Details" })}</h4>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="selectedDropdownOption">
+                <div style={{justifyContent:"space-between" , display:"flex" , alignItems:"center"}}>
+                <label htmlFor="selectedDropdownOption">
                     {intl.formatMessage({ id: "Select Address" })}
                   </label>
-                  <select
+                  <button class="btn btn-fill-out btn-block " onClick={()=>setAddressFormOpen(true)}>
+                    Add New Address
+                  </button>
+                </div>
+                <div class="divider-2 mb-15 mt-15"></div>
+                  {/* <select
                     as="select"
                     className="selectedAddress"
                     name="selectedAddress"
                     value={selectedAddressDropdown}
                     onChange={(e) => {
                       setSelectedAddressDropdown(e.target.value);
-                      console.log(
-                        "on select id passed in api check============================",
-                        e.target.value
-                      );
+                     
                       const selectedOption = address?.billing_address?.find(
                         (option) => option.id === parseInt(e.target.value)
                       );
-                      console.log("Selected option object:", selectedOption);
-                      console.log("seected options in address", selectedOption);
                       if (selectedOption) {
                         const regionId = selectedOption.region_id;
                         getCartData(regionId);
@@ -834,9 +840,58 @@ const Cart = ({
                         }`}
                       </option>
                     ))}
-                  </select>
+                  </select> */}
+
+
+       
                 </div>
-                {formikFormData(selectedAddressData)}
+                <div>
+  {address?.billing_address?.map((addressItem) => (
+    <li key={addressItem.id}>
+      <input
+        type="radio"
+        id={`address${addressItem.id}`}
+        name="selectedAddress"
+        value={addressItem.id}
+        checked={selectedAddressDropdown === addressItem.id}
+        onChange={(e) => {
+          // console.log("Selected address ID:", addressItem); // Log the address ID
+          setAddressFormOpen(false)
+          setSelectedAddressdisplay(addressItem)
+          setSelectedAddressDropdown(addressItem.id); // Set the selected address ID
+          
+
+          // Find the selected option
+          const selectedOption = address?.billing_address?.find(
+            (option) => option.id === parseInt(e.target.value)
+          );
+
+          // If the selected option is found, get the region ID and call getCartData
+          if (selectedOption) {
+            const regionId = selectedOption.region_id;
+            console.log("Selected address region id:", regionId);
+            getCartData(regionId);
+          }
+
+          // Call findElementById with the selected address ID
+          findElementById(e.target.value);
+        }}
+      />
+      <label htmlFor={`address${addressItem.id}`}>
+        {`${addressItem.full_name !== null ? addressItem.full_name + ",\n" : ""} 
+        ${addressItem.address !== null ? addressItem.address + ",\n" : ""} 
+        ${addressItem.road !== null ? addressItem.road + ",\n" : ""} 
+        ${addressItem.city_name !== null ? addressItem.city_name + ",\n" : ""} 
+        ${addressItem.state_name !== null ? addressItem.state_name + ",\n" : ""} 
+        ${addressItem.post_code !== null ? addressItem.post_code : ""}`}
+      </label>
+    </li>
+  ))}
+</div>
+                <div class="divider-2 mb-15 mt-15"></div>
+
+
+         { addressformOpen ?       formikFormData(selectedAddressData) : null}
               </div>
               <div className="col-lg-5">
                 <div className="border p-40 cart-totals ml-30 mb-50 checkout_box mt-30">
@@ -1312,11 +1367,23 @@ const Cart = ({
                 placeholder={intl.formatMessage({ id: "Customer Comment" })}
               />
             </div>
+            <div className="px-10 ml-30 mb-10">
+            {addressformOpen == true? <h6 style={{ color: "red" , fontWeight:"normal" }}>Please Save Address Before place order</h6> : null}
+            <div>
+{  addressformOpen == false    ?     <div><h6 style={{fontWeight:"normal"}}>Selected Address</h6><h8>{`${selectedAddressdisplay?.full_name !== null ? selectedAddressdisplay?.full_name + ",\n" : ""} 
+        ${selectedAddressdisplay?.address !== null ? selectedAddressdisplay?.address + ",\n" : ""} 
+        ${selectedAddressdisplay?.road !== null ? selectedAddressdisplay?.road + ",\n" : ""} 
+        ${selectedAddressdisplay?.city_name !== null ? selectedAddressdisplay?.city_name + ",\n" : ""} 
+        ${selectedAddressdisplay?.state_name !== null ? selectedAddressdisplay?.state_name + ",\n" : ""} 
+        ${selectedAddressdisplay?.post_code !== null ? selectedAddressdisplay?.post_code : ""}`}</h8></div> : null}
+</div>
+            </div>
                 <div className="px-40 ml-30 mb-50">
                   <button
                     onClick={() => {
                       placeOrder();
                     }}
+                    disabled={addressformOpen == true}
                     className="btn btn-fill-out btn-block"
                   >
                     {intl.formatMessage({ id: "Place Order" })}

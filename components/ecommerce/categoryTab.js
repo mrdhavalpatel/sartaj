@@ -3,10 +3,14 @@ import { server } from "../../config/index";
 import Cat1Tab from "../elements/FeaturedTab";
 import Cat2Tab from "../elements/NewArrivalTab";
 import Cat3Tab from "../elements/TrendingTab";
+import { connect } from "react-redux";
+
 import Link from "next/link";
 import { ApiCall } from "../../lib/other/other";
 import { useIntl } from "react-intl";
-function CategoryTab() {
+import { fetchProduct } from "../../redux/action/product";
+
+function CategoryTab({cartItems}) {
   const intl = useIntl();
   const [active, setActive] = useState("1");
   const [catAll, setCatAll] = useState([]);
@@ -92,7 +96,7 @@ function CategoryTab() {
           }
         >
           <div className="product-grid-4 row">
-            <Cat1Tab products={catAll} />
+            <Cat1Tab products={catAll} cartItems={cartItems} />
           </div>
         </div>
 
@@ -102,7 +106,7 @@ function CategoryTab() {
           }
         >
           <div className="product-grid-4 row">
-            <Cat1Tab products={cat1} />
+            <Cat1Tab products={cat1} cartItems={cartItems}/>
           </div>
         </div>
 
@@ -112,7 +116,7 @@ function CategoryTab() {
           }
         >
           <div className="product-grid-4 row">
-            <Cat2Tab products={cat2} />
+            <Cat2Tab products={cat2} cartItems={cartItems}/>
           </div>
         </div>
         <div
@@ -121,11 +125,22 @@ function CategoryTab() {
           }
         >
           <div className="product-grid-4 row">
-            <Cat3Tab products={cat3} />
+            <Cat3Tab products={cat3} cartItems={cartItems}/>
           </div>
         </div>
       </div>
     </>
   );
 }
-export default CategoryTab;
+const mapStateToProps = (state) => ({
+  products: state.products,
+  productFilters: state.productFilters,
+  cartItems: state.cart,
+});
+const mapDidpatchToProps = {
+  // openCart,
+  fetchProduct,
+  // fetchMoreProduct,
+};
+export default connect(mapStateToProps, mapDidpatchToProps)(CategoryTab);
+// export default CategoryTab;

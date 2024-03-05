@@ -43,7 +43,7 @@ const SingleProduct = ({
     const timeoutId = setTimeout(fetchData, 700);
     return () => clearTimeout(timeoutId);
   }, [isLoggedIn, cartDataUpdated]);
-  console.log("cartitems====>", cartItems)
+  // console.log("cartitems====>", cartItems)
   const handleCart = async (product) => {
     product = {
       ...product,

@@ -5,8 +5,11 @@ import { ApiCall } from "../../lib/other/other";
 import { useIntl } from "react-intl";
 import SwiperCore, { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { connect } from "react-redux";
+import { fetchProduct } from "../../redux/action/product";
 
-function FeatchDeals() {
+
+function FeatchDeals({ products , cartItems }) {
   const [deals, setDeals] = useState([]);
   const intl = useIntl();
   const dealsProduct = async () => {
@@ -53,7 +56,7 @@ function FeatchDeals() {
       >
         {deals?.slice(0, 4).map((product, i) => (
           <SwiperSlide key={i}>
-            <Deals1 product={product} />
+            <Deals1 product={product} cartItems={cartItems} />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -72,4 +75,15 @@ function FeatchDeals() {
     </>
   );
 }
-export default FeatchDeals;
+const mapStateToProps = (state) => ({
+  products: state.products,
+  productFilters: state.productFilters,
+  cartItems: state.cart,
+});
+const mapDidpatchToProps = {
+  // openCart,
+  fetchProduct,
+  // fetchMoreProduct,
+};
+export default connect(mapStateToProps, mapDidpatchToProps)(FeatchDeals);
+// export default FeatchDeals;
