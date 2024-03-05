@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useIntl } from "react-intl";
 import { translatedItemDetails } from "../../util/util";
 import Search from "../ecommerce/Search";
+import Modal from "../elements/ModalAlcohole";
 
 const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
   const [isActive, setIsActive] = useState({
@@ -17,7 +18,13 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
   const intl = useIntl();
   const [categories, setCategories] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null); 
   const router = useRouter();
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   const handleToggleMenu = () => {
     setIsMenuOpen((prevIsMenuOpen) => !prevIsMenuOpen);
   };
@@ -34,7 +41,43 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
       });
     }
   };
+  const handleYesClick = () => {
+    closeModal();
 
+    selectedEvent.preventDefault();
+    // removeSearchTerm();
+    updateProductCategory(selectedItem);
+//    console.log(window.location.pathname);
+router.push({
+  pathname: "/products",
+  query: {
+    catId: selectedItem, //
+  },
+});
+  };
+  const selectCategory = (e, item) => {
+    console.log("e" , e , "item" , item)
+    if (item == 66 )
+    {
+      setIsModalOpen(true)
+      setSelectedItem(item)
+      setSelectedEvent(e)
+ 
+      console.log("age verify required before open this cat")
+    }else {
+      e.preventDefault();
+      // removeSearchTerm();
+      updateProductCategory(item);
+  //    console.log(window.location.pathname);
+  router.push({
+        pathname: "/products",
+        query: {
+          catId: item, //
+        },
+      });
+    }
+ 
+  };
   let domNode = useClickOutside(() => {
     setIsActive({
       status: false,
@@ -45,22 +88,25 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
     const allCategories = await request;
     setCategories(allCategories?.data);
   };
-  const selectCategory = (e, category) => {
-    e.preventDefault();
-    // removeSearchTerm();
-    updateProductCategory(category);
-    router.push({
-      pathname: "/products",
-      query: {
-        catId: category, //
-      },
-    });
-  };
+  // const selectCategory = (e, category) => {
+  //   console.log("e==========>", e , "category========>",category)
+  //   e.preventDefault();
+  //   // removeSearchTerm();
+  //   updateProductCategory(category);
+  //   router.push({
+  //     pathname: "/products",
+  //     query: {
+  //       catId: category, //
+  //     },
+  //   });
+  // };
   useEffect(() => {
     getAllCategories();
   }, []);
   return (
     <>
+      <Modal isOpen={isModalOpen} onClose={closeModal} onYesClick={handleYesClick} />
+
       <div
         className={
           isToggled
@@ -116,7 +162,7 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                           key={itm?.id}
                           onClick={(e) => selectCategory(e, itm?.id)}
                         >
-                          <Link href={`/${intl.locale}/shop`}>
+                          <a >
                             <i className="evara-font-dress"></i>
                             <span
                               dangerouslySetInnerHTML={{
@@ -127,7 +173,7 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                                 ),
                               }}
                             />
-                          </Link>
+                          </a>
                         </li>
                       );
                     })}

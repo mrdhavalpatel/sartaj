@@ -14,9 +14,11 @@ import { ApiCall } from "../lib/other/other";
 import QuickView from "../components/ecommerce/QuickView";
 import Link from "next/link";
 import { useIntl } from "react-intl";
+import { Spinner } from "react-bootstrap";
 const Products = ({ productFilters }) => {
   const intl = useIntl();
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [newProducts, setNewProducts] = useState([]);
   const [pagination, setPagination] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -26,7 +28,7 @@ const Products = ({ productFilters }) => {
 
   const Router = useRouter();
 
-  const cratePagination = async() => {
+  const cratePagination = async () => {
     // set pagination
     let arr = new Array(
       Math.ceil((productTotal ? productTotal : []) / (limit ? limit : 10))
@@ -34,8 +36,8 @@ const Products = ({ productFilters }) => {
       .fill()
       .map((_, idx) => idx + 1);
 
-   setPagination(arr);
-   setPages(Math.ceil(productTotal / limit));
+    setPagination(arr);
+    setPages(Math.ceil(productTotal / limit));
   };
 
   const startIndex = (currentPage - 1) * limit;
@@ -79,6 +81,7 @@ const Products = ({ productFilters }) => {
     productFilters?.actual_price?.max,
   ]);
   const getFilteredProduct = async (catId) => {
+    setLoading(true);
     let payload = {
       limit: limit,
       offset: currentPage,
@@ -94,6 +97,7 @@ const Products = ({ productFilters }) => {
     let res = await ApiCall("post", intl, "products/all", payload);
     setProducts(res?.data?.products);
     setProductTotal(res?.data?.total_size);
+    setLoading(false);
   };
 
   // useEffect(() => {
@@ -139,7 +143,6 @@ const Products = ({ productFilters }) => {
                       {intl.formatMessage({ id: "We found" })}
                       <strong className="text-brand">{productTotal}</strong>
                       {intl.formatMessage({ id: "items for you!" })}
-
                     </p>
                   )}
                 </div>
@@ -153,15 +156,21 @@ const Products = ({ productFilters }) => {
                 </div>
               </div>
               <div className="row product-grid">
-                {getPaginatedProducts?.length === 0 && (
-                  <h3>{intl.formatMessage({ id: "No Products Found" })} </h3>
-                )}
-
-                {getPaginatedProducts?.map((item, i) => (
-                  <div className="col-lg-1-5 col-md-4 col-6 col-sm-6" key={i}>
-                    <SingleProduct product={item} />
+                {loading ? (
+                  <div className="d-flex justify-content-center align-items-center">
+                    <Spinner animation="border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
                   </div>
-                ))}
+                ) : getPaginatedProducts?.length === 0 ? (
+                  <h3>{intl.formatMessage({ id: "No Products Found" })}</h3>
+                ) : (
+                  getPaginatedProducts.map((item, i) => (
+                    <div className="col-lg-1-5 col-md-4 col-6 col-sm-6" key={i}>
+                      <SingleProduct product={item} />
+                    </div>
+                  ))
+                )}
               </div>
 
               {getPaginatedProducts?.length === 0 ? null : (
