@@ -1,9 +1,11 @@
 import Link from "next/link";
-import React,{useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-import { addToCart ,increaseQuantity,
-  decreaseQuantity, } from "../../redux/action/cart";
+import {
+  addToCart, increaseQuantity,
+  decreaseQuantity,
+} from "../../redux/action/cart";
 import { addToCompare } from "../../redux/action/compareAction";
 import { openQuickView } from "../../redux/action/quickViewAction";
 import { addToWishlist } from "../../redux/action/wishlistAction";
@@ -120,8 +122,8 @@ const SingleProduct = ({
           <div className="product-category">
             <Link
               href={`/${intl.locale === "eng"
-                  ? product?.manufacturer?.seo_en
-                  : product?.manufacturer?.seo_ja
+                ? product?.manufacturer?.seo_en
+                : product?.manufacturer?.seo_ja
                 }`}
             >
               {product?.manufacturer?.name}
@@ -167,8 +169,8 @@ const SingleProduct = ({
               {intl.formatMessage({ id: "By" })}{" "}
               <Link
                 href={`/${intl.locale === "eng"
-                    ? product?.manufacturer?.seo_en
-                    : product?.manufacturer?.seo_ja
+                  ? product?.manufacturer?.seo_en
+                  : product?.manufacturer?.seo_ja
                   }`}
               >
                 {product?.manufacturer?.name}
@@ -191,134 +193,134 @@ const SingleProduct = ({
                 {product.oldPrice && `¥ ${product.oldPrice}`}
               </span>
             </div> */}
-          <div className="add-cart">
-  {cartQuantity > 0 ? (
-    <div className="detail-extralink mr-15">
-      <div className="detail-qty border radius ">
-        <a
-          onClick={() => {
-            if (cartQuantity >= 1) {
-              decreaseQuantity(product.id);
-            }
-          }}
-          className="qty-down"
-        >
-          <i className="fi-rs-minus-small"></i>
-        </a>
-        <span className="qty-val">{cartQuantity}</span>
-        <a
-          onClick={() => {
-            if (
-              (cartQuantity
-                ? cartQuantity
-                : cartItem.quantity) <
-              (product?.maximum_order_quantity
-                ? product?.maximum_order_quantity
-                : product?.product?.maximum_order_quantity)
-            ) {
-              const localCartItems = JSON.parse(
-                localStorage.getItem("dokani_cart")
-              );
-              let localCartItemIndex = -1;
+            <div className="add-cart">
+              {cartQuantity > 0 ? (
+                <div className="detail-extralink mr-15">
+                  <div className="detail-qty border radius d-flex align-items-center justify-content-between">
+                  <a
+                      onClick={() => {
+                        if (cartQuantity >= 1) {
+                          decreaseQuantity(product.id);
+                        }
+                      }}
+                      className="qty-down"
+                    >
+                      <i className="fi-rs-minus-small"></i>
+                    </a>
+                    <span className="qty-val">{cartQuantity}</span>
+                    <a
+                      onClick={() => {
+                        if (
+                          (cartQuantity
+                            ? cartQuantity
+                            : cartItem.quantity) <
+                          (product?.maximum_order_quantity
+                            ? product?.maximum_order_quantity
+                            : product?.product?.maximum_order_quantity)
+                        ) {
+                          const localCartItems = JSON.parse(
+                            localStorage.getItem("dokani_cart")
+                          );
+                          let localCartItemIndex = -1;
 
-              if (localCartItems) {
-                localCartItemIndex = findProductIndexById(
-                  localCartItems,
-                  cartItem.id
-                );
-              }
+                          if (localCartItems) {
+                            localCartItemIndex = findProductIndexById(
+                              localCartItems,
+                              cartItem.id
+                            );
+                          }
 
-              let productQuantityAllowed = cartItem.total_stock;
+                          let productQuantityAllowed = cartItem.total_stock;
 
-              if (localCartItemIndex >= 0) {
-                productQuantityAllowed =
-                  cartItem.total_stock -
-                  localCartItems[localCartItemIndex]
-                    ?.quantity ||
-                  cartItem.total_stock;
-              }
+                          if (localCartItemIndex >= 0) {
+                            productQuantityAllowed =
+                              cartItem.total_stock -
+                              localCartItems[localCartItemIndex]
+                                ?.quantity ||
+                              cartItem.total_stock;
+                          }
 
-              if (productQuantityAllowed <= 0) {
-                toast.error(
-                  intl.formatMessage({
-                    id: `Maximum order quantity allowed now is `,
-                  })`${cartItem?.total_stock}`
-                );
-                return;
-              }
-              if (isLoggedIn) {
-                if (
-                  cartQuantity + 1 >
-                  cartItem?.total_stock
-                ) {
-                  toast.error(
-                    intl.formatMessage({
-                      id: `Maximum order quantity is`,
-                    })`${product?.total_stock}`
-                  );
-                } else {
-                  increaseQuantity(cartItem.id);
-                  setCartDataUpdated(!cartDataUpdated);
-                }
-              } else {
-                if (
-                  cartQuantity + 1 >
-                  cartItem.total_stock
-                ) {
-                  toast.error(
-                    intl.formatMessage({
-                      id: "Maximum order quantity is ",
-                    }) + `${cartItem.total_stock}`
-                  );
-                } else {
-                  increaseQuantity(product.id);
-                  setCartDataUpdated(!cartDataUpdated);
-                }
-              }
-            } else {
-              toast.error(
-                intl.formatMessage({
-                  id: "Maximum order quantity is ",
-                }) +
-                  ` ${product?.maximum_order_quantity ||
-                  product?.product?.maximum_order_quantity
-                  }`
-              );
-            }
-          }}
-          className="qty-up"
-        >
-          <i className="fi-rs-plus-small"></i>
-        </a>
-      </div>
-    </div>
-  ) : (
-    <button
-      className="add"
-      style={{
-        border: "none",
-        backgroundColor: `${
-          product?.out_of_stock_status !== "in stock" ? "grey" : ""
-        }`,
-      }}
-      disabled={product?.out_of_stock_status !== "in stock"}
-      onClick={(e) => {
-        if (product?.out_of_stock_status === "in stock") {
-          handleCart(product);
-        } else {
-          toast.error(
-            intl.formatMessage({ id: "product is out of stock" })
-          );
-        }
-      }}
-    >
-      <i className="fi-rs-shopping-cart mr-5"></i>{" "}
-      {product?.out_of_stock_status !== "in stock"
-        ? intl.formatMessage({ id: "Out of stock" })
-        : intl.formatMessage({ id: "Add" })}
-    </button>
-  )}
-</div>
+                          if (productQuantityAllowed <= 0) {
+                            toast.error(
+                              intl.formatMessage({
+                                id: `Maximum order quantity allowed now is `,
+                              })`${cartItem?.total_stock}`
+                            );
+                            return;
+                          }
+                          if (isLoggedIn) {
+                            if (
+                              cartQuantity + 1 >
+                              cartItem?.total_stock
+                            ) {
+                              toast.error(
+                                intl.formatMessage({
+                                  id: `Maximum order quantity is`,
+                                })`${product?.total_stock}`
+                              );
+                            } else {
+                              increaseQuantity(cartItem.id);
+                              setCartDataUpdated(!cartDataUpdated);
+                            }
+                          } else {
+                            if (
+                              cartQuantity + 1 >
+                              cartItem.total_stock
+                            ) {
+                              toast.error(
+                                intl.formatMessage({
+                                  id: "Maximum order quantity is ",
+                                }) + `${cartItem.total_stock}`
+                              );
+                            } else {
+                              increaseQuantity(product.id);
+                              setCartDataUpdated(!cartDataUpdated);
+                            }
+                          }
+                        } else {
+                          toast.error(
+                            intl.formatMessage({
+                              id: "Maximum order quantity is ",
+                            }) +
+                            ` ${product?.maximum_order_quantity ||
+                            product?.product?.maximum_order_quantity
+                            }`
+                          );
+                        }
+                      }}
+                      className="qty-up"
+                    >
+                      <i className="fi-rs-plus-small"></i>
+                    </a>
+
+                  </div>
+                </div>
+              ) : (
+                <button
+                  className="add"
+                  style={{
+                    border: "none",
+                    backgroundColor: `${product?.out_of_stock_status !== "in stock" ? "grey" : ""
+                      }`,
+                  }}
+                  disabled={product?.out_of_stock_status !== "in stock"}
+                  onClick={(e) => {
+                    if (product?.out_of_stock_status === "in stock") {
+                      handleCart(product);
+                    } else {
+                      toast.error(
+                        intl.formatMessage({ id: "product is out of stock" })
+                      );
+                    }
+                  }}
+                >
+                  <i className="fi-rs-shopping-cart mr-5"></i>{" "}
+                  {product?.out_of_stock_status !== "in stock"
+                    ? intl.formatMessage({ id: "Out of stock" })
+                    : intl.formatMessage({ id: "Add" })}
+                </button>
+              )}
+            </div>
 
           </div>
         </div>

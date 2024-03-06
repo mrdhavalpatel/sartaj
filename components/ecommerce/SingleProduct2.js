@@ -1,9 +1,11 @@
 import Link from "next/link";
-import React ,{useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-import { addToCart  , increaseQuantity,
-  decreaseQuantity,} from "../../redux/action/cart";
+import {
+  addToCart, increaseQuantity,
+  decreaseQuantity,
+} from "../../redux/action/cart";
 import { addToCompare } from "../../redux/action/compareAction";
 import { openQuickView } from "../../redux/action/quickViewAction";
 import { addToWishlist } from "../../redux/action/wishlistAction";
@@ -29,17 +31,17 @@ const SingleProduct2 = ({
       ...product,
       quantity: 1,
     };
-    addToCart(product ,intl);
+    addToCart(product, intl);
     // toast("Product added to Cart !");
   };
 
   const handleCompare = (product) => {
-    addToCompare(product , intl);
+    addToCompare(product, intl);
     // toast("Added to Compare list !");
   };
 
   const handleWishlist = (product) => {
-    addToWishlist(product , intl);
+    addToWishlist(product, intl);
     // toast("Added to Wishlist !");
   };
   const cartItem = cartItems?.find(item => item?.id === product?.id);
@@ -70,9 +72,8 @@ const SingleProduct2 = ({
         <div className="product-img-action-wrap">
           <div className="product-img product-img-zoom">
             <Link
-              href={`/${
-                intl.locale === "eng" ? product?.seo_en : product?.seo_ja
-              }`}
+              href={`/${intl.locale === "eng" ? product?.seo_en : product?.seo_ja
+                }`}
             >
               <img className="default-img" src={product?.image} alt="nest" />
               <img className="hover-img" src={product?.image} alt="nest" />
@@ -120,9 +121,8 @@ const SingleProduct2 = ({
           </div> */}
           <h2>
             <Link
-              href={`/${
-                intl.locale === "eng" ? product?.seo_en : product?.seo_ja
-              }`}
+              href={`/${intl.locale === "eng" ? product?.seo_en : product?.seo_ja
+                }`}
             >
               <span
                 dangerouslySetInnerHTML={{
@@ -137,9 +137,8 @@ const SingleProduct2 = ({
               <div
                 className="product-rating"
                 style={{
-                  width: `${
-                    product?.overall_rating ? product.overall_rating : 0
-                  }%`,
+                  width: `${product?.overall_rating ? product.overall_rating : 0
+                    }%`,
                 }}
               ></div>
               <span className="font-small ml-5 text-muted">
@@ -153,11 +152,10 @@ const SingleProduct2 = ({
             <span className="font-small text-muted">
               By{" "}
               <Link
-                href={`/${
-                  intl.locale === "eng"
+                href={`/${intl.locale === "eng"
                     ? product?.manufacturer?.seo_en
                     : product?.manufacturer?.seo_ja
-                }`}
+                  }`}
               >
                 {product?.manufacturer?.name}
               </Link>
@@ -180,13 +178,12 @@ const SingleProduct2 = ({
                 className="progress-bar"
                 role="progressbar"
                 style={{
-                  width: `${
-                    ((product?.sold_products || 0) /
+                  width: `${((product?.sold_products || 0) /
                       (product?.total_product_count === 0
                         ? 1
                         : product?.total_product_count || 1)) *
                     100
-                  }%`,
+                    }%`,
                 }}
               ></div>
             </div>
@@ -222,132 +219,132 @@ const SingleProduct2 = ({
               
           </button> */}
           <div className="add-cart">
-  {cartQuantity > 0 ? (
-    <div className="detail-extralink mr-15">
-      <div className="detail-qty border radius ">
-        <a
-          onClick={() => {
-            if (cartQuantity >= 1) {
-              decreaseQuantity(product.id);
-            }
-          }}
-          className="qty-down"
-        >
-          <i className="fi-rs-minus-small"></i>
-        </a>
-        <span className="qty-val">{cartQuantity}</span>
-        <a
-          onClick={() => {
-            if (
-              (cartQuantity
-                ? cartQuantity
-                : cartItem.quantity) <
-              (product?.maximum_order_quantity
-                ? product?.maximum_order_quantity
-                : product?.product?.maximum_order_quantity)
-            ) {
-              const localCartItems = JSON.parse(
-                localStorage.getItem("dokani_cart")
-              );
-              let localCartItemIndex = -1;
+            {cartQuantity > 0 ? (
+              <div className="detail-extralink mr-15">
+                <div className="detail-qty border radius d-flex align-items-center justify-content-between">
+                <a
+                    onClick={() => {
+                      if (cartQuantity >= 1) {
+                        decreaseQuantity(product.id);
+                      }
+                    }}
+                    className="qty-down"
+                  >
+                    <i className="fi-rs-minus-small"></i>
+                  </a>
+                  
+                  <span className="qty-val">{cartQuantity}</span>
+                  <a
+                    onClick={() => {
+                      if (
+                        (cartQuantity
+                          ? cartQuantity
+                          : cartItem.quantity) <
+                        (product?.maximum_order_quantity
+                          ? product?.maximum_order_quantity
+                          : product?.product?.maximum_order_quantity)
+                      ) {
+                        const localCartItems = JSON.parse(
+                          localStorage.getItem("dokani_cart")
+                        );
+                        let localCartItemIndex = -1;
 
-              if (localCartItems) {
-                localCartItemIndex = findProductIndexById(
-                  localCartItems,
-                  cartItem.id
-                );
-              }
+                        if (localCartItems) {
+                          localCartItemIndex = findProductIndexById(
+                            localCartItems,
+                            cartItem.id
+                          );
+                        }
 
-              let productQuantityAllowed = cartItem.total_stock;
+                        let productQuantityAllowed = cartItem.total_stock;
 
-              if (localCartItemIndex >= 0) {
-                productQuantityAllowed =
-                  cartItem.total_stock -
-                  localCartItems[localCartItemIndex]
-                    ?.quantity ||
-                  cartItem.total_stock;
-              }
+                        if (localCartItemIndex >= 0) {
+                          productQuantityAllowed =
+                            cartItem.total_stock -
+                            localCartItems[localCartItemIndex]
+                              ?.quantity ||
+                            cartItem.total_stock;
+                        }
 
-              if (productQuantityAllowed <= 0) {
-                toast.error(
-                  intl.formatMessage({
-                    id: `Maximum order quantity allowed now is `,
-                  })`${cartItem?.total_stock}`
-                );
-                return;
-              }
-              if (isLoggedIn) {
-                if (
-                  cartQuantity + 1 >
-                  cartItem?.total_stock
-                ) {
-                  toast.error(
-                    intl.formatMessage({
-                      id: `Maximum order quantity is`,
-                    })`${product?.total_stock}`
-                  );
-                } else {
-                  increaseQuantity(cartItem.id);
-                  setCartDataUpdated(!cartDataUpdated);
-                }
-              } else {
-                if (
-                  cartQuantity + 1 >
-                  cartItem.total_stock
-                ) {
-                  toast.error(
-                    intl.formatMessage({
-                      id: "Maximum order quantity is ",
-                    }) + `${cartItem.total_stock}`
-                  );
-                } else {
-                  increaseQuantity(product.id);
-                  setCartDataUpdated(!cartDataUpdated);
-                }
-              }
-            } else {
-              toast.error(
-                intl.formatMessage({
-                  id: "Maximum order quantity is ",
-                }) +
-                  ` ${product?.maximum_order_quantity ||
-                  product?.product?.maximum_order_quantity
-                  }`
-              );
-            }
-          }}
-          className="qty-up"
-        >
-          <i className="fi-rs-plus-small"></i>
-        </a>
-      </div>
-    </div>
-  ) : (
-    <button
-            className="add_to_cart_btn btn w-100 hover-up"
-            style={{
-              border: "none",
-              backgroundColor: `${
-                product?.out_of_stock_status !== "in stock" ? "grey" : ""
-              }`,
-            }}
-            disabled={product?.out_of_stock_status !== "in stock"}
-            onClick={(e) => {
-              if (product?.out_of_stock_status == "in stock") {
-                handleCart(product);
-              } else {
-                toast.error( intl.formatMessage({ id:"product is out of stock"}));
+                        if (productQuantityAllowed <= 0) {
+                          toast.error(
+                            intl.formatMessage({
+                              id: `Maximum order quantity allowed now is `,
+                            })`${cartItem?.total_stock}`
+                          );
+                          return;
+                        }
+                        if (isLoggedIn) {
+                          if (
+                            cartQuantity + 1 >
+                            cartItem?.total_stock
+                          ) {
+                            toast.error(
+                              intl.formatMessage({
+                                id: `Maximum order quantity is`,
+                              })`${product?.total_stock}`
+                            );
+                          } else {
+                            increaseQuantity(cartItem.id);
+                            setCartDataUpdated(!cartDataUpdated);
+                          }
+                        } else {
+                          if (
+                            cartQuantity + 1 >
+                            cartItem.total_stock
+                          ) {
+                            toast.error(
+                              intl.formatMessage({
+                                id: "Maximum order quantity is ",
+                              }) + `${cartItem.total_stock}`
+                            );
+                          } else {
+                            increaseQuantity(product.id);
+                            setCartDataUpdated(!cartDataUpdated);
+                          }
+                        }
+                      } else {
+                        toast.error(
+                          intl.formatMessage({
+                            id: "Maximum order quantity is ",
+                          }) +
+                          ` ${product?.maximum_order_quantity ||
+                          product?.product?.maximum_order_quantity
+                          }`
+                        );
+                      }
+                    }}
+                    className="qty-up"
+                  >
+                    <i className="fi-rs-plus-small"></i>
+                  </a>
+                </div>
+              </div>
+            ) : (
+              <button
+                className="add_to_cart_btn btn w-100 hover-up"
+                style={{
+                  border: "none",
+                  backgroundColor: `${product?.out_of_stock_status !== "in stock" ? "grey" : ""
+                    }`,
+                }}
+                disabled={product?.out_of_stock_status !== "in stock"}
+                onClick={(e) => {
+                  if (product?.out_of_stock_status == "in stock") {
+                    handleCart(product);
+                  } else {
+                    toast.error(intl.formatMessage({ id: "product is out of stock" }));
 
-              }
-            }}
-          >
-      <i className="fi-rs-shopping-cart mr-5"></i>{" "}
-      {product?.out_of_stock_status !== "in stock"
-        ? intl.formatMessage({ id: "Out of stock" })
-        : intl.formatMessage({ id: "Add to cart" })}
-    </button>
-  )}
-</div>
+                  }
+                }}
+              >
+                <i className="fi-rs-shopping-cart mr-5"></i>{" "}
+                {product?.out_of_stock_status !== "in stock"
+                  ? intl.formatMessage({ id: "Out of stock" })
+                  : intl.formatMessage({ id: "Add to cart" })}
+              </button>
+            )}
+          </div>
         </div>
       </div>
       <QuickView />

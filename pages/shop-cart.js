@@ -307,7 +307,7 @@ const Cart = ({
                           data-title="Stock"
                         >
                           <div className="detail-extralink mr-15">
-                            <div className="detail-qty border radius ">
+                            <div className="detail-qty border radius d-flex align-items-center justify-content-between">
                               <a
                                 onClick={() => {
                                   if (item?.quantity >= 1) {
