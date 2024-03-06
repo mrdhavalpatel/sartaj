@@ -168,7 +168,7 @@ const Cart = ({
     <Layout parent="Home" sub="Shop" subChild="Cart">
       {/* {!isLoggedIn ? ( */}
       <section className="mt-50 mb-50">
-        <div id="cart_top_row">
+      {isLoggedIn ?  <div id="cart_top_row">
           <div className="container">
             <div className="cart_top_row">
               <div className="row align-items-center" >
@@ -186,9 +186,9 @@ const Cart = ({
                 </div>
                 <div className="col-lg-4 col-4">
                   <div className="text-center">
-                    <h3 className="text-brand"> ¥
+                  {loading ? null :  <h3 className="text-brand"> ¥
                                       {cartTotal?.total_amt -
-                                        cartTotal.delivery_charge}</h3>
+                                        cartTotal.delivery_charge}</h3>}
                   </div>
                 </div>
                 <div className="col-lg-4 col-8">
@@ -196,10 +196,10 @@ const Cart = ({
                     {proceedToCheckout()}
                   </div>
                 </div>
-              </div>
+              </div> 
             </div>
           </div>
-        </div>
+        </div>: null}
         <div className="container">
           <div className="row">
             <div className="col-lg-8 mb-40">
@@ -590,14 +590,7 @@ const Cart = ({
                     <div className="row">
                       <div className="col-xl-8 col-lg-10 col-md-12 m-auto">
                         <div className="row">
-                          <div className="col-lg-6 pr-30 d-none d-lg-block">
-                            <img
-                              className="border-radius-15"
-                              src="/assets/imgs/page/login-1.png"
-                              alt="nest"
-                            />
-                          </div>
-                          <div className="col-lg-6 col-md-8">
+                          <div className="col-lg-12">
                             <div className="login_wrap widget-taber-content background-white">
                               <div className="padding_eight_all bg-white">
                                 <div className="heading_s1">

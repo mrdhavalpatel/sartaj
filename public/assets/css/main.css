@@ -13308,4 +13308,14 @@ textarea.orderNotes_textarea {
     top: 50% !important;
     transform: translate(0, 18%) !important;
   }
+
+  .dailybestsells_section .swiper-slide .product-cart-wrap .detail-qty>a {
+    height: 38px;
+    padding: 11px;
+  }
+
+  .detail-qty>a {
+    padding: 8px;
+    height: 36px;
+  }
 }
