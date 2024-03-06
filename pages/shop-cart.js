@@ -186,7 +186,9 @@ const Cart = ({
                 </div>
                 <div className="col-lg-4 col-4">
                   <div className="text-center">
-                    <h3 className="text-brand">¥5698</h3>
+                    <h3 className="text-brand"> ¥
+                                      {cartTotal?.total_amt -
+                                        cartTotal.delivery_charge}</h3>
                   </div>
                 </div>
                 <div className="col-lg-4 col-8">
