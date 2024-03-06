@@ -5132,9 +5132,10 @@ table .product-thumbnail img {
 
 .detail-qty>a {
   font-size: 16px;
-  position: absolute;
-  right: 8px;
-  color: #3e4493;
+  color: #ffffff;
+  background: #3e4493;
+  padding: 6px;
+  height: 32px;
 }
 
 .detail-qty>a:hover {
@@ -5173,15 +5174,21 @@ table .product-thumbnail img {
 }
 
 .detail-extralink .detail-qty {
-  margin: 0 6px 15px 0;
+  margin: 5px;
   background: #fff;
   border: 2px solid #3e4493 !important;
   font-size: 16px;
   font-weight: 700;
   color: #3e4493;
   border-radius: 5px;
-  padding: 11px 20px 11px 30px;
-  max-width: 90px;
+  padding: 0;
+  max-width: 100px;
+  width: 100px;
+}
+
+span.qty-val {
+  width: 100%;
+  text-align: center;
 }
 
 .stock-status {
@@ -12313,7 +12320,7 @@ footer .hotline img {
 
 .shopping-summery table td[data-title="Stock"] .detail-extralink.mr-15 .detail-qty {
   margin: 0;
-  padding: 9px 28px 9px 10px;
+  padding: 0;
   text-align: right;
 }
 
@@ -13142,6 +13149,7 @@ input[type="radio"] {
 input[type="radio"]:checked {
   background-color: #333;
 }
+<<<<<<< Updated upstream
 .modalAddress {
   background-color: white;
   padding: 20px;
@@ -13150,4 +13158,15 @@ input[type="radio"]:checked {
   z-index: 99999999999;
   overflow: hidden;
   width: 40%;
+=======
+
+.dailybestsells_section .swiper-slide .product-cart-wrap .detail-qty {
+  width: 100%;
+  max-width: 100%;
+}
+
+.dailybestsells_section .swiper-slide .product-cart-wrap .detail-qty>a {
+  height: 45px;
+  padding: 12px;
+>>>>>>> Stashed changes
 }
