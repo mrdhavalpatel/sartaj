@@ -81,7 +81,7 @@ const Cart = ({
   const calculateAmountToAdd = () => {
     return Math.round(
       cartTotal.minOrderAmount -
-        (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
+      (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
     );
   };
   //  ////  console.log(cartTotal);
@@ -177,16 +177,15 @@ const Cart = ({
               setCoupanDetails(
                 `${response?.data?.title} ${intl.formatMessage({
                   id: "coupon applied successfully",
-                })},${intl.formatMessage({ id: "maximum discount" })} ${
-                  response?.data?.max_discount
+                })},${intl.formatMessage({ id: "maximum discount" })} ${response?.data?.max_discount
                 }¥`
               );
             } else if (response.data.discount_type == "amount") {
               setCoupanDetails(
                 `${response?.data?.discount}¥ ` +
-                  intl.formatMessage({
-                    id: "discount applied successfully",
-                  })
+                intl.formatMessage({
+                  id: "discount applied successfully",
+                })
               );
             }
 
@@ -276,7 +275,7 @@ const Cart = ({
           : selectedAddressData?.full_name,
       road:
         values?.billing_address2 != undefined ||
-        values?.billing_address2 != null
+          values?.billing_address2 != null
           ? values?.billing_address2
           : selectedAddressData?.billing_address2,
       house:
@@ -367,7 +366,7 @@ const Cart = ({
       intl.formatMessage({ id: "Address is required" })
     ),
     // city: Yup.string().when("state", {
-   
+
     //   is: (value) => console.log("state" ,value ),
     //   then: Yup.string().required(
     //     intl.formatMessage({ id: "City / Town is required" })
@@ -419,18 +418,18 @@ const Cart = ({
         onSubmit={(values, { setSubmitting }) => {
           handleAddressSubmit(values);
         }}
-        // onSubmit={(values, { setSubmitting, errors }) => {
-        //   handleAddressSubmit(values)
-        //     .then(() => {
-        //        //       console.log("Submission successful");
-        //       setSubmitting(false);
-        //     })
-        //     .catch((error) => {
-        //       console.error("Submission error:", error, errors);
-        //       // Handle the error here, set an error state, or display a message to the user
-        //       setSubmitting(false);
-        //     });
-        // }}
+      // onSubmit={(values, { setSubmitting, errors }) => {
+      //   handleAddressSubmit(values)
+      //     .then(() => {
+      //        //       console.log("Submission successful");
+      //       setSubmitting(false);
+      //     })
+      //     .catch((error) => {
+      //       console.error("Submission error:", error, errors);
+      //       // Handle the error here, set an error state, or display a message to the user
+      //       setSubmitting(false);
+      //     });
+      // }}
       >
         {({ setFieldValue, values, handleChange, errors, touched, dirty }) => (
           <Form method="post">
@@ -521,7 +520,7 @@ const Cart = ({
                   ))}
                 </select> */}
                 <Dropdown
-                className="Dropdownstate"
+                  className="Dropdownstate"
                   name="state"
                   onSelect={(selectedOption) => {
                     // console.log("Selected option" , selectedOption)
@@ -534,7 +533,7 @@ const Cart = ({
                   <Dropdown.Toggle variant="success" id="dropdown-basic">
                     {values.state
                       ? religionData.find((option) => option.id == values.state)
-                          ?.name
+                        ?.name
                       : "Select State"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
@@ -575,7 +574,7 @@ const Cart = ({
               {citydata.length !== 1 ? (
                 <div className="sort-by-dropdown-wrap custom-select mb-20">
                   <Dropdown
-                   className="Dropdownstate"
+                    className="Dropdownstate"
                     onSelect={(selectedCity) => {
                       console.log("selectedcity", selectedCity);
                       setFieldValue("city", selectedCity);
@@ -585,7 +584,7 @@ const Cart = ({
                     <Dropdown.Toggle variant="success" id="city-dropdown">
                       {values.city
                         ? citydata.find((option) => option.id == values.city)
-                            ?.name
+                          ?.name
                         : "City Dropdown"}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
@@ -778,9 +777,9 @@ const Cart = ({
           <div className="container">
             <div className="row">
               <div className="col-lg-8 mb-40">
-                <h1 className="heading-2 mb-10">
+                <h3 className="heading-2 mb-10">
                   {intl.formatMessage({ id: "Checkout" })}
-                </h1>
+                </h3>
                 <div className="d-flex justify-content-between">
                   <h6 className="text-body">
                     {intl.formatMessage({
@@ -791,75 +790,120 @@ const Cart = ({
               </div>
             </div>
             <div className="row">
-              <div className="col-lg-7">
-                <div className="row mb-50">
-                  <div className="col-lg-6 mb-sm-15 mb-lg-0 mb-md-3">
-                    <div
-                      className="panel-collapse collapse login_form"
-                      id="loginform"
-                    >
-                      <div className="panel-body">
-                        <p className="mb-30 font-sm">
-                          {intl.formatMessage({
-                            id: "If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing",
-                          })}{" "}
-                          &amp;{" "}
-                          {intl.formatMessage({ id: "Shipping section." })}
-                        </p>
-                        <form method="post">
-                          <div className="form-group">
-                            <input
-                              type="text"
-                              name="email"
-                              placeholder={intl.formatMessage({
-                                id: "Username Or Email",
-                              })}
-                            />
-                          </div>
-                          <div className="form-group">
-                            <input
-                              type="password"
-                              name="password"
-                              placeholder={intl.formatMessage({
-                                id: "Password",
-                              })}
-                            />
-                          </div>
-                          <div className="login_footer form-group">
-                            <div className="chek-form">
-                              <div className="custome-checkbox">
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  name="checkbox"
-                                  id="remember"
-                                  value=""
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="remember"
-                                >
-                                  <span>
-                                    {intl.formatMessage({ id: "Remember me" })}
-                                  </span>
-                                </label>
-                              </div>
-                            </div>
-                            {/* <a href="#">
-                              {intl.formatMessage({ id: "Forgot password?" })}
-                            </a> */}
-                          </div>
-                          <div className="form-group">
-                            <button className="btn btn-md" name="login">
-                              {intl.formatMessage({ id: "Login" })}
-                            </button>
-                          </div>
-                        </form>
-                      </div>
+              <div className="col-lg-6">
+                <div className="border p-30 cart-totals mb-30 checkout_box">
+                  <div className="d-flex align-items-end justify-content-between mb-30">
+                    <h6>{intl.formatMessage({ id: "Your Order" })}</h6>
+                    <h6 className="text-muted">
+                      {intl.formatMessage({ id: "Subtotal" })}
+                    </h6>
+                  </div>
+                  <div className="divider-2 mb-30"></div>
+                  {loading ? (
+                    <div class="d-flex justify-content-center align-items-center ">
+                      <Spinner animation="border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </Spinner>
                     </div>
+                  ) : (
+                    <div className="table-responsive order_table">
+                      {cartItemsData.length <= 0 && "No Products"}
+                      {cartItemsData.length > 0 ? (
+                        <table className="table no-border">
+                          <tbody>
+                            {cartItemsData?.map((item, i) => (
+                              <tr key={i}>
+                                <td className="image product-thumbnail">
+                                  <img
+                                    src={item?.product?.image?.[0]}
+                                    alt="#"
+                                  />
+                                </td>
+                                <td>
+                                  <h6 className="w-160 mb-5">
+                                    {/* <a
+                                    dangerouslySetInnerHTML={{
+                                      __html: item?.product?.name,
+                                    }}
+                                  ></a> */}
+                                    <a
+                                      dangerouslySetInnerHTML={{
+                                        __html: translatedItemDetails(
+                                          "name",
+                                          intl,
+                                          item?.product
+                                        ),
+                                      }}
+                                    ></a>
+                                    <div className="product-rate-cover">
+                                      <div className="product-rate d-inline-block">
+                                        <div
+                                          className="product-rating"
+                                          style={{
+                                            width: `${item?.product?.overall_rating
+                                              ? item?.product?.overall_rating
+                                              : 0
+                                              }%`,
+                                          }}
+                                        ></div>
+                                      </div>
+                                      <span className="font-small ml-5 text-muted">
+                                        {`(
+                                    ${item?.product?.total_reviews
+                                            ? item?.product?.total_reviews
+                                            : 0
+                                          }
+                                    )`}
+                                      </span>
+                                    </div>
+                                  </h6>{" "}
+                                </td>
+                                <td>
+                                  <h6 className="text-muted pl-20 pr-20">
+                                    x {item.quantity}
+                                  </h6>
+                                </td>
+                                <td>
+                                  <h4 className="text-brand">
+                                    ¥
+                                    {/* {(item.quantity ? item.quantity : 1) *
+                                    item.price} */}
+                                    {(item?.quantity ? item?.quantity : 1) *
+                                      item?.actual_price
+                                      ? item?.actual_price
+                                      : item?.product.actual_price
+                                        ? item?.product.actual_price
+                                        : 0}
+                                  </h4>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      ) : (
+                        "No Products"
+                      )}
+                    </div>
+                  )}
+                </div>
+                <div className="border p-30 cart-totals mb-30 checkout_box">
+                  <h6 className="mb-4">Add Order Notes</h6>
+                  <div className="px-40">
+                    <textarea
+                      className="orderNotes_textarea"
+                      name="orderNotes"
+                      as="textarea"
+                      rows="3"
+                      value={orderNotes}
+                      // disabled={true}
+                      onChange={(e) => setorderNotes(e.target.value)}
+                      placeholder={intl.formatMessage({ id: "Customer Comment" })}
+                    />
                   </div>
                 </div>
-                <div className="mb-25">
+              </div>
+              <div className="col-lg-6">
+                {/*<div className="mb-25">
                   <h4>{intl.formatMessage({ id: "Billing Details" })}</h4>
                 </div>
                 <div className="form-group">
@@ -879,7 +923,7 @@ const Cart = ({
                         openModal(true);
                       }}
                     >
-                      Add New Address
+                      {intl.formatMessage({ id: "Add New Address" })}
                     </button>
                   </div>
                   <div class="divider-2 mb-15 mt-15"></div>
@@ -927,7 +971,7 @@ const Cart = ({
                       </option>
                     ))}
                   </select> */}
-                </div>
+                {/*</div>
                 <div>
                   {address?.billing_address?.map((addressItem) => (
                     <li key={addressItem.id}>
@@ -963,157 +1007,279 @@ const Cart = ({
                         }}
                       />
                       <label htmlFor={`address${addressItem.id}`}>
-                        {`${
-                          addressItem.full_name !== null
-                            ? addressItem.full_name + ",\n"
-                            : ""
-                        } 
-        ${addressItem.address !== null ? addressItem.address + ",\n" : ""} 
-        ${addressItem.road !== null ? addressItem.road + ",\n" : ""} 
-        ${addressItem.city_name !== null ? addressItem.city_name + ",\n" : ""} 
-        ${
-          addressItem.state_name !== null ? addressItem.state_name + ",\n" : ""
-        } 
-        ${addressItem.post_code !== null ? addressItem.post_code : ""}`}
+                        {`${addressItem.full_name !== null
+                          ? addressItem.full_name + ",\n"
+                          : ""
+                          } 
+                            ${addressItem.address !== null ? addressItem.address + ",\n" : ""} 
+                            ${addressItem.road !== null ? addressItem.road + ",\n" : ""} 
+                            ${addressItem.city_name !== null ? addressItem.city_name + ",\n" : ""} 
+                            ${addressItem.state_name !== null ? addressItem.state_name + ",\n" : ""
+                          } 
+                            ${addressItem.post_code !== null ? addressItem.post_code : ""}`}
                       </label>
                     </li>
                   ))}
+                </div>  */}
+                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box">
+                  <div className="address_div">
+                    <div className="d-flex justify-content-between">
+                      <div className="heading_s1 mb-3">
+                        <h6>{intl.formatMessage({ id: "Select Address" })}</h6>
+                      </div>
+                      <button
+                        class="btn btn-fill-out btn-block address_div_btn"
+                        onClick={() => {
+                          openModal(true);
+                        }}
+                      >
+                        {intl.formatMessage({ id: "Add New Address" })}
+                      </button>
+                    </div>
+
+                    {address?.billing_address?.map((addressItem) => (
+                      <div key={addressItem.id} className="custome-radio">
+                        <input
+                          type="radio"
+                          id={`address${addressItem.id}`}
+                          name="selectedAddress"
+                          className="form-check-input"
+                          value={addressItem.id}
+                          checked={selectedAddressDropdown === addressItem.id}
+                          onChange={(e) => {
+                            // console.log("Selected address ID:", addressItem); // Log the address ID
+                            // setAddressFormOpen(false)
+                            setSelectedAddressdisplay(addressItem);
+                            setSelectedAddressDropdown(addressItem.id); // Set the selected address ID
+
+                            // Find the selected option
+                            const selectedOption = address?.billing_address?.find(
+                              (option) => option.id === parseInt(e.target.value)
+                            );
+
+                            // If the selected option is found, get the region ID and call getCartData
+                            if (selectedOption) {
+                              const regionId = selectedOption.region_id;
+                              console.log(
+                                "Selected address region id:",
+                                regionId
+                              );
+                              getCartData(regionId);
+                            }
+
+                            // Call findElementById with the selected address ID
+                            findElementById(e.target.value);
+                          }}
+                        />
+                        <label htmlFor={`address${addressItem.id}`} className="form-check-label">
+                          {`${addressItem.full_name !== null
+                            ? addressItem.full_name + ",\n"
+                            : ""
+                            } 
+                            ${addressItem.address !== null ? addressItem.address + ",\n" : ""} 
+                            ${addressItem.road !== null ? addressItem.road + ",\n" : ""} 
+                            ${addressItem.city_name !== null ? addressItem.city_name + ",\n" : ""} 
+                            ${addressItem.state_name !== null ? addressItem.state_name + ",\n" : ""
+                            } 
+                            ${addressItem.post_code !== null ? addressItem.post_code : ""}`}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div class="divider-2 mb-15 mt-15"></div>
-              </div>
-              <div className="col-lg-5">
-                <div className="border p-40 cart-totals ml-30 mb-50 checkout_box mt-30">
-                  <div className="d-flex align-items-end justify-content-between mb-30">
-                    <h4>{intl.formatMessage({ id: "Your Order" })}</h4>
-                    <h6 className="text-muted">
-                      {intl.formatMessage({ id: "Subtotal" })}
+                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box">
+                  <div className="delivery_time_div">
+                    <div className="heading_s1 mb-3">
+                      <h6>{intl.formatMessage({ id: "Delivery Time" })}</h6>
+                    </div>
+
+                    {timeSlot?.map((Item, index) => {
+                      const radioId = Item?.id;
+
+                      return (
+                        <div key={radioId} className="custome-radio">
+                          <input
+                            className="form-check-input"
+                            required=""
+                            type="radio"
+                            name="timeslot"
+                            id={radioId}
+                            checked={
+                              radioId === selectedRadioId ||
+                              (index === 0 && selectedRadioId === null)
+                            }
+                            onChange={(e) => {
+                              handleRadioChange(radioId);
+                            }}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={radioId}
+                            data-bs-toggle="collapse"
+                            data-target="#timeslot"
+                            aria-controls="timeslot"
+                          >
+                            {console.log("start time", Item.start_time)}
+                            {moment(Item.start_time, "HH:mm:ss").format(
+                              "h:mm A"
+                            )}{" "}
+                            -{" "}
+                            {moment(Item?.end_time, "HH:mm:ss").format(
+                              "h:mm A"
+                            )}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box">
+                  <div className="payment_method">
+                    <div className="heading_s1 mb-3">
+                      <h6>{intl.formatMessage({ id: "Payment Method" })}</h6>
+                    </div>
+
+                    <div className="payment_option">
+                      <div className="custome-radio">
+                        <input
+                          className="form-check-input"
+                          required=""
+                          type="radio"
+                          name="payment_option"
+                          id="exampleRadios3"
+                          defaultChecked={true}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="exampleRadios3"
+                          data-bs-toggle="collapse"
+                          data-target="#bankTranfer"
+                          aria-controls="bankTranfer"
+                        >
+                          {intl.formatMessage({ id: "COD" })}
+                        </label>
+                        {/* <div
+                          className="form-group collapse in"
+                          id="bankTranfer"
+                        >
+                          <p className="text-muted mt-5">
+                            There are many variations of passages of Lorem Ipsum
+                            available, but the majority have suffered
+                            alteration.{" "}
+                          </p>
+                        </div> */}
+                      </div>
+                      {/* <div className="custome-radio">
+                        <input
+                          className="form-check-input"
+                          required=""
+                          type="radio"
+                          name="payment_option"
+                          id="exampleRadios4"
+                          defaultChecked={true}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="exampleRadios4"
+                          data-bs-toggle="collapse"
+                          data-target="#checkPayment"
+                          aria-controls="checkPayment"
+                        >
+                          Check Payment
+                        </label>
+                        <div
+                          className="form-group collapse in"
+                          id="checkPayment"
+                        >
+                          <p className="text-muted mt-5">
+                            Please send your cheque to Store Name, Store Street,
+                            Store Town, Store State / County, Store Postcode.{" "}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="custome-radio">
+                        <input
+                          className="form-check-input"
+                          required=""
+                          type="radio"
+                          name="payment_option"
+                          id="exampleRadios5"
+                          defaultChecked={true}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="exampleRadios5"
+                          data-bs-toggle="collapse"
+                          data-target="#paypal"
+                          aria-controls="paypal"
+                        >
+                          Paypal
+                        </label>
+                        <div className="form-group collapse in" id="paypal">
+                          <p className="text-muted mt-5">
+                            Pay via PayPal; you can pay with your credit card if
+                            you don't have a PayPal account.
+                          </p>
+                        </div>
+                      </div> */}
+                    </div>
+                  </div>
+                  <div>
+                    {cartTotal?.total_amt <= cartTotal.minOrderAmount ? (
+                      <h8 style={{ color: "red" }}>
+                        {intl.formatMessage({
+                          id: "Oops! Your cart is below 2500 ¥. Please add items worth",
+                        })}{" "}
+                        {calculateAmountToAdd()} ¥
+                        {intl.formatMessage({
+                          id: " or more to place your order. Happy shopping!",
+                        })}
+                      </h8>
+                    ) : (
+                      <h8 style={{ color: "green" }}>
+                        {intl.formatMessage({
+                          id: "Congratulations, You are eligible to place an order",
+                        })}
+                      </h8>
+                    )}
+                  </div>
+                </div>
+
+                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box">
+                  <div className="mb-20">
+                    <form method="post" className="apply-coupon">
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          setCoupenCode(e?.target?.value);
+                        }}
+                        value={coupenCode}
+                        placeholder={intl.formatMessage({
+                          id: "Enter Coupon Code...",
+                        })}
+                      />
+                      <button
+                        className="btn  btn-md"
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleCoupencode();
+                        }}
+                      >
+                        {intl.formatMessage({ id: "Apply Coupon" })}
+                      </button>
+                    </form>
+
+                    <h6 style={{ color: "green", marginTop: "15px" }}>
+                      {coupanDetails}
                     </h6>
                   </div>
-                  <div className="divider-2 mb-30"></div>
-                  {loading ? (
-                    <div class="d-flex justify-content-center align-items-center ">
-                      <Spinner animation="border" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                      </Spinner>
-                    </div>
-                  ) : (
-                    <div className="table-responsive order_table">
-                      {cartItemsData.length <= 0 && "No Products"}
-                      {cartItemsData.length > 0 ? (
-                        <table className="table no-border">
-                          <tbody>
-                            {cartItemsData?.map((item, i) => (
-                              <tr key={i}>
-                                <td className="image product-thumbnail">
-                                  <img
-                                    src={item?.product?.image?.[0]}
-                                    alt="#"
-                                  />
-                                </td>
-                                <td>
-                                  <h6 className="w-160 mb-5">
-                                    {/* <a
-                                    dangerouslySetInnerHTML={{
-                                      __html: item?.product?.name,
-                                    }}
-                                  ></a> */}
-                                    <a
-                                      dangerouslySetInnerHTML={{
-                                        __html: translatedItemDetails(
-                                          "name",
-                                          intl,
-                                          item?.product
-                                        ),
-                                      }}
-                                    ></a>
-                                    <div className="product-rate-cover">
-                                      <div className="product-rate d-inline-block">
-                                        <div
-                                          className="product-rating"
-                                          style={{
-                                            width: `${
-                                              item?.product?.overall_rating
-                                                ? item?.product?.overall_rating
-                                                : 0
-                                            }%`,
-                                          }}
-                                        ></div>
-                                      </div>
-                                      <span className="font-small ml-5 text-muted">
-                                        {`(
-                                    ${
-                                      item?.product?.total_reviews
-                                        ? item?.product?.total_reviews
-                                        : 0
-                                    }
-                                    )`}
-                                      </span>
-                                    </div>
-                                  </h6>{" "}
-                                </td>
-                                <td>
-                                  <h6 className="text-muted pl-20 pr-20">
-                                    x {item.quantity}
-                                  </h6>
-                                </td>
-                                <td>
-                                  <h4 className="text-brand">
-                                    ¥
-                                    {/* {(item.quantity ? item.quantity : 1) *
-                                    item.price} */}
-                                    {(item?.quantity ? item?.quantity : 1) *
-                                    item?.actual_price
-                                      ? item?.actual_price
-                                      : item?.product.actual_price
-                                      ? item?.product.actual_price
-                                      : 0}
-                                  </h4>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      ) : (
-                        "No Products"
-                      )}
-                    </div>
-                  )}
-                </div>
-                <div className="ml-30 mb-50">
-                  <form method="post" className="apply-coupon">
-                    <input
-                      type="text"
-                      onChange={(e) => {
-                        setCoupenCode(e?.target?.value);
-                      }}
-                      value={coupenCode}
-                      placeholder={intl.formatMessage({
-                        id: "Enter Coupon Code...",
-                      })}
-                    />
-                    <button
-                      className="btn  btn-md"
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleCoupencode();
-                      }}
-                    >
-                      {intl.formatMessage({ id: "Apply Coupon" })}
-                    </button>
-                  </form>
-
-                  <h6 style={{ color: "green", marginTop: "15px" }}>
-                    {coupanDetails}
-                  </h6>
-                </div>
-                <div className="border p-40 cart-totals ml-30 mb-50 checkout_box">
                   <div className="heading_s1 mb-3">
-                    <h4>{intl.formatMessage({ id: "Cart Totals" })}</h4>
+                    <h6>{intl.formatMessage({ id: "Cart Totals" })}</h6>
                   </div>
                   {cartTotal.cartProducts?.length > 0 ? (
                     <table
@@ -1291,229 +1457,19 @@ const Cart = ({
                       </tr>
                     </table>
                   ) : null}
-                </div>
-
-                <div className="border p-40 cart-totals ml-30 mb-50 checkout_box">
-                  <div className="delivery_time_div">
-                    <div className="heading_s1 mb-3">
-                      <h4>{intl.formatMessage({ id: "Delivery time" })}</h4>
-                    </div>
-
-                    {timeSlot?.map((Item, index) => {
-                      const radioId = Item?.id;
-
-                      return (
-                        <div key={radioId} className="custome-radio">
-                          <input
-                            className="form-check-input"
-                            required=""
-                            type="radio"
-                            name="timeslot"
-                            id={radioId}
-                            checked={
-                              radioId === selectedRadioId ||
-                              (index === 0 && selectedRadioId === null)
-                            }
-                            onChange={(e) => {
-                              handleRadioChange(radioId);
-                            }}
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor={radioId}
-                            data-bs-toggle="collapse"
-                            data-target="#timeslot"
-                            aria-controls="timeslot"
-                          >
-                            {console.log("start time", Item.start_time)}
-                            {moment(Item.start_time, "HH:mm:ss").format(
-                              "h:mm A"
-                            )}{" "}
-                            -{" "}
-                            {moment(Item?.end_time, "HH:mm:ss").format(
-                              "h:mm A"
-                            )}
-                          </label>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div className="border p-40 cart-totals ml-30 mb-50 checkout_box">
-                  <div className="payment_method">
-                    <div className="heading_s1 mb-3">
-                      <h4>{intl.formatMessage({ id: "Payment" })}</h4>
-                    </div>
-
-                    <div className="payment_option">
-                      <div className="custome-radio">
-                        <input
-                          className="form-check-input"
-                          required=""
-                          type="radio"
-                          name="payment_option"
-                          id="exampleRadios3"
-                          defaultChecked={true}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="exampleRadios3"
-                          data-bs-toggle="collapse"
-                          data-target="#bankTranfer"
-                          aria-controls="bankTranfer"
-                        >
-                          {intl.formatMessage({ id: "COD" })}
-                        </label>
-                        {/* <div
-                          className="form-group collapse in"
-                          id="bankTranfer"
-                        >
-                          <p className="text-muted mt-5">
-                            There are many variations of passages of Lorem Ipsum
-                            available, but the majority have suffered
-                            alteration.{" "}
-                          </p>
-                        </div> */}
-                      </div>
-                      {/* <div className="custome-radio">
-                        <input
-                          className="form-check-input"
-                          required=""
-                          type="radio"
-                          name="payment_option"
-                          id="exampleRadios4"
-                          defaultChecked={true}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="exampleRadios4"
-                          data-bs-toggle="collapse"
-                          data-target="#checkPayment"
-                          aria-controls="checkPayment"
-                        >
-                          Check Payment
-                        </label>
-                        <div
-                          className="form-group collapse in"
-                          id="checkPayment"
-                        >
-                          <p className="text-muted mt-5">
-                            Please send your cheque to Store Name, Store Street,
-                            Store Town, Store State / County, Store Postcode.{" "}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="custome-radio">
-                        <input
-                          className="form-check-input"
-                          required=""
-                          type="radio"
-                          name="payment_option"
-                          id="exampleRadios5"
-                          defaultChecked={true}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="exampleRadios5"
-                          data-bs-toggle="collapse"
-                          data-target="#paypal"
-                          aria-controls="paypal"
-                        >
-                          Paypal
-                        </label>
-                        <div className="form-group collapse in" id="paypal">
-                          <p className="text-muted mt-5">
-                            Pay via PayPal; you can pay with your credit card if
-                            you don't have a PayPal account.
-                          </p>
-                        </div>
-                      </div> */}
-                    </div>
-                  </div>
                   <div>
-                    {cartTotal?.total_amt <= cartTotal.minOrderAmount ? (
-                      <h8 style={{ color: "red" }}>
-                        {intl.formatMessage({
-                          id: "Oops! Your cart is below 2500 ¥. Please add items worth",
-                        })}{" "}
-                        {calculateAmountToAdd()} ¥
-                        {intl.formatMessage({
-                          id: " or more to place your order. Happy shopping!",
-                        })}
-                      </h8>
-                    ) : (
-                      <h8 style={{ color: "green" }}>
-                        {intl.formatMessage({
-                          id: "Congratulations, You are eligible to place an order",
-                        })}
-                      </h8>
-                    )}
+                    <button
+                      onClick={() => {
+                        placeOrder();
+                      }}
+                      disabled={showModaladdress == true}
+                      className="w-100 btn btn-fill-out btn-block"
+                    >
+                      {intl.formatMessage({ id: "Place Order" })}
+                    </button>
                   </div>
                 </div>
-                <div className="px-40 ml-30 mb-40">
-                  <textarea
-                    name="orderNotes"
-                    as="textarea"
-                    rows="5"
-                    value={orderNotes}
-                    // disabled={true}
-                    onChange={(e) => setorderNotes(e.target.value)}
-                    placeholder={intl.formatMessage({ id: "Customer Comment" })}
-                  />
-                </div>
-                <div className="px-10 ml-30 mb-10">
-                  {/* {addressformOpen == true? <h6 style={{ color: "red" , fontWeight:"normal" }}>Please Save Address Before place order</h6> : null} */}
-                  <div>
-                    {showModaladdress == false ? (
-                      <div>
-                        <h6 style={{ fontWeight: "normal" }}>
-                          Selected Address
-                        </h6>
-                        <h8>{`${
-                          selectedAddressdisplay?.full_name !== null
-                            ? selectedAddressdisplay?.full_name + ",\n"
-                            : ""
-                        } 
-        ${
-          selectedAddressdisplay?.address !== null
-            ? selectedAddressdisplay?.address + ",\n"
-            : ""
-        } 
-        ${
-          selectedAddressdisplay?.road !== null
-            ? selectedAddressdisplay?.road + ",\n"
-            : ""
-        } 
-        ${
-          selectedAddressdisplay?.city_name !== null
-            ? selectedAddressdisplay?.city_name + ",\n"
-            : ""
-        } 
-        ${
-          selectedAddressdisplay?.state_name !== null
-            ? selectedAddressdisplay?.state_name + ",\n"
-            : ""
-        } 
-        ${
-          selectedAddressdisplay?.post_code !== null
-            ? selectedAddressdisplay?.post_code
-            : ""
-        }`}</h8>
-                      </div>
-                    ) : null}
-                  </div>
-                </div>
-                <div className="px-40 ml-30 mb-50">
-                  <button
-                    onClick={() => {
-                      placeOrder();
-                    }}
-                    disabled={showModaladdress == true}
-                    className="btn btn-fill-out btn-block"
-                  >
-                    {intl.formatMessage({ id: "Place Order" })}
-                  </button>
-                </div>
+
               </div>
             </div>
           </div>

@@ -72,7 +72,7 @@ const Cart = ({
         },
       })
       .catch((error) => {
-               console.log("error", error?.code === "ERR_NETWORK");
+        console.log("error", error?.code === "ERR_NETWORK");
       });
   };
   const getCartData = (token) => {
@@ -95,7 +95,7 @@ const Cart = ({
       .catch((error) => {
         setLoading(false)
 
-               console.log("error", error?.code === "ERR_NETWORK");
+        console.log("error", error?.code === "ERR_NETWORK");
       });
   };
   const validationSchema = Yup.object().shape({
@@ -168,312 +168,328 @@ const Cart = ({
     <Layout parent="Home" sub="Shop" subChild="Cart">
       {/* {!isLoggedIn ? ( */}
       <section className="mt-50 mb-50">
+        <div id="cart_top_row">
+          <div className="container">
+            <div className="cart_top_row">
+              <div className="row align-items-center" >
+                <div className="col-lg-4">
+                  <h3 className="heading-2 mb-10">
+                    {intl.formatMessage({ id: "Your Cart" })}
+                  </h3>
+                  <div className="d-flex d-md-block justify-content-between">
+                    <h6 className="text-body">
+                      {intl.formatMessage({
+                        id: "Carefully check the information before checkout",
+                      })}
+                    </h6>
+                  </div>
+                </div>
+                <div className="col-lg-4 col-4">
+                  <div className="text-center">
+                    <h3 className="text-brand">¥5698</h3>
+                  </div>
+                </div>
+                <div className="col-lg-4 col-8">
+                  <div className="text-end">
+                    {proceedToCheckout()}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="container">
           <div className="row">
             <div className="col-lg-8 mb-40">
-              <h1 className="heading-2 mb-10">
-                {intl.formatMessage({ id: "Your Cart" })}
-              </h1>
-              <div className="d-flex d-md-block justify-content-between">
-                <h6 className="text-body mb-3">
-                  {intl.formatMessage({
-                    id: "Carefully check the information before checkout",
-                  })}
-                </h6>
-                <h6 className="text-body text-md-end">
-                  <a
-                    className="text-muted"
-                    onClick={() => {
-                      handleClearCart();
-                    }}
-                  >
-                    <i className="fi-rs-trash mr-5"></i>
-                    {intl.formatMessage({ id: "Clear Cart" })}
-                    
-                  </a>
-                </h6>
-              </div>
+              <h6 className="text-body text-md-end">
+                <a
+                  className="text-muted"
+                  onClick={() => {
+                    handleClearCart();
+                  }}
+                >
+                  <i className="fi-rs-trash mr-5"></i>
+                  {intl.formatMessage({ id: "Clear Cart" })}
+
+                </a>
+              </h6>
             </div>
           </div>
           <div className="row">
             <div className="col-lg-8">
-         {loading ? 
-         <div class="d-flex justify-content-center align-items-center ">
-         <Spinner animation="border" role="status">
-           <span class="visually-hidden">Loading...</span>
-         </Spinner>
-       </div> :
-         <div className="table-responsive shopping-summery">
-                {cartProducts.length <= 0 && "No Products"}
-                <table
-                  className={
-                    cartProducts.length > 0 ? "table table-cart" : "d-none"
-                  }
-                >
-                  <thead>
-                    <tr className="main-heading">
-                      <th className="custome-checkbox start pl-30" colSpan="2">
-                        {intl.formatMessage({ id: "Product" })}
-                      </th>
-                      <th scope="col">
-                        {intl.formatMessage({ id: "Unit Price" })}
-                      </th>
-                      <th scope="col">
-                        {intl.formatMessage({ id: "Quantity" })}
-                      </th>
-                      <th scope="col">
-                        {intl.formatMessage({ id: "Sub Total" })}
-                      </th>
-                      <th scope="col" className="end">
-                        {intl.formatMessage({ id: "Remove" })}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {cartProducts?.map((item, i) => (
-                      <tr key={i}>
-                        <td className="image product-thumbnail">
-                          <img
-                            src={
-                              item?.image?.[0]
-                                ? item?.image?.[0]
-                                : item?.product?.image?.[0]
-                            }
-                          />
-                        </td>
-                        <td className="product-des product-name">
-                          <h6 className="product-name">
-                            <Link
-                              href={
-                                intl.locale == "eng"
-                                  ? `${
-                                      item?.seo_en
+              <div class="content-div">
+                {loading ?
+                  <div class="d-flex justify-content-center align-items-center ">
+                    <Spinner animation="border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </div> :
+                  <div className="table-responsive shopping-summery">
+                    {cartProducts.length <= 0 && "No Products"}
+                    <table
+                      className={
+                        cartProducts.length > 0 ? "table table-cart" : "d-none"
+                      }
+                    >
+                      <thead>
+                        <tr className="main-heading">
+                          <th className="custome-checkbox start pl-30" colSpan="2">
+                            {intl.formatMessage({ id: "Product" })}
+                          </th>
+                          <th scope="col">
+                            {intl.formatMessage({ id: "Unit Price" })}
+                          </th>
+                          <th scope="col">
+                            {intl.formatMessage({ id: "Quantity" })}
+                          </th>
+                          <th scope="col">
+                            {intl.formatMessage({ id: "Sub Total" })}
+                          </th>
+                          <th scope="col" className="end">
+                            {intl.formatMessage({ id: "Remove" })}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {cartProducts?.map((item, i) => (
+                          <tr key={i}>
+                            <td className="image product-thumbnail">
+                              <img
+                                src={
+                                  item?.image?.[0]
+                                    ? item?.image?.[0]
+                                    : item?.product?.image?.[0]
+                                }
+                              />
+                            </td>
+                            <td className="product-des product-name">
+                              <h6 className="product-name">
+                                <Link
+                                  href={
+                                    intl.locale == "eng"
+                                      ? `${item?.seo_en
                                         ? item?.seo_en
                                         : item?.product?.seo_en
-                                    }`
-                                  : `${
-                                      item?.seo_ja
+                                      }`
+                                      : `${item?.seo_ja
                                         ? item?.seo_ja
                                         : item?.product?.seo_ja
-                                    }`
-                              }
-                            >
-                              {translatedItemDetails(
-                                "name",
-                                intl,
-                                item.product ? item.product : item
-                              )}
-                            </Link>
-                          </h6>
-                          <div className="product-rate-cover">
-                            <div className="product-rate d-inline-block">
-                              <div
-                                className="product-rating"
-                                style={{
-                                  width: `${
-                                    item?.overall_rating
-                                      ? item?.overall_rating
-                                      : item?.product?.overall_rating
-                                      ? item?.product?.overall_rating
-                                      : 0
-                                  }%`,
-                                }}
-                              ></div>
-                            </div>
-                            <span className="font-small ml-5 text-muted">
-                              {" "}
-                              {`(${
-                                item?.total_reviews
-                                  ? item.total_reviews
-                                  : item?.product?.total_reviews
-                                  ? item?.product?.total_reviews
-                                  : 0
-                              })`}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="price" data-title="Price">
-                          <h4 className="text-brand">
-                            ¥
-                            {item?.actual_price
-                              ? item?.actual_price
-                              : item?.product?.actual_price
-                              ? item?.product?.actual_price
-                              : 0}
-                          </h4>
-                        </td>
-                        <td
-                          className="text-center detail-info"
-                          data-title="Stock"
-                        >
-                          <div className="detail-extralink mr-15">
-                            <div className="detail-qty border radius d-flex align-items-center justify-content-between">
-                              <a
-                                onClick={() => {
-                                  if (item?.quantity >= 1) {
-                                    if (isLoggedIn) {
-                                      decreaseQuantity(item?.product?.id);
-                                      setCartDataUpdated(!cartDataUpdated);
-                                    } else {
-                                      decreaseQuantity(item?.id);
-                                      setCartDataUpdated(!cartDataUpdated);
-                                    }
+                                      }`
                                   }
-                                }}
-                                className="qty-down"
-                              >
-                                <i className="fi-rs-minus-small"></i>
-                              </a>
-                              <span className="qty-val">{item?.quantity}</span>
-                              <a
-                                onClick={() => {
-                                  if (
-                                    (item?.quantity
-                                      ? item?.quantity
-                                      : item?.product?.product?.quantity) <
-                                    (item?.maximum_order_quantity
-                                      ? item?.maximum_order_quantity
-                                      : item?.product?.maximum_order_quantity)
-                                  ) {
-                                    const localCartItems = JSON.parse(
-                                      localStorage.getItem("dokani_cart")
-                                    );
-                                    let localCartItemIndex = -1;
-
-                                    if (localCartItems) {
-                                      localCartItemIndex = findProductIndexById(
-                                        localCartItems,
-                                        item?.product_id
-                                      );
-                                    }
-
-                                    let productQuantityAllowed =
-                                      item?.product?.total_stock;
-
-                                    if (localCartItemIndex >= 0) {
-                                      productQuantityAllowed =
-                                        item?.product?.total_stock -
-                                          localCartItems[localCartItemIndex]
-                                            ?.quantity ||
-                                        item?.product?.total_stock;
-                                    }
-
-                                    if (productQuantityAllowed <= 0) {
-                                      toast.error(
-                                        intl.formatMessage({
-                                          id: `Maximum order quantity allowed now is `,
-                                        })`${item?.product?.total_stock}`
-                                      );
-                                      return;
-                                    }
-                                    if (isLoggedIn) {
-                                      if (
-                                        item?.quantity + 1 >
-                                        item?.product?.total_stock
-                                      ) {
-                                        // toast.error(
-                                        //   `Maximum order quantity is ${item?.product?.total_stock}`
-                                        // );
-                                        toast.error(
-                                          intl.formatMessage({
-                                            id: `Maximum order quantity is`,
-                                          })`${item?.product?.total_stock}`
-                                        );
-                                      } else {
-                                        increaseQuantity(item?.product_id);
-                                        setCartDataUpdated(!cartDataUpdated);
+                                >
+                                  {translatedItemDetails(
+                                    "name",
+                                    intl,
+                                    item.product ? item.product : item
+                                  )}
+                                </Link>
+                              </h6>
+                              <div className="product-rate-cover">
+                                <div className="product-rate d-inline-block">
+                                  <div
+                                    className="product-rating"
+                                    style={{
+                                      width: `${item?.overall_rating
+                                        ? item?.overall_rating
+                                        : item?.product?.overall_rating
+                                          ? item?.product?.overall_rating
+                                          : 0
+                                        }%`,
+                                    }}
+                                  ></div>
+                                </div>
+                                <span className="font-small ml-5 text-muted">
+                                  {" "}
+                                  {`(${item?.total_reviews
+                                    ? item.total_reviews
+                                    : item?.product?.total_reviews
+                                      ? item?.product?.total_reviews
+                                      : 0
+                                    })`}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="price" data-title={intl.formatMessage({ id: "Unit Price" })}>
+                              <h4 className="text-brand">
+                                ¥
+                                {item?.actual_price
+                                  ? item?.actual_price
+                                  : item?.product?.actual_price
+                                    ? item?.product?.actual_price
+                                    : 0}
+                              </h4>
+                            </td>
+                            <td
+                              className="text-center detail-info"
+                              data-title={intl.formatMessage({ id: "Quantity" })}
+                            >
+                              <div className="detail-extralink">
+                                <div className="detail-qty border radius d-sm-inline-flex d-flex align-items-center justify-content-between">
+                                  <a
+                                    onClick={() => {
+                                      if (item?.quantity >= 1) {
+                                        if (isLoggedIn) {
+                                          decreaseQuantity(item?.product?.id);
+                                          setCartDataUpdated(!cartDataUpdated);
+                                        } else {
+                                          decreaseQuantity(item?.id);
+                                          setCartDataUpdated(!cartDataUpdated);
+                                        }
                                       }
-                                    } else {
+                                    }}
+                                    className="qty-down"
+                                  >
+                                    <i className="fi-rs-minus-small"></i>
+                                  </a>
+                                  <span className="qty-val">{item?.quantity}</span>
+                                  <a
+                                    onClick={() => {
                                       if (
-                                        item?.quantity + 1 >
-                                        item?.total_stock
+                                        (item?.quantity
+                                          ? item?.quantity
+                                          : item?.product?.product?.quantity) <
+                                        (item?.maximum_order_quantity
+                                          ? item?.maximum_order_quantity
+                                          : item?.product?.maximum_order_quantity)
                                       ) {
+                                        const localCartItems = JSON.parse(
+                                          localStorage.getItem("dokani_cart")
+                                        );
+                                        let localCartItemIndex = -1;
+
+                                        if (localCartItems) {
+                                          localCartItemIndex = findProductIndexById(
+                                            localCartItems,
+                                            item?.product_id
+                                          );
+                                        }
+
+                                        let productQuantityAllowed =
+                                          item?.product?.total_stock;
+
+                                        if (localCartItemIndex >= 0) {
+                                          productQuantityAllowed =
+                                            item?.product?.total_stock -
+                                            localCartItems[localCartItemIndex]
+                                              ?.quantity ||
+                                            item?.product?.total_stock;
+                                        }
+
+                                        if (productQuantityAllowed <= 0) {
+                                          toast.error(
+                                            intl.formatMessage({
+                                              id: `Maximum order quantity allowed now is `,
+                                            })`${item?.product?.total_stock}`
+                                          );
+                                          return;
+                                        }
+                                        if (isLoggedIn) {
+                                          if (
+                                            item?.quantity + 1 >
+                                            item?.product?.total_stock
+                                          ) {
+                                            // toast.error(
+                                            //   `Maximum order quantity is ${item?.product?.total_stock}`
+                                            // );
+                                            toast.error(
+                                              intl.formatMessage({
+                                                id: `Maximum order quantity is`,
+                                              })`${item?.product?.total_stock}`
+                                            );
+                                          } else {
+                                            increaseQuantity(item?.product_id);
+                                            setCartDataUpdated(!cartDataUpdated);
+                                          }
+                                        } else {
+                                          if (
+                                            item?.quantity + 1 >
+                                            item?.total_stock
+                                          ) {
+                                            // toast.error(
+                                            //   `Maximum order quantity is ${item?.total_stock}`
+                                            // );
+                                            toast.error(
+                                              intl.formatMessage({
+                                                id: "Maximum order quantity is ",
+                                              }) + `${item?.total_stock}`
+                                            );
+                                          } else {
+                                            increaseQuantity(item?.id);
+                                            setCartDataUpdated(!cartDataUpdated);
+                                          }
+                                        }
+                                      } else {
                                         // toast.error(
-                                        //   `Maximum order quantity is ${item?.total_stock}`
+                                        //   `Maximum order quantity is ${
+                                        //     item?.maximum_order_quantity
+                                        //       ? item?.maximum_order_quantity
+                                        //       : item?.product
+                                        //           ?.maximum_order_quantity
+                                        //   }`
                                         // );
                                         toast.error(
                                           intl.formatMessage({
                                             id: "Maximum order quantity is ",
-                                          }) + `${item?.total_stock}`
-                                        );
-                                      } else {
-                                        increaseQuantity(item?.id);
-                                        setCartDataUpdated(!cartDataUpdated);
-                                      }
-                                    }
-                                  } else {
-                                    // toast.error(
-                                    //   `Maximum order quantity is ${
-                                    //     item?.maximum_order_quantity
-                                    //       ? item?.maximum_order_quantity
-                                    //       : item?.product
-                                    //           ?.maximum_order_quantity
-                                    //   }`
-                                    // );
-                                    toast.error(
-                                      intl.formatMessage({
-                                        id: "Maximum order quantity is ",
-                                      }) +
-                                        ` ${
-                                          item?.maximum_order_quantity ||
+                                          }) +
+                                          ` ${item?.maximum_order_quantity ||
                                           item?.product?.maximum_order_quantity
-                                        }`
-                                    );
-                                  }
+                                          }`
+                                        );
+                                      }
+                                    }}
+                                    className="qty-up"
+                                  >
+                                    <i className="fi-rs-plus-small"></i>
+                                  </a>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="text-right" data-title={intl.formatMessage({ id: "Sub Total" })}>
+                              <h4 className="text-body">
+                                ¥
+                                {(item?.quantity ? item?.quantity : 1) *
+                                  (item?.actual_price
+                                    ? item?.actual_price
+                                    : item?.product?.actual_price
+                                      ? item?.product?.actual_price
+                                      : 0)}
+                              </h4>
+                            </td>
+                            <td className="action" data-title="Remove">
+                              <a
+                                onClick={(_e) => {
+                                  deleteFromCart(
+                                    item?.product?.maximum_order_quantity
+                                      ? item?.product?.id
+                                      : item?.id
+                                  );
+                                  setTimeout(() => {
+                                    setCartDataUpdated(!cartDataUpdated);
+                                  }, 600);
                                 }}
-                                className="qty-up"
+                                className="text-muted"
                               >
-                                <i className="fi-rs-plus-small"></i>
+                                <i className="fi-rs-trash"></i>
                               </a>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="text-right" data-title="Cart">
-                          <h4 className="text-body">
-                            ¥
-                            {(item?.quantity ? item?.quantity : 1) *
-                              (item?.actual_price
-                                ? item?.actual_price
-                                : item?.product?.actual_price
-                                ? item?.product?.actual_price
-                                : 0)}
-                          </h4>
-                        </td>
-                        <td className="action" data-title="Remove">
-                          <a
-                            onClick={(_e) => {
-                              deleteFromCart(
-                                item?.product?.maximum_order_quantity
-                                  ? item?.product?.id
-                                  : item?.id
-                              );
-                              setTimeout(() => {
-                                setCartDataUpdated(!cartDataUpdated);
-                              }, 600);
-                            }}
-                            className="text-muted"
-                          >
-                            <i className="fi-rs-trash"></i>
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>}
-              <div className="cart-action text-end">
-                <a className="btn " href={`/${intl.locale}/shop`}>
-                  <i className="fi-rs-shopping-bag mr-10"></i>
-                  {intl.formatMessage({ id: "Continue Shopping" })}
-                </a>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>}
+                <div className="cart-action text-end mobile_btn">
+                  <a className="btn " href={`/${intl.locale}/shop`}>
+                    <i className="fi-rs-shopping-bag mr-10"></i>
+                    {intl.formatMessage({ id: "Continue Shopping" })}
+                  </a>
+                </div>
               </div>
-              <div className="divider center_icon mt-50 mb-50">
-                <i className="fi-rs-fingerprint"></i>
-              </div>
-              {cartProducts.length > 0 ? (
-                <div className="row mb-50">
+            </div>
+            {cartProducts.length > 0 ? (
+              <div className="col-lg-4 col-md-12">
+                <div className="carttotal_main_div sticky-div">
                   {isLoggedIn ? (
-                    <div className="col-lg-6 col-md-12">
+                    <div className="">
                       <div className="border p-md-4 p-30 border-radius cart-totals">
                         <div className="heading_s1 mb-3">
                           <h4>{intl.formatMessage({ id: "Cart Totals" })}</h4>
@@ -525,14 +541,14 @@ const Cart = ({
                               ) : null}
 
                               {/* <tr>
-                                <td className="cart_total_label">
-                                  {intl.formatMessage({ id: "Shipping" })}
-                                </td>
-                                <td className="cart_total_amount">
-                                  <i className="ti-gift mr-5"></i>¥
-                                  {cartTotal?.delivery_charge}
-                                </td>
-                              </tr> */}
+                                  <td className="cart_total_label">
+                                    {intl.formatMessage({ id: "Shipping" })}
+                                  </td>
+                                  <td className="cart_total_amount">
+                                    <i className="ti-gift mr-5"></i>¥
+                                    {cartTotal?.delivery_charge}
+                                  </td>
+                                </tr> */}
                               <tr>
                                 <td className="cart_total_label">
                                   {intl.formatMessage({ id: "Sub-Total" })}
@@ -547,23 +563,23 @@ const Cart = ({
                                   </strong>
                                 </td>
                               </tr>
-                              <p className="cart_total_label">
-                                {intl.formatMessage({
-                                  id: "Shipping charges and delivery times vary based on the selected region during checkout.for more information visit",
-                                })}
-                                <a
-                                  href="/delivery_Information"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  {intl.formatMessage({
-                                    id: "Delivery Information",
-                                  })}
-                                </a>
-                                .
-                              </p>
                             </tbody>
                           </table>
+                          <p className="cart_total_label mb-3">
+                            {intl.formatMessage({
+                              id: "Shipping charges and delivery times vary based on the selected region during checkout for more information visit:",
+                            })}
+                            <a
+                              href="/delivery_Information"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {intl.formatMessage({
+                                id: " Delivery Information",
+                              })}
+                            </a>
+                            .
+                          </p>
                         </div>
                         {proceedToCheckout()}
                       </div>
@@ -675,8 +691,8 @@ const Cart = ({
                     </div>
                   )}
                 </div>
-              ) : null}
-            </div>
+              </div>
+            ) : null}
           </div>
         </div>
       </section>

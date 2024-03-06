@@ -164,8 +164,8 @@ const ProductDetails = ({
                       </p> */}
                     </div>
                     <div className="bt-1 border-color-1 mt-30 mb-30"></div>
-                    <div className="detail-extralink">
-                      <div className="detail-qty border radius">
+                    <div className="detail-extralink d-flex">
+                      <div className="detail-qty border radius d-flex align-items-center justify-content-between">
                         <a
                           onClick={(_e) => {
                             product.total_stock > quantity &&
@@ -173,7 +173,7 @@ const ProductDetails = ({
                           }}
                           className="qty-down"
                         >
-                          <i className="fi-rs-angle-small-down"></i>
+                          <i className="fi-rs-minus-small"></i>
                         </a>
                         <span className="qty-val">{quantity}</span>
                         <a
@@ -183,7 +183,7 @@ const ProductDetails = ({
                           }}
                           className="qty-up"
                         >
-                          <i className="fi-rs-angle-small-up"></i>
+                          <i className="fi-rs-plus-small"></i>
                         </a>
                       </div>
 
