@@ -8,7 +8,7 @@ import {
   increaseQuantity,
   openCart,
 } from "../redux/action/cart";
-import { ErrorMessage, Field, Form, Formik ,useFormikContext } from "formik";
+import { ErrorMessage, Field, Form, Formik, useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 import { API_BASE_URL, api } from "../lib/api";
 import axios from "axios";
@@ -19,8 +19,9 @@ import { useIntl } from "react-intl";
 import { translatedItemDetails } from "../util/util";
 import * as Yup from "yup";
 import { Spinner } from "react-bootstrap";
-import moment from 'moment';
-
+import moment from "moment";
+import React, { useRef } from "react";
+import Dropdown from "react-bootstrap/Dropdown";
 const Cart = ({
   openCart,
   cartItems,
@@ -42,8 +43,7 @@ const Cart = ({
   const [cartItemsData, setCartItemsData] = useState([]);
   const [timeSlot, setTimeSlot] = useState([]);
   const [selectedRadioId, setSelectedRadioId] = useState(timeSlot?.[0]?.id);
-  const [selectedAddressdisplay, setSelectedAddressdisplay] = useState(
-  );
+  const [selectedAddressdisplay, setSelectedAddressdisplay] = useState();
   const [ip, setIp] = useState("");
   const [browserData, setBrowserData] = useState([]);
   const [selectedAddressData, setSelectedAddressData] = useState({});
@@ -54,12 +54,30 @@ const Cart = ({
   const [selectedregion, setSelectedRegion] = useState(-1);
   const [citydata, setCityData] = useState([]);
   const [selectedCity, setSelectedCity] = useState(-1);
-  const [addressformOpen,setAddressFormOpen]=useState(false)
+  const [addressformOpen, setAddressFormOpen] = useState(false);
+  const [showModaladdress, setShowModaladdress] = useState(false);
   const intl = useIntl();
+
   const handleRadioChange = (id) => {
     setSelectedRadioId(id);
     // setorderNotes(id);
   };
+  const openModal = () => {
+    setShowModaladdress(true);
+  };
+
+  const closeModal = () => {
+    setShowModaladdress(false);
+  };
+  const handleClickOutside = () => {
+    closeModal();
+  };
+  const formRef = useRef();
+
+  const handleReset = () => {
+    formRef.current.resetForm();
+  };
+
   const calculateAmountToAdd = () => {
     return Math.round(
       cartTotal.minOrderAmount -
@@ -104,7 +122,7 @@ const Cart = ({
         // { id: -1, value: "", name: "--Choose an option--", disabled: true },
         newArray
       );
-      //      console.log("Regions data update", newArray);
+      console.log("Regions data update", newArray);
     } catch (error) {
       console.error("API Error in regions:", error);
     }
@@ -186,7 +204,6 @@ const Cart = ({
     }
   };
   //  ////  console.log("cart prodyct detail", cartItemsData);
- 
 
   const getAddress = async (encodedToken) => {
     const response = await api.get("customer/address/list", {
@@ -202,7 +219,7 @@ const Cart = ({
     );
 
     getCartData(response?.data.billing_address[0]?.region_id);
-    setSelectedAddressdisplay(response?.data.billing_address[0])
+    setSelectedAddressdisplay(response?.data.billing_address[0]);
     setAddress(response?.data);
     // const region_id =()
   };
@@ -246,6 +263,7 @@ const Cart = ({
     const data = res.data;
     setTimeSlot(data);
   };
+  // console.log("addresslist" , address.billing_address.length)
 
   const handleAddressSubmit = async (values) => {
     let encodedToken = localStorage.getItem("token");
@@ -287,6 +305,9 @@ const Cart = ({
         ? values?.contact_person_number
         : selectedAddressData?.contact_person_number,
     };
+    // const checkaddress = address?.billing_address?.length== 0 ? "create" : "update"
+    console.log("addresslist", address);
+    console.log("payoad", payload);
     const response = await axios
       .put(`${API_BASE_URL}customer/address/update`, payload, {
         headers: {
@@ -297,11 +318,11 @@ const Cart = ({
       })
       .then((response) => {
         //        ////        console.log("response", response);
-  
+
         if (response.status == 200) {
           toast.success("address updated successfully");
           getAddress(encodedToken);
-          setAddressFormOpen(false)
+          setShowModaladdress(false);
         }
       });
   };
@@ -346,21 +367,22 @@ const Cart = ({
       intl.formatMessage({ id: "Address is required" })
     ),
     // city: Yup.string().when("state", {
-    //   is: (value) => value?.length > 1,
+   
+    //   is: (value) => console.log("state" ,value ),
     //   then: Yup.string().required(
     //     intl.formatMessage({ id: "City / Town is required" })
     //   ),
     //   otherwise: Yup.string(),
     // }),
-    // state: Yup.string().required(
-    //   intl.formatMessage({ id: "State / County is required" })
-    // ),
-    post_code: Yup.string().matches(
-      /^[0-9]{7}$/,
-      intl.formatMessage({ id: "Postcode must be 7 digits" })
-    ).required(
-      intl.formatMessage({ id: "Postcode / ZIP is required" })
+    state: Yup.string().required(
+      intl.formatMessage({ id: "State / County is required" })
     ),
+    post_code: Yup.string()
+      .matches(
+        /^[0-9]{7}$/,
+        intl.formatMessage({ id: "Postcode must be 7 digits" })
+      )
+      .required(intl.formatMessage({ id: "Postcode / ZIP is required" })),
     contact_person_name: Yup.string().required(
       intl.formatMessage({ id: "Contact Person Name is required" })
     ),
@@ -379,10 +401,10 @@ const Cart = ({
   //  console.log("selectedAddress",selectedAddressData.region_id  )
 
   const formikFormData = (selectedAddressData) => {
-
     return (
       <Formik
         enableReinitialize
+        innerRef={formRef}
         validationSchema={validationSchema}
         initialValues={{
           full_name: selectedAddressData?.full_name,
@@ -410,9 +432,9 @@ const Cart = ({
         //     });
         // }}
       >
-        {({ setFieldValue, values, handleChange, errors, touched , dirty }) => (
+        {({ setFieldValue, values, handleChange, errors, touched, dirty }) => (
           <Form method="post">
-            <div className="form-group mb-40">
+            <div className="form-group mb-20">
               <Field
                 type="text"
                 required=""
@@ -428,7 +450,7 @@ const Cart = ({
               )}
             </div>
 
-            <div className="form-group mb-40">
+            <div className="form-group mb-20">
               <Field
                 type="text"
                 name="billing_address"
@@ -443,7 +465,7 @@ const Cart = ({
                 />
               )}
             </div>
-            <div className="form-group mb-40">
+            <div className="form-group mb-20">
               <Field
                 type="text"
                 name="billing_address2"
@@ -452,7 +474,7 @@ const Cart = ({
               />
             </div>
 
-            {/* <div className="form-group mb-40">
+            {/* <div className="form-group mb-20">
               <Field
                 required=""
                 type="text"
@@ -467,13 +489,13 @@ const Cart = ({
                 />
               )}
             </div> */}
-            <div className="form-group mb-40">
-              <div className="sort-by-dropdown-wrap custom-select mb-40">
-                <select
+            <div className="form-group mb-20">
+              <div className="sort-by-dropdown-wrap custom-select mb-20">
+                {/* <select
                   as="select"
                   className="selectedAddress"
                   name="state"
-                  style={{ color: 'black' }}
+                  style={{ color: "black" }}
                   value={values.state}
                   onChange={(e) => {
                     // setSelectedAddressDropdown(e.target.value);
@@ -497,7 +519,44 @@ const Cart = ({
                       {option.name}
                     </option>
                   ))}
-                </select>
+                </select> */}
+                <Dropdown
+                className="Dropdownstate"
+                  name="state"
+                  onSelect={(selectedOption) => {
+                    // console.log("Selected option" , selectedOption)
+                    setFieldValue("state", selectedOption);
+                    setFieldValue("city", "");
+                    setSelectedRegion(selectedOption); // This should be defined somewhere in your component
+                    getCartData(selectedOption); // This should be defined somewhere in your component
+                  }}
+                >
+                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    {values.state
+                      ? religionData.find((option) => option.id == values.state)
+                          ?.name
+                      : "Select State"}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {religionData?.map((option) => (
+                      <Dropdown.Item
+                        key={option.id}
+                        eventKey={option.id}
+                        disabled={option.id === -1}
+                        active={option.id === values.region_id}
+                      >
+                        {option.name}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
+                {errors.state && touched.state && (
+                  <ErrorMessage
+                    name="state"
+                    component="div"
+                    style={{ color: "red", position: "absolute" }}
+                  />
+                )}
               </div>
               {/* <Field
                 required=""
@@ -514,45 +573,48 @@ const Cart = ({
               )} */}
 
               {citydata.length !== 1 ? (
-                <div className="sort-by-dropdown-wrap custom-select mb-40">
-                  <select
-                    as="select"
-                    className="selectedAddress"
-                    name="city"
-                  style={{ color: 'black' }}
-
-                    value={values.city}
-                    onChange={(e) => {
-                      // setSelectedAddressDropdown(e.target.value);
-                      // findElementById(e.target.value);
-                      //                      console.log("selected city", e.target.value);
-                      setFieldValue("city", e?.target?.value);
-
-                      setSelectedCity(e.target.value);
+                <div className="sort-by-dropdown-wrap custom-select mb-20">
+                  <Dropdown
+                   className="Dropdownstate"
+                    onSelect={(selectedCity) => {
+                      console.log("selectedcity", selectedCity);
+                      setFieldValue("city", selectedCity);
+                      setSelectedCity(selectedCity);
                     }}
                   >
-                    {citydata?.map((option) => (
-                      <option
-                        key={option.id}
-                        value={option.id}
-                        disabled={option.id === -1 ? true : false}
-                      >
-                        {option.name}
-                      </option>
-                    ))}
-                  </select>
+                    <Dropdown.Toggle variant="success" id="city-dropdown">
+                      {values.city
+                        ? citydata.find((option) => option.id == values.city)
+                            ?.name
+                        : "City Dropdown"}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      {citydata?.map((option) => (
+                        <Dropdown.Item
+                          key={option.id}
+                          eventKey={option.id}
+                          disabled={option.id === -1}
+                          active={option.id === values.city}
+                        >
+                          {option.name}
+                        </Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </div>
               ) : null}
             </div>
-            <div className="form-group mb-40">
+            <div className="form-group mb-20">
               <Field
                 required=""
                 type="string"
                 name="post_code"
                 // value={values.post_code}
                 onChange={(e) => {
-                  const inputValue = e.target.value.replace(/[-*\/]/g, '').slice(0, 7); // Limit to 10 characters
-                  console.log("postcodedeeeeee" , inputValue)
+                  const inputValue = e.target.value
+                    .replace(/[-*\/]/g, "")
+                    .slice(0, 7); // Limit to 10 characters
+                  console.log("postcodedeeeeee", inputValue);
                   setFieldValue("post_code", inputValue);
                 }}
                 placeholder={intl.formatMessage({ id: "Postcode / ZIP *" })}
@@ -565,7 +627,7 @@ const Cart = ({
                 />
               )}
             </div>
-            <div className="form-group mb-40">
+            <div className="form-group mb-20">
               <Field
                 required=""
                 type="text"
@@ -580,7 +642,7 @@ const Cart = ({
                 />
               )}
             </div>
-            <div className="form-group mb-40">
+            <div className="form-group mb-20">
               <Field
                 required=""
                 type="number"
@@ -588,15 +650,13 @@ const Cart = ({
                 onChange={(e) => {
                   let phoneNumber = e.target.value.slice(0, 10); // Limit to 10 characters
                   // Remove non-numeric characters
-                  phoneNumber = phoneNumber.replace(/\D/g, '');
+                  phoneNumber = phoneNumber.replace(/\D/g, "");
                   // Check if the first character is zero and if so, remove it
-                  if (phoneNumber.charAt(0) === '0') {
-                  let  phoneNumber1 = phoneNumber.substring(1);
-                 setFieldValue("contact_person_number", phoneNumber1);
-
-                  }else{
-                 setFieldValue("contact_person_number", phoneNumber);
-
+                  if (phoneNumber.charAt(0) === "0") {
+                    let phoneNumber1 = phoneNumber.substring(1);
+                    setFieldValue("contact_person_number", phoneNumber1);
+                  } else {
+                    setFieldValue("contact_person_number", phoneNumber);
                   }
                 }}
               />
@@ -621,12 +681,12 @@ const Cart = ({
                 name="password"
               />
             </div> */}
-    
+
             <div>
               <button type="submit">
                 {intl.formatMessage({ id: "Save Changes" })}
               </button>
-              <button onClick={()=>setAddressFormOpen(false)} class="submit">
+              <button onClick={() => setShowModaladdress(false)} class="submit">
                 {intl.formatMessage({ id: "Close" })}
               </button>
             </div>
@@ -699,6 +759,21 @@ const Cart = ({
   return (
     <>
       <Layout parent="Home" sub="Shop" subChild="Checkout">
+        {showModaladdress && (
+          <div className="modal-overlay" style={{ zIndex: 9999999999999 }}>
+            <div className="modalAddress">
+              <div className="d-flex justify-content-between">
+                <h3> {intl.formatMessage({ id: "Add Address" })}</h3>
+                {/* <button className="Resetbtn" onClick={()=>handleReset()}>
+                  {intl.formatMessage({ id: "Reset" })}
+                </button> */}
+              </div>
+              <div className="divider-2 mb-15 mt-15"></div>
+
+              {formikFormData(selectedAddressData)}
+            </div>
+          </div>
+        )}
         <section className="mt-50 mb-50">
           <div className="container">
             <div className="row">
@@ -788,15 +863,26 @@ const Cart = ({
                   <h4>{intl.formatMessage({ id: "Billing Details" })}</h4>
                 </div>
                 <div className="form-group">
-                <div style={{justifyContent:"space-between" , display:"flex" , alignItems:"center"}}>
-                <label htmlFor="selectedDropdownOption">
-                    {intl.formatMessage({ id: "Select Address" })}
-                  </label>
-                  <button class="btn btn-fill-out btn-block " onClick={()=>setAddressFormOpen(true)}>
-                    Add New Address
-                  </button>
-                </div>
-                <div class="divider-2 mb-15 mt-15"></div>
+                  <div
+                    style={{
+                      justifyContent: "space-between",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <label htmlFor="selectedDropdownOption">
+                      {intl.formatMessage({ id: "Select Address" })}
+                    </label>
+                    <button
+                      class="btn btn-fill-out btn-block "
+                      onClick={() => {
+                        openModal(true);
+                      }}
+                    >
+                      Add New Address
+                    </button>
+                  </div>
+                  <div class="divider-2 mb-15 mt-15"></div>
                   {/* <select
                     as="select"
                     className="selectedAddress"
@@ -841,57 +927,59 @@ const Cart = ({
                       </option>
                     ))}
                   </select> */}
-
-
-       
                 </div>
                 <div>
-  {address?.billing_address?.map((addressItem) => (
-    <li key={addressItem.id}>
-      <input
-        type="radio"
-        id={`address${addressItem.id}`}
-        name="selectedAddress"
-        value={addressItem.id}
-        checked={selectedAddressDropdown === addressItem.id}
-        onChange={(e) => {
-          // console.log("Selected address ID:", addressItem); // Log the address ID
-          setAddressFormOpen(false)
-          setSelectedAddressdisplay(addressItem)
-          setSelectedAddressDropdown(addressItem.id); // Set the selected address ID
-          
+                  {address?.billing_address?.map((addressItem) => (
+                    <li key={addressItem.id}>
+                      <input
+                        type="radio"
+                        id={`address${addressItem.id}`}
+                        name="selectedAddress"
+                        value={addressItem.id}
+                        checked={selectedAddressDropdown === addressItem.id}
+                        onChange={(e) => {
+                          // console.log("Selected address ID:", addressItem); // Log the address ID
+                          // setAddressFormOpen(false)
+                          setSelectedAddressdisplay(addressItem);
+                          setSelectedAddressDropdown(addressItem.id); // Set the selected address ID
 
-          // Find the selected option
-          const selectedOption = address?.billing_address?.find(
-            (option) => option.id === parseInt(e.target.value)
-          );
+                          // Find the selected option
+                          const selectedOption = address?.billing_address?.find(
+                            (option) => option.id === parseInt(e.target.value)
+                          );
 
-          // If the selected option is found, get the region ID and call getCartData
-          if (selectedOption) {
-            const regionId = selectedOption.region_id;
-            console.log("Selected address region id:", regionId);
-            getCartData(regionId);
-          }
+                          // If the selected option is found, get the region ID and call getCartData
+                          if (selectedOption) {
+                            const regionId = selectedOption.region_id;
+                            console.log(
+                              "Selected address region id:",
+                              regionId
+                            );
+                            getCartData(regionId);
+                          }
 
-          // Call findElementById with the selected address ID
-          findElementById(e.target.value);
-        }}
-      />
-      <label htmlFor={`address${addressItem.id}`}>
-        {`${addressItem.full_name !== null ? addressItem.full_name + ",\n" : ""} 
+                          // Call findElementById with the selected address ID
+                          findElementById(e.target.value);
+                        }}
+                      />
+                      <label htmlFor={`address${addressItem.id}`}>
+                        {`${
+                          addressItem.full_name !== null
+                            ? addressItem.full_name + ",\n"
+                            : ""
+                        } 
         ${addressItem.address !== null ? addressItem.address + ",\n" : ""} 
         ${addressItem.road !== null ? addressItem.road + ",\n" : ""} 
         ${addressItem.city_name !== null ? addressItem.city_name + ",\n" : ""} 
-        ${addressItem.state_name !== null ? addressItem.state_name + ",\n" : ""} 
+        ${
+          addressItem.state_name !== null ? addressItem.state_name + ",\n" : ""
+        } 
         ${addressItem.post_code !== null ? addressItem.post_code : ""}`}
-      </label>
-    </li>
-  ))}
-</div>
+                      </label>
+                    </li>
+                  ))}
+                </div>
                 <div class="divider-2 mb-15 mt-15"></div>
-
-
-         { addressformOpen ?       formikFormData(selectedAddressData) : null}
               </div>
               <div className="col-lg-5">
                 <div className="border p-40 cart-totals ml-30 mb-50 checkout_box mt-30">
@@ -1071,7 +1159,8 @@ const Cart = ({
                           <strong>
                             {intl.formatMessage({
                               id: "All Item in Dry Shipping",
-                            })}:
+                            })}
+                            :
                           </strong>
                         </td>
                         <td
@@ -1236,9 +1325,14 @@ const Cart = ({
                             data-target="#timeslot"
                             aria-controls="timeslot"
                           >
-                            {console.log("start time",Item.start_time)}
-
-                            {moment(Item.start_time, 'HH:mm:ss').format('h:mm A')} - {moment(Item?.end_time, 'HH:mm:ss').format('h:mm A')}
+                            {console.log("start time", Item.start_time)}
+                            {moment(Item.start_time, "HH:mm:ss").format(
+                              "h:mm A"
+                            )}{" "}
+                            -{" "}
+                            {moment(Item?.end_time, "HH:mm:ss").format(
+                              "h:mm A"
+                            )}
                           </label>
                         </div>
                       );
@@ -1357,33 +1451,64 @@ const Cart = ({
                   </div>
                 </div>
                 <div className="px-40 ml-30 mb-40">
-              <textarea
-                name="orderNotes"
-                as="textarea"
-                rows="5"
-                value={orderNotes}
-                // disabled={true}
-                onChange={(e) => setorderNotes(e.target.value)}
-                placeholder={intl.formatMessage({ id: "Customer Comment" })}
-              />
-            </div>
-            <div className="px-10 ml-30 mb-10">
-            {addressformOpen == true? <h6 style={{ color: "red" , fontWeight:"normal" }}>Please Save Address Before place order</h6> : null}
-            <div>
-{  addressformOpen == false    ?     <div><h6 style={{fontWeight:"normal"}}>Selected Address</h6><h8>{`${selectedAddressdisplay?.full_name !== null ? selectedAddressdisplay?.full_name + ",\n" : ""} 
-        ${selectedAddressdisplay?.address !== null ? selectedAddressdisplay?.address + ",\n" : ""} 
-        ${selectedAddressdisplay?.road !== null ? selectedAddressdisplay?.road + ",\n" : ""} 
-        ${selectedAddressdisplay?.city_name !== null ? selectedAddressdisplay?.city_name + ",\n" : ""} 
-        ${selectedAddressdisplay?.state_name !== null ? selectedAddressdisplay?.state_name + ",\n" : ""} 
-        ${selectedAddressdisplay?.post_code !== null ? selectedAddressdisplay?.post_code : ""}`}</h8></div> : null}
-</div>
-            </div>
+                  <textarea
+                    name="orderNotes"
+                    as="textarea"
+                    rows="5"
+                    value={orderNotes}
+                    // disabled={true}
+                    onChange={(e) => setorderNotes(e.target.value)}
+                    placeholder={intl.formatMessage({ id: "Customer Comment" })}
+                  />
+                </div>
+                <div className="px-10 ml-30 mb-10">
+                  {/* {addressformOpen == true? <h6 style={{ color: "red" , fontWeight:"normal" }}>Please Save Address Before place order</h6> : null} */}
+                  <div>
+                    {showModaladdress == false ? (
+                      <div>
+                        <h6 style={{ fontWeight: "normal" }}>
+                          Selected Address
+                        </h6>
+                        <h8>{`${
+                          selectedAddressdisplay?.full_name !== null
+                            ? selectedAddressdisplay?.full_name + ",\n"
+                            : ""
+                        } 
+        ${
+          selectedAddressdisplay?.address !== null
+            ? selectedAddressdisplay?.address + ",\n"
+            : ""
+        } 
+        ${
+          selectedAddressdisplay?.road !== null
+            ? selectedAddressdisplay?.road + ",\n"
+            : ""
+        } 
+        ${
+          selectedAddressdisplay?.city_name !== null
+            ? selectedAddressdisplay?.city_name + ",\n"
+            : ""
+        } 
+        ${
+          selectedAddressdisplay?.state_name !== null
+            ? selectedAddressdisplay?.state_name + ",\n"
+            : ""
+        } 
+        ${
+          selectedAddressdisplay?.post_code !== null
+            ? selectedAddressdisplay?.post_code
+            : ""
+        }`}</h8>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
                 <div className="px-40 ml-30 mb-50">
                   <button
                     onClick={() => {
                       placeOrder();
                     }}
-                    disabled={addressformOpen == true}
+                    disabled={showModaladdress == true}
                     className="btn btn-fill-out btn-block"
                   >
                     {intl.formatMessage({ id: "Place Order" })}
