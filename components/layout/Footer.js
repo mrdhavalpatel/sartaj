@@ -68,13 +68,15 @@ const Footer = () => {
                 <div className="position-relative newsletter-inner">
                   <div className="newsletter-content">
                     <h2 className="mb-20">
-                      {intl.formatMessage({ id: "Stay home & get your daily" })}
+                      {intl.formatMessage({ id: "ONLINE GROCERY" })}
                       <br />
-                      {intl.formatMessage({ id: "needs from our shop" })}
+                      {intl.formatMessage({id:"SHOPPING"})}
+                      <br />
+                      {intl.formatMessage({id:"MADE EASY"})}
                     </h2>
                     <p className="mb-45">
                       {intl.formatMessage({
-                        id: "Start You'r Daily Shopping with",
+                        id: "Start Your Daily Shopping with",
                       })}{" "}
                       <span className="text-brand">
                         {intl.formatMessage({ id: "Sartaj" })}

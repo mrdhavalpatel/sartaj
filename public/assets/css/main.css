@@ -9105,7 +9105,7 @@ footer .hotline img {
 }
 
 .newsletter .newsletter-inner {
-  background: url(../imgs/banner/banner-10.png) no-repeat center;
+ background-color: #fbd93e;
   background-size: cover;
   padding: 84px 78px;
   clear: both;
@@ -9118,11 +9118,14 @@ footer .hotline img {
 
 .newsletter .newsletter-inner img {
   position: absolute;
-  right: 50px;
+  right: 0px;
   bottom: 0;
-  max-width: 40%;
+  max-width: 36%;
 }
 
+.form-subscriber input.form-control {
+  height: 65px;
+}
 .newsletter .newsletter-inner .newsletter-content p {
   font-size: 18px;
 }
