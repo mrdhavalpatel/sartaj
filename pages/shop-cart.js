@@ -168,7 +168,7 @@ const Cart = ({
     <Layout parent="Home" sub="Shop" subChild="Cart">
       {/* {!isLoggedIn ? ( */}
       <section className="mt-50 mb-50">
-      {isLoggedIn ?  <div id="cart_top_row">
+        {isLoggedIn ? <div id="cart_top_row">
           <div className="container">
             <div className="cart_top_row">
               <div className="row align-items-center" >
@@ -186,9 +186,9 @@ const Cart = ({
                 </div>
                 <div className="col-lg-4 col-4">
                   <div className="text-center">
-                  {loading ? null :  <h3 className="text-brand"> ¥
-                                      {cartTotal?.total_amt -
-                                        cartTotal.delivery_charge}</h3>}
+                    {loading ? null : <h3 className="text-brand"> ¥
+                      {cartTotal?.total_amt -
+                        cartTotal.delivery_charge}</h3>}
                   </div>
                 </div>
                 <div className="col-lg-4 col-8">
@@ -196,10 +196,10 @@ const Cart = ({
                     {proceedToCheckout()}
                   </div>
                 </div>
-              </div> 
+              </div>
             </div>
           </div>
-        </div>: null}
+        </div> : null}
         <div className="container">
           <div className="row">
             <div className="col-lg-8 mb-40">
