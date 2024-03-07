@@ -3,7 +3,7 @@ import { API_BASE_URL, api } from "../../lib/api";
 import moment from "moment/moment";
 import StarRating from "./StarRating";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import Link from "next/link";

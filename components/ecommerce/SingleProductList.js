@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { connect } from "react-redux";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { addToCart } from "../../redux/action/cart";
 import { addToCompare } from "../../redux/action/compareAction";
 import { openQuickView } from "../../redux/action/quickViewAction";

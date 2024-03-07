@@ -1,7 +1,7 @@
 import * as Types from "../constants/actionTypes";
 import { deleteProduct, findProductIndexById } from "../../util/util";
 import storage from "../../util/localStorage";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 const initialState = {
   modal: false,

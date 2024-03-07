@@ -9122,7 +9122,25 @@ footer .hotline img {
   bottom: 0;
   max-width: 36%;
 }
+.emptyCart {
+  text-align: center;
+  padding: 20px;
+}
 
+.emptyCart img {
+  width: 200px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.emptyCart h5 {
+  color: #333;
+}
+
+.emptyCart h6 {
+  color: #666;
+  font-weight: 500;
+}
 .form-subscriber input.form-control {
   height: 65px;
 }

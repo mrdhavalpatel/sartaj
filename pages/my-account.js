@@ -6,7 +6,7 @@ import moment from "moment/moment";
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import Button from "react-bootstrap/Button";
 import AddressDialog from "../components/dialogs/AddressDialog";
 import { useRouter } from "next/router";
@@ -46,7 +46,16 @@ function Account() {
     confirm_password: "",
   };
   const pageNumbers = [];
-
+  const handleClick = (itm) => {
+   
+    navigator.clipboard.writeText(itm)
+      .then(() => {
+      
+      })
+      .catch(err => {
+        console.error('Failed to copy text: ', err);
+      });
+  }
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsperpage, setItemsPerPage] = useState(5);
   const indexOfLastItem = currentPage * itemsperpage;
@@ -131,7 +140,7 @@ function Account() {
     setOrderPDFURL(url);
   };
 
-  const handleChangePassword = async (values ,{resetForm}) => {
+  const handleChangePassword = async (values, { resetForm }) => {
     let payload = {
       old_password: values?.current_password,
       new_password: values?.new_password,
@@ -462,6 +471,9 @@ function Account() {
                                     <th>
                                       {intl.formatMessage({ id: "Actions" })}
                                     </th>
+                                    <th>
+                                      {intl.formatMessage({ id: "Track Shipment" })}
+                                    </th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -511,6 +523,19 @@ function Account() {
                                             </Button>
                                           )} */}
                                         </td>
+                                        <td>
+                                          {Item?.tracking_id !== null ?<div>{Item?.tracking_id}
+                                          <div>
+                                            <a
+                                            href="https://k2k.sagawa-exp.co.jp/p/sagawa/web/okurijosearcheng.jsp"
+                                            target="_blank"
+                                            onClick={handleClick(Item?.tracking_id)}
+                                            rel="noopener noreferrer"
+                                           style={{backgroundColor:"#3e4493" , color:"white" , paddingTop:3 , borderRadius:5 , paddingBottom:3 , paddingLeft:5 , paddingRight:5}}
+                                          >Track Order</a></div></div> : "Tracking information will be update shortly."}
+
+
+                                        </td>
                                       </tr>
                                     );
                                   })}
@@ -523,24 +548,24 @@ function Account() {
                               paginate={setCurrentPage}
                             />
                             <ul className="pagination">
-                            {pageNumbers.map((pageNumber, index) => (
-            <span key={index}>
-                {pageNumber === '<' && (
-                    <button className="pagination-button large" onClick={handlePrevPage}>&lt;</button>
-                )}
-                {pageNumber === '>' && (
-                    <button className="pagination-button large" onClick={handleNextPage}>&gt;</button>
-                )}
-                {pageNumber !== '<' && pageNumber !== '>' && (
-                    <button
-                        onClick={() => setCurrentPage(pageNumber)}
-                        className={`pagination-button ${currentPage === pageNumber ? 'active' : ''}`}
-                    >
-                        {pageNumber}
-                    </button>
-                )}
-            </span>
-        ))}
+                              {pageNumbers.map((pageNumber, index) => (
+                                <span key={index}>
+                                  {pageNumber === '<' && (
+                                    <button className="pagination-button large" onClick={handlePrevPage}>&lt;</button>
+                                  )}
+                                  {pageNumber === '>' && (
+                                    <button className="pagination-button large" onClick={handleNextPage}>&gt;</button>
+                                  )}
+                                  {pageNumber !== '<' && pageNumber !== '>' && (
+                                    <button
+                                      onClick={() => setCurrentPage(pageNumber)}
+                                      className={`pagination-button ${currentPage === pageNumber ? 'active' : ''}`}
+                                    >
+                                      {pageNumber}
+                                    </button>
+                                  )}
+                                </span>
+                              ))}
                             </ul>
                           </div>
                         </div>
@@ -563,10 +588,11 @@ function Account() {
                               initialValues={initialValues2}
                               validationSchema={validationSchema2}
                               // onSubmit={(value)=>handleChangePassword(value,{resetForm})}
-                              onSubmit={(values, {  resetForm }) => {
+                              onSubmit={(values, { resetForm }) => {
                                 // Handle form submission here
-                                handleChangePassword(values , {resetForm});
-                                setSubmitting(false);}}
+                                handleChangePassword(values, { resetForm });
+                                setSubmitting(false);
+                              }}
                             >
                               <Form>
                                 <div>

@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { API_BASE_URL } from "../../lib/api";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 const AddressDialog = ({ address, token, show, handleClose }) => {
   // Define the validation schema using Yup

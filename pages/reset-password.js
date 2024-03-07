@@ -4,7 +4,7 @@ import Layout from "../components/layout/Layout";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { auth } from "../lib/auth/auth";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { connect } from "react-redux";
 import { useIntl } from "react-intl";
 import { useEffect, useState } from "react";

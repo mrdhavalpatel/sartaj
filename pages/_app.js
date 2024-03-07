@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
+import { Toaster } from 'sonner';
 import "react-toastify/dist/ReactToastify.css";
 import "react-responsive-modal/styles.css";
 import "swiper/css";
@@ -79,6 +80,7 @@ function MyApp({ Component, pageProps }) {
                 <IntlProvider locale={locale} messages={messages[locale]}>
                   <Component {...pageProps} />
                   <ToastContainer />
+                  <Toaster position="top-right" richColors />
                 </IntlProvider>
               </StorageWrapper>
             </LanguageProvider>

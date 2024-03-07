@@ -14,7 +14,7 @@ import {
 import { useEffect } from "react";
 import storage from "../util/localStorage";
 import { useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import axios from "axios";
 import { API_BASE_URL } from "../lib/api";
 import { ErrorMessage, Field, Formik } from "formik";
@@ -203,7 +203,7 @@ const Cart = ({
         <div className="container">
           <div className="row">
             <div className="col-lg-8 mb-40">
-              <h6 className="text-body text-md-end">
+           {cartProducts.length <= 0 ? null :  <h6 className="text-body text-md-end">
                 <a
                   className="text-muted"
                   onClick={() => {
@@ -214,7 +214,7 @@ const Cart = ({
                   {intl.formatMessage({ id: "Clear Cart" })}
 
                 </a>
-              </h6>
+              </h6>}
             </div>
           </div>
           <div className="row">
@@ -227,7 +227,20 @@ const Cart = ({
                     </Spinner>
                   </div> :
                   <div className="table-responsive shopping-summery">
-                    {cartProducts.length <= 0 && "No Products"}
+
+                    {!loading && cartProducts.length <= 0  ?
+                      <div className="emptyCart">
+                        <img src="/assets/emptycart.png" alt="Empty Cart Image"/>
+                        <h5 className="mb-10">Cart's Feeling Light</h5>
+                        <h6>Your cart awaits! Dive into your shopping adventure now and let the treasures find their way in!</h6>
+                        <div className="cart-action  mobile_btn mt-40">
+                  <a className="btn" href={`/${intl.locale}/shop`}>
+                  <i className="fi-rs-arrow-left mr-10 "  style={{ verticalAlign:"middle"}}></i>
+
+                    {intl.formatMessage({ id: "Explore Sartaj" })}
+                  </a>
+                </div>
+                      </div> : null}
                     <table
                       className={
                         cartProducts.length > 0 ? "table table-cart" : "d-none"
@@ -479,12 +492,12 @@ const Cart = ({
                       </tbody>
                     </table>
                   </div>}
-                <div className="cart-action text-end mobile_btn">
+                  {cartProducts.length <= 0 ? null :  <div className="cart-action text-end mobile_btn">
                   <a className="btn " href={`/${intl.locale}/shop`}>
                     <i className="fi-rs-shopping-bag mr-10"></i>
                     {intl.formatMessage({ id: "Continue Shopping" })}
                   </a>
-                </div>
+                </div>}
               </div>
             </div>
             {cartProducts.length > 0 ? (

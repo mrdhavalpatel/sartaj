@@ -4,7 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import { auth } from "../lib/auth/auth";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import DateInput from "../components/customDatePicker/DateInput";
 import { useIntl } from "react-intl";
 import PhoneInput from "react-phone-number-input";

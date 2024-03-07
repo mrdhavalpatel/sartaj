@@ -4,7 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { auth } from "../lib/auth/auth";
 import { useRouter } from "next/router";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { useAuth } from "../components/context/AuthContext";
 import { connect } from "react-redux";
 import { API_BASE_URL } from "../lib/api";

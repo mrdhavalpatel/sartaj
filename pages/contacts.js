@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { ErrorMessage, Field, Formik } from "formik";
 import { API_BASE_URL } from "../lib/api";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 const Gmap = dynamic(() => import("../components/elements/Gmap"), {
   ssr: false,

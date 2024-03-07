@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ApiCall } from "../../lib/other/other";
 import { Formik, Field, Form } from "formik";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { useIntl } from "react-intl";
 import { useAuth } from "../context/AuthContext";
 import { useDispatch } from "react-redux";

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import {
   addToCart,
   decreaseQuantity,

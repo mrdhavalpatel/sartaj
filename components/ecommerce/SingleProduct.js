@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import {
   addToCart, increaseQuantity,
   decreaseQuantity,

@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { Modal } from "react-responsive-modal";
 import { addToCart } from "../../redux/action/cart";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import {
   clearWishlist,
   closeWishlistModal,

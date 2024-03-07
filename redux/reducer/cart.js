@@ -3,7 +3,7 @@
 // import { deleteProduct, findProductIndexById } from "../../util/util";
 // import * as Types from "../constants/actionTypes";
 // import { API_BASE_URL } from "../../lib/api";
-// import { toast } from "react-toastify";
+// import { toast } from "sonner";
 
 // export default (state = [], action) => {
 //   let index = null;
@@ -272,7 +272,7 @@ import storage from "../../util/localStorage";
 import { deleteProduct, findProductIndexById } from "../../util/util";
 import * as Types from "../constants/actionTypes";
 import { API_BASE_URL } from "../../lib/api";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 export default (state = [], action) => {
   let index = null;
