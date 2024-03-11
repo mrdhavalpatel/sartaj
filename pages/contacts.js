@@ -283,7 +283,7 @@ function Contact() {
                     <div className="col-lg-4 pl-50 d-lg-block d-none">
                       <img
                         className="border-radius-15 mt-50"
-                        src="/assets/imgs/page/contact-2.png"
+                        src="/assets/imgs/page/contact-us.jpg"
                         
                         alt="nest"
                       />

@@ -8754,7 +8754,7 @@ span.fi-rs-apps {
 }
 
 .price_range {
-  background: url(../imgs/banner/fillter-widget-bg.png) no-repeat right bottom;
+  /* background: url(../imgs/banner/fillter-widget-bg.png) no-repeat right bottom; */
   background-size: 150px;
 }
 
