@@ -11,6 +11,7 @@ import { useIntl } from "react-intl";
 import ShowSelect from "./Filter/ShowSelect";
 import QuickView from "./QuickView";
 import { ApiCall } from "../../lib/other/other";
+import { translatedItemDetails } from "../../util/util";
 
 const CategoryProducts = ({ productFilters }) => {
   const router = useRouter();
@@ -30,7 +31,8 @@ const CategoryProducts = ({ productFilters }) => {
   const [sortBy, setSortBy] = useState("default");
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [catName , setCatName]=useState("")
+const [isCollapsed,setisCollapsed]=useState(false)
   const getPaginatedProducts = productsData;
 
   const getPaginationGroup = pagination;
@@ -65,6 +67,8 @@ const CategoryProducts = ({ productFilters }) => {
         .join("/")
         .replace(",", "/")}`
     ).then(async (response) => {
+      setCatName(response?.data[0]?.categories)
+ 
       let payload = {
         limit: limit,
         offset: currentPage,
@@ -109,7 +113,11 @@ const CategoryProducts = ({ productFilters }) => {
                 <div className="totall-product">
                   {!isLoading && (
                     <p>
-                      {intl.formatMessage({ id: "We found" })}
+                       <span
+                    dangerouslySetInnerHTML={{
+                      __html: translatedItemDetails("name", intl, catName),
+                    }}
+                  /> , {intl.formatMessage({ id: "We found" })}
                       <strong className="text-brand">{productTotal}</strong>
                       {intl.formatMessage({ id: "items for you!" })}
                     </p>
@@ -117,6 +125,11 @@ const CategoryProducts = ({ productFilters }) => {
                 </div>
                 <div className="sort-by-product-area">
                   <div className="sort-by-cover mr-10">
+                   
+                
+                   
+                  
+                  
                     <ShowSelect selectChange={selectChange} showLimit={10} />
                   </div>
                   <div className="sort-by-cover">
@@ -164,10 +177,8 @@ const CategoryProducts = ({ productFilters }) => {
             </div>
             <div className="col-lg-1-5 primary-sidebar sticky-sidebar">
               <div className="sidebar-widget widget-category-2 mb-30">
-                <h5 className="section-title style-1 mb-30">
-                  {intl.formatMessage({ id: "Category" })}
-                </h5>
-                <CategoryProduct />
+                
+                <CategoryProduct isCollapsed={isCollapsed}/>
               </div>
 
               <div className="sidebar-widget price_range range mb-30">

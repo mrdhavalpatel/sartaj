@@ -8,7 +8,7 @@ import { translatedItemDetails } from "../../../util/util";
 import Modal from "../../elements/ModalAlcohole";
 
 
-const CategoryProduct = ({ updateProductCategory }) => {
+const CategoryProduct = ({ updateProductCategory , isCollapsed }) => {
   const router = useRouter();
   const intl = useIntl();
   const [categories, setCategories] = useState([]);
@@ -17,6 +17,11 @@ const CategoryProduct = ({ updateProductCategory }) => {
   const [selectedEvent, setSelectedEvent] = useState(null); 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  const [collapsed, setCollapsed] = useState(true);
+
+  const toggleCollapse = () => {
+    setCollapsed(!collapsed);
+  };
   const handleYesClick = () => {
     closeModal();
 
@@ -65,25 +70,30 @@ const CategoryProduct = ({ updateProductCategory }) => {
   }, []);
   return (
     <>
-      <ul>
-      <Modal isOpen={isModalOpen} onClose={closeModal} onYesClick={handleYesClick} />
-
-        {categories?.map((Itm) => {
-          return (
-            <li onClick={(e) => selectCategory(e, Itm)}>
-              <a>
-                <img src={Itm?.image} alt="nest" />
-                <span
-                  dangerouslySetInnerHTML={{
-                    __html: translatedItemDetails("name", intl, Itm),
-                  }}
-                />
-              </a>
-              <span className="count">{Itm?.total_produts}</span>
-            </li>
-          );
-        })}
-      </ul>
+      <h5 className="section-title style-1 mb-30" onClick={toggleCollapse}>
+        {intl.formatMessage({ id: "Category" })}
+        <i class="fi-rs-angle-down"></i>
+      </h5>
+      {!collapsed && (
+        <ul>
+          <Modal isOpen={isModalOpen} onClose={closeModal} onYesClick={handleYesClick} />
+          {categories?.map((Itm) => {
+            return (
+              <li onClick={(e) => selectCategory(e, Itm)} key={Itm.id}>
+                <a>
+                  <img src={Itm?.image} alt="nest" />
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: translatedItemDetails("name", intl, Itm),
+                    }}
+                  />
+                </a>
+                <span className="count">{Itm?.total_produts}</span>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </>
   );
 };
