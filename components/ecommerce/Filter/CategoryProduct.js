@@ -72,7 +72,7 @@ const CategoryProduct = ({ updateProductCategory , isCollapsed }) => {
     <>
       <h5 className="section-title style-1 mb-30" onClick={toggleCollapse}>
         {intl.formatMessage({ id: "Category" })}
-        <i class="fi-rs-angle-down"></i>
+       { collapsed ? <i class="fi-rs-angle-down"></i> :<i class="fi-rs-angle-up"></i>}
       </h5>
       {!collapsed && (
         <ul>

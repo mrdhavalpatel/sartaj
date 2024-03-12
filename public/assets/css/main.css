@@ -10820,7 +10820,7 @@ footer .hotline img {
   }
 
   .select-active {
-    display: none;
+    width: 150px;
   }
 
   .loop-grid.loop-list article .post-thumb {
