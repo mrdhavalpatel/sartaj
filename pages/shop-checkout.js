@@ -22,6 +22,7 @@ import { Spinner } from "react-bootstrap";
 import moment from "moment";
 import React, { useRef } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
+import { set } from "date-fns";
 const Cart = ({
   openCart,
   cartItems,
@@ -707,6 +708,7 @@ const Cart = ({
     fnBrowserDetect();
   }, []);
   const placeOrder = async () => {
+    setloading(true)
     try {
       let token = localStorage.getItem("token");
 
@@ -740,18 +742,22 @@ const Cart = ({
         .then((response) => {
           if (response?.status === 200) {
             router.push(`/OrderReceived?order_id=${response?.data?.order_id}`);
+          
           }
         })
         .then(() => {
           clearCart();
+          setloading(false)
         });
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         const errorMessage = error.response.data.errors[0]?.message;
         toast.error(errorMessage + "¥");
+        setloading(false)
       } else {
         // console.error("Error while placing order:", error);
         toast.error("An error occurred while placing the order");
+        setloading(false)
       }
     }
   };
@@ -1458,7 +1464,12 @@ const Cart = ({
                     </table>
                   ) : null}
                   <div>
-                    <button
+                {loading ? 
+                <div class="d-flex justify-content-center align-items-center ">
+                <Spinner animation="border" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>:    <button
                       onClick={() => {
                         placeOrder();
                       }}
@@ -1466,7 +1477,7 @@ const Cart = ({
                       className="w-100 btn btn-fill-out btn-block"
                     >
                       {intl.formatMessage({ id: "Place Order" })}
-                    </button>
+                    </button>}
                   </div>
                 </div>
 
