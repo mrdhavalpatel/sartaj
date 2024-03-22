@@ -12,8 +12,8 @@ const ThumbSlider = ({ product }) => {
     <div>
       <Swiper
         style={{
-          "--swiper-navigation-color": "#fff",
-          "--swiper-pagination-color": "#fff",
+          "--swiper-navigation-color": "#3e4493",
+          "--swiper-pagination-color": "#3e4493",
         }}
         spaceBetween={10}
         navigation={true}

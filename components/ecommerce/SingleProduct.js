@@ -14,6 +14,12 @@ import QuickView from "./QuickView";
 import { useIntl } from "react-intl";
 import storage from "../../util/localStorage";
 import { translatedItemDetails } from "../../util/util";
+import { Swiper, SwiperSlide  } from "swiper/react";
+import { Pagination } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
 const SingleProduct = ({
   product,
@@ -64,6 +70,13 @@ const SingleProduct = ({
     addToWishlist(product, intl);
     // toast("Added to Wishlist !");
   };
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
   const cartItem = cartItems?.find(item => item?.id === product?.id);
   const cartQuantity = cartItem ? cartItem.quantity : 0;
   return (
@@ -71,7 +84,7 @@ const SingleProduct = ({
       <div className="product-cart-wrap mb-30">
         <div className="product-img-action-wrap">
           <div className="product-img product-img-zoom">
-            <Link
+            {/* <Link
               href={`/${intl.locale === "eng" ? product?.seo_en : product?.seo_ja
                 }`}
             >
@@ -79,7 +92,33 @@ const SingleProduct = ({
                 product?.image?.map((itm, index) => {
                   return <img key={index} className="default-img" src={itm} alt="nest" />;
                 })}
-            </Link>
+            </Link> */}
+            <div data-slick='{"slidesToShow": 2, "slidesToScroll": 2}'>
+            <Swiper
+             slidesPerView={1}
+             //loop={true}
+             spaceBetween={0}
+             modules={[Pagination]}
+             effect={"fade"}
+             fadeEffect={{
+               crossFade: true,
+             }}
+             pagination={{clickable:true}}
+           
+            
+         
+            > 
+        {Array.isArray(product?.image) &&
+          product?.image?.map((itm, index) => {
+            return (
+              <SwiperSlide key={index}  >
+                <img className="default-img" src={itm} alt="nest"  />
+              </SwiperSlide>
+            );
+          })}
+      </Swiper>
+            </div>
+     
           </div>
           <div className="product-action-1">
             <a

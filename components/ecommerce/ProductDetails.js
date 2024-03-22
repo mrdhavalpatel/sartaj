@@ -164,7 +164,7 @@ const ProductDetails = ({
                       </p> */}
                     </div>
                     <div className="bt-1 border-color-1 mt-30 mb-30"></div>
-                    <div className="detail-extralink d-flex">
+                    <div className="detail-extralink d-flex align-items-start">
                       <div className="detail-qty border radius d-flex align-items-center justify-content-between">
                         <a
                           onClick={(_e) => {

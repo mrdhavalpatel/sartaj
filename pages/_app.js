@@ -17,6 +17,8 @@ import { IntlProvider } from "react-intl";
 import eng from "../lang/en.json";
 import jp from "../lang/jp.json";
 import { LanguageProvider } from "../components/context/LanguageContext";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
