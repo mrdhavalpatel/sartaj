@@ -14,6 +14,13 @@ import { useIntl } from "react-intl";
 import { translatedItemDetails } from "../../util/util";
 import { findProductIndexById } from "../../util/util";
 import storage from "../../util/localStorage";
+import { Swiper, SwiperSlide  } from "swiper/react";
+import { Pagination } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+
 const SingleProduct2 = ({
   product,
   addToCart,
@@ -71,13 +78,38 @@ const SingleProduct2 = ({
       <div className="product-cart-wrap mb-30">
         <div className="product-img-action-wrap">
           <div className="product-img product-img-zoom">
-            <Link
+            {/* <Link
               href={`/${intl.locale === "eng" ? product?.seo_en : product?.seo_ja
                 }`}
             >
               <img className="default-img" src={product?.image} alt="nest" />
               <img className="hover-img" src={product?.image} alt="nest" />
-            </Link>
+            </Link> */}
+             <div data-slick='{"slidesToShow": 2, "slidesToScroll": 2}'>
+            <Swiper
+             slidesPerView={1}
+             //loop={true}
+             spaceBetween={0}
+             modules={[Pagination]}
+             effect={"fade"}
+             fadeEffect={{
+               crossFade: true,
+             }}
+             pagination={{clickable:true}}
+           
+            
+         
+            > 
+        {Array.isArray(product?.image) &&
+          product?.image?.map((itm, index) => {
+            return (
+              <SwiperSlide key={index}  >
+                <img className="default-img" src={itm} alt="nest"  />
+              </SwiperSlide>
+            );
+          })}
+      </Swiper>
+            </div>
           </div>
           <div className="product-action-1">
             <a

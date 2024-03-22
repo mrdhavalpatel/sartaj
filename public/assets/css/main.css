@@ -12298,10 +12298,11 @@ footer .hotline img {
   margin: 0 auto 40px;
 }
 
-.product-cart-wrap .product-img-action-wrap .product-img a img {
+.product-cart-wrap .product-img-action-wrap .product-img img {
   height: 190px;
   object-fit: contain;
   object-position: center;
+  width: 100%;
 }
 
 .product-list-small figure img {
