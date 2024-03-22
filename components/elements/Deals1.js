@@ -15,7 +15,12 @@ import { useIntl } from "react-intl";
 import { translatedItemDetails } from "../../util/util";
 import { fetchProduct } from "../../redux/action/product";
 import storage from "../../util/localStorage";
-
+import { Swiper, SwiperSlide  } from "swiper/react";
+import { Pagination } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 const Deals1 = ({
   product,
   addToCart,
@@ -65,9 +70,34 @@ const Deals1 = ({
         </div>
         <div className="product-img-action-wrap">
           <div className="product-img">
-            <Link href={`/${product?.seo_en}`}>
+            {/* <Link href={`/${product?.seo_en}`}>
               <img src={product?.image?.[0]} alt="nest" />
-            </Link>
+            </Link> */}
+             <div data-slick='{"slidesToShow": 2, "slidesToScroll": 2}'>
+            <Swiper
+             slidesPerView={1}
+             //loop={true}
+             spaceBetween={0}
+             modules={[Pagination]}
+             effect={"fade"}
+             fadeEffect={{
+               crossFade: true,
+             }}
+             pagination={{clickable:true}}
+           
+            
+         
+            > 
+        {Array.isArray(product?.image) &&
+          product?.image?.map((itm, index) => {
+            return (
+              <SwiperSlide key={index}  >
+                <img className="default-img" src={itm} alt="nest"  />
+              </SwiperSlide>
+            );
+          })}
+      </Swiper>
+            </div>
           </div>
         </div>
 
