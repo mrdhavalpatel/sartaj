@@ -205,7 +205,7 @@ const SingleProduct2 = ({
           </div>
 
           <div className="sold mt-15 mb-15">
-            <div className="progress mb-5">
+            {/* <div className="progress mb-5">
               <div
                 className="progress-bar"
                 role="progressbar"
@@ -223,7 +223,7 @@ const SingleProduct2 = ({
               {" "}
               Sold:{" "}
               {`${product?.sold_products}/${product?.total_product_count}`}
-            </span>
+            </span> */}
           </div>
 
           {/* <button
