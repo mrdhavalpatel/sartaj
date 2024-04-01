@@ -58,6 +58,14 @@ function MyApp({ Component, pageProps }) {
     const handleRouteChange = () => {
       checkAuth();
     };
+        // Google Tag Manager
+    const handleRouteChangeForGTM = (url) => {
+      window.dataLayer.push({
+        event: 'pageview',
+        page: url,
+      });
+    };
+    router.events.on('routeChangeComplete', handleRouteChangeForGTM);
 
     router.events.on("routeChangeStart", handleRouteChange);
     router.events.on("routeChangeStart", () => handleLoading(true));
@@ -69,6 +77,7 @@ function MyApp({ Component, pageProps }) {
       router.events.off("routeChangeStart", () => handleLoading(true));
       router.events.off("routeChangeComplete", () => handleLoading(false));
       router.events.off("routeChangeError", () => handleLoading(false));
+      router.events.off('routeChangeComplete', handleRouteChangeForGTM);
     };
   }, []);
 
