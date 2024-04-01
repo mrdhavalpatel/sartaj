@@ -13368,3 +13368,8 @@ div#Description,div#Description h1,div#Description h2,div#Description h3, div#De
     background-position: left;
 }
   }
+  @media only screen and (max-width: 500px) {
+    .modalAddress {
+      width: 90%;
+    }
+  }
