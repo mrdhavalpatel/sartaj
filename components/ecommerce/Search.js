@@ -76,10 +76,10 @@ const handleYesClick=()=>{
         onSubmit={handleSubmit}
       >
         <select
-          className="select-active"
+          className="select-active d-none"
           value={categoriesValue}
           onChange={(e) => {
-            console.log("in search lock for alcohole" , e.target.value)
+            console.log("in search lock for alcohole" ,  e.target.value)
             if(e.target.value == 66){
               setIsModalOpen(true)
               setmodalcustomvalue(e.target.value)
