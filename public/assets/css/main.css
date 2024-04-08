@@ -14868,5 +14868,27 @@ div#Description, div#Description h1, div#Description h2, div#Description h3, div
     right: 0;
     top: 5px;
     color: #fff;
+    z-index: 0;
+  }
+
+  .archive-header {
+    display: none;
+  }
+
+  .sidebar-widget {
+    display: none;
+  }
+
+  .pagination-area p {
+    color: #fff;
+  }
+
+  .main-categori-wrap>a {
+    z-index: 9;
+    position: relative;
+  }
+
+  .categori-dropdown-active-small.active+span.fi-rs-angle-small-down {
+    rotate: 180deg;
   }
 }

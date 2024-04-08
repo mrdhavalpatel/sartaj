@@ -473,7 +473,7 @@ const Footer = () => {
                 className="mini-cart-icon"
               >
                 <img src="/assets/imgs/menu/cart.png" alt="Cart" className="bottom_menu_icon" />
-                <span className="footer_menu_text">Cart</span>
+                <span className="footer_menu_text">{intl.formatMessage({ id: "Cart" })}</span>
               </Link>
             </div>
             <div className="col footer_menu">
