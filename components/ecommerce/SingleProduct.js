@@ -14,7 +14,7 @@ import QuickView from "./QuickView";
 import { useIntl } from "react-intl";
 import storage from "../../util/localStorage";
 import { translatedItemDetails } from "../../util/util";
-import { Swiper, SwiperSlide  } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -94,31 +94,31 @@ const SingleProduct = ({
                 })}
             </Link> */}
             <div data-slick='{"slidesToShow": 2, "slidesToScroll": 2}'>
-            <Swiper
-             slidesPerView={1}
-             //loop={true}
-             spaceBetween={0}
-             modules={[Pagination]}
-             effect={"fade"}
-             fadeEffect={{
-               crossFade: true,
-             }}
-             pagination={{clickable:true}}
-           
-            
-         
-            > 
-        {Array.isArray(product?.image) &&
-          product?.image?.map((itm, index) => {
-            return (
-              <SwiperSlide key={index}  >
-                <img className="default-img" src={itm} alt="nest"  />
-              </SwiperSlide>
-            );
-          })}
-      </Swiper>
+              <Swiper
+                slidesPerView={1}
+                //loop={true}
+                spaceBetween={0}
+                modules={[Pagination]}
+                effect={"fade"}
+                fadeEffect={{
+                  crossFade: true,
+                }}
+                pagination={{ clickable: true }}
+
+
+
+              >
+                {Array.isArray(product?.image) &&
+                  product?.image?.map((itm, index) => {
+                    return (
+                      <SwiperSlide key={index}  >
+                        <img className="default-img" src={itm} alt="nest" />
+                      </SwiperSlide>
+                    );
+                  })}
+              </Swiper>
             </div>
-     
+
           </div>
           <div className="product-action-1">
             <a
@@ -182,26 +182,27 @@ const SingleProduct = ({
               />
             </Link>
           </h2>
-
-          {product?.overall_rating ? (
-            <div className="product-rate-cover">
-              <div className="product-rate d-inline-block">
-                <div
-                  className="product-rating"
-                  style={{
-                    width: `${product?.overall_rating ? product.overall_rating : 0
-                      }%`,
-                  }}
-                ></div>
+          <div className="product-rate-cover-div">
+            {product?.overall_rating ? (
+              <div className="product-rate-cover">
+                <div className="product-rate d-inline-block">
+                  <div
+                    className="product-rating"
+                    style={{
+                      width: `${product?.overall_rating ? product.overall_rating : 0
+                        }%`,
+                    }}
+                  ></div>
+                </div>
+                <span className="font-small ml-5 text-muted">
+                  {" "}
+                  {/* {product?.rating} */}
+                </span>
               </div>
-              <span className="font-small ml-5 text-muted">
-                {" "}
-                {/* {product?.rating} */}
-              </span>
-            </div>
-          ) : (
-            intl.formatMessage({ id: "No reviews available" })
-          )}
+            ) : (
+              intl.formatMessage({ id: "No reviews available" })
+            )}
+          </div>
 
           <div className="comapny_name">
             <span className="font-small text-muted">
@@ -236,7 +237,7 @@ const SingleProduct = ({
               {cartQuantity > 0 ? (
                 <div className="detail-extralink mr-15">
                   <div className="detail-qty border radius d-flex align-items-center justify-content-between">
-                  <a
+                    <a
                       onClick={() => {
                         if (cartQuantity >= 1) {
                           decreaseQuantity(product.id);

@@ -70,9 +70,9 @@ const Footer = () => {
                     <h2 className="mb-20">
                       {intl.formatMessage({ id: "ONLINE GROCERY" })}
                       <br />
-                      {intl.formatMessage({id:"SHOPPING"})}
+                      {intl.formatMessage({ id: "SHOPPING" })}
                       <br />
-                      {intl.formatMessage({id:"MADE EASY"})}
+                      {intl.formatMessage({ id: "MADE EASY" })}
                     </h2>
                     <p className="mb-45">
                       {intl.formatMessage({
@@ -298,10 +298,10 @@ const Footer = () => {
                   {intl.formatMessage({ id: "Account" })}
                 </h4>
                 <ul className="footer-list  mb-sm-5 mb-md-0">
-         {  isLoggin ?     <li>
-                  <a href="/my-account">
-                        {intl.formatMessage({ id: "My Profile" })}
-                      </a>
+                  {isLoggin ? <li>
+                    <a href="/my-account">
+                      {intl.formatMessage({ id: "My Profile" })}
+                    </a>
                   </li> : null}
                   {isLoggin ? (
                     <li>
@@ -315,7 +315,7 @@ const Footer = () => {
                       >
                         {intl.formatMessage({ id: "Sign Out" })}
                       </a>
-                     
+
                     </li>
                   ) : (
                     <li>
@@ -331,8 +331,8 @@ const Footer = () => {
                       </a>
                     </li>
                   )}
-                
-                  
+
+
                   {/* <li>
                     <a href="/sign-in">{intl.formatMessage({ id: "Sign In" })}</a>
                   </li> */}
@@ -452,6 +452,45 @@ const Footer = () => {
           </div>
         </div>
       </footer>
+      <div className="footer_bottom_menu">
+        <div className="container">
+          <div className="row">
+            <div className="col footer_menu">
+              <Link href="/" className="active">
+                <img src="/assets/imgs/menu/home.png" alt="Home" className="bottom_menu_icon" />
+                <span className="footer_menu_text">{intl.formatMessage({ id: "Home" })}</span>
+              </Link>
+            </div>
+            <div className="col footer_menu">
+              <Link href={`/${intl.locale}/shop`}>
+                <img src="/assets/imgs/menu/shop.png" alt="Shop" className="bottom_menu_icon" />
+                <span className="footer_menu_text">{intl.formatMessage({ id: "Shop" })}</span>
+              </Link>
+            </div>
+            <div className="col footer_menu">
+              <Link
+                href={`/${intl.locale}/shop-cart`}
+                className="mini-cart-icon"
+              >
+                <img src="/assets/imgs/menu/cart.png" alt="Cart" className="bottom_menu_icon" />
+                <span className="footer_menu_text">Cart</span>
+              </Link>
+            </div>
+            <div className="col footer_menu">
+              <Link href={`/${intl.locale}/shop-wishlist`}>
+              <img src="/assets/imgs/menu/wishlist.png" alt="Wishlist" className="bottom_menu_icon" />
+                <span className="footer_menu_text">{intl.formatMessage({ id: "Wishlist" })}</span>
+              </Link>
+            </div>
+            <div className="col footer_menu">
+              <Link href="/my-account">
+              <img src="/assets/imgs/menu/account.png" alt="Account" className="bottom_menu_icon" />
+                <span className="footer_menu_text">{intl.formatMessage({ id: "Account" })}</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

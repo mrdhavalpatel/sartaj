@@ -112,6 +112,7 @@ const Deals1 = ({
                 />
               </Link>
             </h2>
+            <div className="product-rate-cover-div">
             {product?.total_reviews > 0 ? (
               <div className="product-rate-cover">
                 <div className="product-rate d-inline-block">
@@ -132,6 +133,7 @@ const Deals1 = ({
             ) : (
               intl.formatMessage({ id: "No reviews available" })
             )}
+            </div>
             <div>
               <span className="font-small text-muted">
                 By{" "}

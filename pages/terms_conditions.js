@@ -25,7 +25,7 @@ function Terms() {
   return (
     <>
       <Layout parent="Home" sub="Pages" subChild="Terms">
-        <div className="page-content pt-50">
+        <div className="page-content pt-50 terms_conditions_content">
           <div className="container">
             <div className="row">
               <div className="col-xl-10 col-lg-12 m-auto">

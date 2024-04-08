@@ -26,7 +26,7 @@ if(intl.locale === "eng"){
   return (
     <>
       <Layout parent="Home" sub="Pages" subChild="Guide">
-        <div className="page-content pt-50">
+        <div className="page-content pt-50 faq_page_content">
           <div className="container">
             <div className="row">
               <div className="col-xl-10 col-lg-12 m-auto">

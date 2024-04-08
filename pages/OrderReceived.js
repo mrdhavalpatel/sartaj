@@ -79,7 +79,7 @@ const OrderReceived = ({ cartItems }) => {
     <Layout parent="Home" sub="Shop" subChild="Checkout">
       <section className="mt-50 mb-50">
         <div className="container">
-          <div style={{ margin: "0 auto", fontFamily: "Montserrat" }}>
+          <div className="order_received_div" style={{ margin: "0 auto"}}>
             <div style={{ pageBreakAfter: "always" }}>
               <h1>
                 {intl.formatMessage({ id: "Order Received - Thank You!" })}
@@ -123,7 +123,7 @@ const OrderReceived = ({ cartItems }) => {
                   </tr>
                 </tbody>
               </table>
-              <table className="table table-bordered  thankyou-table">
+              <table className="table table-bordered  thankyou-table thankyou-table-info">
                 <thead>
                   <tr>
                     <td className="text-left">

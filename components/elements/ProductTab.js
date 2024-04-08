@@ -155,7 +155,7 @@ const ProductTab = ({
           </div>
 
           <div
-            classdescription={
+            className={
               activeIndex === 4 ? "tab-pane fade show active" : "tab-pane fade"
             }
             id="Reviews"

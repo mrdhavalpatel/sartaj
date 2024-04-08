@@ -288,7 +288,7 @@ function Account() {
         orderId={orderId}
       />
       <Layout parent="Home" sub="Pages" subChild="Account">
-        <div className="page-content pt-150 pb-150">
+        <div className="account_page page-content pt-150 pb-150">
           <div className="container">
             <div className="row">
               <div className="col-lg-10 m-auto">
@@ -304,7 +304,7 @@ function Account() {
                             onClick={() => handleOnClick(1)}
                           >
                             <i className="fi-rs-settings-sliders mr-10"></i>
-                            {intl.formatMessage({ id: "Dashboard" })}
+                            <span>{intl.formatMessage({ id: "Dashboard" })}</span>
                           </a>
                         </li>
                         <li className="nav-item">
@@ -315,7 +315,7 @@ function Account() {
                             onClick={() => handleOnClick(2)}
                           >
                             <i className="fi-rs-shopping-bag mr-10"></i>
-                            {intl.formatMessage({ id: "Orders" })}
+                            <span>{intl.formatMessage({ id: "Orders" })}</span>
                           </a>
                         </li>
 
@@ -327,7 +327,7 @@ function Account() {
                             onClick={() => handleOnClick(4)}
                           >
                             <i className="fi-rs-marker mr-10"></i>
-                            {intl.formatMessage({ id: "My Address" })}
+                            <span>{intl.formatMessage({ id: "My Address" })}</span>
                           </a>
                         </li>
                         <li className="nav-item">
@@ -338,7 +338,7 @@ function Account() {
                             onClick={() => handleOnClick(5)}
                           >
                             <i className="fi-rs-user mr-10"></i>
-                            {intl.formatMessage({ id: "Account details" })}
+                            <span>{intl.formatMessage({ id: "Account details" })}</span>
                           </a>
                         </li>
                         <li className="nav-item">
@@ -362,17 +362,8 @@ function Account() {
                               <path d="M12,14a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V15A1,1,0,0,0,12,14Z" />
                             </svg> */}
                             {/* <i className="fi-rs-crossed-eye"></i> */}
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="26"
-                              height="26"
-                              fill="currentColor"
-                              className="bi bi-unlock"
-                              viewBox="0 0 18 18"
-                            >
-                              <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2M3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z" />
-                            </svg>
-                            {intl.formatMessage({ id: "Change Password" })}
+                            <i className="fi-rs-lock mr-10"></i>
+                            <span>{intl.formatMessage({ id: "Change Password" })}</span>
                           </a>
                         </li>
                         <li className="nav-item">
@@ -382,7 +373,7 @@ function Account() {
                             className="nav-link"
                           >
                             <i className="fi-rs-sign-out mr-10"></i>
-                            {intl.formatMessage({ id: "Logout" })}
+                            <span>{intl.formatMessage({ id: "Logout" })}</span>
                           </Link>
                         </li>
                       </ul>
@@ -772,7 +763,7 @@ function Account() {
                             </h5>
                           </div>
                           <div className="card-body">
-                            <p>
+                            {/* <p>
                               {intl.formatMessage({
                                 id: "Already have an account?",
                               })}{" "}
@@ -780,7 +771,7 @@ function Account() {
                                 {" "}
                                 {intl.formatMessage({ id: "Log in instead!" })}
                               </Link>
-                            </p>
+                            </p> */}
                             <Formik
                               enableReinitialize
                               initialValues={{

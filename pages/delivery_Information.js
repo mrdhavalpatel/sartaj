@@ -23,7 +23,7 @@ function Guide() {
   return (
     <>
       <Layout parent="Home" sub="Pages" subChild="Guide">
-        <div className="page-content pt-50">
+        <div className="page-content pt-50 delivery_information_page">
           <div className="container">
             <div className="row">
               <div className="col-xl-10 col-lg-12 m-auto">

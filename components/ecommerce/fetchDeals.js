@@ -37,17 +37,17 @@ function FeatchDeals({ products , cartItems }) {
         className="custom-class"
         breakpoints={{
           0: {
-            slidesPerView: 1,
+            slidesPerView: 2,
             spaceBetween: 0,
           },
           480: {
-            slidesPerView: 1,
+            slidesPerView: 2,
           },
           640: {
-            slidesPerView: 1,
+            slidesPerView: 2,
           },
           768: {
-            slidesPerView: 1,
+            slidesPerView: 2,
           },
           1024: {
             slidesPerView: 3,

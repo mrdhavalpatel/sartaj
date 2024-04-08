@@ -7,6 +7,7 @@ const SEO = ({ title, description, keywords }) => {
             <title>{`${title}`}</title>
             <meta name="description" content={description} />
             <meta name="keywords" content={keywords} />
+            
         </Head>
     );
 };

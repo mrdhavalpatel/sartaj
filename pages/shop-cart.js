@@ -42,13 +42,13 @@ const Cart = ({
   const proceedToCheckout = () => {
     if (cartProducts?.length > 0) {
       return (
-        <a href={checkoutUrl} className="btn" aria-disabled>
+        <a href={checkoutUrl} className="btn cart_checkout_btn" aria-disabled>
           <i className="fi-rs-box-alt mr-10"></i>
           {intl.formatMessage({ id: "Proceed To CheckOut" })}
         </a>
       );
     } else {
-      <a className="btn" aria-disabled>
+      <a className="btn cart_checkout_btn" aria-disabled>
         <i className="fi-rs-box-alt mr-10"></i>
         {intl.formatMessage({ id: "Proceed To CheckOut" })}
       </a>;
@@ -203,9 +203,9 @@ const Cart = ({
         <div className="container">
           <div className="row">
             <div className="col-lg-8 mb-40">
-           {cartProducts.length <= 0 ? null :  <h6 className="text-body text-md-end">
+              {cartProducts.length <= 0 ? null : <h6 className="text-body text-md-end">
                 <a
-                  className="text-muted"
+                  className="text-muted clearcarttext"
                   onClick={() => {
                     handleClearCart();
                   }}
@@ -228,22 +228,225 @@ const Cart = ({
                   </div> :
                   <div className="table-responsive shopping-summery">
 
-                    {!loading && cartProducts.length <= 0  ?
+                    {!loading && cartProducts.length <= 0 ?
                       <div className="emptyCart">
-                        <img src="/assets/emptycart.png" alt="Empty Cart Image"/>
+                        <img src="/assets/emptycart.png" alt="Empty Cart Image" />
                         <h5 className="mb-10">Cart's Feeling Light</h5>
                         <h6>Your cart awaits! Dive into your shopping adventure now and let the treasures find their way in!</h6>
                         <div className="cart-action  mobile_btn mt-40">
-                  <a className="btn" href={`/${intl.locale}/shop`}>
-                  <i className="fi-rs-arrow-left mr-10 "  style={{ verticalAlign:"middle"}}></i>
+                          <a className="btn" href={`/${intl.locale}/shop`}>
+                            <i className="fi-rs-arrow-left mr-10 " style={{ verticalAlign: "middle" }}></i>
 
-                    {intl.formatMessage({ id: "Explore Sartaj" })}
-                  </a>
-                </div>
+                            {intl.formatMessage({ id: "Explore Sartaj" })}
+                          </a>
+                        </div>
                       </div> : null}
+                    <div className={
+                      cartProducts.length > 0 ? "mobile_cart_box" : "d-none"
+                    }>
+                      {cartProducts?.map((item, i) => (
+                        <div className="mobile_cart_product_box" key={i}>
+                          <div className="d-flex justify-content-between">
+                            <img className="mobile_cart_product_box_img"
+                              src={
+                                item?.image?.[0]
+                                  ? item?.image?.[0]
+                                  : item?.product?.image?.[0]
+                              }
+                            />
+                            <div className="mobile_cart_product_box_info">
+                              <h6 className="mobile_cart_product_box_name">
+                                <Link
+                                  href={
+                                    intl.locale == "eng"
+                                      ? `${item?.seo_en
+                                        ? item?.seo_en
+                                        : item?.product?.seo_en
+                                      }`
+                                      : `${item?.seo_ja
+                                        ? item?.seo_ja
+                                        : item?.product?.seo_ja
+                                      }`
+                                  }
+                                >
+                                  {translatedItemDetails(
+                                    "name",
+                                    intl,
+                                    item.product ? item.product : item
+                                  )}
+                                </Link>
+                              </h6>
+                              <p className="mobile_cart_product_box_price">{intl.formatMessage({ id: "Unit Price" })}
+                                <span>¥
+                                  {item?.actual_price
+                                    ? item?.actual_price
+                                    : item?.product?.actual_price
+                                      ? item?.product?.actual_price
+                                      : 0}
+                                </span>
+                              </p>
+                            </div>
+                            <div className="mobile_cart_product_box_qty">
+                              <div className="detail-extralink">
+                                <div className="detail-qty border radius d-sm-inline-flex d-flex align-items-center justify-content-between">
+                                  <a
+                                    onClick={() => {
+                                      if (item?.quantity >= 1) {
+                                        if (isLoggedIn) {
+                                          decreaseQuantity(item?.product?.id);
+                                          setCartDataUpdated(!cartDataUpdated);
+                                        } else {
+                                          decreaseQuantity(item?.id);
+                                          setCartDataUpdated(!cartDataUpdated);
+                                        }
+                                      }
+                                    }}
+                                    className="qty-down"
+                                  >
+                                    <i className="fi-rs-minus-small"></i>
+                                  </a>
+                                  <span className="qty-val">{item?.quantity}</span>
+                                  <a
+                                    onClick={() => {
+                                      if (
+                                        (item?.quantity
+                                          ? item?.quantity
+                                          : item?.product?.product?.quantity) <
+                                        (item?.maximum_order_quantity
+                                          ? item?.maximum_order_quantity
+                                          : item?.product?.maximum_order_quantity)
+                                      ) {
+                                        const localCartItems = JSON.parse(
+                                          localStorage.getItem("dokani_cart")
+                                        );
+                                        let localCartItemIndex = -1;
+
+                                        if (localCartItems) {
+                                          localCartItemIndex = findProductIndexById(
+                                            localCartItems,
+                                            item?.product_id
+                                          );
+                                        }
+
+                                        let productQuantityAllowed =
+                                          item?.product?.total_stock;
+
+                                        if (localCartItemIndex >= 0) {
+                                          productQuantityAllowed =
+                                            item?.product?.total_stock -
+                                            localCartItems[localCartItemIndex]
+                                              ?.quantity ||
+                                            item?.product?.total_stock;
+                                        }
+
+                                        if (productQuantityAllowed <= 0) {
+                                          toast.error(
+                                            intl.formatMessage({
+                                              id: `Maximum order quantity allowed now is `,
+                                            })`${item?.product?.total_stock}`
+                                          );
+                                          return;
+                                        }
+                                        if (isLoggedIn) {
+                                          if (
+                                            item?.quantity + 1 >
+                                            item?.product?.total_stock
+                                          ) {
+                                            // toast.error(
+                                            //   `Maximum order quantity is ${item?.product?.total_stock}`
+                                            // );
+                                            toast.error(
+                                              intl.formatMessage({
+                                                id: `Maximum order quantity is`,
+                                              })`${item?.product?.total_stock}`
+                                            );
+                                          } else {
+                                            increaseQuantity(item?.product_id);
+                                            setCartDataUpdated(!cartDataUpdated);
+                                          }
+                                        } else {
+                                          if (
+                                            item?.quantity + 1 >
+                                            item?.total_stock
+                                          ) {
+                                            // toast.error(
+                                            //   `Maximum order quantity is ${item?.total_stock}`
+                                            // );
+                                            toast.error(
+                                              intl.formatMessage({
+                                                id: "Maximum order quantity is ",
+                                              }) + `${item?.total_stock}`
+                                            );
+                                          } else {
+                                            increaseQuantity(item?.id);
+                                            setCartDataUpdated(!cartDataUpdated);
+                                          }
+                                        }
+                                      } else {
+                                        // toast.error(
+                                        //   `Maximum order quantity is ${
+                                        //     item?.maximum_order_quantity
+                                        //       ? item?.maximum_order_quantity
+                                        //       : item?.product
+                                        //           ?.maximum_order_quantity
+                                        //   }`
+                                        // );
+                                        toast.error(
+                                          intl.formatMessage({
+                                            id: "Maximum order quantity is ",
+                                          }) +
+                                          ` ${item?.maximum_order_quantity ||
+                                          item?.product?.maximum_order_quantity
+                                          }`
+                                        );
+                                      }
+                                    }}
+                                    className="qty-up"
+                                  >
+                                    <i className="fi-rs-plus-small"></i>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="mobile_cart_product_box_bottom">
+                            <div className="d-flex justify-content-between">
+                              <div className="mobile_cart_product_box_bottom_remove">
+                                <a className="mobile_cart_product_box_bottom_remove_link"
+                                  onClick={(_e) => {
+                                    deleteFromCart(
+                                      item?.product?.maximum_order_quantity
+                                        ? item?.product?.id
+                                        : item?.id
+                                    );
+                                    setTimeout(() => {
+                                      setCartDataUpdated(!cartDataUpdated);
+                                    }, 600);
+                                  }}
+                                >
+                                  Remove
+                                </a>
+                              </div>
+                              <div className="mobile_cart_product_box_bottom_price">
+                                {intl.formatMessage({ id: "Sub Total" })}
+                                <span>
+                                  ¥
+                                  {(item?.quantity ? item?.quantity : 1) *
+                                    (item?.actual_price
+                                      ? item?.actual_price
+                                      : item?.product?.actual_price
+                                        ? item?.product?.actual_price
+                                        : 0)}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                     <table
                       className={
-                        cartProducts.length > 0 ? "table table-cart" : "d-none"
+                        cartProducts.length > 0 ? "table table-cart desktop_table" : "d-none"
                       }
                     >
                       <thead>
@@ -492,8 +695,8 @@ const Cart = ({
                       </tbody>
                     </table>
                   </div>}
-                  {cartProducts.length <= 0 ? null :  <div className="cart-action text-end mobile_btn">
-                  <a className="btn " href={`/${intl.locale}/shop`}>
+                {cartProducts.length <= 0 ? null : <div className="cart-action text-end mobile_btn">
+                  <a className="btn cart_button_desktop" href={`/${intl.locale}/shop`}>
                     <i className="fi-rs-shopping-bag mr-10"></i>
                     {intl.formatMessage({ id: "Continue Shopping" })}
                   </a>
@@ -701,6 +904,31 @@ const Cart = ({
                 </div>
               </div>
             ) : null}
+
+            <div className="cart_button_mobile d-flex">
+              {cartProducts.length <= 0 ? null :
+                <>
+                  {isLoggedIn ? (
+                    <>
+                      <div className="cart-action text-end mobile_btn">
+                        <a className="btn" href={`/${intl.locale}/shop`}>
+                          <i className="fi-rs-shopping-bag mr-10"></i>
+                          {intl.formatMessage({ id: "Continue Shopping" })}
+                        </a>
+                      </div>
+                      {proceedToCheckout()}
+                    </>
+                  ) : (
+                    <div className="cart-action text-end mobile_btn onebtn">
+                      <a className="btn" href={`/${intl.locale}/shop`}>
+                        <i className="fi-rs-shopping-bag mr-10"></i>
+                        {intl.formatMessage({ id: "Continue Shopping" })}
+                      </a>
+                    </div>
+                  )}
+                </>
+              }
+            </div>
           </div>
         </div>
       </section>

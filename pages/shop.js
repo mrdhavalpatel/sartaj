@@ -7,13 +7,16 @@ import QuickView from "../components/ecommerce/QuickView";
 import ShowSelect from "../components/ecommerce/Filter/ShowSelect";
 import SingleProduct from "../components/ecommerce/SingleProduct";
 import SortSelect from "../components/ecommerce/Filter/SortSelect";
+import ShowSelect1 from "../components/ecommerce/Filter/ShowSelect1";
+import IconGame from "../public/assets/icongamee.svg"
 import WishlistModal from "../components/ecommerce/WishlistModal";
 import Layout from "../components/layout/Layout";
 import { fetchProduct } from "../redux/action/product";
 import { ApiCall } from "../lib/other/other";
 import { useIntl } from "react-intl";
 import { Spinner } from "react-bootstrap";
-const ProductsFullWidth = ({ products, productFilters ,cartItems }) => {
+import Image from "next/image";
+const ProductsFullWidth = ({ products, productFilters, cartItems }) => {
   const intl = useIntl();
   const router = useRouter();
   const [productsData, setProductsData] = useState([]);
@@ -23,7 +26,12 @@ const ProductsFullWidth = ({ products, productFilters ,cartItems }) => {
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [showOptions, setShowOptions] = useState(false);
 
+  const toggleOptions = (event) => {
+    event.preventDefault();
+    setShowOptions(!showOptions);
+  };
   const next = () => {
     setCurrentPage((page) => page + 1);
   };
@@ -80,20 +88,36 @@ const ProductsFullWidth = ({ products, productFilters ,cartItems }) => {
           <div className="row flex-row-reverse">
             <div className="col-lg-12">
               <div className="shop-product-fillter">
-          { loading ? null:     <div className="totall-product">
+                {loading ? null : <div className="totall-product">
                   <p>
                     {intl.formatMessage({ id: "We found" })}
                     <strong className="text-brand">{productTotal}</strong>
                     {intl.formatMessage({ id: "items for you!" })}
                   </p>
                 </div>}
-                <div className="sort-by-product-area" style={{display: loading ? "none" :"flex"}}>
+                <div className="sort-by-product-area" style={{ display: loading ? "none" : "flex" }}>
                   <div className="sort-by-cover mr-10">
                     <ShowSelect selectChange={selectChange} />
                   </div>
                   <div className="sort-by-cover">
                     <SortSelect />
                   </div>
+                  {/* <div onClick={toggleOptions}>
+                    <Image
+                      priority
+                      src={IconGame}
+                      alt="next"
+                      width={50}
+                      height={50}
+                    />
+
+                  </div> */}
+                  {/* <div>
+                <div className="sort-by-cover">
+                 {showOptions ?  <ShowSelect1 setShowOptions={setShowOptions} /> : null}
+                    </div> 
+                  </div> */}
+                 
                 </div>
               </div>
               {loading ? (

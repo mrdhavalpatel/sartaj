@@ -37,17 +37,17 @@ const Header = ({
 
     const pathWithoutLanguage = router.pathname;
     const newPathWithoutLanguage = pathWithoutLanguage
-    .replace(/^\/(eng|jp)\//, '/')  // Replace the language prefix with a single slash
-    .replace('/[...slug]', '');      // Remove the slug placeholder if present
+      .replace(/^\/(eng|jp)\//, '/')  // Replace the language prefix with a single slash
+      .replace('/[...slug]', '');      // Remove the slug placeholder if present
     var newUrl = `/${newLanguage}/${newPathWithoutLanguage}`;
     const currentToken = router.query.token || "";
     const slug = router.query?.slug;
-//    console.log("query in heaqderssssssssss",router.query)
+    //    console.log("query in heaqderssssssssss",router.query)
     if (router.pathname.includes("reset-password")) {
       window.location.replace(
         `/${newLanguage}/reset-password?token=${currentToken}`
       );
-     
+
     } else if (router.pathname.includes("orders")) {
       window.location.replace(
         `/${newLanguage}/orders/${router?.query?.id}`
@@ -63,7 +63,7 @@ const Header = ({
       if (slug) {
         newUrl += `/${slug}`;
       }
-  
+
       // Redirect to the new URL without double slashes
       window.location.replace(newUrl.replace(/\/\//g, '/'));
     }
@@ -72,21 +72,21 @@ const Header = ({
 
 
 
-  //   else if (slug) {
-  //     let finalUrl = slug ? `${newUrl}/${slug}${window.location.search}` : newUrl;
-  //     // Check for double slashes after language prefix and replace with single slash
-  //     if (finalUrl.includes(`/${newLanguage}//`)) {
-  //         finalUrl = finalUrl.replace(`/${newLanguage}//`, `/${newLanguage}/`);
-  //     }
-  //     window.location.replace(finalUrl);
+    //   else if (slug) {
+    //     let finalUrl = slug ? `${newUrl}/${slug}${window.location.search}` : newUrl;
+    //     // Check for double slashes after language prefix and replace with single slash
+    //     if (finalUrl.includes(`/${newLanguage}//`)) {
+    //         finalUrl = finalUrl.replace(`/${newLanguage}//`, `/${newLanguage}/`);
+    //     }
+    //     window.location.replace(finalUrl);
 
-  // } else {
-  //     // Check for double slashes after language prefix and replace with single slash
-  //     if (newUrl.includes(`/${newLanguage}//`)) {
-  //         newUrl = newUrl.replace(`/${newLanguage}//`, `/${newLanguage}/`);
-  //     }
-  //     window.location.replace(`${newUrl}${window.location.search}`);
-  // }
+    // } else {
+    //     // Check for double slashes after language prefix and replace with single slash
+    //     if (newUrl.includes(`/${newLanguage}//`)) {
+    //         newUrl = newUrl.replace(`/${newLanguage}//`, `/${newLanguage}/`);
+    //     }
+    //     window.location.replace(`${newUrl}${window.location.search}`);
+    // }
   };
 
   const getAllCategories = async () => {
@@ -114,14 +114,14 @@ const Header = ({
         setCartItemsCount(response?.data?.cartProducts?.length);
       })
       .catch((error) => {
-//        console.log("error", error?.code === "ERR_NETWORK");
+        //        console.log("error", error?.code === "ERR_NETWORK");
       });
   };
   const Jsonhandler = (data) => {
     try {
       JSON.parse(data);
     } catch (e) {
-//      console.log("JSON parse error");
+      //      console.log("JSON parse error");
     }
     return JSON.parse(data);
   };
@@ -493,7 +493,7 @@ const Header = ({
               </div>
             </div>
 
-            <div className="header-action-right d-block d-lg-none">
+            <div className="header-action-right d-none d-lg-none">
               <div className="header-action-2">
                 <div className="header-action-icon-2">
                   <Link href={`/${intl.locale}/shop-wishlist`}>
@@ -518,72 +518,88 @@ const Header = ({
                     <span className="pro-count white">{totalCartItems}</span>
                   </Link>
                 </div>
-              
+
                 <div className="header-action-icon-2">
-                    <Link href="javascript:">
-                      <img
-                        className="svgInject"
-                        alt="Nest"
-                        src="/assets/imgs/theme/icons/icon-user.svg"
-                      />
-                    </Link>
-                    <Link href="/">
-                      <span className="lable ml-0">
-                        {intl.formatMessage({ id: "Account" })}
-                      </span>
-                    </Link>
-                    <div className="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
-                      <ul>
+                  <Link href="javascript:">
+                    <img
+                      className="svgInject"
+                      alt="Nest"
+                      src="/assets/imgs/theme/icons/icon-user.svg"
+                    />
+                  </Link>
+                  <Link href="/">
+                    <span className="lable ml-0">
+                      {intl.formatMessage({ id: "Account" })}
+                    </span>
+                  </Link>
+                  <div className="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
+                    <ul>
+                      <li>
+                        <Link href="/my-account">
+                          <i className="fi fi-rs-user mr-10"></i>
+                          {intl.formatMessage({ id: "My Account" })}
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link href={`/${intl.locale}/shop-wishlist`}>
+                          <i className="fi fi-rs-heart mr-10"></i>
+                          {intl.formatMessage({ id: "My Wishlist" })}
+                        </Link>
+                      </li>
+
+                      {isLoggin ? (
                         <li>
-                          <Link href="/my-account">
-                            <i className="fi fi-rs-user mr-10"></i>
-                            {intl.formatMessage({ id: "My Account" })}
+                          <Link
+                            href="/sign-in"
+                            onClick={() => {
+                              localStorage.removeItem("token");
+                              logout();
+                              dispatch(clearCart());
+                            }}
+                          >
+                            <i className="fi fi-rs-sign-out mr-10"></i>
+                            {intl.formatMessage({ id: "Sign out" })}
                           </Link>
                         </li>
-
+                      ) : (
                         <li>
-                          <Link href={`/${intl.locale}/shop-wishlist`}>
-                            <i className="fi fi-rs-heart mr-10"></i>
-                            {intl.formatMessage({ id: "My Wishlist" })}
+                          <Link href="/sign-in">
+                            <i className="fi fi-rs-sign-out mr-10"></i>
+                            {intl.formatMessage({ id: "Sign In" })}
                           </Link>
                         </li>
-
-                        {isLoggin ? (
-                          <li>
-                            <Link
-                              href="/sign-in"
-                              onClick={() => {
-                                localStorage.removeItem("token");
-                                logout();
-                                dispatch(clearCart());
-                              }}
-                            >
-                              <i className="fi fi-rs-sign-out mr-10"></i>
-                              {intl.formatMessage({ id: "Sign out" })}
-                            </Link>
-                          </li>
-                        ) : (
-                          <li>
-                            <Link href="/sign-in">
-                              <i className="fi fi-rs-sign-out mr-10"></i>
-                              {intl.formatMessage({ id: "Sign In" })}
-                            </Link>
-                          </li>
-                        )}
-                      </ul>
-                    </div>
+                      )}
+                    </ul>
                   </div>
+                </div>
               </div>
             </div>
-       
+
+
+
+            <div className="header-action-right d-block d-lg-none header_action_right_lang">
+              <label htmlFor="languageDropdown" className="sr-only">
+                {intl.formatMessage({ id: "Select Language" })}
+              </label>
+              <select
+                id="languageDropdown"
+                onChange={(e) => handleLanguageSwitch(e.target.value)}
+                value={DLang}
+              >
+                <option value="eng">English</option>
+                <option value="jp">日本語</option>
+              </select>
+            </div>
+
           </div>
 
           {/* search component test add */}
           <div className="mobile-search search-style-3 mobile-header-border mt-10 searchhide">
-          <Search />
-            </div>
+            <Search />
+          </div>
         </div>
- 
+
       </div>
     </header>
   );

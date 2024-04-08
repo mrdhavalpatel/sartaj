@@ -81,7 +81,7 @@ const CategorySlider2 = ({ updateProductCategory }) => {
         }}
         breakpoints={{
           0: {
-            slidesPerView: 2,
+            slidesPerView: 3,
           },
           639: {
             slidesPerView: 3,

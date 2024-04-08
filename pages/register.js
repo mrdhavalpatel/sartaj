@@ -82,7 +82,7 @@ function Privacy() {
 
   return (
     <Layout parent="Home" sub="Pages" subChild="Privacy">
-      <div className="page-content pt-150 pb-150">
+      <div className="account_page page-content pt-150 pb-150">
         <div className="container">
           <div className="row">
             <div className="col-xl-8 col-lg-10 col-md-12 m-auto">

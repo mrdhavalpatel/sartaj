@@ -6,6 +6,8 @@ import { updateProductCategory } from "../../redux/action/productFiltersAction";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
 import { useIntl } from "react-intl";
+import { useAuth } from "../context/AuthContext";
+import { useDispatch } from "react-redux";
 import { translatedItemDetails } from "../../util/util";
 import Search from "../ecommerce/Search";
 import Modal from "../elements/ModalAlcohole";
@@ -21,13 +23,25 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [selectedItem, setSelectedItem] = useState(null);
-  const [selectedEvent, setSelectedEvent] = useState(null); 
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const router = useRouter();
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const handleToggleMenu = () => {
     setIsMenuOpen((prevIsMenuOpen) => !prevIsMenuOpen);
   };
+
+  const [isLoggin, setIsLoggin] = useState(false);
+  const { logout } = useAuth();
+
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggin(true);
+    } else {
+      setIsLoggin(false);
+    }
+  }, []);
 
   const handleToggle = (key) => {
     if (isActive.key === key) {
@@ -47,36 +61,35 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
     selectedEvent.preventDefault();
     // removeSearchTerm();
     updateProductCategory(selectedItem);
-//    console.log(window.location.pathname);
-router.push({
-  pathname: "/products",
-  query: {
-    catId: selectedItem, //
-  },
-});
+    //    console.log(window.location.pathname);
+    router.push({
+      pathname: "/products",
+      query: {
+        catId: selectedItem, //
+      },
+    });
   };
   const selectCategory = (e, item) => {
-    console.log("e" , e , "item" , item)
-    if (item == 66 )
-    {
+    console.log("e", e, "item", item)
+    if (item == 66) {
       setIsModalOpen(true)
       setSelectedItem(item)
       setSelectedEvent(e)
- 
+
       console.log("age verify required before open this cat")
-    }else {
+    } else {
       e.preventDefault();
       // removeSearchTerm();
       updateProductCategory(item);
-  //    console.log(window.location.pathname);
-  router.push({
+      //    console.log(window.location.pathname);
+      router.push({
         pathname: "/products",
         query: {
           catId: item, //
         },
       });
     }
- 
+
   };
   let domNode = useClickOutside(() => {
     setIsActive({
@@ -151,9 +164,8 @@ router.push({
                   <span className="fi-rs-apps"></span> Browse Categories
                 </Link>
                 <div
-                  className={`categori-dropdown-wrap categori-dropdown-active-small ${
-                    isMenuOpen ? "active" : ""
-                  }`}
+                  className={`categori-dropdown-wrap categori-dropdown-active-small ${isMenuOpen ? "active" : ""
+                    }`}
                 >
                   <ul>
                     {categories?.map((itm) => {
@@ -179,42 +191,85 @@ router.push({
                     })}
                   </ul>
                 </div>
+                <span className="fi-rs-angle-small-down"></span>
               </div>
 
               <nav>
                 <ul className="mobile-menu" ref={domNode}>
                   <li>
                     <Link href="/" className="active">
-                      {intl.formatMessage({ id: "Home" })}
+                      <img src="/assets/imgs/menu/home.png" alt="Home" className="menu_icon" />{intl.formatMessage({ id: "Home" })}
                     </Link>
                   </li>
                   <li>
                     <Link href="/about-sartaj">
-                      {intl.formatMessage({ id: "About" })}
+                      <img src="/assets/imgs/menu/about.png" alt="About" className="menu_icon" />{intl.formatMessage({ id: "About" })}
                     </Link>
                   </li>
                   <li>
                     <Link href={`/${intl.locale}/shop`}>
-                      {intl.formatMessage({ id: "Shop" })}
+                      <img src="/assets/imgs/menu/shop.png" alt="Shop" className="menu_icon" />{intl.formatMessage({ id: "Shop" })}
                     </Link>
                   </li>
                   <li>
                     <Link href="/contacts">
-                      {intl.formatMessage({ id: "Contact" })}
+                      <img src="/assets/imgs/menu/contact.png" alt="Contact" className="menu_icon" />{intl.formatMessage({ id: "Contact" })}
                     </Link>
                   </li>
                   <li>
                     <Link href="/delivery_Information">
-                      {intl.formatMessage({ id: "Delivery Information" })}
+                      <img src="/assets/imgs/menu/delivery.png" alt="Delivery Information" className="menu_icon" />{intl.formatMessage({ id: "Delivery Information" })}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/terms_conditions">
+                      <img src="/assets/imgs/menu/terms.png" alt="Terms" className="menu_icon" />
+                      {intl.formatMessage({ id: "Terms" })} &amp;{" "}
+                      {intl.formatMessage({ id: "Conditions" })}
+
                     </Link>
                   </li>
                   <li>
                     <Link href="/faqs">
-                      {intl.formatMessage({ id: "FAQs" })}
+                      <img src="/assets/imgs/menu/faq.png" alt="FAQs" className="menu_icon" />{intl.formatMessage({ id: "FAQs" })}
                     </Link>
                   </li>
+                  {isLoggin ? (
+                    <li>
+                      <Link
+                        href="/sign-in"
+                        onClick={() => {
+                          localStorage.removeItem("token");
+                          logout();
+                          dispatch(clearCart());
+                        }}
+                      >
+                        <img src="/assets/imgs/menu/logout.png" alt="logout" className="menu_icon" />{intl.formatMessage({ id: "Sign Out" })}
+                      </Link>
+
+                    </li>
+                  ) : (
+                    <li>
+                      <Link href="/sign-in">
+                        <img src="/assets/imgs/menu/login.png" alt="login" className="menu_icon" />{intl.formatMessage({ id: "Sign In" })}
+                      </Link>
+                    </li>
+                  )}
                 </ul>
               </nav>
+
+            </div>
+
+            <div className="sidemenu_bottom d-flex justify-content-around">
+              <Link href="mailto:info@sartajfoods.jp">
+                <img src="/assets/imgs/menu/mail.png" alt="Email" className="sidemenu_bottom_icon" />{intl.formatMessage({ id: "Email" })}
+              </Link>
+              <Link href="tel:+810727511975">
+                <img src="/assets/imgs/menu/call.png" alt="FAQs" className="sidemenu_bottom_icon" />{intl.formatMessage({ id: "Phone" })}
+              </Link>
+              <Link href="https://instagram.com/sartaj_foods_official">
+                <img src="/assets/imgs/menu/instagram.png" alt="FAQs" className="sidemenu_bottom_icon" />instagram
+              </Link>
             </div>
           </div>
         </div>

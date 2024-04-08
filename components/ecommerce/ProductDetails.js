@@ -26,8 +26,8 @@ const ProductDetails = ({
   decreaseQuantity,
   quickView,
   showReviewForm = false,
-  setShowReviewForm = () => {},
-  getProductDetailsBySlug = (product) => {},
+  setShowReviewForm = () => { },
+  getProductDetailsBySlug = (product) => { },
 }) => {
   //  // console.log(
   //   "data.........................................",
@@ -46,7 +46,7 @@ const ProductDetails = ({
   };
 
   return (
-    <section className="mt-50 mb-50">
+    <section className="mt-50 mb-50 product_section">
       <div className="container">
         <div className="row flex-row-reverse">
           <div className="col-xl-10 col-lg-12 m-auto">
@@ -100,30 +100,31 @@ const ProductDetails = ({
                         __html: translatedItemDetails("name", intl, product),
                       }}
                     ></h2>
-                    {product?.overall_rating > 0 ? (
-                      <div className="product-detail-rating">
-                        <div className="product-rate-cover text-end">
-                          <div className="product-rate d-inline-block">
-                            <div
-                              className="product-rating"
-                              style={{
-                                width: `${
-                                  product?.overall_rating
-                                    ? product?.overall_rating
-                                    : 0
-                                }%`,
-                              }}
-                            ></div>
+                    <div className="product-detail-rating_div">
+                      {product?.overall_rating > 0 ? (
+                        <div className="product-detail-rating">
+                          <div className="product-rate-cover text-end">
+                            <div className="product-rate d-inline-block">
+                              <div
+                                className="product-rating"
+                                style={{
+                                  width: `${product?.overall_rating
+                                      ? product?.overall_rating
+                                      : 0
+                                    }%`,
+                                }}
+                              ></div>
+                            </div>
+                            <span className="font-small ml-5 text-muted">
+                              {" "}
+                              {`(${product?.total_reviews})`}
+                            </span>
                           </div>
-                          <span className="font-small ml-5 text-muted">
-                            {" "}
-                            {`(${product?.total_reviews})`}
-                          </span>
                         </div>
-                      </div>
-                    ) : (
-                      intl.formatMessage({ id: "No reviews available" })
-                    )}
+                      ) : (
+                        intl.formatMessage({ id: "No reviews available" })
+                      )}
+                    </div>
                     <div className="clearfix product-price-cover">
                       <div className="product-price primary-color float-left">
                         <div className="product-price">
@@ -198,11 +199,10 @@ const ProductDetails = ({
                             addToCart(p, intl);
                           }}
                           style={{
-                            backgroundColor: `${
-                              product?.out_of_stock_status !== "in stock"
+                            backgroundColor: `${product?.out_of_stock_status !== "in stock"
                                 ? "grey"
                                 : ""
-                            }`,
+                              }`,
                           }}
                           className="button button-add-to-cart"
                         >

@@ -742,7 +742,7 @@ const Cart = ({
         .then((response) => {
           if (response?.status === 200) {
             router.push(`/OrderReceived?order_id=${response?.data?.order_id}`);
-          
+
           }
         })
         .then(() => {
@@ -781,13 +781,13 @@ const Cart = ({
         )}
         <section className="mt-50 mb-50">
           <div className="container">
-            <div className="row">
+            <div className="row checkout_row">
               <div className="col-lg-8 mb-40">
-                <h3 className="heading-2 mb-10">
+                <h3 className="heading-2 mb-10 checkout_title">
                   {intl.formatMessage({ id: "Checkout" })}
                 </h3>
                 <div className="d-flex justify-content-between">
-                  <h6 className="text-body">
+                  <h6 className="text-body checkout_text">
                     {intl.formatMessage({
                       id: "Carefully check the information before checkout",
                     })}
@@ -865,7 +865,7 @@ const Cart = ({
                                   </h6>{" "}
                                 </td>
                                 <td>
-                                  <h6 className="text-muted pl-20 pr-20">
+                                  <h6 className="checkout_quantity text-muted pl-20 pr-20">
                                     x {item.quantity}
                                   </h6>
                                 </td>
@@ -892,7 +892,7 @@ const Cart = ({
                     </div>
                   )}
                 </div>
-                <div className="border p-30 cart-totals mb-30 checkout_box">
+                <div className="border p-30 cart-totals mb-30 checkout_box desktop_notes">
                   <h6 className="mb-4">Add Order Notes</h6>
                   <div className="px-40">
                     <textarea
@@ -1027,7 +1027,7 @@ const Cart = ({
                     </li>
                   ))}
                 </div>  */}
-                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box">
+                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box address_box">
                   <div className="address_div">
                     <div className="d-flex justify-content-between">
                       <div className="heading_s1 mb-3">
@@ -1093,53 +1093,55 @@ const Cart = ({
                     ))}
                   </div>
                 </div>
-                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box">
+                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box time_box">
                   <div className="delivery_time_div">
                     <div className="heading_s1 mb-3">
                       <h6>{intl.formatMessage({ id: "Delivery Time" })}</h6>
                     </div>
 
-                    {timeSlot?.map((Item, index) => {
-                      const radioId = Item?.id;
+                    <div className="time_box_input">
+                      {timeSlot?.map((Item, index) => {
+                        const radioId = Item?.id;
 
-                      return (
-                        <div key={radioId} className="custome-radio">
-                          <input
-                            className="form-check-input"
-                            required=""
-                            type="radio"
-                            name="timeslot"
-                            id={radioId}
-                            checked={
-                              radioId === selectedRadioId ||
-                              (index === 0 && selectedRadioId === null)
-                            }
-                            onChange={(e) => {
-                              handleRadioChange(radioId);
-                            }}
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor={radioId}
-                            data-bs-toggle="collapse"
-                            data-target="#timeslot"
-                            aria-controls="timeslot"
-                          >
-                            {console.log("start time", Item.start_time)}
-                            {moment(Item.start_time, "HH:mm:ss").format(
-                              "h:mm A"
-                            )}{" "}
-                            -{" "}
-                            {moment(Item?.end_time, "HH:mm:ss").format(
-                              "h:mm A"
-                            )}
-                          </label>
-                        </div>
-                      );
-                    })}
+                        return (
+                          <div key={radioId} className="custome-radio">
+                            <input
+                              className="form-check-input"
+                              required=""
+                              type="radio"
+                              name="timeslot"
+                              id={radioId}
+                              checked={
+                                radioId === selectedRadioId ||
+                                (index === 0 && selectedRadioId === null)
+                              }
+                              onChange={(e) => {
+                                handleRadioChange(radioId);
+                              }}
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor={radioId}
+                              data-bs-toggle="collapse"
+                              data-target="#timeslot"
+                              aria-controls="timeslot"
+                            >
+                              {console.log("start time", Item.start_time)}
+                              {moment(Item.start_time, "HH:mm:ss").format(
+                                "h:mm A"
+                              )}{" "}
+                              -{" "}
+                              {moment(Item?.end_time, "HH:mm:ss").format(
+                                "h:mm A"
+                              )}
+                            </label>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
-                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box">
+                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box payment_box">
                   <div className="payment_method">
                     <div className="heading_s1 mb-3">
                       <h6>{intl.formatMessage({ id: "Payment Method" })}</h6>
@@ -1230,9 +1232,9 @@ const Cart = ({
                       </div> */}
                     </div>
                   </div>
-                  <div>
+                  <div className="minOrderAmount_div">
                     {cartTotal?.total_amt <= cartTotal.minOrderAmount ? (
-                      <h8 style={{ color: "red" }}>
+                      <h6 style={{ color: "red" }}>
                         {intl.formatMessage({
                           id: "Oops! Your cart is below 2500 ¥. Please add items worth",
                         })}{" "}
@@ -1240,18 +1242,18 @@ const Cart = ({
                         {intl.formatMessage({
                           id: " or more to place your order. Happy shopping!",
                         })}
-                      </h8>
+                      </h6>
                     ) : (
-                      <h8 style={{ color: "green" }}>
+                      <h6 style={{ color: "green" }}>
                         {intl.formatMessage({
                           id: "Congratulations, You are eligible to place an order",
                         })}
-                      </h8>
+                      </h6>
                     )}
                   </div>
                 </div>
 
-                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box">
+                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box mobile_bottom_margin">
                   <div className="mb-20">
                     <form method="post" className="apply-coupon">
                       <input
@@ -1463,21 +1465,37 @@ const Cart = ({
                       </tr>
                     </table>
                   ) : null}
-                  <div>
-                {loading ? 
-                <div class="d-flex justify-content-center align-items-center ">
-                <Spinner animation="border" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </Spinner>
-              </div>:    <button
-                      onClick={() => {
-                        placeOrder();
-                      }}
-                      disabled={showModaladdress == true}
-                      className="w-100 btn btn-fill-out btn-block"
-                    >
-                      {intl.formatMessage({ id: "Place Order" })}
-                    </button>}
+                  <div className="mobile_checkout_btn">
+                    {loading ?
+                      <div class="d-flex justify-content-center align-items-center ">
+                        <Spinner animation="border" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </Spinner>
+                      </div> : <button
+                        onClick={() => {
+                          placeOrder();
+                        }}
+                        disabled={showModaladdress == true}
+                        className="w-100 btn btn-fill-out btn-block"
+                      >
+                        {intl.formatMessage({ id: "Place Order" })}
+                      </button>}
+                  </div>
+                </div>
+
+                <div className="border p-30 cart-totals mb-30 checkout_box mobile_notes mb-30 ">
+                  <h6 className="mb-4">Add Order Notes</h6>
+                  <div className="px-40">
+                    <textarea
+                      className="orderNotes_textarea"
+                      name="orderNotes"
+                      as="textarea"
+                      rows="3"
+                      value={orderNotes}
+                      // disabled={true}
+                      onChange={(e) => setorderNotes(e.target.value)}
+                      placeholder={intl.formatMessage({ id: "Customer Comment" })}
+                    />
                   </div>
                 </div>
 
