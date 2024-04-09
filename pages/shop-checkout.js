@@ -65,10 +65,12 @@ const Cart = ({
   };
   const openModal = () => {
     setShowModaladdress(true);
+    document.body.classList.add('body-with-modal');
   };
 
   const closeModal = () => {
     setShowModaladdress(false);
+    document.body.classList.remove('body-with-modal'); 
   };
   const handleClickOutside = () => {
     closeModal();

@@ -14891,4 +14891,13 @@ div#Description, div#Description h1, div#Description h2, div#Description h3, div
   .categori-dropdown-active-small.active+span.fi-rs-angle-small-down {
     rotate: 180deg;
   }
+
+  .Dropdownstate.dropdown .dropdown-menu.show {
+    overflow: scroll;
+    height: 230px !important;
+  }
+
+  body.body-with-modal {
+    overflow: hidden;
+  }
 }
