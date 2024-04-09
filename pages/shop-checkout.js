@@ -66,13 +66,18 @@ const Cart = ({
   const openModal = () => {
     setShowModaladdress(true);
     document.body.classList.add('body-with-modal');
+    console.log('Modal opened');
   };
 
   const closeModal = () => {
+    document.body.classList.remove('body-with-modal');
     setShowModaladdress(false);
-    document.body.classList.remove('body-with-modal'); 
+    console.log('Modal closed');
+     
   };
   const handleClickOutside = () => {
+    document.body.classList.remove('body-with-modal');
+
     closeModal();
   };
   const formRef = useRef();
@@ -688,7 +693,7 @@ const Cart = ({
               <button type="submit">
                 {intl.formatMessage({ id: "Save Changes" })}
               </button>
-              <button onClick={() => setShowModaladdress(false)} class="submit">
+              <button onClick={() => closeModal()} class="submit">
                 {intl.formatMessage({ id: "Close" })}
               </button>
             </div>
