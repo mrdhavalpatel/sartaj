@@ -14903,4 +14903,12 @@ div#Description, div#Description h1, div#Description h2, div#Description h3, div
   body.body-with-modal {
     overflow: hidden;
   }
+
+  .pagination-area .page-item:first-child .page-link {
+    line-height: 2.3;
+  }
+
+  .pagination-area .page-item {
+    margin: 0 2px;
+  }
 }
