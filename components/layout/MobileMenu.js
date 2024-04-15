@@ -21,9 +21,19 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
   const [categories, setCategories] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [toggle, setToggle] = useState(false)
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [collapsed, setCollapsed] = useState(true);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+  const [arrowRotations, setArrowRotations] = useState(
+    categories?.reduce((acc, item) => ({ ...acc, [item.id]: false }), {}) || {}
+  );
+  const toggleCollapse = () => {
+    setCollapsed(!collapsed);
+  };
+
   const router = useRouter();
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -99,6 +109,7 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
   const getAllCategories = async () => {
     const request = await ApiCall("get", intl, "categories");
     const allCategories = await request;
+    console.log("mobile menu cat" , allCategories.data)
     setCategories(allCategories?.data);
   };
   // const selectCategory = (e, category) => {
@@ -116,10 +127,17 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
   useEffect(() => {
     getAllCategories();
   }, []);
+  const toggleSubCategories = (itemId) => {
+    setSelectedCategoryId((prevId) => (prevId === itemId ? null : itemId));
+    setToggle(!toggle)
+    setArrowRotations((prevRotations) => ({
+      ...prevRotations,
+      [itemId]: !prevRotations[itemId],
+    }));
+  };
   return (
     <>
       <Modal isOpen={isModalOpen} onClose={closeModal} onYesClick={handleYesClick} />
-
       <div
         className={
           isToggled
@@ -172,20 +190,58 @@ const MobileMenu = ({ updateProductCategory, isToggled, toggleClick }) => {
                       return (
                         <li
                           key={itm?.id}
-                          onClick={(e) => selectCategory(e, itm?.id)}
+                         
                         >
-                          <a >
-                            <i className="evara-font-dress"></i>
-                            <span
-                              dangerouslySetInnerHTML={{
-                                __html: translatedItemDetails(
-                                  "name",
-                                  intl,
-                                  itm
-                                ),
-                              }}
-                            />
-                          </a>
+                          <div>
+                            <a  onClick={(e) => selectCategory(e, itm?.id)}>
+                              <i className="evara-font-dress"></i>
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: translatedItemDetails(
+                                    "name",
+                                    intl,
+                                    itm
+                                  ),
+                                }}
+                              />
+                              
+                            </a>
+                            
+                            {itm?.sub_categories && itm?.sub_categories.length > 0 && (
+                              <i
+                                className={`fi-rs-angle-${arrowRotations[itm.id] ? 'up' : 'down'}`}
+                                onClick={() => { toggleSubCategories(itm.id) }}
+                                style={{color:"white" , marginLeft:"10px"}}
+                              ></i>
+                            )}
+                          </div>
+                          {itm.sub_categories &&
+              itm.sub_categories.length > 0 &&
+              selectedCategoryId === itm.id && (
+                <ul className={"sub-cat"}>
+                  {/* Map through subcategories */}
+                  {itm.sub_categories.map((subCategory) => (
+                    <li key={subCategory.id}>
+                      {/* Add click handler to navigate to subcategory */}
+                      <a
+                        onClick={(e) => {
+                          e.preventDefault();
+                          updateProductCategory(subCategory.name);
+                          router.push({
+                            pathname: `${intl.locale === "eng"
+                                ? subCategory.seo_en.replace("/eng", "")
+                                : subCategory.seo_ja.replace("/jp", "")
+                              }`,
+                          });
+                        }}
+                      >
+                        {/* Display subcategory name */}
+                        {subCategory.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
                         </li>
                       );
                     })}

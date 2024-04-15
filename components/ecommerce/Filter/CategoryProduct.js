@@ -7,28 +7,31 @@ import { useIntl } from "react-intl";
 import { translatedItemDetails } from "../../../util/util";
 import Modal from "../../elements/ModalAlcohole";
 
-
-const CategoryProduct = ({ updateProductCategory , isCollapsed }) => {
+const CategoryProduct = ({ updateProductCategory, isCollapsed }) => {
   const router = useRouter();
   const intl = useIntl();
   const [categories, setCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [selectedEvent, setSelectedEvent] = useState(null); 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-  const [collapsed, setCollapsed] = useState(true);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [toggle,setToggle]=useState(false)
 
+  const [collapsed, setCollapsed] = useState(true);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+  const [arrowRotations, setArrowRotations] = useState(
+    categories?.reduce((acc, item) => ({ ...acc, [item.id]: false }), {}) || {}
+  );
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
   };
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   const handleYesClick = () => {
     closeModal();
-
     selectedEvent.preventDefault();
-    // removeSearchTerm();
     updateProductCategory(selectedItem.name);
-//    console.log(window.location.pathname);
     router.push({
       pathname: `${
         intl.locale === "eng"
@@ -37,25 +40,22 @@ const CategoryProduct = ({ updateProductCategory , isCollapsed }) => {
       }`,
     });
   };
+
   const getAllCategories = async () => {
     const request = await ApiCall("get", intl, "categories");
     const allCategories = await request;
-
     setCategories(allCategories?.data);
   };
+
   const selectCategory = (e, item) => {
-    if (item.id == 66 )
-    {
-      setIsModalOpen(true)
-      setSelectedItem(item)
-      setSelectedEvent(e)
- 
-      console.log("age verify required before open this cat")
-    }else {
+    if (item.id === 66) {
+      setIsModalOpen(true);
+      setSelectedItem(item);
+      setSelectedEvent(e);
+      console.log("age verify required before opening this category");
+    } else {
       e.preventDefault();
-      // removeSearchTerm();
       updateProductCategory(item?.name);
-  //    console.log(window.location.pathname);
       router.push({
         pathname: `${
           intl.locale === "eng"
@@ -65,30 +65,79 @@ const CategoryProduct = ({ updateProductCategory , isCollapsed }) => {
       });
     }
   };
+
   useEffect(() => {
     getAllCategories();
   }, []);
+  const toggleSubCategories = (itemId) => {
+    setSelectedCategoryId((prevId) => (prevId === itemId ? null : itemId));
+    setToggle(!toggle)
+    setArrowRotations((prevRotations) => ({
+      ...prevRotations,
+      [itemId]: !prevRotations[itemId],
+    }));
+  };
   return (
     <>
       <h5 className="section-title style-1 mb-30" onClick={toggleCollapse}>
         {intl.formatMessage({ id: "Category" })}
-       { collapsed ? <i class="fi-rs-angle-down"></i> :<i class="fi-rs-angle-up"></i>}
+        {collapsed ? (
+          <i class="fi-rs-angle-down"></i>
+        ) : (
+          <i class="fi-rs-angle-up"></i>
+        )}
       </h5>
       {!collapsed && (
-        <ul>
+        <ul className="end">
           <Modal isOpen={isModalOpen} onClose={closeModal} onYesClick={handleYesClick} />
-          {categories?.map((Itm) => {
+          {categories?.map((category) => {
             return (
-              <li onClick={(e) => selectCategory(e, Itm)} key={Itm.id}>
-                <a>
-                  <img src={Itm?.image} alt="nest" />
+              <li key={category.id} className="main-cat">
+                <div style={{flexDirection:"row" , display:"flex" , justifyContent:"space-between" , alignItems:"center" , alignContent:"center"}}>
+                <a onClick={(e) => selectCategory(e, category)}>
+                  <img src={category?.image} alt="nest" />
                   <span
                     dangerouslySetInnerHTML={{
-                      __html: translatedItemDetails("name", intl, Itm),
+                      __html: translatedItemDetails("name", intl, category),
                     }}
                   />
                 </a>
-                <span className="count">{Itm?.total_produts}</span>
+                <span className="count">{category?.total_produts}</span>
+                {category.sub_categories && category.sub_categories.length > 0 && (
+                <i
+                className={`fi-rs-angle-${arrowRotations[category.id] ? 'up' : 'down'}`}
+                  style={{ marginLeft:"7px" }}
+                  onClick={() => {toggleSubCategories(category.id)}}
+                ></i> // Use fi-rs-angle-down class with rotation
+              )}
+                </div>
+                 {category.sub_categories && category.sub_categories.length > 0 
+                &&selectedCategoryId === category.id   && (
+                  <ul className="sub-cat">
+                    {category.sub_categories.map((subcategory) => (
+                      <li key={subcategory.id}>
+                        <a
+                          onClick={(e) => {
+                            e.preventDefault();
+                            updateProductCategory(subcategory.name);
+                            router.push({
+                              pathname: `${
+                                intl.locale === "eng"
+                                  ? subcategory.seo_en.replace("/eng", "")
+                                  : subcategory.seo_ja.replace("/jp", "")
+                              }`,
+                            });
+                          }}
+                          style={{justifyContent:"space-between"}}
+                        >
+                          {subcategory.name}
+                          <span className="count">{subcategory?.total_produts}</span>
+                        </a>
+                
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             );
           })}

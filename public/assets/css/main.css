@@ -13396,6 +13396,26 @@ div#Description, div#Description h1, div#Description h2, div#Description h3, div
   }
 }
 
+.categories-dropdown-wrap ul li {
+  height: auto;
+  display: block;
+}
+
+.categories-dropdown-wrap ul li.main-cat div {
+  display: flex;
+  flex-wrap: inherit;
+  justify-content: space-between;
+  align-items: center;
+}
+
+ul.sub-cat {
+  margin-top: 15px;
+  width: 100%;
+}
+
+.widget-category-2 ul li {
+  display: block;
+}
 
 /** Mobile app   **/
 .footer_bottom_menu {
@@ -14911,4 +14931,16 @@ div#Description, div#Description h1, div#Description h2, div#Description h3, div
   .pagination-area .page-item {
     margin: 0 2px;
   }
+  .categori-dropdown-active-small li {border-bottom: 1px solid #8c8c8c;}
+
+.categori-dropdown-active-small li div {
+    display: flex;
+    align-items: center;
+    padding: 9px 0px;
+}
+
+ul.sub-cat {
+    margin-left: 15px;
+    width: auto;
+}
 }
