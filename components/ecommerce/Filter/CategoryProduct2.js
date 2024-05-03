@@ -45,7 +45,7 @@ const CategoryProduct2 = ({ updateProductCategory, data }) => {
       router.push({
         pathname: `${intl.locale === "eng"
             ? item.seo_en.replace("/eng", "")
-            : selectedItem.seo_ja.replace("/jp", "")
+            : item.seo_ja.replace("/jp", "")
           }`,
       });
     }
@@ -102,7 +102,7 @@ const CategoryProduct2 = ({ updateProductCategory, data }) => {
                           router.push({
                             pathname: `${intl.locale === "eng"
                                 ? subCategory.seo_en.replace("/eng", "")
-                                : subCategory.seo_ja.replace("/jp", "")
+                                : subCategory?.seo_ja?.replace("/jp", "")
                               }`,
                           });
                         }}

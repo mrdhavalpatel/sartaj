@@ -45,7 +45,7 @@ const CategoryProduct3 = ({ updateProductCategory, data }) => {
       router.push({
         pathname: `${intl.locale === "eng"
             ? item.seo_en.replace("/eng", "")
-            : selectedItem.seo_ja.replace("/jp", "")
+            : item.seo_ja.replace("/jp", "")
           }`,
       });
     }
