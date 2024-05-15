@@ -26,8 +26,8 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
     road: address?.road,
     house: address?.house,
     floor: address?.floor,
-    city: address?.city,
-    state: address?.state,
+    city: address?.city_name,
+    state: address?.state_name,
     post_code: address?.post_code,
     contact_person_name: address?.contact_person_name,
     contact_person_number: address?.contact_person_number,
@@ -79,7 +79,7 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>
-          {isEmptyObject(address) ? "Add Address" : "Update Address"}
+          {isEmptyObject(address) ? "Add Address" : "Address"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -114,6 +114,7 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
                 className="form-control"
                 id="address"
                 name="address"
+                disabled
               />
               <ErrorMessage
                 name="address"
@@ -130,9 +131,11 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
                 className="form-control"
                 id="road"
                 name="road"
+                disabled
+
               />
             </div>
-            <div className="mb-3">
+            {/* <div className="mb-3">
               <label htmlFor="house" className="form-label">
                 House
               </label>
@@ -153,7 +156,7 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
                 id="floor"
                 name="floor"
               />
-            </div>
+            </div> */}
 
             <div className="mb-3">
               <label htmlFor="contact_person_name" className="form-label">
@@ -164,6 +167,8 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
                 className="form-control"
                 id="city"
                 name="city"
+                disabled
+
               />
             </div>
             <div className="mb-3">
@@ -175,6 +180,8 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
                 className="form-control"
                 id="state"
                 name="state"
+                disabled
+
               />
             </div>
             <div className="mb-3">
@@ -186,6 +193,8 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
                 className="form-control"
                 id="state"
                 name="post_code"
+                disabled
+
               />
             </div>
             <div className="mb-3">
@@ -197,6 +206,8 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
                 className="form-control"
                 id="contact_person_name"
                 name="contact_person_name"
+                disabled
+
               />
               <ErrorMessage
                 name="contact_person_name"
@@ -213,6 +224,8 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
                 className="form-control"
                 id="contact_person_number"
                 name="contact_person_number"
+                disabled
+
               />
               <ErrorMessage
                 name="contact_person_number"
@@ -221,8 +234,8 @@ const AddressDialog = ({ address, token, show, handleClose }) => {
               />
             </div>
 
-            <Button variant="secondary" type="submit">
-              Save
+            <Button variant="secondary" onClick={handleClose}>
+             Close
             </Button>
           </Form>
         </Formik>

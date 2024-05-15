@@ -707,7 +707,7 @@ function Account() {
                                             handleShow();
                                           }}
                                         >
-                                          {intl.formatMessage({ id: "Edit" })}
+                                          {intl.formatMessage({ id: "View" })}
                                         </Button>{" "}
                                       </>
                                     </div>
@@ -715,7 +715,7 @@ function Account() {
                                 ))}
                               </div>
                             </div>
-                            <Button
+                            {/* <Button
                               style={{
                                 backgroundColor: "#3e4493",
                               }}
@@ -725,7 +725,7 @@ function Account() {
                               }}
                             >
                               {intl.formatMessage({ id: "Add New Address" })}
-                            </Button>
+                            </Button> */}
                           </div>
                           {/* <div className="col-lg-6">
                               <div className="card">
