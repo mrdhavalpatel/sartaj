@@ -9,8 +9,8 @@ const ProductImage = ({ imgUrl }) => {
     Fancybox.bind("[data-fancybox]", {
       on: {
         close: (fancyboxInstance) => {
-          //Handle any logic needed when Fancybox closes
-          //console.log("Fancybox closed:", fancyboxInstance);
+          // Handle any logic needed when Fancybox closes
+          console.log('Fancybox closed:', fancyboxInstance);
         },
       },
     });
