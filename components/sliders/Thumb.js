@@ -2,7 +2,8 @@ import { useState } from "react";
 import SwiperCore, { Navigation, Thumbs } from "swiper";
 import "swiper/css/thumbs";
 import { Swiper, SwiperSlide } from "swiper/react";
-import ImageMagnifier from "./ImageMagnifier";
+//import ImageMagnifier from "./ImageMagnifier";
+import ProductImage from "./ProductImage";
 SwiperCore.use([Navigation, Thumbs]);
 
 const ThumbSlider = ({ product }) => {
@@ -22,7 +23,7 @@ const ThumbSlider = ({ product }) => {
       >
         {product?.image?.map((item, index) => (
           <SwiperSlide key={index}>
-            <ImageMagnifier imgUrl={item} />
+            <ProductImage imgUrl={item} />
           </SwiperSlide>
         ))}
       </Swiper>
