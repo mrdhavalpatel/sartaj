@@ -58,7 +58,19 @@ const SingleProductList = ({
               </div>
             </div>
             <div className="product-action-1">
-              <a
+              <Link
+                class="action-btn hover-up"
+                aria-label="Quick view"
+                href={`/${
+                  intl.locale === "eng" ? product?.seo_en : product?.seo_ja
+                }`}
+                as={`/${
+                  intl.locale === "eng" ? product?.seo_en : product?.seo_ja
+                }`}
+              >
+                <i className="fi-rs-eye"></i>
+              </Link>
+              {/* <a
                 aria-label="Quick view"
                 className="action-btn hover-up"
                 data-bs-toggle="modal"
@@ -66,7 +78,7 @@ const SingleProductList = ({
                 onClick={(e) => openQuickView(product)}
               >
                 <i className="fi-rs-eye"></i>
-              </a>
+              </a> */}
               <a
                 aria-label="Add To Wishlist"
                 className="action-btn hover-up"

@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { toast } from "sonner";
 import {
-  addToCart, increaseQuantity,
+  addToCart,
+  increaseQuantity,
   decreaseQuantity,
 } from "../../redux/action/cart";
 import { addToCompare } from "../../redux/action/compareAction";
@@ -14,12 +15,12 @@ import { useIntl } from "react-intl";
 import { translatedItemDetails } from "../../util/util";
 import { findProductIndexById } from "../../util/util";
 import storage from "../../util/localStorage";
-import { Swiper, SwiperSlide  } from "swiper/react";
-import { Pagination } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 const SingleProduct2 = ({
   product,
@@ -29,8 +30,7 @@ const SingleProduct2 = ({
   openQuickView,
   increaseQuantity,
   decreaseQuantity,
-  cartItems
-
+  cartItems,
 }) => {
   const intl = useIntl();
   const handleCart = (product) => {
@@ -51,7 +51,7 @@ const SingleProduct2 = ({
     addToWishlist(product, intl);
     // toast("Added to Wishlist !");
   };
-  const cartItem = cartItems?.find(item => item?.id === product?.id);
+  const cartItem = cartItems?.find((item) => item?.id === product?.id);
   const cartQuantity = cartItem ? cartItem.quantity : 0;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartDataUpdated, setCartDataUpdated] = useState(false);
@@ -85,34 +85,43 @@ const SingleProduct2 = ({
               <img className="default-img" src={product?.image} alt="nest" />
               <img className="hover-img" src={product?.image} alt="nest" />
             </Link> */}
-             <div data-slick='{"slidesToShow": 2, "slidesToScroll": 2}'>
-            <Swiper
-             slidesPerView={1}
-             //loop={true}
-             spaceBetween={0}
-             modules={[Pagination]}
-             effect={"fade"}
-             fadeEffect={{
-               crossFade: true,
-             }}
-             pagination={{clickable:true}}
-           
-            
-         
-            > 
-        {Array.isArray(product?.image) &&
-          product?.image?.map((itm, index) => {
-            return (
-              <SwiperSlide key={index}  >
-                <img className="default-img" src={itm} alt="nest"  />
-              </SwiperSlide>
-            );
-          })}
-      </Swiper>
+            <div data-slick='{"slidesToShow": 2, "slidesToScroll": 2}'>
+              <Swiper
+                slidesPerView={1}
+                //loop={true}
+                spaceBetween={0}
+                modules={[Pagination]}
+                effect={"fade"}
+                fadeEffect={{
+                  crossFade: true,
+                }}
+                pagination={{ clickable: true }}
+              >
+                {Array.isArray(product?.image) &&
+                  product?.image?.map((itm, index) => {
+                    return (
+                      <SwiperSlide key={index}>
+                        <img className="default-img" src={itm} alt="nest" />
+                      </SwiperSlide>
+                    );
+                  })}
+              </Swiper>
             </div>
           </div>
           <div className="product-action-1">
-            <a
+            <Link
+              class="action-btn hover-up"
+              aria-label="Quick view"
+              href={`/${
+                intl.locale === "eng" ? product?.seo_en : product?.seo_ja
+              }`}
+              as={`/${
+                intl.locale === "eng" ? product?.seo_en : product?.seo_ja
+              }`}
+            >
+              <i className="fi-rs-eye"></i>
+            </Link>
+            {/* <a
               aria-label="Quick view"
               className="action-btn hover-up"
               data-bs-toggle="modal"
@@ -120,7 +129,7 @@ const SingleProduct2 = ({
               onClick={(e) => openQuickView(product)}
             >
               <i className="fi-rs-eye"></i>
-            </a>
+            </a> */}
             <a
               aria-label="Add To Wishlist"
               className="action-btn hover-up"
@@ -153,8 +162,9 @@ const SingleProduct2 = ({
           </div> */}
           <h2>
             <Link
-              href={`/${intl.locale === "eng" ? product?.seo_en : product?.seo_ja
-                }`}
+              href={`/${
+                intl.locale === "eng" ? product?.seo_en : product?.seo_ja
+              }`}
             >
               <span
                 dangerouslySetInnerHTML={{
@@ -163,33 +173,35 @@ const SingleProduct2 = ({
               />
             </Link>
           </h2>
-          
+
           <div className="product-rate-div">
-          {product?.total_reviews > 0 ? (
-            <div className="product-rate d-inline-block">
-              <div
-                className="product-rating"
-                style={{
-                  width: `${product?.overall_rating ? product.overall_rating : 0
+            {product?.total_reviews > 0 ? (
+              <div className="product-rate d-inline-block">
+                <div
+                  className="product-rating"
+                  style={{
+                    width: `${
+                      product?.overall_rating ? product.overall_rating : 0
                     }%`,
-                }}
-              ></div>
-              <span className="font-small ml-5 text-muted">
-                {`(${product?.total_reviews ? product?.total_reviews : 0})`}
-              </span>
-            </div>
-          ) : (
-            intl.formatMessage({ id: "No reviews available" })
-          )}
+                  }}
+                ></div>
+                <span className="font-small ml-5 text-muted">
+                  {`(${product?.total_reviews ? product?.total_reviews : 0})`}
+                </span>
+              </div>
+            ) : (
+              intl.formatMessage({ id: "No reviews available" })
+            )}
           </div>
           <div>
             <span className="font-small text-muted">
               By{" "}
               <Link
-                href={`/${intl.locale === "eng"
+                href={`/${
+                  intl.locale === "eng"
                     ? product?.manufacturer?.seo_en
                     : product?.manufacturer?.seo_ja
-                  }`}
+                }`}
               >
                 {product?.manufacturer?.name}
               </Link>
@@ -256,7 +268,7 @@ const SingleProduct2 = ({
             {cartQuantity > 0 ? (
               <div className="detail-extralink mr-15">
                 <div className="detail-qty border radius d-flex align-items-center justify-content-between">
-                <a
+                  <a
                     onClick={() => {
                       if (cartQuantity >= 1) {
                         decreaseQuantity(product.id);
@@ -266,14 +278,12 @@ const SingleProduct2 = ({
                   >
                     <i className="fi-rs-minus-small"></i>
                   </a>
-                  
+
                   <span className="qty-val">{cartQuantity}</span>
                   <a
                     onClick={() => {
                       if (
-                        (cartQuantity
-                          ? cartQuantity
-                          : cartItem.quantity) <
+                        (cartQuantity ? cartQuantity : cartItem.quantity) <
                         (product?.maximum_order_quantity
                           ? product?.maximum_order_quantity
                           : product?.product?.maximum_order_quantity)
@@ -295,8 +305,7 @@ const SingleProduct2 = ({
                         if (localCartItemIndex >= 0) {
                           productQuantityAllowed =
                             cartItem.total_stock -
-                            localCartItems[localCartItemIndex]
-                              ?.quantity ||
+                              localCartItems[localCartItemIndex]?.quantity ||
                             cartItem.total_stock;
                         }
 
@@ -309,10 +318,7 @@ const SingleProduct2 = ({
                           return;
                         }
                         if (isLoggedIn) {
-                          if (
-                            cartQuantity + 1 >
-                            cartItem?.total_stock
-                          ) {
+                          if (cartQuantity + 1 > cartItem?.total_stock) {
                             toast.error(
                               intl.formatMessage({
                                 id: `Maximum order quantity is`,
@@ -323,10 +329,7 @@ const SingleProduct2 = ({
                             setCartDataUpdated(!cartDataUpdated);
                           }
                         } else {
-                          if (
-                            cartQuantity + 1 >
-                            cartItem.total_stock
-                          ) {
+                          if (cartQuantity + 1 > cartItem.total_stock) {
                             toast.error(
                               intl.formatMessage({
                                 id: "Maximum order quantity is ",
@@ -342,9 +345,10 @@ const SingleProduct2 = ({
                           intl.formatMessage({
                             id: "Maximum order quantity is ",
                           }) +
-                          ` ${product?.maximum_order_quantity ||
-                          product?.product?.maximum_order_quantity
-                          }`
+                            ` ${
+                              product?.maximum_order_quantity ||
+                              product?.product?.maximum_order_quantity
+                            }`
                         );
                       }
                     }}
@@ -359,16 +363,18 @@ const SingleProduct2 = ({
                 className="add_to_cart_btn btn w-100 hover-up"
                 style={{
                   border: "none",
-                  backgroundColor: `${product?.out_of_stock_status !== "in stock" ? "grey" : ""
-                    }`,
+                  backgroundColor: `${
+                    product?.out_of_stock_status !== "in stock" ? "grey" : ""
+                  }`,
                 }}
                 disabled={product?.out_of_stock_status !== "in stock"}
                 onClick={(e) => {
                   if (product?.out_of_stock_status == "in stock") {
                     handleCart(product);
                   } else {
-                    toast.error(intl.formatMessage({ id: "product is out of stock" }));
-
+                    toast.error(
+                      intl.formatMessage({ id: "product is out of stock" })
+                    );
                   }
                 }}
               >
