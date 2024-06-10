@@ -758,7 +758,7 @@ const onError = (err) => {
     // Call the browser detection function
     fnBrowserDetect();
   }, []);
-  const [selectedOption, setSelectedOption] = useState('paypal');
+  const [selectedOption, setSelectedOption] = useState('cash_on_delivery');
   const handleChangeRadio = (event) => {
     setSelectedOption(event.target.value);
   };
