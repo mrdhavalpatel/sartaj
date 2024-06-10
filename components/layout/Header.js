@@ -52,6 +52,10 @@ const Header = ({
       window.location.replace(
         `/${newLanguage}/orders/${router?.query?.id}`
       );
+    }else if(router.pathname.includes("fail")){
+      window.location.replace(
+        `/${newLanguage}/fail?order_id=${router?.query?.order_id}&name=${router?.query?.name}`
+      );
     }
     //  else if (slug) {
     //   window.location.replace(`${newUrl}/${slug}${window.location.search}`);

@@ -23,6 +23,7 @@ import moment from "moment";
 import React, { useRef } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { set } from "date-fns";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 const Cart = ({
   openCart,
   cartItems,
@@ -58,7 +59,7 @@ const Cart = ({
   const [addressformOpen, setAddressFormOpen] = useState(false);
   const [showModaladdress, setShowModaladdress] = useState(false);
   const intl = useIntl();
-
+console.log("intlllllllllllllllll====" , intl.locale)
   const handleRadioChange = (id) => {
     setSelectedRadioId(id);
     // setorderNotes(id);
@@ -73,7 +74,7 @@ const Cart = ({
     document.body.classList.remove('body-with-modal');
     setShowModaladdress(false);
     console.log('Modal closed');
-     
+
   };
   const handleClickOutside = () => {
     document.body.classList.remove('body-with-modal');
@@ -211,7 +212,50 @@ const Cart = ({
     }
   };
   //  ////  console.log("cart prodyct detail", cartItemsData);
+  const initialOptions = {
+    clientId: "test",
+    currency: "USD",
+    intent: "capture",
+};
+const createOrder = (data, actions) => {
+  return actions.order.create({
+    purchase_units: [{
+      amount: {
+        currency_code: 'USD',
+        value: calculateAmountToAdd().toFixed(2),
+        breakdown: {
+          item_total: {
+            currency_code: 'USD',
+            value: calculateAmountToAdd().toFixed(2),
+          },
+        },
+      },
+      items: cartItemsData.map(item => ({
+        name: translatedItemDetails("name", intl, item?.product),
+        unit_amount: {
+          currency_code: 'USD',
+          value:  (item?.quantity ? item?.quantity : 1) *
+            item?.actual_price
+            ? item?.actual_price
+            : item?.product.actual_price
+              ? item?.product.actual_price
+              : 0,
+        },
+        quantity: item.quantity,
+      })),
+    }],
+  });
+};
 
+const onApprove = (data, actions) => {
+  return actions.order.capture().then(details => {
+    alert('Transaction completed by ' + details.payer.name.given_name);
+  });
+};
+
+const onError = (err) => {
+  console.error(err);
+};
   const getAddress = async (encodedToken) => {
     const response = await api.get("customer/address/list", {
       headers: {
@@ -439,7 +483,7 @@ const Cart = ({
       //     });
       // }}
       >
-        {({ setFieldValue, values, handleChange, errors, touched, dirty }) => (
+        {({ setFieldValue, values, Radio, errors, touched, dirty }) => (
           <Form method="post">
             <div className="form-group mb-20">
               <Field
@@ -714,6 +758,10 @@ const Cart = ({
     // Call the browser detection function
     fnBrowserDetect();
   }, []);
+  const [selectedOption, setSelectedOption] = useState('paypal');
+  const handleChangeRadio = (event) => {
+    setSelectedOption(event.target.value);
+  };
   const placeOrder = async () => {
     setloading(true)
     try {
@@ -723,13 +771,14 @@ const Cart = ({
         order_amount: coupanRes?.orderAmount
           ? coupanRes?.orderAmount
           : cartTotal?.total_amt,
-        payment_method: "cash_on_delivery",
+        payment_method: selectedOption,
         delivery_address_id: selectedAddressDropdown,
         order_type: "delivery",
         coupon_discount_amount: coupenCodeDis,
         cart: cartItemsData,
         time_slot_id: selectedRadioId,
         order_note: orderNotes,
+        local:intl.locale,
         coupon_code: coupenCode,
         ip_address: ip,
         forwarded_ip: ip,
@@ -747,8 +796,11 @@ const Cart = ({
           },
         })
         .then((response) => {
+          console.log("response" ,response.data.payment_link)
           if (response?.status === 200) {
-            router.push(`/OrderReceived?order_id=${response?.data?.order_id}`);
+            selectedOption == 'paypal' ? 
+            router.push(response.data.payment_link):
+            router.push(`/OrderReceived?order_id=${response?.data?.order_id}`)
 
           }
         })
@@ -900,7 +952,7 @@ const Cart = ({
                   )}
                 </div>
                 <div className="border p-30 cart-totals mb-30 checkout_box desktop_notes">
-                  <h6 className="mb-4">Add Order Notes</h6>
+                  <h6 className="mb-4">{intl.formatMessage({ id: "Add Order Notes" })}</h6>
                   <div className="px-40">
                     <textarea
                       className="orderNotes_textarea"
@@ -1103,7 +1155,7 @@ const Cart = ({
                 <div className="border p-30 cart-totals ml-30 mb-30 checkout_box time_box">
                   <div className="delivery_time_div">
                     <div className="heading_s1 mb-3">
-                      <h6>{intl.formatMessage({ id: "Delivery Time" })}</h6>
+                      <h6>{intl.formatMessage({ id: "Delivery time" })}</h6>
                     </div>
 
                     <div className="time_box_input">
@@ -1155,89 +1207,69 @@ const Cart = ({
                     </div>
 
                     <div className="payment_option">
-                      <div className="custome-radio">
-                        <input
-                          className="form-check-input"
-                          required=""
-                          type="radio"
-                          name="payment_option"
-                          id="exampleRadios3"
-                          defaultChecked={true}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="exampleRadios3"
-                          data-bs-toggle="collapse"
-                          data-target="#bankTranfer"
-                          aria-controls="bankTranfer"
-                        >
-                          {intl.formatMessage({ id: "COD" })}
-                        </label>
-                        {/* <div
-                          className="form-group collapse in"
-                          id="bankTranfer"
-                        >
-                          <p className="text-muted mt-5">
-                            There are many variations of passages of Lorem Ipsum
-                            available, but the majority have suffered
-                            alteration.{" "}
-                          </p>
-                        </div> */}
-                      </div>
-                      {/* <div className="custome-radio">
-                        <input
-                          className="form-check-input"
-                          required=""
-                          type="radio"
-                          name="payment_option"
-                          id="exampleRadios4"
-                          defaultChecked={true}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="exampleRadios4"
-                          data-bs-toggle="collapse"
-                          data-target="#checkPayment"
-                          aria-controls="checkPayment"
-                        >
-                          Check Payment
-                        </label>
-                        <div
-                          className="form-group collapse in"
-                          id="checkPayment"
-                        >
-                          <p className="text-muted mt-5">
-                            Please send your cheque to Store Name, Store Street,
-                            Store Town, Store State / County, Store Postcode.{" "}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="custome-radio">
-                        <input
-                          className="form-check-input"
-                          required=""
-                          type="radio"
-                          name="payment_option"
-                          id="exampleRadios5"
-                          defaultChecked={true}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="exampleRadios5"
-                          data-bs-toggle="collapse"
-                          data-target="#paypal"
-                          aria-controls="paypal"
-                        >
-                          Paypal
-                        </label>
-                        <div className="form-group collapse in" id="paypal">
-                          <p className="text-muted mt-5">
-                            Pay via PayPal; you can pay with your credit card if
-                            you don't have a PayPal account.
-                          </p>
-                        </div>
-                      </div> */}
-                    </div>
+      <div className="custome-radio">
+        <input
+          className="form-check-input"
+          required
+          type="radio"
+          name="payment_option"
+          id="exampleRadios3"
+          value="cash_on_delivery"
+          checked={selectedOption === 'cash_on_delivery'}
+          onChange={handleChangeRadio}
+         
+        />
+        <label
+          className="form-check-label"
+          htmlFor="exampleRadios3"
+          data-bs-toggle="collapse"
+          data-target="#bankTranfer"
+          aria-controls="bankTranfer"
+        >
+          {intl.formatMessage({ id: "COD" })}
+        </label>
+      </div>
+      <div className="custome-radio">
+        <input
+          className="form-check-input"
+          required
+          type="radio"
+          name="payment_option"
+          id="exampleRadios4"
+          value="paypal"
+          checked={selectedOption === 'paypal'}
+          onChange={handleChangeRadio}
+        />
+        <label
+          className="form-check-label"
+          htmlFor="exampleRadios4"
+          data-bs-toggle="collapse"
+          data-target="#checkPayment"
+          aria-controls="checkPayment"
+        >
+          Paypal
+        </label>
+      </div>
+      {/* Add similar structure for other payment options */}
+
+      {/* Conditionally render content based on selectedOption */}
+      {selectedOption === 'COD' && (
+        <div className="form-group collapse in" id="bankTranfer">
+          {/* Content for COD */}
+          <p className="text-muted mt-5">
+            {/* Information about COD */}
+          </p>
+        </div>
+      )}
+      {selectedOption === 'Paypal' && (
+        <div className="form-group collapse in" id="checkPayment">
+          {/* Content for Paypal */}
+          <p className="text-muted mt-5">
+            {/* Information about Paypal */}
+          </p>
+        </div>
+      )}
+    </div>
                   </div>
                   <div className="minOrderAmount_div">
                     {cartTotal?.total_amt <= cartTotal.minOrderAmount ? (
@@ -1491,7 +1523,7 @@ const Cart = ({
                 </div>
 
                 <div className="border p-30 cart-totals mb-30 checkout_box mobile_notes mb-30 ">
-                  <h6 className="mb-4">Add Order Notes</h6>
+                  <h6 className="mb-4">{intl.formatMessage({ id: "Add Order Notes" })}</h6>
                   <div className="px-40">
                     <textarea
                       className="orderNotes_textarea"

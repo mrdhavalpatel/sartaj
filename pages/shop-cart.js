@@ -115,6 +115,7 @@ const Cart = ({
       if (res?.response?.data?.errors) {
         toast.error(res?.response?.data?.errors?.[0]?.message);
       } else {
+        console.log("token" , res.token)
         localStorage.setItem("token", res.token);
         addCurrenItems(res.token);
         setIsLoggedIn(true);
@@ -151,6 +152,7 @@ const Cart = ({
   useEffect(() => {
     let Token = storage.get("token");
     const fetchData = () => {
+      console.log("token" , Token)
       if (Token) {
         getCartData(Token);
         setIsLoggedIn(Token);

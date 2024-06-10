@@ -55,6 +55,7 @@ function Login({ cartItems }) {
       if (res?.response?.data?.errors) {
         toast.error(res?.response?.data?.errors?.[0]?.message);
       } else {
+        console.log("token in login" , res.token)
         localStorage.setItem("token", res.token);
         addCurrenItems(res.token);
 
