@@ -89,7 +89,13 @@ const OrderDetails = () => {
                     {formatDate(orderDetails?.created_at)}
                   </td>
                   <td className="text-left" style={{ width: "50%" }}>
-                    <b>{intl.formatMessage({ id: "Payment Method" })} : </b>{orderDetails?.payment_method =="cash_on_delivery" ? intl.formatMessage({ id: "Cash On Delivery" }) : intl.formatMessage({ id: "Paypal"})} , {orderDetails?.payment_status =="unpaid" ? intl.formatMessage({ id:"unpaid"}) : intl.formatMessage({id:"paid"})} <br />
+                    <b>{intl.formatMessage({ id: "Payment Method" })} : </b>{orderDetails?.payment_method =="cash_on_delivery" ? intl.formatMessage({ id: "Cash On Delivery" }) : intl.formatMessage({ id: "Paypal"})}
+                    {orderDetails?.payment_method === "paypal" && (
+        ` ${orderDetails.payment_status === "unpaid"
+          ? ","+intl.formatMessage({ id: "unpaid" })
+          : ","+intl.formatMessage({ id: "paid" })
+        }`
+      )} <br />
                     <b>{intl.formatMessage({ id: "Shipping Method" })} : </b>{intl.formatMessage({ id: "All Item in Dry Shipping"})}
                   </td>
                 </tr>
