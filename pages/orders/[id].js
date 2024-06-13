@@ -82,15 +82,15 @@ const OrderDetails = () => {
               <tbody>
                 <tr>
                   <td className="text-left" style={{ width: "50%" }}>
-                    <b>{intl.formatMessage({ id: "Order ID" })}:</b> #
+                    <b>{intl.formatMessage({ id: "Order ID" })} : </b> #
                     {orderDetails?.id}
                     <br />
-                    <b>{intl.formatMessage({ id: "Date Added" })}:</b>{" "}
+                    <b>{intl.formatMessage({ id: "Date Added" })} : </b>{" "}
                     {formatDate(orderDetails?.created_at)}
                   </td>
                   <td className="text-left" style={{ width: "50%" }}>
-                    <b>{intl.formatMessage({ id: "Payment Method" })}:</b>{orderDetails?.payment_method =="cash_on_delivery" ? intl.formatMessage({ id: "Cash On Delivery" }) : intl.formatMessage({ id: "Online"})} <br />
-                    <b>{intl.formatMessage({ id: "Shipping Method" })}:</b>{intl.formatMessage({ id: "All Item in Dry Shipping"})}
+                    <b>{intl.formatMessage({ id: "Payment Method" })} : </b>{orderDetails?.payment_method =="cash_on_delivery" ? intl.formatMessage({ id: "Cash On Delivery" }) : intl.formatMessage({ id: "Paypal"})} , {orderDetails?.payment_status =="unpaid" ? intl.formatMessage({ id:"unpaid"}) : intl.formatMessage({id:"paid"})} <br />
+                    <b>{intl.formatMessage({ id: "Shipping Method" })} : </b>{intl.formatMessage({ id: "All Item in Dry Shipping"})}
                   </td>
                 </tr>
               </tbody>
@@ -132,7 +132,7 @@ const OrderDetails = () => {
                       </>
                     )}
                     <br />
-                    {intl.formatMessage({ id: "Postal code" })}: {orderDetails?.delivery_address?.post_code}
+                    {intl.formatMessage({ id: "Postal code" })} : {orderDetails?.delivery_address?.post_code}
                   </td>
                   <td class="text-left">
                     {orderDetails?.delivery_address?.contact_person_name}
