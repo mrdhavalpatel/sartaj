@@ -482,13 +482,13 @@ const Footer = () => {
           <div className="row">
             <div className="col footer_menu">
               <Link href="/" className="active">
-                <img src="/assets/imgs/menu/home.png" alt="Home" className="bottom_menu_icon" />
+                <img src="/assets/imgs/menu/home.svg" alt="Home" className="bottom_menu_icon" />
                 <span className="footer_menu_text">{intl.formatMessage({ id: "Home" })}</span>
               </Link>
             </div>
             <div className="col footer_menu">
               <Link href={`/${intl.locale}/shop`}>
-                <img src="/assets/imgs/menu/shop.png" alt="Shop" className="bottom_menu_icon" />
+                <img src="/assets/imgs/menu/shop.svg" alt="Shop" className="bottom_menu_icon" />
                 <span className="footer_menu_text">{intl.formatMessage({ id: "Shop" })}</span>
               </Link>
             </div>

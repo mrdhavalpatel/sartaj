@@ -14665,6 +14665,7 @@ ul.sub-cat {
   img.menu_icon {
     width: 20px;
     margin-right: 10px;
+    filter: invert(2);
   }
 
   .mobile-menu li a {
