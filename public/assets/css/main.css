@@ -358,15 +358,15 @@ input[type="number"]:focus,
 }
 
 .hover-up {
-  -webkit-transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
-  transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+  /* -webkit-transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+  transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1); */
 }
 
 .hover-up:hover {
-  -webkit-transform: translateY(-5px);
+  /* -webkit-transform: translateY(-5px);
   transform: translateY(-5px);
   -webkit-transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
-  transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+  transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1); */
 }
 
 .text-brand {
@@ -1142,8 +1142,8 @@ h5.widget-title {
 
 .btn-heading,
 button.btn-heading[type="submit"] {
-  background-color: #000000;
-  border-color: #000000;
+  background-color: #3e4493;
+  border-color: #3e4493;
   font-weight: 700;
   border: 0;
 }
@@ -5154,7 +5154,7 @@ table .product-thumbnail img {
 }
 
 .detail-qty>a:hover {
-  color: #3e4493;
+  color: #ffffff;
 }
 
 .detail-qty>a.qty-up {
@@ -5286,9 +5286,9 @@ span.qty-val {
 }
 
 .product-extra-link2 a {
-  background: #fff none repeat scroll 0 0;
+  background: #3e4493 none repeat scroll 0 0;
   border: 1px solid #f1f1f1;
-  color: #333;
+  color: #ffffff;
   border-radius: 5px;
   display: inline-block;
   height: 50px;
@@ -5313,7 +5313,7 @@ span.qty-val {
 
 .product-extra-link2 a i {
   font-size: 18px;
-  opacity: 0.6;
+  opacity: 1;
 }
 
 .product-extra-link2 .button.button-add-to-cart {
@@ -7754,6 +7754,7 @@ h6.post-title {
 .hotline img {
   min-width: 35px;
   margin-right: 12px;
+  width: 36px;
 }
 
 .hotline p {
@@ -13035,11 +13036,11 @@ button.ordertable_btn {
 }
 
 .product-list-small article .bottom_row_div {
-  box-shadow: 0px 0px 3px 0px #00000059;
   border-radius: 5px;
   padding: 10px;
   margin: 0;
   min-height: 129px;
+  border: 1px solid #000000;
 }
 
 .bottom_row_div h6 {
@@ -15133,7 +15134,7 @@ span.clear-btn {
   border-radius: 5px;
   display: inline-block;
   margin-bottom: 20px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .ordetable tbody td {
@@ -15163,4 +15164,17 @@ button.address_btn.btn.btn-primary {
 td.cart_total_label {
   color: #000000;
   font-weight: 500;
+}
+
+a.text-muted.clearcarttext {
+  color: #ff0000 !important;
+  background: #fde0e9;
+  padding: 10px 12px;
+  border-radius: 5px;
+  display: inline-block;
+  font-weight: 600;
+}
+
+.login_footer.form-group.mb-50 label.form-check-label {
+  border: none;
 }
