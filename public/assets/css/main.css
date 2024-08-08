@@ -4349,9 +4349,10 @@ table .product-thumbnail img {
   display: inline-block;
   padding: 6px 20px 6px 20px;
   border-radius: 4px;
-  background-color: #def9ec;
+  background-color: #3e4493;
   font-size: 14px;
   font-weight: 700;
+  color: #ffffff;
 }
 
 .product-cart-wrap .product-card-bottom .add-cart .add:hover {
