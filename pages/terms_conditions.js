@@ -13,9 +13,9 @@ function Terms() {
     const privacyPolicyData = await request;
     if(intl.locale === "eng"){
 
-    setTermsData(privacyPolicyData?.data?.privacy_policy);}
+    setTermsData(privacyPolicyData?.data?.terms_and_conditions);}
     else{
-      setTermsData(privacyPolicyData?.data?.japanese_privacy_policy);}
+      setTermsData(privacyPolicyData?.data?.japanese_terms_and_conditions);}
 
     
   };

@@ -497,19 +497,19 @@ const Footer = () => {
                 href={`/${intl.locale}/shop-cart`}
                 className="mini-cart-icon"
               >
-                <img src="/assets/imgs/menu/cart.png" alt="Cart" className="bottom_menu_icon" />
+                <img src="/assets/imgs/menu/cart.svg" alt="Cart" className="bottom_menu_icon" />
                 <span className="footer_menu_text">{intl.formatMessage({ id: "Cart" })}</span>
               </Link>
             </div>
             <div className="col footer_menu">
               <Link href={`/${intl.locale}/shop-wishlist`}>
-              <img src="/assets/imgs/menu/wishlist.png" alt="Wishlist" className="bottom_menu_icon" />
+              <img src="/assets/imgs/menu/wishlist.svg" alt="Wishlist" className="bottom_menu_icon" />
                 <span className="footer_menu_text">{intl.formatMessage({ id: "Wishlist" })}</span>
               </Link>
             </div>
             <div className="col footer_menu">
               <Link href="/my-account">
-              <img src="/assets/imgs/menu/account.png" alt="Account" className="bottom_menu_icon" />
+              <img src="/assets/imgs/menu/account.svg" alt="Account" className="bottom_menu_icon" />
                 <span className="footer_menu_text">{intl.formatMessage({ id: "Account" })}</span>
               </Link>
             </div>

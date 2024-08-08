@@ -12380,10 +12380,6 @@ footer .hotline img {
   text-align: center;
 }
 
-.shopping-summery table thead th.start {
-  text-align: left;
-}
-
 .shopping-summery table td.product-des.product-name h6.product-name {
   font-size: 16px;
   line-height: 1.45em;
@@ -14820,13 +14816,22 @@ ul.sub-cat {
     margin-bottom: 90px;
   }
 
-  .terms_conditions_content p, .terms_conditions_content a {
+  .terms_conditions_content p, .terms_conditions_content a, .terms_conditions_content h3, .terms_conditions_content h1 {
     color: #ffffff !important;
   }
 
   .faq_page_content a, .faq_page_content p, .faq_page_content h2 {
     color: #fff;
     word-break: break-word;
+  }
+
+  .contact_page p, .contact_page h4, .contact_page h3, .contact_page h5 {
+    color: #fff !important;
+  }
+
+  .contact-from-area .contact-form-style button{
+    background-color: #fff;
+    color: #3e4493;
   }
 
   .faq_page_content a {
@@ -14997,7 +15002,7 @@ img.footer_logo {
 }
 
 .shopping-summery table thead th {
-  text-align: left;
+  text-align: center;
   padding: 15px !important;
 }
 
@@ -15135,6 +15140,7 @@ span.clear-btn {
   display: inline-block;
   margin-bottom: 20px;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .ordetable tbody td {

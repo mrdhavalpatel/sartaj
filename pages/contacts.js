@@ -15,31 +15,32 @@ const Gmap = dynamic(() => import("../components/elements/Gmap"), {
 
 function Contact() {
   const intl = useIntl();
-  const handleContactform =(value)=>{
-   
-    const payload={
-      "first_name":value.name,
-   
-      "email":value.email,
-      "mobile_no":value.telephone,
-      "subject":value.subject,
-      "message":value.message
-    }
-    axios.post(`${API_BASE_URL}inquiry`, payload, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-      },
-    }).then((res)=>{
-//      console.log("res",res.data.message);
-  if(res.data.message =="Inquiry sent successfully"){
-    toast(intl.formatMessage({ id:"Message sent successfully"}));
-  }
-    })
-    .catch((error) => {
-//      console.log("error", error?.code === "ERR_NETWORK");
-    });
-  } 
+  const handleContactform = (value) => {
+    const payload = {
+      first_name: value.name,
+
+      email: value.email,
+      mobile_no: value.telephone,
+      subject: value.subject,
+      message: value.message,
+    };
+    axios
+      .post(`${API_BASE_URL}inquiry`, payload, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        //      console.log("res",res.data.message);
+        if (res.data.message == "Inquiry sent successfully") {
+          toast(intl.formatMessage({ id: "Message sent successfully" }));
+        }
+      })
+      .catch((error) => {
+        //      console.log("error", error?.code === "ERR_NETWORK");
+      });
+  };
   const validationSchema = Yup.object().shape({
     name: Yup.string().required(
       intl.formatMessage({ id: "First name is required" })
@@ -48,13 +49,13 @@ function Contact() {
       .email(intl.formatMessage({ id: "Invalid email address" }))
       .required(intl.formatMessage({ id: "Email is required" })),
     telephone: Yup.string()
-    .required(intl.formatMessage({ id: "Phone number is required" }))
-    .matches(
-      /^\d{10}$/,
-      intl.formatMessage({
-        id: "Phone number must be 10 digits",
-      })
-    ),
+      .required(intl.formatMessage({ id: "Phone number is required" }))
+      .matches(
+        /^\d{10}$/,
+        intl.formatMessage({
+          id: "Phone number must be 10 digits",
+        })
+      ),
     subject: Yup.string().required(
       intl.formatMessage({ id: "Subject is required" })
     ),
@@ -66,7 +67,7 @@ function Contact() {
   return (
     <>
       <Layout parent="Home" sub="Pages" subChild="Contact">
-        <div className="page-content pt-50">
+        <div className="page-content pt-50 contact_page">
           <section className="container mb-50 d-none d-md-block">
             <div className="border-radius-15 overflow-hidden">
               <div id="map-panes" className="leaflet-map">
@@ -77,7 +78,7 @@ function Contact() {
               </div>
             </div>
           </section>
-          <div className="container">
+          <div className="container contact_page">
             <div className="row">
               <div className="col-xl-10 col-lg-12 m-auto">
                 <section className="mb-50">
@@ -86,20 +87,23 @@ function Contact() {
                       <h4 className="mb-15 text-brand">
                         {intl.formatMessage({ id: "Shop" })}
                       </h4>
-                      {intl.formatMessage({
-                        id: "osaka-fu, ikeda-shi, koda 2-10-23",
-                      })}
-                      <br />
-                      <abbr title="Phone">
-                        {intl.formatMessage({ id: "Phone" })}:
-                      </abbr>{" "}
-                      072-751-1975
-                      <br />
-                      <abbr title="Email">
-                        {intl.formatMessage({ id: "Email" })}:{" "}
-                      </abbr>
-                      {intl.formatMessage({ id: "info@sartajfoods.jp" })}
-                      <br />
+                      <p>
+                        {intl.formatMessage({
+                          id: "osaka-fu, ikeda-shi, koda 2-10-23",
+                        })}
+                      </p>
+                      <p>
+                        <abbr title="Phone">
+                          {intl.formatMessage({ id: "Phone" })}:
+                        </abbr>{" "}
+                        072-751-1975
+                      </p>
+                      <p>
+                        <abbr title="Email">
+                          {intl.formatMessage({ id: "Email" })}:{" "}
+                        </abbr>
+                        {intl.formatMessage({ id: "info@sartajfoods.jp" })}
+                      </p>
                     </div>
                   </div>
                   <div className="row">
@@ -108,15 +112,15 @@ function Contact() {
                         <h5 className="text-brand mb-10">
                           {intl.formatMessage({ id: "Contact form" })}
                         </h5>
-                        <h2 className="mb-10">
+                        <h3 className="mb-10">
                           {intl.formatMessage({ id: "Drop Us a Line" })}
-                        </h2>
+                        </h3>
                         <p className="text-muted mb-30 font-sm">
                           {intl.formatMessage({
                             id: "Your email address will not be published. Required fields are marked *",
                           })}
                         </p>
-                
+
                         <Formik
                           initialValues={{
                             name: "",
@@ -127,8 +131,8 @@ function Contact() {
                           }}
                           validationSchema={validationSchema}
                           onSubmit={(values, { resetForm }) => {
-//                            // console.log(values);
-                            handleContactform(values)
+                            //                            // console.log(values);
+                            handleContactform(values);
                             // Your form submission logic goes here
 
                             // Optionally, reset the form after submission
@@ -143,7 +147,7 @@ function Contact() {
                             handleBlur,
                             handleSubmit,
                             isSubmitting,
-                            setFieldValue
+                            setFieldValue,
                           }) => (
                             <form
                               className="contact-form-style mt-30"
@@ -191,39 +195,45 @@ function Contact() {
                                     />
                                   </div>
                                 </div>
-                        
+
                                 <div
-                              className="form-group"
-                              style={{ display: "flex", alignItems: "center" }}
-                            >
-                              <input
-                                type="text"
-                                id="countryCode"
-                                name="countryCode"
-                                value="+81"
-                                disabled
-                                style={{ width: "70px", marginRight: "5px" }}
-                              />
-                              <Field
-                                type="number"
-                                id="phone"
-                                name="telephone"
-                                value={values.telephone}
-                                onChange={(e) => {
-                                  const inputValue = e.target.value.slice(
-                                    0,
-                                    10
-                                  ); // Limit to 10 characters
-                                  setFieldValue("telephone", inputValue);
-                                }}
-                              />
-                            </div>
-                            <ErrorMessage
-                                      name="telephone"
-                                      component="div"
-                                      className="error-message"
-                                      style={{ color: "red" }}
-                                    />
+                                  className="form-group"
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <input
+                                    type="text"
+                                    id="countryCode"
+                                    name="countryCode"
+                                    value="+81"
+                                    disabled
+                                    style={{
+                                      width: "70px",
+                                      marginRight: "5px",
+                                    }}
+                                  />
+                                  <Field
+                                    type="number"
+                                    id="phone"
+                                    name="telephone"
+                                    value={values.telephone}
+                                    onChange={(e) => {
+                                      const inputValue = e.target.value.slice(
+                                        0,
+                                        10
+                                      ); // Limit to 10 characters
+                                      setFieldValue("telephone", inputValue);
+                                    }}
+                                  />
+                                </div>
+                                <ErrorMessage
+                                  name="telephone"
+                                  component="div"
+                                  className="error-message"
+                                  style={{ color: "red" }}
+                                />
 
                                 <div className="col-lg-12 col-md-12">
                                   <div className="input-style mb-20">
@@ -267,7 +277,6 @@ function Contact() {
                                   <button
                                     className="submit submit-auto-width"
                                     type="submit"
-                                    
                                   >
                                     {intl.formatMessage({ id: "Send message" })}
                                   </button>
@@ -284,7 +293,6 @@ function Contact() {
                       <img
                         className="border-radius-15 mt-50"
                         src="/assets/imgs/page/contact-us.jpg"
-                        
                         alt="nest"
                       />
                     </div>
