@@ -26,7 +26,7 @@ function About() {
         <div className="container  pt-50">
           <div className="row">
             <div className="col-xl-10 col-lg-12 m-auto">
-              <section className="row align-items-center mb-50">
+              <section className="row align-items-center mb-50 about_page">
                 {/* <div className="col-lg-6">
                   <img
                     src="/assets/imgs/page/about.jpg"

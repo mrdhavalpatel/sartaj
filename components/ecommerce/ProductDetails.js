@@ -135,7 +135,7 @@ const ProductDetails = ({
                             <span className="old-price">
                               {product?.price && `¥ ${product?.price}`}
                             </span>
-                          )}
+                          )}(Without tax)
                         </div>
                         {product?.discount?.percentage == null ? (
                           <span></span>

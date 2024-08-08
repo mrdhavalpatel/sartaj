@@ -181,12 +181,8 @@ const CompareTable = ({ data, features, deleteFromCompare, addToCart }) => {
                   )}
                 </td>
               ) : feature == " " ? (
-                <td className="row_remove">
-                  <a onClick={() => deleteFromCompare(product.id)}>
-                    <i className="fi-rs-trash mr-5"></i>
-                    <span>{intl.formatMessage({ id: "Remove" })}</span>
-                  </a>
-                </td>
+                <td class="row_remove action" data-title="Remove"><a onClick={() => deleteFromCompare(product.id)}><i class="fi-rs-trash"></i></a></td>
+                
               ) : null
             )}
           </tr>

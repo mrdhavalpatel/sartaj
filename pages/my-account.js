@@ -47,15 +47,13 @@ function Account() {
   };
   const pageNumbers = [];
   const handleClick = (itm) => {
-   
-    navigator.clipboard.writeText(itm)
-      .then(() => {
-      
-      })
-      .catch(err => {
-        console.error('Failed to copy text: ', err);
+    navigator.clipboard
+      .writeText(itm)
+      .then(() => {})
+      .catch((err) => {
+        console.error("Failed to copy text: ", err);
       });
-  }
+  };
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsperpage, setItemsPerPage] = useState(5);
   const indexOfLastItem = currentPage * itemsperpage;
@@ -157,7 +155,7 @@ function Account() {
       .then((response) => {
         if (response?.data?.status === 200) {
           toast.success(response?.data?.message);
-          resetForm()
+          resetForm();
         } else {
           toast.error(response?.data?.message);
         }
@@ -304,7 +302,9 @@ function Account() {
                             onClick={() => handleOnClick(1)}
                           >
                             <i className="fi-rs-settings-sliders mr-10"></i>
-                            <span>{intl.formatMessage({ id: "Dashboard" })}</span>
+                            <span>
+                              {intl.formatMessage({ id: "Dashboard" })}
+                            </span>
                           </a>
                         </li>
                         <li className="nav-item">
@@ -327,7 +327,9 @@ function Account() {
                             onClick={() => handleOnClick(4)}
                           >
                             <i className="fi-rs-marker mr-10"></i>
-                            <span>{intl.formatMessage({ id: "My Address" })}</span>
+                            <span>
+                              {intl.formatMessage({ id: "My Address" })}
+                            </span>
                           </a>
                         </li>
                         <li className="nav-item">
@@ -338,7 +340,9 @@ function Account() {
                             onClick={() => handleOnClick(5)}
                           >
                             <i className="fi-rs-user mr-10"></i>
-                            <span>{intl.formatMessage({ id: "Account details" })}</span>
+                            <span>
+                              {intl.formatMessage({ id: "Account details" })}
+                            </span>
                           </a>
                         </li>
                         <li className="nav-item">
@@ -363,7 +367,9 @@ function Account() {
                             </svg> */}
                             {/* <i className="fi-rs-crossed-eye"></i> */}
                             <i className="fi-rs-lock mr-10"></i>
-                            <span>{intl.formatMessage({ id: "Change Password" })}</span>
+                            <span>
+                              {intl.formatMessage({ id: "Change Password" })}
+                            </span>
                           </a>
                         </li>
                         <li className="nav-item">
@@ -463,7 +469,9 @@ function Account() {
                                       {intl.formatMessage({ id: "Actions" })}
                                     </th>
                                     <th>
-                                      {intl.formatMessage({ id: "Track Shipment" })}
+                                      {intl.formatMessage({
+                                        id: "Track Shipment",
+                                      })}
                                     </th>
                                   </tr>
                                 </thead>
@@ -484,7 +492,7 @@ function Account() {
                                           {Item?.details_count}{" "}
                                           {intl.formatMessage({ id: "item" })}
                                         </td>
-                                        <td className="d-flex align-items-center justify-content-between">
+                                        <td>
                                           <Link
                                             href={{
                                               pathname: "/orders/[id]",
@@ -515,17 +523,34 @@ function Account() {
                                           )} */}
                                         </td>
                                         <td>
-                                          {Item?.tracking_id !== null ?<div>{Item?.tracking_id}
-                                          <div>
-                                            <a
-                                            href="https://k2k.sagawa-exp.co.jp/p/sagawa/web/okurijosearcheng.jsp"
-                                            target="_blank"
-                                            onClick={handleClick(Item?.tracking_id)}
-                                            rel="noopener noreferrer"
-                                           style={{backgroundColor:"#3e4493" , color:"white" , paddingTop:3 , borderRadius:5 , paddingBottom:3 , paddingLeft:5 , paddingRight:5}}
-                                          >Track Order</a></div></div> : "Tracking information will be update shortly."}
-
-
+                                          {Item?.tracking_id !== null ? (
+                                            <div>
+                                              {Item?.tracking_id}
+                                              <div>
+                                                <a
+                                                  href="https://k2k.sagawa-exp.co.jp/p/sagawa/web/okurijosearcheng.jsp"
+                                                  target="_blank"
+                                                  onClick={handleClick(
+                                                    Item?.tracking_id
+                                                  )}
+                                                  rel="noopener noreferrer"
+                                                  style={{
+                                                    backgroundColor: "#3e4493",
+                                                    color: "white",
+                                                    paddingTop: 3,
+                                                    borderRadius: 5,
+                                                    paddingBottom: 3,
+                                                    paddingLeft: 5,
+                                                    paddingRight: 5,
+                                                  }}
+                                                >
+                                                  Track Order
+                                                </a>
+                                              </div>
+                                            </div>
+                                          ) : (
+                                            "Tracking information will be update shortly."
+                                          )}
                                         </td>
                                       </tr>
                                     );
@@ -541,16 +566,30 @@ function Account() {
                             <ul className="pagination">
                               {pageNumbers.map((pageNumber, index) => (
                                 <span key={index}>
-                                  {pageNumber === '<' && (
-                                    <button className="pagination-button large" onClick={handlePrevPage}>&lt;</button>
+                                  {pageNumber === "<" && (
+                                    <button
+                                      className="pagination-button large"
+                                      onClick={handlePrevPage}
+                                    >
+                                      &lt;
+                                    </button>
                                   )}
-                                  {pageNumber === '>' && (
-                                    <button className="pagination-button large" onClick={handleNextPage}>&gt;</button>
+                                  {pageNumber === ">" && (
+                                    <button
+                                      className="pagination-button large"
+                                      onClick={handleNextPage}
+                                    >
+                                      &gt;
+                                    </button>
                                   )}
-                                  {pageNumber !== '<' && pageNumber !== '>' && (
+                                  {pageNumber !== "<" && pageNumber !== ">" && (
                                     <button
                                       onClick={() => setCurrentPage(pageNumber)}
-                                      className={`pagination-button ${currentPage === pageNumber ? 'active' : ''}`}
+                                      className={`pagination-button ${
+                                        currentPage === pageNumber
+                                          ? "active"
+                                          : ""
+                                      }`}
                                     >
                                       {pageNumber}
                                     </button>
@@ -758,9 +797,9 @@ function Account() {
                       >
                         <div className="card">
                           <div className="card-header">
-                            <h5>
+                            <h3>
                               {intl.formatMessage({ id: "Account Details" })}
-                            </h5>
+                            </h3>
                           </div>
                           <div className="card-body">
                             {/* <p>
@@ -788,30 +827,30 @@ function Account() {
                             >
                               <Form>
                                 <div className="row">
-                                  <div className="form-group col-md-6">
+                                  <div className="col-md-6">
                                     <label>
                                       {intl.formatMessage({ id: "First Name" })}{" "}
                                       <span className="required">*</span>
                                     </label>
                                     <Field
                                       required=""
-                                      className="form-control"
+                                      className=""
                                       name="f_name"
                                       type="text"
                                     />
                                   </div>
-                                  <div className="form-group col-md-6">
+                                  <div className="col-md-6">
                                     <label>
                                       {intl.formatMessage({ id: "Last Name" })}{" "}
                                       <span className="required">*</span>
                                     </label>
                                     <Field
                                       required=""
-                                      className="form-control"
+                                      className=""
                                       name="l_name"
                                     />
                                   </div>
-                                  <div className="form-group col-md-12">
+                                  <div className="col-md-12">
                                     <label>
                                       {intl.formatMessage({
                                         id: "Display Name",
@@ -820,12 +859,12 @@ function Account() {
                                     </label>
                                     <Field
                                       required=""
-                                      className="form-control"
+                                      className=""
                                       name="dname"
                                       type="text"
                                     />
                                   </div>
-                                  <div className="form-group col-md-12">
+                                  <div className="col-md-12">
                                     <label>
                                       {intl.formatMessage({
                                         id: "Email Address",
@@ -834,7 +873,7 @@ function Account() {
                                     </label>
                                     <Field
                                       required=""
-                                      className="form-control"
+                                      className=""
                                       name="email"
                                       type="email"
                                     />

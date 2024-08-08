@@ -91,13 +91,13 @@ function Index2() {
         <section className="home-slider style-2 position-relative mb-50">
           <div className="container">
             <div className="row">
-              <div className="col-xl-8 col-lg-8">
+              <div className="col-xl-12 col-lg-12">
                 <div className="home-slide-cover">
                   <Intro2 />
                 </div>
               </div>
 
-              <div className="col-lg-4 d-none d-xl-block">
+              {/* <div className="col-lg-4 d-none d-xl-block">
                 <div
                   className="banner-img style-3 animated animated"
                   style={{
@@ -119,12 +119,12 @@ function Index2() {
                         : adBanner?.[0]?.description_ja}
                     </h5>
 
-                    {/* <Link
+                    <Link
                       href={`${adBanner?.[0]?.link}`}
                       className="btn btn-xs"
                     >
                       Learn more <i className="fi-rs-arrow-small-right"></i>
-                    </Link> */}
+                    </Link>
                   </div>
 
                   <img
@@ -140,6 +140,25 @@ function Index2() {
                     }}
                   />
                 </div>
+              </div> */}
+            </div>
+          </div>
+        </section>
+
+        <section className="popular-categories section-padding">
+          <div className="container">
+            <div className="section-title">
+              <div className="title">
+                <h3>{intl.formatMessage({ id: "Shop by Categories" })}</h3>
+                <Link href={`/${intl.locale}/shop`} className="show-all">
+                  {intl.formatMessage({ id: "All Categories" })}
+                  <i className="fi-rs-angle-right"></i>
+                </Link>
+              </div>
+            </div>
+            <div className="carausel-8-columns-cover position-relative">
+              <div className="carausel-8-columns" id="carausel-8-columns">
+                <CategorySlider2 />
               </div>
             </div>
           </div>
@@ -176,25 +195,6 @@ function Index2() {
               </Link>
             </div>
             <FeatchDeals />
-          </div>
-        </section>
-
-        <section className="popular-categories section-padding">
-          <div className="container">
-            <div className="section-title">
-              <div className="title">
-                <h3>{intl.formatMessage({ id: "Shop by Categories" })}</h3>
-                <Link href={`/${intl.locale}/shop`} className="show-all">
-                  {intl.formatMessage({ id: "All Categories" })}
-                  <i className="fi-rs-angle-right"></i>
-                </Link>
-              </div>
-            </div>
-            <div className="carausel-8-columns-cover position-relative">
-              <div className="carausel-8-columns" id="carausel-8-columns">
-                <CategorySlider2 />
-              </div>
-            </div>
           </div>
         </section>
 

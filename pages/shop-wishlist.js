@@ -33,12 +33,20 @@ const Wishlist = ({
               <div className="mobile_wishlist_table">
                 {wishlist.items.length > 0 ? (
                   <div className="mobile_wishlist_table">
-                    <h3 className="Wishlist_title">{intl.formatMessage({ id: "Wishlist" })}</h3>
+                    <h3 className="Wishlist_title">
+                      {intl.formatMessage({ id: "Wishlist" })}
+                    </h3>
                     <div className="product-grid-4 rowproduct-grid-4 row">
                       {wishlist?.items?.map((product, i) => (
-                        <div className="col-lg-1-5 col-md-4 col-6 col-sm-6 Wishlist_col" key={i}>
+                        <div
+                          className="col-lg-1-5 col-md-4 col-6 col-sm-6 Wishlist_col"
+                          key={i}
+                        >
                           <SingleProduct product={product} />
-                          <a className="Wishlist_remove" onClick={(e) => deleteFromWishlist(product.id)}>
+                          <a
+                            className="Wishlist_remove"
+                            onClick={(e) => deleteFromWishlist(product.id)}
+                          >
                             <i className="fi-rs-trash"></i>
                           </a>
                         </div>
@@ -54,6 +62,11 @@ const Wishlist = ({
               <div className="desktop_wishlist_table">
                 {wishlist.items.length > 0 ? (
                   <div className="table-responsive shopping-summery">
+                    <div className="text-end">
+                      <span className="clear-btn" onClick={clearWishlist}>
+                        {intl.formatMessage({ id: "Reset" })}
+                      </span>
+                    </div>
                     <table className="table table-wishlist">
                       <thead>
                         <tr className="main-heading">
@@ -91,10 +104,11 @@ const Wishlist = ({
                             <td className="product-des product-name">
                               <h6 className="product-name  mb-10">
                                 <a
-                                  href={`/${intl.locale == "eng"
-                                    ? product?.seo_en
-                                    : product?.seo_ja
-                                    }`}
+                                  href={`/${
+                                    intl.locale == "eng"
+                                      ? product?.seo_en
+                                      : product?.seo_ja
+                                  }`}
                                 >
                                   <span
                                     dangerouslySetInnerHTML={{
@@ -112,19 +126,21 @@ const Wishlist = ({
                                   <div
                                     className="product-rating"
                                     style={{
-                                      width: `${product?.overall_rating
-                                        ? product?.overall_rating
-                                        : 0
-                                        }%`,
+                                      width: `${
+                                        product?.overall_rating
+                                          ? product?.overall_rating
+                                          : 0
+                                      }%`,
                                     }}
                                   ></div>
                                 </div>
                                 <span className="font-small ml-5 text-muted">
                                   {" "}
-                                  {`(${product?.total_reviews
-                                    ? product.total_reviews
-                                    : 0
-                                    })`}
+                                  {`(${
+                                    product?.total_reviews
+                                      ? product.total_reviews
+                                      : 0
+                                  })`}
                                 </span>
                               </div>
                             </td>
@@ -155,15 +171,18 @@ const Wishlist = ({
                               className="text-center detail-info"
                               data-title="Stock"
                             >
-                              {product.out_of_stock_status === "out of stock" ? (
+                              {product.out_of_stock_status ===
+                              "out of stock" ? (
                                 <span className="stock-status out-stock mb-0">
                                   {intl.formatMessage({ id: "Out of stock" })}
                                 </span>
-                              ) : product?.out_of_stock_status === "2-3 days" ? (
+                              ) : product?.out_of_stock_status ===
+                                "2-3 days" ? (
                                 <span className="stock-status in-stock mb-0">
                                   {intl.formatMessage({ id: "2-3 days" })}
                                 </span>
-                              ) : product?.out_of_stock_status === "pre order" ? (
+                              ) : product?.out_of_stock_status ===
+                                "pre order" ? (
                                 <span className="stock-status in-stock mb-0">
                                   {intl.formatMessage({ id: "Pre Order" })}
                                 </span>
@@ -184,23 +203,26 @@ const Wishlist = ({
                                     product?.out_of_stock_status !== "in stock"
                                   }
                                   style={{
-                                    backgroundColor: `${product?.out_of_stock_status !== "in stock"
-                                      ? "grey"
-                                      : ""
-                                      }`,
+                                    backgroundColor: `${
+                                      product?.out_of_stock_status !==
+                                      "in stock"
+                                        ? "grey"
+                                        : ""
+                                    }`,
                                   }}
                                   className="btn btn-sm"
                                   onClick={(e) => handleCart(product)}
                                 >
                                   {product?.out_of_stock_status !== "in stock"
-                                    ?
-                                    intl.formatMessage({ id: "Out of stock" })
+                                    ? intl.formatMessage({ id: "Out of stock" })
                                     : intl.formatMessage({ id: "Add to cart" })}
                                 </button>
                               )}
                             </td>
                             <td className="action" data-title="Remove">
-                              <a onClick={(e) => deleteFromWishlist(product.id)}>
+                              <a
+                                onClick={(e) => deleteFromWishlist(product.id)}
+                              >
                                 <i className="fi-rs-trash"></i>
                               </a>
                             </td>
@@ -208,11 +230,6 @@ const Wishlist = ({
                         ))}
                       </tbody>
                     </table>
-                    <div className="text-right">
-                      <span className="clear-btn" onClick={clearWishlist}>
-                        {intl.formatMessage({ id: "Clear All" })}
-                      </span>
-                    </div>
                   </div>
                 ) : (
                   <h4 className="mb-0">

@@ -529,7 +529,7 @@ const Cart = ({
                                 </span>
                               </div>
                             </td>
-                            <td className="price" data-title={intl.formatMessage({ id: "Unit Price" })}>
+                            <td data-title={intl.formatMessage({ id: "Unit Price" })}>
                               <h4 className="text-brand">
                                 ¥
                                 {item?.actual_price

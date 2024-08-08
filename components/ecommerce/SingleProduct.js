@@ -167,7 +167,7 @@ const SingleProduct = ({
           </div>
         </div>
         <div className="product-content-wrap">
-          <div className="product-category">
+          {/* <div className="product-category">
             <Link
               href={`/${
                 intl.locale === "eng"
@@ -177,7 +177,7 @@ const SingleProduct = ({
             >
               {product?.manufacturer?.name}
             </Link>
-          </div>
+          </div> */}
           <h2 className="ellipsis-title">
             <Link
               href={`/${

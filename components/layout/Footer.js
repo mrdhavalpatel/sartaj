@@ -225,7 +225,7 @@ const Footer = () => {
                 >
                   <div className="logo  mb-30">
                     <Link href="/" className="mb-15">
-                      <img src="/assets/imgs/theme/logo.svg" alt="logo" />
+                      <img src="/assets/imgs/theme/logo.svg" alt="logo" className="footer_logo" />
                     </Link>
                     <p className="font-lg text-heading">
                       {footerData?.business_description}

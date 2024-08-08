@@ -490,8 +490,9 @@ const onError = (err) => {
                 type="text"
                 required=""
                 name="full_name"
-                placeholder={intl.formatMessage({ id: "Full Name*" })}
+                placeholder=""
               />
+              <label>{intl.formatMessage({ id: "Full Name*" })}</label>
               {errors.full_name && touched.full_name && (
                 <ErrorMessage
                   name="full_name"
@@ -506,8 +507,9 @@ const onError = (err) => {
                 type="text"
                 name="billing_address"
                 required=""
-                placeholder={intl.formatMessage({ id: "Address *" })}
+                placeholder=""
               />
+               <label>{intl.formatMessage({ id: "Address*" })}</label>
               {errors.billing_address && touched.billing_address && (
                 <ErrorMessage
                   name="billing_address"
@@ -521,8 +523,9 @@ const onError = (err) => {
                 type="text"
                 name="billing_address2"
                 required=""
-                placeholder={intl.formatMessage({ id: "Address line2" })}
+                placeholder=""
               />
+              <label>{intl.formatMessage({ id: "Address Line2*" })}</label>
             </div>
 
             {/* <div className="form-group mb-20">
@@ -668,8 +671,9 @@ const onError = (err) => {
                   console.log("postcodedeeeeee", inputValue);
                   setFieldValue("post_code", inputValue);
                 }}
-                placeholder={intl.formatMessage({ id: "Postcode / ZIP *" })}
+                placeholder=""
               />
+              <label>{intl.formatMessage({ id: "Postcode / ZIP*" })}</label>
               {errors.post_code && touched.post_code && (
                 <ErrorMessage
                   name="post_code"
@@ -683,8 +687,9 @@ const onError = (err) => {
                 required=""
                 type="text"
                 name="contact_person_name"
-                placeholder={intl.formatMessage({ id: "Contact Person Name*" })}
+                placeholder=""
               />
+              <label>{intl.formatMessage({ id: "Contact Person Name*" })}</label>
               {errors.contact_person_name && touched.contact_person_name && (
                 <ErrorMessage
                   name="contact_person_name"
@@ -711,6 +716,7 @@ const onError = (err) => {
                   }
                 }}
               />
+              <label>{intl.formatMessage({ id: "Contact Person Number*" })}</label>
               {errors.contact_person_number &&
                 touched.contact_person_number && (
                   <ErrorMessage
@@ -857,13 +863,13 @@ const onError = (err) => {
             <div className="row">
               <div className="col-lg-6">
                 <div className="border p-30 cart-totals mb-30 checkout_box">
-                  <div className="d-flex align-items-end justify-content-between mb-30">
+                  {/* <div className="d-flex align-items-end justify-content-between mb-30">
                     <h6>{intl.formatMessage({ id: "Your Order" })}</h6>
                     <h6 className="text-muted">
                       {intl.formatMessage({ id: "Subtotal" })}
                     </h6>
                   </div>
-                  <div className="divider-2 mb-30"></div>
+                  <div className="divider-2 mb-30"></div> */}
                   {loading ? (
                     <div class="d-flex justify-content-center align-items-center ">
                       <Spinner animation="border" role="status">
@@ -875,6 +881,10 @@ const onError = (err) => {
                       {cartItemsData.length <= 0 && "No Products"}
                       {cartItemsData.length > 0 ? (
                         <table className="table no-border">
+                        <thead>
+                          <td colSpan={3}><h6>{intl.formatMessage({ id: "Your Order" })}</h6></td>
+                          <td><h6>{intl.formatMessage({ id: "Subtotal" })}</h6></td>
+                        </thead>
                           <tbody>
                             {cartItemsData?.map((item, i) => (
                               <tr key={i}>

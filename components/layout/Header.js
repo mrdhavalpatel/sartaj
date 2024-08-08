@@ -37,8 +37,8 @@ const Header = ({
 
     const pathWithoutLanguage = router.pathname;
     const newPathWithoutLanguage = pathWithoutLanguage
-      .replace(/^\/(eng|jp)\//, '/')  // Replace the language prefix with a single slash
-      .replace('/[...slug]', '');      // Remove the slug placeholder if present
+      .replace(/^\/(eng|jp)\//, "/") // Replace the language prefix with a single slash
+      .replace("/[...slug]", ""); // Remove the slug placeholder if present
     var newUrl = `/${newLanguage}/${newPathWithoutLanguage}`;
     const currentToken = router.query.token || "";
     const slug = router.query?.slug;
@@ -47,12 +47,9 @@ const Header = ({
       window.location.replace(
         `/${newLanguage}/reset-password?token=${currentToken}`
       );
-
     } else if (router.pathname.includes("orders")) {
-      window.location.replace(
-        `/${newLanguage}/orders/${router?.query?.id}`
-      );
-    }else if(router.pathname.includes("fail")){
+      window.location.replace(`/${newLanguage}/orders/${router?.query?.id}`);
+    } else if (router.pathname.includes("fail")) {
       window.location.replace(
         `/${newLanguage}/fail?order_id=${router?.query?.order_id}&name=${router?.query?.name}`
       );
@@ -69,12 +66,8 @@ const Header = ({
       }
 
       // Redirect to the new URL without double slashes
-      window.location.replace(newUrl.replace(/\/\//g, '/'));
+      window.location.replace(newUrl.replace(/\/\//g, "/"));
     }
-
-
-
-
 
     //   else if (slug) {
     //     let finalUrl = slug ? `${newUrl}/${slug}${window.location.search}` : newUrl;
@@ -193,7 +186,7 @@ const Header = ({
           <option value="jp">日本語</option>
         </select>
       </div>
-      <div className="header-top header-top-ptb-1 d-none d-lg-block">
+      {/* <div className="header-top header-top-ptb-1 d-none d-lg-block">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-xl-6 col-lg-6">
@@ -222,7 +215,7 @@ const Header = ({
                       <strong className="text-brand">072-751-1975</strong>
                     </a>
                   </li>
-                  {/* <li>
+                  <li>
                       <Link
                         href="/"
                         onClick={() => handleLanguageSwitch("eng")}
@@ -244,7 +237,7 @@ const Header = ({
                           日本語
                         </Link>
                       </ul>
-                    </li> */}
+                    </li> 
                   <li>
                     <label htmlFor="languageDropdown" className="sr-only">
                       {intl.formatMessage({ id: "Select Language" })}
@@ -263,7 +256,7 @@ const Header = ({
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="header-middle header-middle-ptb-1 d-none d-lg-block">
         <div className="container">
           <div className="header-wrap">
@@ -383,6 +376,16 @@ const Header = ({
                         )}
                       </ul>
                     </div>
+                  </div>
+                  <div>
+                    <select
+                      id="languageDropdown"
+                      onChange={(e) => handleLanguageSwitch(e.target.value)}
+                      value={DLang}
+                    >
+                      <option value="eng">English</option>
+                      <option value="jp">日本語</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -580,8 +583,6 @@ const Header = ({
               </div>
             </div>
 
-
-
             <div className="header-action-right d-block d-lg-none header_action_right_lang">
               <label htmlFor="languageDropdown" className="sr-only">
                 {intl.formatMessage({ id: "Select Language" })}
@@ -595,7 +596,6 @@ const Header = ({
                 <option value="jp">日本語</option>
               </select>
             </div>
-
           </div>
 
           {/* search component test add */}
@@ -603,7 +603,6 @@ const Header = ({
             <Search />
           </div>
         </div>
-
       </div>
     </header>
   );

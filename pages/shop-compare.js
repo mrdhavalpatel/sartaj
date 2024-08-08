@@ -30,6 +30,17 @@ const Compare = ({ compare, clearCompare, deleteFromCompare }) => {
                   id: "This is your products list to compare",
                 })}
               </h6>
+              <div className="text-end">
+                <span
+                  className="clear-btn"
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={clearCompare}
+                >
+                  {intl.formatMessage({ id: "Reset" })}
+                </span>
+              </div>
               <div className="table-responsive compare-table">
                 {compare.items.length > 0 ? (
                   <>
@@ -52,17 +63,6 @@ const Compare = ({ compare, clearCompare, deleteFromCompare }) => {
                       ]}
                       deleteFromCompare={deleteFromCompare}
                     />
-                    <div className="text-right">
-                      <span
-                        className="clear-btn"
-                        style={{
-                          cursor: "pointer",
-                        }}
-                        onClick={clearCompare}
-                      >
-                        {intl.formatMessage({ id: "Clear All" })}
-                      </span>
-                    </div>
                   </>
                 ) : (
                   <h4>
