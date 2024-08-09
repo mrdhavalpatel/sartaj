@@ -23,27 +23,23 @@ const Compare = ({ compare, clearCompare, deleteFromCompare }) => {
           <div className="row">
             <div className="col-xl-10 col-lg-12 m-auto">
               <h1 className="heading-2 mb-10">
-                {intl.formatMessage({ id: "Products Compare" })}
+                {intl.formatMessage({ id: "Products Comparison" })}
               </h1>
-              <h6 className="text-body mb-40">
-                {intl.formatMessage({
-                  id: "This is your products list to compare",
-                })}
-              </h6>
-              <div className="text-end">
-                <span
-                  className="clear-btn"
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  onClick={clearCompare}
-                >
-                  {intl.formatMessage({ id: "Reset" })}
-                </span>
-              </div>
+
               <div className="table-responsive compare-table">
                 {compare.items.length > 0 ? (
                   <>
+                    <div className="text-end">
+                      <span
+                        className="clear-btn"
+                        style={{
+                          cursor: "pointer",
+                        }}
+                        onClick={clearCompare}
+                      >
+                        {intl.formatMessage({ id: "Reset" })}
+                      </span>
+                    </div>
                     <CompareTable
                       data={compare.items}
                       features={[
@@ -65,11 +61,13 @@ const Compare = ({ compare, clearCompare, deleteFromCompare }) => {
                     />
                   </>
                 ) : (
-                  <h4>
-                    {intl.formatMessage({
-                      id: "This is your products list to compare",
-                    })}
-                  </h4>
+                  <>
+                    <div className="mt-40">
+                      <a className="btn" href={`/${intl.locale}/shop`}>
+                        {intl.formatMessage({ id: "Let's Shop" })}
+                      </a>
+                    </div>
+                  </>
                 )}
               </div>
             </div>

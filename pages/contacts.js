@@ -105,13 +105,8 @@ function Contact() {
                         {intl.formatMessage({ id: "info@sartajfoods.jp" })}
                       </p>
                     </div>
-                  </div>
-                  <div className="row">
                     <div className="col-xl-8">
                       <div className="contact-from-area padding-20-row-col">
-                        <h5 className="text-brand mb-10">
-                          {intl.formatMessage({ id: "Contact form" })}
-                        </h5>
                         <h3 className="mb-10">
                           {intl.formatMessage({ id: "Drop Us a Line" })}
                         </h3>
@@ -288,13 +283,6 @@ function Contact() {
 
                         <p className="form-messege"></p>
                       </div>
-                    </div>
-                    <div className="col-lg-4 pl-50 d-lg-block d-none">
-                      <img
-                        className="border-radius-15 mt-50"
-                        src="/assets/imgs/page/contact-us.jpg"
-                        alt="nest"
-                      />
                     </div>
                   </div>
                 </section>
