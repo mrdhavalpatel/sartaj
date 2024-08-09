@@ -122,6 +122,7 @@ video {
   border: 0;
   font-size: 100%;
   font-family: "DM Sans";
+  font-display: swap;
   vertical-align: baseline;
 }
 
@@ -796,6 +797,7 @@ h4 {
 body {
   color: #000000;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   font-size: 14px;
   line-height: 24px;
   font-style: normal;
@@ -811,6 +813,7 @@ h6,
 .display-2,
 .heading-sm-1 {
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   color: #000000;
   font-weight: 700;
   line-height: 1.2;
@@ -819,6 +822,7 @@ h6,
 h1,
 h2 {
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   color: #3e4493;
   font-weight: 800;
   line-height: 1.2;
@@ -1075,6 +1079,7 @@ h5.widget-title {
   border-radius: 50px;
   padding: 13px 28px;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
 }
 
 .btn-default i {
@@ -1119,6 +1124,7 @@ h5.widget-title {
 
 .btn {
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
 }
 
 .btn:hover {
@@ -1289,6 +1295,7 @@ button[type="submit"]:hover {
   padding: 14px 80px 14px 65px;
   background-repeat: no-repeat;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
 }
 
 .btn.btn-brush i,
@@ -1414,6 +1421,7 @@ textarea:focus {
   font-size: 14px;
   padding: 0;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   color: #000000;
 }
 
@@ -1535,6 +1543,7 @@ textarea:focus {
   background-color: #3e4493;
   border-radius: 10px;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
 }
 
 .contact-from-area .contact-form-style button:hover {
@@ -2632,6 +2641,7 @@ label {
 
 .account .card .table>thead {
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   font-size: 17px;
 }
 
@@ -2646,6 +2656,7 @@ label {
   font-size: 20px;
   font-weight: 700;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2714,6 +2725,7 @@ label {
   border-bottom-color: currentcolor;
   border-left-color: currentcolor;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   font-weight: 600;
   line-height: 1;
 }
@@ -2780,6 +2792,7 @@ label {
   color: #000000;
   padding: 15px 30px;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   font-weight: 700;
 }
 
@@ -2817,6 +2830,7 @@ label {
 
 .tab-header .view-more {
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   font-size: 13px;
   font-weight: 700;
   display: -webkit-box;
@@ -2868,6 +2882,7 @@ label {
   line-height: 50px;
   text-align: center;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
 }
 
 .deals-countdown .countdown-section .countdown-period {
@@ -3015,6 +3030,7 @@ label {
   background-color: #fff;
   border-bottom: 1px solid #ececec;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   display: none;
 }
 
@@ -4543,6 +4559,7 @@ table .product-thumbnail img {
 
 .product-price {
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
 }
 
 .product-list-small article:not(:last-child) {
@@ -5212,6 +5229,7 @@ span.qty-val {
   border-radius: 5px;
   margin-bottom: 20px;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   font-size: 14px;
   font-weight: 700;
   line-height: 1;
@@ -5326,6 +5344,7 @@ span.qty-val {
   font-weight: 700;
   font-size: 16px;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
 }
 
 .product-extra-link2 .button.button-add-to-cart i {
@@ -5351,6 +5370,7 @@ span.qty-val {
   text-align: center;
   font-weight: 700;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   text-transform: none;
   font-size: 17px;
   border-radius: 30px;
@@ -5524,6 +5544,7 @@ span.qty-val {
   font-size: 17px;
   font-weight: 700;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   -webkit-box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
   padding: 10px 20px;
@@ -5610,6 +5631,7 @@ span.qty-val {
   background-color: #ececec;
   padding: 18px 0;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   font-size: 17px;
   font-weight: 700;
   color: #000000;
@@ -5841,6 +5863,7 @@ form.apply-coupon {
   padding: 10px 20px;
   border: 1px solid #ececec;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   font-size: 17px;
   font-weight: 700;
 }
@@ -7081,6 +7104,7 @@ h6.post-title {
   padding: 10px 20px;
   background-color: #3e4493;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   border: 2px solid #3e4493;
 }
 
@@ -7762,6 +7786,7 @@ h6.post-title {
   font-size: 26px;
   font-weight: 700;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   display: block;
   line-height: 1;
 }
@@ -7770,6 +7795,7 @@ h6.post-title {
   font-weight: 500;
   font-size: 12px;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   color: #000000;
   display: block;
   letter-spacing: 0.9px;
@@ -7952,6 +7978,7 @@ h6.post-title {
   border-radius: 5px;
   padding: 0 20px;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   font-size: 16px;
 }
 
@@ -8034,6 +8061,7 @@ span.fi-rs-apps {
   font-weight: 700;
   color: #000000;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
 }
 
 .main-menu>nav>ul>li>a i {
@@ -8629,6 +8657,7 @@ span.fi-rs-apps {
   position: relative;
   font-size: 13px;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -8727,6 +8756,7 @@ span.fi-rs-apps {
   text-align: center;
   font-weight: 700;
   font-family: "DM Sans", sans-serif;
+  font-display: swap;
   font-size: 16px;
   background-color: #f2f3f4;
 }
@@ -14830,7 +14860,7 @@ ul.sub-cat {
     color: #fff !important;
   }
 
-  .contact-from-area .contact-form-style button{
+  .contact-from-area .contact-form-style button {
     background-color: #fff;
     color: #3e4493;
   }
@@ -15186,7 +15216,7 @@ a.text-muted.clearcarttext {
   border: none;
 }
 
-.detail-info .detail-extralink>div{
+.detail-info .detail-extralink>div {
   display: flex;
 }
 
@@ -15197,6 +15227,7 @@ a.text-muted.clearcarttext {
 .about_text h4 {
   margin: 30px 0 10px 0;
 }
-.about_slider{
+
+.about_slider {
   position: relative;
 }
