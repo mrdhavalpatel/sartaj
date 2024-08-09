@@ -34,6 +34,12 @@ const Layout = ({
           content="SartajFoods Japan has all Indian grocery products, spices,  with the best quality and food products in Japan. Sartaj Co. ltd location 563-0043, 2 Chome-10-23 Koda, Ikeda, Osaka.  Contact Details of Food Store in Japan: 072-751-1975 Buy Online at: www.sartajfoods.jp. Sartaj Foods Japan also offers a large variety of cosmetics and beauty products in Japan. All Products available at Sartaj foods japan are 100% Veg and suitable for vegetarians to consume. SartajFoods offers delivery all over the region of Japan.  Sartaj Co. Ltd is an authenticate importer of  International brands like Vadilal, MDH, Haldiram Nagpur (Moplleez), Dabur Herbal, Basmati India Gate, Haldiram, Britannia, Mother's Recipe, Santa G, and other beauty brands like- Dabur, Khaadi Natural, Vatika, Dermoviva and Himalaya in japan. Vegan products are also available at SartajFoods in Japan. Order online and free delivery on orders worth YEN 6500/-. "
         />
         <link rel="icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+          rel="stylesheet"
+        />
       </Head>
 
       {isToggled && (
