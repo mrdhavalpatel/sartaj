@@ -15241,3 +15241,7 @@ a.text-muted.clearcarttext {
   color: #000 !important;
   border: none;
 }
+
+.account_page .custome-checkbox .form-check-label{
+  border: none;
+}
