@@ -2112,7 +2112,7 @@ label {
 
 .slider-arrow {
   position: absolute;
-  top: 46%;
+  top: 39%;
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
   z-index: 2;
@@ -10859,7 +10859,7 @@ footer .hotline img {
 
 @media only screen and (max-width: 768px) {
 
-  .about_page h2, .about_page p {
+  .about_page h2,.about_page h4, .about_page p {
     color: #fff !important;
   }
 
@@ -15003,6 +15003,10 @@ ul.sub-cat {
     margin-left: 15px;
     width: auto;
   }
+
+  .delivery_time_div .custome-radio{
+    width: 100%;
+  }
 }
 
 .slider-arrow .slider-btn i {
@@ -15221,11 +15225,11 @@ a.text-muted.clearcarttext {
 }
 
 .about_text p {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .about_text h4 {
-  margin: 30px 0 10px 0;
+  margin: 25px 0 10px 0;
 }
 
 .about_slider {

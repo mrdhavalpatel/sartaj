@@ -1,6 +1,6 @@
 import SwiperCore, { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SingleProduct2 from "./../ecommerce/SingleProduct2";
+import SingleProduct from "./../ecommerce/SingleProduct";
 import { connect } from "react-redux";
 import { fetchProduct } from "../../redux/action/product";
 
@@ -40,7 +40,7 @@ const FeaturedSlider = ({ products , cartItems }) => {
       >
         {products?.map((product, i) => (
           <SwiperSlide key={i}>
-            <SingleProduct2 product={product} cartItems={cartItems} />
+            <SingleProduct product={product} cartItems={cartItems} />
           </SwiperSlide>
         ))}
       </Swiper>
