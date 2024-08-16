@@ -15235,3 +15235,9 @@ a.text-muted.clearcarttext {
 .about_slider {
   position: relative;
 }
+
+.account_page .form-check-input:checked+.form-check-label {
+  background-color: transparent;
+  color: #000 !important;
+  border: none;
+}
