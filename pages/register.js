@@ -269,7 +269,7 @@ function Privacy() {
                               />
                             </div>
 
-                            <div className="login_footer form-group mb-50">
+                            <div className="login_footer mb-50">
                               <div className="chek-form">
                                 <div className="custome-checkbox">
                                   <Field
