@@ -2797,7 +2797,7 @@ label {
 }
 
 .dashboard-menu ul li a i {
-  color: #eaeaea;
+  color: #000000;
   font-size: 19px;
   opacity: 0.6;
 }
@@ -11222,6 +11222,10 @@ footer .hotline img {
 
   .custom-modal .modal-dialog {
     max-width: 720px !important;
+  }
+
+  .dashboard-menu ul li a i{
+    color: #c6c6c6;
   }
 }
 
