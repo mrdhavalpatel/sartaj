@@ -10859,7 +10859,7 @@ footer .hotline img {
 
 @media only screen and (max-width: 768px) {
 
-  .about_page h2,.about_page h4, .about_page p {
+  .about_page h2, .about_page h4, .about_page p {
     color: #fff !important;
   }
 
@@ -11055,9 +11055,9 @@ footer .hotline img {
     display: none;
   }
 
-  .home-slider .hero-slider-1 {
+  /* .home-slider .hero-slider-1 {
     height: 200px;
-  }
+  } */
 
   .home-slider .hero-slider-1.style-2 {
     height: 400px;
@@ -11224,7 +11224,7 @@ footer .hotline img {
     max-width: 720px !important;
   }
 
-  .dashboard-menu ul li a i{
+  .dashboard-menu ul li a i {
     color: #c6c6c6;
   }
 }
@@ -15008,7 +15008,7 @@ ul.sub-cat {
     width: auto;
   }
 
-  .delivery_time_div .custome-radio{
+  .delivery_time_div .custome-radio {
     width: 100%;
   }
 }
@@ -15246,13 +15246,17 @@ a.text-muted.clearcarttext {
   border: none;
 }
 
-.account_page .custome-checkbox .form-check-label{
+.account_page .custome-checkbox .form-check-label {
   border: none;
 }
 
 @media only screen and (min-width: 1200px) {
   .hero-slider-1 .single-hero-slider {
     height: 390px;
+  }
+
+  .product-cart-wrap .product-card-bottom .add-cart .add {
+    padding: 6px 20px 6px 20px;
   }
 }
 
