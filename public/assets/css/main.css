@@ -1979,7 +1979,7 @@ label {
 }
 
 .hero-slider-1 .single-hero-slider {
-  height: 550px;
+  height: 530px;
   border-radius: 30px;
   background-size: cover;
   background-position: center center;
@@ -11577,7 +11577,7 @@ footer .hotline img {
   }
 
   .hero-slider-1 .single-hero-slider {
-    height: 467px;
+    height: 455px;
   }
 
   .display-2 {
@@ -15248,4 +15248,22 @@ a.text-muted.clearcarttext {
 
 .account_page .custome-checkbox .form-check-label{
   border: none;
+}
+
+@media only screen and (min-width: 1200px) {
+  .hero-slider-1 .single-hero-slider {
+    height: 390px;
+  }
+}
+
+@media only screen and (min-width: 1300px) {
+  .hero-slider-1 .single-hero-slider {
+    height: 420px;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .hero-slider-1 .single-hero-slider {
+    height: 470px;
+  }
 }
