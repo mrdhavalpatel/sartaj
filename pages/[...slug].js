@@ -303,9 +303,9 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
               </div>
               <div className="col-lg-1-5 primary-sidebar sticky-sidebar">
                 <div className="sidebar-widget widget-category-2 mb-30">
-                  <h5 className="section-title style-1 mb-30">
+                  {/* <h5 className="section-title style-1 mb-30">
                     {intl.formatMessage({ id: "Category" })}
-                  </h5>
+                  </h5> */}
                   <CategoryProduct />
                 </div>
 
@@ -432,9 +432,9 @@ const ProductId = ({ products, productFilters, fetchProduct }) => {
                 </div>
                 <div className="col-lg-1-5 primary-sidebar sticky-sidebar">
                   <div className="sidebar-widget widget-category-2 mb-30">
-                    <h5 className="section-title style-1 mb-30">
+                    {/* <h5 className="section-title style-1 mb-30">
                       {intl.formatMessage({ id: "Category" })}
-                    </h5>
+                    </h5> */}
                     <CategoryProduct />
                   </div>
 

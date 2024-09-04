@@ -59,25 +59,38 @@ const Cart = ({
   const [addressformOpen, setAddressFormOpen] = useState(false);
   const [showModaladdress, setShowModaladdress] = useState(false);
   const intl = useIntl();
-console.log("intlllllllllllllllll====" , intl.locale)
+
+  const [showModalAddress1, setShowModalAddress1] = useState(false);
+
+  // Toggle function to open and close the modal
+  const toggleAddressModal1 = () => {
+    setShowModalAddress1((prevState) => !prevState);
+  };
+
+  const handleAddressSelect = (addressItem) => {
+    setSelectedAddressdisplay(addressItem); // Update the selected address display
+    setSelectedAddressDropdown(addressItem.id); // Update the dropdown selection
+    setShowModalAddress1(false); // Close the modal after selection
+  };
+
+  console.log("intlllllllllllllllll====", intl.locale);
   const handleRadioChange = (id) => {
     setSelectedRadioId(id);
     // setorderNotes(id);
   };
   const openModal = () => {
     setShowModaladdress(true);
-    document.body.classList.add('body-with-modal');
-    console.log('Modal opened');
+    document.body.classList.add("body-with-modal");
+    console.log("Modal opened");
   };
 
   const closeModal = () => {
-    document.body.classList.remove('body-with-modal');
+    document.body.classList.remove("body-with-modal");
     setShowModaladdress(false);
-    console.log('Modal closed');
-
+    console.log("Modal closed");
   };
   const handleClickOutside = () => {
-    document.body.classList.remove('body-with-modal');
+    document.body.classList.remove("body-with-modal");
 
     closeModal();
   };
@@ -90,7 +103,7 @@ console.log("intlllllllllllllllll====" , intl.locale)
   const calculateAmountToAdd = () => {
     return Math.round(
       cartTotal.minOrderAmount -
-      (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
+        (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
     );
   };
   //  ////  console.log(cartTotal);
@@ -186,15 +199,16 @@ console.log("intlllllllllllllllll====" , intl.locale)
               setCoupanDetails(
                 `${response?.data?.title} ${intl.formatMessage({
                   id: "coupon applied successfully",
-                })},${intl.formatMessage({ id: "maximum discount" })} ${response?.data?.max_discount
+                })},${intl.formatMessage({ id: "maximum discount" })} ${
+                  response?.data?.max_discount
                 }¥`
               );
             } else if (response.data.discount_type == "amount") {
               setCoupanDetails(
                 `${response?.data?.discount}¥ ` +
-                intl.formatMessage({
-                  id: "discount applied successfully",
-                })
+                  intl.formatMessage({
+                    id: "discount applied successfully",
+                  })
               );
             }
 
@@ -216,46 +230,48 @@ console.log("intlllllllllllllllll====" , intl.locale)
     clientId: "test",
     currency: "USD",
     intent: "capture",
-};
-const createOrder = (data, actions) => {
-  return actions.order.create({
-    purchase_units: [{
-      amount: {
-        currency_code: 'USD',
-        value: calculateAmountToAdd().toFixed(2),
-        breakdown: {
-          item_total: {
-            currency_code: 'USD',
+  };
+  const createOrder = (data, actions) => {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            currency_code: "USD",
             value: calculateAmountToAdd().toFixed(2),
+            breakdown: {
+              item_total: {
+                currency_code: "USD",
+                value: calculateAmountToAdd().toFixed(2),
+              },
+            },
           },
+          items: cartItemsData.map((item) => ({
+            name: translatedItemDetails("name", intl, item?.product),
+            unit_amount: {
+              currency_code: "USD",
+              value:
+                (item?.quantity ? item?.quantity : 1) * item?.actual_price
+                  ? item?.actual_price
+                  : item?.product.actual_price
+                  ? item?.product.actual_price
+                  : 0,
+            },
+            quantity: item.quantity,
+          })),
         },
-      },
-      items: cartItemsData.map(item => ({
-        name: translatedItemDetails("name", intl, item?.product),
-        unit_amount: {
-          currency_code: 'USD',
-          value:  (item?.quantity ? item?.quantity : 1) *
-            item?.actual_price
-            ? item?.actual_price
-            : item?.product.actual_price
-              ? item?.product.actual_price
-              : 0,
-        },
-        quantity: item.quantity,
-      })),
-    }],
-  });
-};
+      ],
+    });
+  };
 
-const onApprove = (data, actions) => {
-  return actions.order.capture().then(details => {
-    alert('Transaction completed by ' + details.payer.name.given_name);
-  });
-};
+  const onApprove = (data, actions) => {
+    return actions.order.capture().then((details) => {
+      alert("Transaction completed by " + details.payer.name.given_name);
+    });
+  };
 
-const onError = (err) => {
-  console.error(err);
-};
+  const onError = (err) => {
+    console.error(err);
+  };
   const getAddress = async (encodedToken) => {
     const response = await api.get("customer/address/list", {
       headers: {
@@ -327,7 +343,7 @@ const onError = (err) => {
           : selectedAddressData?.full_name,
       road:
         values?.billing_address2 != undefined ||
-          values?.billing_address2 != null
+        values?.billing_address2 != null
           ? values?.billing_address2
           : selectedAddressData?.billing_address2,
       house:
@@ -470,28 +486,23 @@ const onError = (err) => {
         onSubmit={(values, { setSubmitting }) => {
           handleAddressSubmit(values);
         }}
-      // onSubmit={(values, { setSubmitting, errors }) => {
-      //   handleAddressSubmit(values)
-      //     .then(() => {
-      //        //       console.log("Submission successful");
-      //       setSubmitting(false);
-      //     })
-      //     .catch((error) => {
-      //       console.error("Submission error:", error, errors);
-      //       // Handle the error here, set an error state, or display a message to the user
-      //       setSubmitting(false);
-      //     });
-      // }}
+        // onSubmit={(values, { setSubmitting, errors }) => {
+        //   handleAddressSubmit(values)
+        //     .then(() => {
+        //        //       console.log("Submission successful");
+        //       setSubmitting(false);
+        //     })
+        //     .catch((error) => {
+        //       console.error("Submission error:", error, errors);
+        //       // Handle the error here, set an error state, or display a message to the user
+        //       setSubmitting(false);
+        //     });
+        // }}
       >
         {({ setFieldValue, values, Radio, errors, touched, dirty }) => (
           <Form method="post">
             <div className="form-group mb-20">
-              <Field
-                type="text"
-                required=""
-                name="full_name"
-                placeholder=""
-              />
+              <Field type="text" required="" name="full_name" placeholder="" />
               <label>{intl.formatMessage({ id: "Full Name*" })}</label>
               {errors.full_name && touched.full_name && (
                 <ErrorMessage
@@ -509,7 +520,7 @@ const onError = (err) => {
                 required=""
                 placeholder=""
               />
-               <label>{intl.formatMessage({ id: "Address*" })}</label>
+              <label>{intl.formatMessage({ id: "Address*" })}</label>
               {errors.billing_address && touched.billing_address && (
                 <ErrorMessage
                   name="billing_address"
@@ -588,7 +599,7 @@ const onError = (err) => {
                   <Dropdown.Toggle variant="success" id="dropdown-basic">
                     {values.state
                       ? religionData.find((option) => option.id == values.state)
-                        ?.name
+                          ?.name
                       : "Select State"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
@@ -639,7 +650,7 @@ const onError = (err) => {
                     <Dropdown.Toggle variant="success" id="city-dropdown">
                       {values.city
                         ? citydata.find((option) => option.id == values.city)
-                          ?.name
+                            ?.name
                         : "City Dropdown"}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
@@ -689,7 +700,9 @@ const onError = (err) => {
                 name="contact_person_name"
                 placeholder=""
               />
-              <label>{intl.formatMessage({ id: "Contact Person Name*" })}</label>
+              <label>
+                {intl.formatMessage({ id: "Contact Person Name*" })}
+              </label>
               {errors.contact_person_name && touched.contact_person_name && (
                 <ErrorMessage
                   name="contact_person_name"
@@ -716,7 +729,9 @@ const onError = (err) => {
                   }
                 }}
               />
-              <label>{intl.formatMessage({ id: "Contact Person Number*" })}</label>
+              <label>
+                {intl.formatMessage({ id: "Contact Person Number*" })}
+              </label>
               {errors.contact_person_number &&
                 touched.contact_person_number && (
                   <ErrorMessage
@@ -764,12 +779,12 @@ const onError = (err) => {
     // Call the browser detection function
     fnBrowserDetect();
   }, []);
-  const [selectedOption, setSelectedOption] = useState('cash_on_delivery');
+  const [selectedOption, setSelectedOption] = useState("cash_on_delivery");
   const handleChangeRadio = (event) => {
     setSelectedOption(event.target.value);
   };
   const placeOrder = async () => {
-    setloading(true)
+    setloading(true);
     try {
       let token = localStorage.getItem("token");
 
@@ -784,7 +799,7 @@ const onError = (err) => {
         cart: cartItemsData,
         time_slot_id: selectedRadioId,
         order_note: orderNotes,
-        local:intl.locale,
+        local: intl.locale,
         coupon_code: coupenCode,
         ip_address: ip,
         forwarded_ip: ip,
@@ -802,27 +817,28 @@ const onError = (err) => {
           },
         })
         .then((response) => {
-          console.log("response" ,response.data.payment_link)
+          console.log("response", response.data.payment_link);
           if (response?.status === 200) {
-            selectedOption == 'paypal' ? 
-            router.push(response.data.payment_link):
-            router.push(`/OrderReceived?order_id=${response?.data?.order_id}`)
-
+            selectedOption == "paypal"
+              ? router.push(response.data.payment_link)
+              : router.push(
+                  `/OrderReceived?order_id=${response?.data?.order_id}`
+                );
           }
         })
         .then(() => {
           clearCart();
-          setloading(false)
+          setloading(false);
         });
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         const errorMessage = error.response.data.errors[0]?.message;
         toast.error(errorMessage + "¥");
-        setloading(false)
+        setloading(false);
       } else {
         // console.error("Error while placing order:", error);
         toast.error("An error occurred while placing the order");
-        setloading(false)
+        setloading(false);
       }
     }
   };
@@ -881,10 +897,16 @@ const onError = (err) => {
                       {cartItemsData.length <= 0 && "No Products"}
                       {cartItemsData.length > 0 ? (
                         <table className="table no-border">
-                        <thead>
-                          <td colSpan={3}><h6>{intl.formatMessage({ id: "Your Order" })}</h6></td>
-                          <td><h6>{intl.formatMessage({ id: "Subtotal" })}</h6></td>
-                        </thead>
+                          <thead>
+                            <td colSpan={3}>
+                              <h6>
+                                {intl.formatMessage({ id: "Your Order" })}
+                              </h6>
+                            </td>
+                            <td>
+                              <h6>{intl.formatMessage({ id: "Subtotal" })}</h6>
+                            </td>
+                          </thead>
                           <tbody>
                             {cartItemsData?.map((item, i) => (
                               <tr key={i}>
@@ -915,19 +937,21 @@ const onError = (err) => {
                                         <div
                                           className="product-rating"
                                           style={{
-                                            width: `${item?.product?.overall_rating
-                                              ? item?.product?.overall_rating
-                                              : 0
-                                              }%`,
+                                            width: `${
+                                              item?.product?.overall_rating
+                                                ? item?.product?.overall_rating
+                                                : 0
+                                            }%`,
                                           }}
                                         ></div>
                                       </div>
                                       <span className="font-small ml-5 text-muted">
                                         {`(
-                                    ${item?.product?.total_reviews
-                                            ? item?.product?.total_reviews
-                                            : 0
-                                          }
+                                    ${
+                                      item?.product?.total_reviews
+                                        ? item?.product?.total_reviews
+                                        : 0
+                                    }
                                     )`}
                                       </span>
                                     </div>
@@ -944,11 +968,11 @@ const onError = (err) => {
                                     {/* {(item.quantity ? item.quantity : 1) *
                                     item.price} */}
                                     {(item?.quantity ? item?.quantity : 1) *
-                                      item?.actual_price
+                                    item?.actual_price
                                       ? item?.actual_price
                                       : item?.product.actual_price
-                                        ? item?.product.actual_price
-                                        : 0}
+                                      ? item?.product.actual_price
+                                      : 0}
                                   </h4>
                                 </td>
                               </tr>
@@ -962,7 +986,9 @@ const onError = (err) => {
                   )}
                 </div>
                 <div className="border p-30 cart-totals mb-30 checkout_box desktop_notes">
-                  <h6 className="mb-4">{intl.formatMessage({ id: "Add Order Notes" })}</h6>
+                  <h6 className="mb-4">
+                    {intl.formatMessage({ id: "Add Order Notes" })}
+                  </h6>
                   <div className="px-40">
                     <textarea
                       className="orderNotes_textarea"
@@ -972,136 +998,23 @@ const onError = (err) => {
                       value={orderNotes}
                       // disabled={true}
                       onChange={(e) => setorderNotes(e.target.value)}
-                      placeholder={intl.formatMessage({ id: "Customer Comment" })}
+                      placeholder={intl.formatMessage({
+                        id: "Customer Comment",
+                      })}
                     />
                   </div>
                 </div>
               </div>
               <div className="col-lg-6">
-                {/*<div className="mb-25">
-                  <h4>{intl.formatMessage({ id: "Billing Details" })}</h4>
-                </div>
-                <div className="form-group">
-                  <div
-                    style={{
-                      justifyContent: "space-between",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <label htmlFor="selectedDropdownOption">
-                      {intl.formatMessage({ id: "Select Address" })}
-                    </label>
-                    <button
-                      class="btn btn-fill-out btn-block "
-                      onClick={() => {
-                        openModal(true);
-                      }}
-                    >
-                      {intl.formatMessage({ id: "Add New Address" })}
-                    </button>
-                  </div>
-                  <div class="divider-2 mb-15 mt-15"></div>
-                  {/* <select
-                    as="select"
-                    className="selectedAddress"
-                    name="selectedAddress"
-                    value={selectedAddressDropdown}
-                    onChange={(e) => {
-                      setSelectedAddressDropdown(e.target.value);
-                     
-                      const selectedOption = address?.billing_address?.find(
-                        (option) => option.id === parseInt(e.target.value)
-                      );
-                      if (selectedOption) {
-                        const regionId = selectedOption.region_id;
-                        getCartData(regionId);
-                        console.log("Selected address region id:", regionId);
-                      }
-
-                      // console.log("Selected address region id", address?.billing_address?.find(option => option.id === e.target.value)?.region_id);
-
-                      findElementById(e.target.value);
-                    }}
-                  >
-                    {address?.billing_address?.map((option) => (
-                      <option key={option.id} value={option.id}>
-                        {`${
-                          option?.full_name !== null
-                            ? option.full_name + ","
-                            : ""
-                        } ${
-                          option?.address !== null ? option.address + "," : ""
-                        }${
-                          option?.city_name !== null
-                            ? option?.city_name + ","
-                            : ""
-                        }${
-                          option?.state_name !== null ? option?.state_name +"," : ""
-                        }${
-                          option?.post_code !== null
-                            ? option?.post_code 
-                            : ""
-                        }`}
-                      </option>
-                    ))}
-                  </select> */}
-                {/*</div>
-                <div>
-                  {address?.billing_address?.map((addressItem) => (
-                    <li key={addressItem.id}>
-                      <input
-                        type="radio"
-                        id={`address${addressItem.id}`}
-                        name="selectedAddress"
-                        value={addressItem.id}
-                        checked={selectedAddressDropdown === addressItem.id}
-                        onChange={(e) => {
-                          // console.log("Selected address ID:", addressItem); // Log the address ID
-                          // setAddressFormOpen(false)
-                          setSelectedAddressdisplay(addressItem);
-                          setSelectedAddressDropdown(addressItem.id); // Set the selected address ID
-
-                          // Find the selected option
-                          const selectedOption = address?.billing_address?.find(
-                            (option) => option.id === parseInt(e.target.value)
-                          );
-
-                          // If the selected option is found, get the region ID and call getCartData
-                          if (selectedOption) {
-                            const regionId = selectedOption.region_id;
-                            console.log(
-                              "Selected address region id:",
-                              regionId
-                            );
-                            getCartData(regionId);
-                          }
-
-                          // Call findElementById with the selected address ID
-                          findElementById(e.target.value);
-                        }}
-                      />
-                      <label htmlFor={`address${addressItem.id}`}>
-                        {`${addressItem.full_name !== null
-                          ? addressItem.full_name + ",\n"
-                          : ""
-                          } 
-                            ${addressItem.address !== null ? addressItem.address + ",\n" : ""} 
-                            ${addressItem.road !== null ? addressItem.road + ",\n" : ""} 
-                            ${addressItem.city_name !== null ? addressItem.city_name + ",\n" : ""} 
-                            ${addressItem.state_name !== null ? addressItem.state_name + ",\n" : ""
-                          } 
-                            ${addressItem.post_code !== null ? addressItem.post_code : ""}`}
-                      </label>
-                    </li>
-                  ))}
-                </div>  */}
-                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box address_box">
+                <div className="border p-30 cart-totals mb-30 checkout_box address_box">
                   <div className="address_div">
-                    <div className="d-flex justify-content-between">
-                      <div className="heading_s1 mb-3">
-                        <h6>{intl.formatMessage({ id: "Select Address" })}</h6>
-                      </div>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <button
+                        class="btn btn-fill-out btn-block address_div_btn"
+                        onClick={toggleAddressModal1}
+                      >
+                        {intl.formatMessage({ id: "Select Address" })}
+                      </button>
                       <button
                         class="btn btn-fill-out btn-block address_div_btn"
                         onClick={() => {
@@ -1111,58 +1024,124 @@ const onError = (err) => {
                         {intl.formatMessage({ id: "Add New Address" })}
                       </button>
                     </div>
+                    <div>
+                      {/* Modal for selecting the address */}
+                      {showModalAddress1 && (
+                        <div className="modal-overlay" style={{ zIndex: 9999 }}>
+                          <div className="modalAddress">
+                            <div className="d-flex justify-content-between">
+                              <h3>
+                                {" "}
+                                {intl.formatMessage({ id: "Select Address" })}
+                              </h3>
+                            </div>
+                            <div className="divider-2 mb-15 mt-15"></div>
+                            {address?.billing_address?.map((addressItem) => (
+                              <div
+                                key={addressItem.id}
+                                className="custome-radio"
+                              >
+                                <input
+                                  type="radio"
+                                  id={`address${addressItem.id}`}
+                                  name="selectedAddress"
+                                  className="form-check-input"
+                                  value={addressItem.id}
+                                  checked={
+                                    selectedAddressDropdown === addressItem.id
+                                  }
+                                  onChange={(e) => {
+                                    // console.log("Selected address ID:", addressItem); // Log the address ID
+                                    // setAddressFormOpen(false)
+                                    setSelectedAddressdisplay(addressItem);
+                                    setSelectedAddressDropdown(addressItem.id); // Set the selected address ID
 
-                    {address?.billing_address?.map((addressItem) => (
-                      <div key={addressItem.id} className="custome-radio">
-                        <input
-                          type="radio"
-                          id={`address${addressItem.id}`}
-                          name="selectedAddress"
-                          className="form-check-input"
-                          value={addressItem.id}
-                          checked={selectedAddressDropdown === addressItem.id}
-                          onChange={(e) => {
-                            // console.log("Selected address ID:", addressItem); // Log the address ID
-                            // setAddressFormOpen(false)
-                            setSelectedAddressdisplay(addressItem);
-                            setSelectedAddressDropdown(addressItem.id); // Set the selected address ID
+                                    // Find the selected option
+                                    const selectedOption =
+                                      address?.billing_address?.find(
+                                        (option) =>
+                                          option.id === parseInt(e.target.value)
+                                      );
 
-                            // Find the selected option
-                            const selectedOption = address?.billing_address?.find(
-                              (option) => option.id === parseInt(e.target.value)
-                            );
+                                    // If the selected option is found, get the region ID and call getCartData
+                                    if (selectedOption) {
+                                      const regionId = selectedOption.region_id;
+                                      console.log(
+                                        "Selected address region id:",
+                                        regionId
+                                      );
+                                      getCartData(regionId);
+                                    }
 
-                            // If the selected option is found, get the region ID and call getCartData
-                            if (selectedOption) {
-                              const regionId = selectedOption.region_id;
-                              console.log(
-                                "Selected address region id:",
-                                regionId
-                              );
-                              getCartData(regionId);
-                            }
+                                    // Call findElementById with the selected address ID
+                                    findElementById(e.target.value);
+                                  }}
+                                />
+                                <label
+                                  htmlFor={`address${addressItem.id}`}
+                                  className="form-check-label"
+                                >
+                                  {`${
+                                    addressItem.full_name !== null
+                                      ? addressItem.full_name + ",\n"
+                                      : ""
+                                  } 
+                              ${
+                                addressItem.address !== null
+                                  ? addressItem.address + ",\n"
+                                  : ""
+                              } 
+                              ${
+                                addressItem.road !== null
+                                  ? addressItem.road + ",\n"
+                                  : ""
+                              } 
+                              ${
+                                addressItem.city_name !== null
+                                  ? addressItem.city_name + ",\n"
+                                  : ""
+                              } 
+                              ${
+                                addressItem.state_name !== null
+                                  ? addressItem.state_name + ",\n"
+                                  : ""
+                              } 
+                              ${
+                                addressItem.post_code !== null
+                                  ? addressItem.post_code
+                                  : ""
+                              }`}
+                                </label>
+                              </div>
+                            ))}
+                            <button
+                              class="submit"
+                              onClick={() => setShowModalAddress1(false)}
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      )}
 
-                            // Call findElementById with the selected address ID
-                            findElementById(e.target.value);
-                          }}
-                        />
-                        <label htmlFor={`address${addressItem.id}`} className="form-check-label">
-                          {`${addressItem.full_name !== null
-                            ? addressItem.full_name + ",\n"
-                            : ""
-                            } 
-                            ${addressItem.address !== null ? addressItem.address + ",\n" : ""} 
-                            ${addressItem.road !== null ? addressItem.road + ",\n" : ""} 
-                            ${addressItem.city_name !== null ? addressItem.city_name + ",\n" : ""} 
-                            ${addressItem.state_name !== null ? addressItem.state_name + ",\n" : ""
-                            } 
-                            ${addressItem.post_code !== null ? addressItem.post_code : ""}`}
-                        </label>
-                      </div>
-                    ))}
+                      {/* Display the selected address */}
+                      {selectedAddressdisplay && (
+                        <div>
+                          <h6>Selected Address:</h6>
+                          <p>
+                            {selectedAddressdisplay.full_name},{" "}
+                            {selectedAddressdisplay.address},{" "}
+                            {selectedAddressdisplay.road},{" "}
+                            {selectedAddressdisplay.city_name},{" "}
+                            {selectedAddressdisplay.state_name},{" "}
+                            {selectedAddressdisplay.post_code}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box time_box">
+                <div className="border p-30 cart-totals mb-30 checkout_box time_box">
                   <div className="delivery_time_div">
                     <div className="heading_s1 mb-3">
                       <h6>{intl.formatMessage({ id: "Delivery time" })}</h6>
@@ -1210,76 +1189,81 @@ const onError = (err) => {
                     </div>
                   </div>
                 </div>
-                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box payment_box">
+                <div className="border p-30 cart-totals mb-30 checkout_box payment_box">
                   <div className="payment_method">
                     <div className="heading_s1 mb-3">
                       <h6>{intl.formatMessage({ id: "Payment Method" })}</h6>
                     </div>
 
                     <div className="payment_option">
-      <div className="custome-radio">
-        <input
-          className="form-check-input"
-          required
-          type="radio"
-          name="payment_option"
-          id="exampleRadios3"
-          value="cash_on_delivery"
-          checked={selectedOption === 'cash_on_delivery'}
-          onChange={handleChangeRadio}
-         
-        />
-        <label
-          className="form-check-label"
-          htmlFor="exampleRadios3"
-          data-bs-toggle="collapse"
-          data-target="#bankTranfer"
-          aria-controls="bankTranfer"
-        >
-          {intl.formatMessage({ id: "COD" })}
-        </label>
-      </div>
-      <div className="custome-radio">
-        <input
-          className="form-check-input"
-          required
-          type="radio"
-          name="payment_option"
-          id="exampleRadios4"
-          value="paypal"
-          checked={selectedOption === 'paypal'}
-          onChange={handleChangeRadio}
-        />
-        <label
-          className="form-check-label"
-          htmlFor="exampleRadios4"
-          data-bs-toggle="collapse"
-          data-target="#checkPayment"
-          aria-controls="checkPayment"
-        >
-          Paypal
-        </label>
-      </div>
-      {/* Add similar structure for other payment options */}
+                      <div className="custome-radio">
+                        <input
+                          className="form-check-input"
+                          required
+                          type="radio"
+                          name="payment_option"
+                          id="exampleRadios3"
+                          value="cash_on_delivery"
+                          checked={selectedOption === "cash_on_delivery"}
+                          onChange={handleChangeRadio}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="exampleRadios3"
+                          data-bs-toggle="collapse"
+                          data-target="#bankTranfer"
+                          aria-controls="bankTranfer"
+                        >
+                          {intl.formatMessage({ id: "COD" })}
+                        </label>
+                      </div>
+                      <div className="custome-radio">
+                        <input
+                          className="form-check-input"
+                          required
+                          type="radio"
+                          name="payment_option"
+                          id="exampleRadios4"
+                          value="paypal"
+                          checked={selectedOption === "paypal"}
+                          onChange={handleChangeRadio}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="exampleRadios4"
+                          data-bs-toggle="collapse"
+                          data-target="#checkPayment"
+                          aria-controls="checkPayment"
+                        >
+                          Paypal
+                        </label>
+                      </div>
+                      {/* Add similar structure for other payment options */}
 
-      {/* Conditionally render content based on selectedOption */}
-      {selectedOption === 'COD' && (
-        <div className="form-group collapse in" id="bankTranfer">
-          {/* Content for COD */}
-          <p className="text-muted mt-5">
-            {/* Information about COD */}
-          </p>
-        </div>
-      )}
-      {selectedOption === 'Paypal' && (
-        <div className="form-group collapse in" id="checkPayment">
-          {/* Content for Paypal */}
-          <p className="text-muted mt-5">
-            {/* Information about Paypal */}
-          </p>
-        </div>
-      )}
-    </div>
+                      {/* Conditionally render content based on selectedOption */}
+                      {selectedOption === "COD" && (
+                        <div
+                          className="form-group collapse in"
+                          id="bankTranfer"
+                        >
+                          {/* Content for COD */}
+                          <p className="text-muted mt-5">
+                            {/* Information about COD */}
+                          </p>
+                        </div>
+                      )}
+                      {selectedOption === "Paypal" && (
+                        <div
+                          className="form-group collapse in"
+                          id="checkPayment"
+                        >
+                          {/* Content for Paypal */}
+                          <p className="text-muted mt-5">
+                            {/* Information about Paypal */}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                   <div className="minOrderAmount_div">
                     {cartTotal?.total_amt <= cartTotal.minOrderAmount ? (
@@ -1302,7 +1286,7 @@ const onError = (err) => {
                   </div>
                 </div>
 
-                <div className="border p-30 cart-totals ml-30 mb-30 checkout_box mobile_bottom_margin">
+                <div className="border p-30 cart-totals mb-30 checkout_box mobile_bottom_margin">
                   <div className="mb-20">
                     <form method="post" className="apply-coupon">
                       <input
@@ -1515,12 +1499,14 @@ const onError = (err) => {
                     </table>
                   ) : null}
                   <div className="mobile_checkout_btn">
-                    {loading ?
+                    {loading ? (
                       <div class="d-flex justify-content-center align-items-center ">
                         <Spinner animation="border" role="status">
                           <span class="visually-hidden">Loading...</span>
                         </Spinner>
-                      </div> : <button
+                      </div>
+                    ) : (
+                      <button
                         onClick={() => {
                           placeOrder();
                         }}
@@ -1528,12 +1514,15 @@ const onError = (err) => {
                         className="w-100 btn btn-fill-out btn-block"
                       >
                         {intl.formatMessage({ id: "Place Order" })}
-                      </button>}
+                      </button>
+                    )}
                   </div>
                 </div>
 
                 <div className="border p-30 cart-totals mb-30 checkout_box mobile_notes mb-30 ">
-                  <h6 className="mb-4">{intl.formatMessage({ id: "Add Order Notes" })}</h6>
+                  <h6 className="mb-4">
+                    {intl.formatMessage({ id: "Add Order Notes" })}
+                  </h6>
                   <div className="px-40">
                     <textarea
                       className="orderNotes_textarea"
@@ -1543,11 +1532,12 @@ const onError = (err) => {
                       value={orderNotes}
                       // disabled={true}
                       onChange={(e) => setorderNotes(e.target.value)}
-                      placeholder={intl.formatMessage({ id: "Customer Comment" })}
+                      placeholder={intl.formatMessage({
+                        id: "Customer Comment",
+                      })}
                     />
                   </div>
                 </div>
-
               </div>
             </div>
           </div>

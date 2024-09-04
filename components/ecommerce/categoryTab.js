@@ -78,14 +78,14 @@ function CategoryTab({cartItems}) {
               {intl.formatMessage({ id: "Popular" })}
             </button>
           </li>
-          <li className="nav-item" role="presentation">
+          {/* <li className="nav-item" role="presentation">
             <button
               className={active === "4" ? "nav-link active" : "nav-link"}
               onClick={catP3}
             >
               {intl.formatMessage({ id: "New added" })}
             </button>
-          </li>
+          </li> */}
         </ul>
       </div>
 
