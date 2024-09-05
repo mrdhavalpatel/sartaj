@@ -301,6 +301,8 @@ const Cart = ({
 
     if (data) {
       url += `/${data}`;
+      // url += `/true`;
+      // for use wallet amount
     }
     console.log("url in get cart", url);
     const response = axios
