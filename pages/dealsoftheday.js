@@ -27,7 +27,7 @@ const Dealsoftheday = ({
 
 
   const dealsProduct = async () => {
-    const request = await ApiCall("get", intl, "products/sale-products");
+    const request = await ApiCall("get", intl, "products/sale-products?limit=1000");
     const allProducts = await request;
     // Discount
     setDeals(allProducts?.data?.products);
