@@ -30,6 +30,7 @@ const Dealsoftheday = ({
     const request = await ApiCall("get", intl, "products/sale-products?limit=1000");
     const allProducts = await request;
     // Discount
+    console.log("fetch sale products",allProducts.data)
     setDeals(allProducts?.data?.products);
     let arr = new Array(Math.ceil(deals.length / limit))
     .fill()

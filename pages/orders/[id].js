@@ -233,6 +233,15 @@ const OrderDetails = () => {
       <td className="text-right">¥{orderDetails?.ten_percent}</td>
     </tr>
   ) : null}
+    {orderDetails?.redeem_points && orderDetails?.redeem_points !== 0 ? (
+    <tr>
+      <td colSpan="2"></td>
+      <td className="text-right">
+        <b>{intl.formatMessage({ id: "Reddem Points use" })}</b>
+      </td>
+      <td className="text-right">- ¥{orderDetails?.redeem_points}</td>
+    </tr>
+  ) : null}
   <tr>
     <td colSpan="2"></td>
     <td className="text-right">

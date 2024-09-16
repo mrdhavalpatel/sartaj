@@ -24,6 +24,7 @@ import React, { useRef } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { set } from "date-fns";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 const Cart = ({
   openCart,
   cartItems,
@@ -41,6 +42,9 @@ const Cart = ({
   const [cartTotal, setCartTotal] = useState([]);
   const [coupanDetails, setCoupanDetails] = useState("");
   const [coupanRes, setCoupanRes] = useState("");
+  const [balance, setbalance] = useState(0)
+  const [elebal, setelebal] = useState(0)
+  const [redeem, setredeem] = useState(false)
   const router = useRouter();
   const [cartItemsData, setCartItemsData] = useState([]);
   const [timeSlot, setTimeSlot] = useState([]);
@@ -49,7 +53,6 @@ const Cart = ({
   const [ip, setIp] = useState("");
   const [browserData, setBrowserData] = useState([]);
   const [selectedAddressData, setSelectedAddressData] = useState({});
-
   const [selectedAddressDropdown, setSelectedAddressDropdown] = useState("");
   const [orderNotes, setorderNotes] = useState();
   const [religionData, setReligionData] = useState([]);
@@ -58,8 +61,10 @@ const Cart = ({
   const [selectedCity, setSelectedCity] = useState(-1);
   const [addressformOpen, setAddressFormOpen] = useState(false);
   const [showModaladdress, setShowModaladdress] = useState(false);
-  const intl = useIntl();
+  const [regionId1, setRegionId] = useState()
 
+  const intl = useIntl();
+  const regID = useRef()
   const [showModalAddress1, setShowModalAddress1] = useState(false);
 
   // Toggle function to open and close the modal
@@ -67,13 +72,32 @@ const Cart = ({
     setShowModalAddress1((prevState) => !prevState);
   };
 
+  // const fetchWalletBalance = async (encodedToken) => {
+  //   try {
+  //     const response = await api.get(`customer/wallet-balance`, {
+  //       headers: {
+  //         "Access-Control-Allow-Origin": "*",
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${encodedToken}`,
+  //       },
+  //     });
+  //     console.log("response wallet==>", response.data)
+  //     // Update state or perform necessary actions based on response
+  //   } catch (error) {
+  //     console.error("API Error in wallet", error);
+  //   }
+  // }
+  // useEffect(() => {
+  //   let encodedToken = localStorage.getItem("token");
+  //   fetchWalletBalance(encodedToken)
+  // }, [])
   const handleAddressSelect = (addressItem) => {
     setSelectedAddressdisplay(addressItem); // Update the selected address display
     setSelectedAddressDropdown(addressItem.id); // Update the dropdown selection
     setShowModalAddress1(false); // Close the modal after selection
   };
 
-  console.log("intlllllllllllllllll====", intl.locale);
+  // console.log("intlllllllllllllllll====", intl.locale);
   const handleRadioChange = (id) => {
     setSelectedRadioId(id);
     // setorderNotes(id);
@@ -103,7 +127,7 @@ const Cart = ({
   const calculateAmountToAdd = () => {
     return Math.round(
       cartTotal.minOrderAmount -
-        (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
+      (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
     );
   };
   //  ////  console.log(cartTotal);
@@ -199,16 +223,15 @@ const Cart = ({
               setCoupanDetails(
                 `${response?.data?.title} ${intl.formatMessage({
                   id: "coupon applied successfully",
-                })},${intl.formatMessage({ id: "maximum discount" })} ${
-                  response?.data?.max_discount
+                })},${intl.formatMessage({ id: "maximum discount" })} ${response?.data?.max_discount
                 }¥`
               );
             } else if (response.data.discount_type == "amount") {
               setCoupanDetails(
                 `${response?.data?.discount}¥ ` +
-                  intl.formatMessage({
-                    id: "discount applied successfully",
-                  })
+                intl.formatMessage({
+                  id: "discount applied successfully",
+                })
               );
             }
 
@@ -253,8 +276,8 @@ const Cart = ({
                 (item?.quantity ? item?.quantity : 1) * item?.actual_price
                   ? item?.actual_price
                   : item?.product.actual_price
-                  ? item?.product.actual_price
-                  : 0,
+                    ? item?.product.actual_price
+                    : 0,
             },
             quantity: item.quantity,
           })),
@@ -284,7 +307,7 @@ const Cart = ({
       "address response in region id===============>",
       response?.data.billing_address[0]?.region_id
     );
-
+    setRegionId(response?.data.billing_address[0]?.region_id)
     getCartData(response?.data.billing_address[0]?.region_id);
     setSelectedAddressdisplay(response?.data.billing_address[0]);
     setAddress(response?.data);
@@ -293,16 +316,17 @@ const Cart = ({
   const [loading, setloading] = useState(true);
   const getCartData = (data) => {
     setloading(true);
-
-    console.log("is region id pass in get cart", data);
+    console.log("is region id pass in get cart", regionId1, data);
     let encodedToken = localStorage.getItem("token");
 
     let url = `${API_BASE_URL}customer/cart`;
 
     if (data) {
       url += `/${data}`;
-      // url += `/true`;
-      // for use wallet amount
+      if (redeem === true) {
+        url += `/true`; // Append "/true" if reedem is true
+      }
+      // for use wallet amount apply 
     }
     console.log("url in get cart", url);
     const response = axios
@@ -316,7 +340,9 @@ const Cart = ({
       .then((res) => {
         setCartItemsData(res?.data?.cartProducts);
         setCartTotal(res?.data);
-        console.log("cart data", res.data);
+        setbalance(res?.data?.redeem_points)
+        setelebal(res?.data?.eligible_redeem_points)
+        // console.log("cart data", res.data);
         setloading(false);
       })
       .catch((error) => {
@@ -325,7 +351,47 @@ const Cart = ({
         //        ////        console.log("error", error?.code === "ERR_NETWORK");
       });
   };
+  // const getCartDataforRedeem = () => {
+  //   setloading(true);
 
+  //   console.log("api call for reedem", regionId);
+  //   let encodedToken = localStorage.getItem("token");
+
+  //   let url = `${API_BASE_URL}customer/cart`;
+
+  //   if (regionId) {
+  //     url += `/${regionId}`;
+  //     if (redeem === true) {
+  //       url += `/true`; // Append "/true" if reedem is true
+  //     }
+  //     // for use wallet amount apply 
+  //   }
+  //   console.log("url in get cart", url);
+  //   const response = axios
+  //     .get(url, {
+  //       headers: {
+  //         "Access-Control-Allow-Origin": "*",
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${encodedToken}`,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       setCartItemsData(res?.data?.cartProducts);
+  //       setCartTotal(res?.data);
+  //       setbalance(res?.data?.redeem_points)
+  //       setelebal(res?.data?.eligible_redeem_points)
+  //       console.log("cart data", res.data);
+  //       setloading(false);
+  //     })
+  //     .catch((error) => {
+  //       setloading(false);
+
+  //       //        ////        console.log("error", error?.code === "ERR_NETWORK");
+  //     });
+  // };
+  useEffect(() => {
+    getCartData(regionId1)
+  }, [redeem])
   const getTimeSlot = async () => {
     //timeSlot
     const res = await ApiCall("get", intl, "timeSlot");
@@ -345,7 +411,7 @@ const Cart = ({
           : selectedAddressData?.full_name,
       road:
         values?.billing_address2 != undefined ||
-        values?.billing_address2 != null
+          values?.billing_address2 != null
           ? values?.billing_address2
           : selectedAddressData?.billing_address2,
       house:
@@ -488,18 +554,18 @@ const Cart = ({
         onSubmit={(values, { setSubmitting }) => {
           handleAddressSubmit(values);
         }}
-        // onSubmit={(values, { setSubmitting, errors }) => {
-        //   handleAddressSubmit(values)
-        //     .then(() => {
-        //        //       console.log("Submission successful");
-        //       setSubmitting(false);
-        //     })
-        //     .catch((error) => {
-        //       console.error("Submission error:", error, errors);
-        //       // Handle the error here, set an error state, or display a message to the user
-        //       setSubmitting(false);
-        //     });
-        // }}
+      // onSubmit={(values, { setSubmitting, errors }) => {
+      //   handleAddressSubmit(values)
+      //     .then(() => {
+      //        //       console.log("Submission successful");
+      //       setSubmitting(false);
+      //     })
+      //     .catch((error) => {
+      //       console.error("Submission error:", error, errors);
+      //       // Handle the error here, set an error state, or display a message to the user
+      //       setSubmitting(false);
+      //     });
+      // }}
       >
         {({ setFieldValue, values, Radio, errors, touched, dirty }) => (
           <Form method="post">
@@ -594,6 +660,7 @@ const Cart = ({
                     // console.log("Selected option" , selectedOption)
                     setFieldValue("state", selectedOption);
                     setFieldValue("city", "");
+                    // setRegionId(selectedOption)
                     setSelectedRegion(selectedOption); // This should be defined somewhere in your component
                     getCartData(selectedOption); // This should be defined somewhere in your component
                   }}
@@ -601,7 +668,7 @@ const Cart = ({
                   <Dropdown.Toggle variant="success" id="dropdown-basic">
                     {values.state
                       ? religionData.find((option) => option.id == values.state)
-                          ?.name
+                        ?.name
                       : "Select State"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
@@ -652,7 +719,7 @@ const Cart = ({
                     <Dropdown.Toggle variant="success" id="city-dropdown">
                       {values.city
                         ? citydata.find((option) => option.id == values.city)
-                            ?.name
+                          ?.name
                         : "City Dropdown"}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
@@ -783,9 +850,11 @@ const Cart = ({
   }, []);
   const [selectedOption, setSelectedOption] = useState("cash_on_delivery");
   const handleChangeRadio = (event) => {
+    console.log("event", event.target.value)
     setSelectedOption(event.target.value);
   };
   const placeOrder = async () => {
+    console.log("place order called")
     setloading(true);
     try {
       let token = localStorage.getItem("token");
@@ -799,6 +868,8 @@ const Cart = ({
         order_type: "delivery",
         coupon_discount_amount: coupenCodeDis,
         cart: cartItemsData,
+        redeem_points: elebal,
+        isredeem: redeem ? true : false,
         time_slot_id: selectedRadioId,
         order_note: orderNotes,
         local: intl.locale,
@@ -819,31 +890,52 @@ const Cart = ({
           },
         })
         .then((response) => {
-          console.log("response", response.data.payment_link);
+          console.log("response of place order", response.data.payment_link);
           if (response?.status === 200) {
             selectedOption == "paypal"
               ? router.push(response.data.payment_link)
               : router.push(
-                  `/OrderReceived?order_id=${response?.data?.order_id}`
-                );
+                `/OrderReceived?order_id=${response?.data?.order_id}`
+              );
           }
         })
         .then(() => {
           clearCart();
           setloading(false);
-        });
-    } catch (error) {
-      if (error.response && error.response.data && error.response.data.errors) {
-        const errorMessage = error.response.data.errors[0]?.message;
-        toast.error(errorMessage + "¥");
-        setloading(false);
-      } else {
-        // console.error("Error while placing order:", error);
-        toast.error("An error occurred while placing the order");
-        setloading(false);
-      }
-    }
-  };
+        });}
+        catch (error) {
+          setloading(false);
+      
+          if (error.response && error.response.data && error.response.data.errors) {
+            const errorMessage = error.response.data.errors[0]?.message;
+      
+            // Check if the error message starts with "Stock for"
+            if (errorMessage.startsWith("Stock for")) {
+              toast.error(errorMessage); // Display the full dynamic stock error message
+            } else {
+              toast.error(errorMessage); // Display other errors as they are
+            }
+          } else {
+            console.log("Error while placing order:", error?.response?.data?.message);
+            toast.error(`An error occurred while placing the order`);
+            toast.error(`${error?.response?.data?.message}`);
+
+
+          }
+        }
+      };
+  //   } catch (error) {
+  //     if (error.response && error.response.data && error.response.data.errors) {
+  //       const errorMessage = error.response.data.errors[0]?.message;
+  //       toast.error(errorMessage + "¥");
+  //       setloading(false);
+  //     } else {
+  //       // console.error("Error while placing order:", error);
+  //       toast.error("An error occurred while placing the order");
+  //       setloading(false);
+  //     }
+  //   }
+  // };
   return (
     <>
       <Layout parent="Home" sub="Shop" subChild="Checkout">
@@ -857,7 +949,6 @@ const Cart = ({
                 </button> */}
               </div>
               <div className="divider-2 mb-15 mt-15"></div>
-
               {formikFormData(selectedAddressData)}
             </div>
           </div>
@@ -939,21 +1030,19 @@ const Cart = ({
                                         <div
                                           className="product-rating"
                                           style={{
-                                            width: `${
-                                              item?.product?.overall_rating
-                                                ? item?.product?.overall_rating
-                                                : 0
-                                            }%`,
+                                            width: `${item?.product?.overall_rating
+                                              ? item?.product?.overall_rating
+                                              : 0
+                                              }%`,
                                           }}
                                         ></div>
                                       </div>
                                       <span className="font-small ml-5 text-muted">
                                         {`(
-                                    ${
-                                      item?.product?.total_reviews
-                                        ? item?.product?.total_reviews
-                                        : 0
-                                    }
+                                    ${item?.product?.total_reviews
+                                            ? item?.product?.total_reviews
+                                            : 0
+                                          }
                                     )`}
                                       </span>
                                     </div>
@@ -970,11 +1059,11 @@ const Cart = ({
                                     {/* {(item.quantity ? item.quantity : 1) *
                                     item.price} */}
                                     {(item?.quantity ? item?.quantity : 1) *
-                                    item?.actual_price
+                                      item?.actual_price
                                       ? item?.actual_price
                                       : item?.product.actual_price
-                                      ? item?.product.actual_price
-                                      : 0}
+                                        ? item?.product.actual_price
+                                        : 0}
                                   </h4>
                                 </td>
                               </tr>
@@ -1052,10 +1141,14 @@ const Cart = ({
                                   checked={
                                     selectedAddressDropdown === addressItem.id
                                   }
-                                  onChange={(e) => {
-                                    // console.log("Selected address ID:", addressItem); // Log the address ID
+                                  onChange={async (e) => {
+                                    // console.log("Selected address ID from map:", e); // Log the address ID
                                     // setAddressFormOpen(false)
+                                    //  await   setRegionId(regionId)
+                                    setRegionId(addressItem.region_id)
+                                    setredeem(false) //reset reddem
                                     setSelectedAddressdisplay(addressItem);
+                                    console.log("addres display data", addressItem.region_id)
                                     setSelectedAddressDropdown(addressItem.id); // Set the selected address ID
 
                                     // Find the selected option
@@ -1072,6 +1165,8 @@ const Cart = ({
                                         "Selected address region id:",
                                         regionId
                                       );
+                                      setRegionId(regionId)
+
                                       getCartData(regionId);
                                     }
 
@@ -1083,36 +1178,30 @@ const Cart = ({
                                   htmlFor={`address${addressItem.id}`}
                                   className="form-check-label"
                                 >
-                                  {`${
-                                    addressItem.full_name !== null
-                                      ? addressItem.full_name + ",\n"
+                                  {`${addressItem.full_name !== null
+                                    ? addressItem.full_name + ",\n"
+                                    : ""
+                                    } 
+                              ${addressItem.address !== null
+                                      ? addressItem.address + ",\n"
                                       : ""
-                                  } 
-                              ${
-                                addressItem.address !== null
-                                  ? addressItem.address + ",\n"
-                                  : ""
-                              } 
-                              ${
-                                addressItem.road !== null
-                                  ? addressItem.road + ",\n"
-                                  : ""
-                              } 
-                              ${
-                                addressItem.city_name !== null
-                                  ? addressItem.city_name + ",\n"
-                                  : ""
-                              } 
-                              ${
-                                addressItem.state_name !== null
-                                  ? addressItem.state_name + ",\n"
-                                  : ""
-                              } 
-                              ${
-                                addressItem.post_code !== null
-                                  ? addressItem.post_code
-                                  : ""
-                              }`}
+                                    } 
+                              ${addressItem.road !== null
+                                      ? addressItem.road + ",\n"
+                                      : ""
+                                    } 
+                              ${addressItem.city_name !== null
+                                      ? addressItem.city_name + ",\n"
+                                      : ""
+                                    } 
+                              ${addressItem.state_name !== null
+                                      ? addressItem.state_name + ",\n"
+                                      : ""
+                                    } 
+                              ${addressItem.post_code !== null
+                                      ? addressItem.post_code
+                                      : ""
+                                    }`}
                                 </label>
                               </div>
                             ))}
@@ -1176,7 +1265,7 @@ const Cart = ({
                               data-target="#timeslot"
                               aria-controls="timeslot"
                             >
-                              {console.log("start time", Item.start_time)}
+                              {/* {console.log("start time", Item.start_time)} */}
                               {moment(Item.start_time, "HH:mm:ss").format(
                                 "h:mm A"
                               )}{" "}
@@ -1267,13 +1356,13 @@ const Cart = ({
                       )}
                     </div>
                   </div>
-                  <div className="minOrderAmount_div">
-                    {cartTotal?.total_amt <= cartTotal.minOrderAmount ? (
+                  {!loading && <div className="minOrderAmount_div">
+                    {(cartTotal?.befor_total <= cartTotal.minOrderAmount) ? (
                       <h6 style={{ color: "red" }}>
                         {intl.formatMessage({
-                          id: "Oops! Your cart is below 2500 ¥. Please add items worth",
-                        })}{" "}
-                        {calculateAmountToAdd()} ¥
+                          id: "Oops! Your cart is below ¥ 2500. Please add items worth",
+                        })}{" "}¥{" "}
+                        {calculateAmountToAdd()}
                         {intl.formatMessage({
                           id: " or more to place your order. Happy shopping!",
                         })}
@@ -1281,16 +1370,92 @@ const Cart = ({
                     ) : (
                       <h6 style={{ color: "green" }}>
                         {intl.formatMessage({
-                          id: "Congratulations, You are eligible to place an order",
+                          id: "Congratulations! You are eligible to place an order",
                         })}
                       </h6>
                     )}
+                  </div>}
+                </div>
+
+                <div className="border p-30 cart-totals mb-30 checkout_box payment_box">
+                  <div className="payment_method">
+                    <div className="heading_s1 mb-3">
+                      <h6>{intl.formatMessage({ id: "Reward Points" })}</h6>
+                    </div>
+
+                    {balance > 0 && <div style={{ flexDirection: "row" }} className="d-flex align-items-center">
+                      <input
+                        type="checkbox"
+                        disabled={selectedOption !== "paypal" && cartTotal?.befor_total <= cartTotal.minOrderAmount || balance == 0}
+                        style={{ height: 20, width: 20, marginRight: 10, color: "red" }}
+                        checked={redeem}  // Control checked state using `redeem` value
+                        onChange={() => setredeem(prev => !prev)}  // Toggle `redeem` value on change
+                      />
+
+                      <div style={{ flexDirection: "column" }}>
+                        <div>
+                          <span style={{ color: "grey", fontSize: 15 }}>Sartaj {intl.formatMessage({ id: "Points" })}</span>
+                          <span style={{
+                            color: "white", fontSize: 10, alignSelf: "flex-start", backgroundColor: "red", paddingTop: 2, paddingBottom: 2, paddingLeft: 5, paddingRight: 5, marginLeft: 5, borderRadius: 10
+                          }}>{intl.formatMessage({ id: "New" })}</span>
+
+                        </div>
+                        {console.log("payment mwthid", selectedOption)}
+                        {
+                          selectedOption !== "paypal" && (cartTotal?.befor_total <= cartTotal.minOrderAmount) ?
+                            <> <span style={{ fontSize: 15 }}>{intl.formatMessage({ id: `Your balance is` })}</span> <span> `¥ {balance}`</span></>
+
+                            :
+                            <>
+                              <span style={{ fontSize: 15 }}>{intl.formatMessage({ id: `You are eligible to use` })}</span><span> ¥ {elebal} </span>
+                              <span style={{ color: "grey" }}>{intl.formatMessage({ id: `of` })}</span><span style={{ color: "grey" }}> ¥ {balance}</span>
+                            </>
+
+                        }
+                      </div>
+                    </div>}
+
+                  </div>
+                  <div className="minOrderAmount_div">
+
+                    {!loading && balance > 0 && <div className="minOrderAmount_div">
+                      {selectedOption !== "paypal" && (cartTotal?.befor_total <= cartTotal.minOrderAmount) ? (
+                        <h6 style={{ color: "red" }}>
+                          {intl.formatMessage({
+                            id: "Oops! Your cart is below ¥ 2500. You are not eligible to use reward points",
+                          })}
+
+
+                        </h6>
+                      ) : (
+                        // <h6 style={{ color: "green" }}>
+                        //   {intl.formatMessage({
+                        //     id: `Congratulations! You are eligible to use ¥`+` ${elebal}` +`in reward points`,
+                        //   })}
+                        // </h6>
+                        <h6 style={{ color: "green" }}>
+                          {intl.formatMessage(
+                            {
+                              id: "Congratulations! You are eligible to use ¥ in reward points",
+                            },
+                            {
+                              amount: elebal, // Inject dynamic value
+                            }
+                          )}
+                        </h6>
+                      )}
+                    </div>}
+                    {balance == 0 && <h6 style={{ color: "red" }}>
+                      {intl.formatMessage({
+                        id: "Your wallet balance is currently ¥0. Earn reward points by shopping",
+                      })}
+                    </h6>}
                   </div>
                 </div>
 
                 <div className="border p-30 cart-totals mb-30 checkout_box mobile_bottom_margin">
                   <div className="mb-20">
-                    <form method="post" className="apply-coupon">
+                    {!redeem && <form method="post" className="apply-coupon">
                       <input
                         type="text"
                         onChange={(e) => {
@@ -1315,7 +1480,7 @@ const Cart = ({
                       >
                         {intl.formatMessage({ id: "Apply Coupon" })}
                       </button>
-                    </form>
+                    </form>}
 
                     <h6 style={{ color: "green", marginTop: "15px" }}>
                       {coupanDetails}
@@ -1411,6 +1576,7 @@ const Cart = ({
                           </td>
                         </tr>
                       ) : null}
+
                       {cartTotal?.ten_percent ? (
                         <tr>
                           <td
@@ -1425,7 +1591,7 @@ const Cart = ({
                               {intl.formatMessage({
                                 id: "Consumption Tax",
                               })}{" "}
-                              {cartTotal?.eight_percent ? 10 : 0}%
+                              {cartTotal?.ten_percent ? 10 : 0}%
                             </strong>
                           </td>
                           <td
@@ -1440,6 +1606,33 @@ const Cart = ({
                               {cartTotal?.ten_percent
                                 ? cartTotal?.ten_percent
                                 : 0}
+                            </span>
+                          </td>
+                        </tr>
+                      ) : null}
+                      {redeem ? (
+                        <tr>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px 15px",
+                            }}
+                            className="text-start"
+                          >
+                            <strong>
+                              {intl.formatMessage({ id: "Wallet" })}{" "}
+
+                            </strong>
+                          </td>
+                          <td
+                            style={{
+                              border: "1px solid #bababa",
+                              padding: "5px 15px",
+                            }}
+                            className="text-end"
+                          >
+                            <span className="fw-600">
+                              - ¥{elebal}
                             </span>
                           </td>
                         </tr>

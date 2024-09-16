@@ -22,9 +22,9 @@ const SingleProductList = ({
       quantity: 1,
     };
     addToCart(product, intl);
-    toast(intl.formatMessage({ id: "Product added to Cart !" }), {
-      autoClose: 1000,
-    });
+    // toast(intl.formatMessage({ id: "Product added to Cart !" }), {
+    //   autoClose: 1000,
+    // });
   };
 
   const handleCompare = (product) => {

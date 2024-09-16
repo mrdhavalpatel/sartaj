@@ -27,7 +27,7 @@ const Intro2 = () => {
     <>
       <Swiper
         slidesPerView={1}
-        loop={banners.length > 1} // Only loop if more than one banner
+        loop={banners?.length > 1} // Only loop if more than one banner
         spaceBetween={0}
         effect={"fade"}
         fadeEffect={{
@@ -36,7 +36,7 @@ const Intro2 = () => {
         pagination={{
           clickable: true,
         }}
-        navigation={banners.length > 1 ? {
+        navigation={banners?.length > 1 ? {
           prevEl: ".custom_prev_i1",
           nextEl: ".custom_next_i1",
         } : false} // Disable navigation if only one banner
@@ -71,7 +71,7 @@ const Intro2 = () => {
         ))}
       </Swiper>
 
-      {banners.length > 1 && (
+      {banners?.length > 1 && (
         <div className="slider-arrow hero-slider-1-arrow">
           <span className="slider-btn slider-prev slick-arrow custom_prev_i1">
             <i className="fi-rs-angle-left"></i>

@@ -26,6 +26,7 @@ function Account() {
   const [address, setAddress] = useState("");
   const [isOrderListLoading, setIsOrderListLoading] = useState(true);
   const [token, setToken] = useState("");
+  const [walletBalance , setWalletBalance]=useState(0)
   const router = useRouter();
   const handleOnClick = (index) => {
     setActiveIndex(index);
@@ -203,7 +204,21 @@ function Account() {
       console.error("API Error:", error);
     }
   };
-
+  const getUserWallet = async (encodedToken) => {
+    try {
+      const response = await api.get("customer/wallet-balance", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${encodedToken}`,
+        },
+      });
+      setWalletBalance(response?.data?.wallet_balance);
+      console.log("wallet" , response.data.wallet_balance )
+    } catch (error) {
+      console.error("API Error fetching wallet balance:", error);
+    }
+  };
   const getOrderList = async (encodedToken) => {
     setIsOrderListLoading(true);
     const response = await api.get("customer/order/list", {
@@ -263,6 +278,7 @@ function Account() {
     let encodedToken = localStorage.getItem("token");
     if (encodedToken) {
       setToken(encodedToken);
+      getUserWallet(encodedToken)
       getUserDetails(encodedToken);
       getOrderList(encodedToken);
       getAddress(encodedToken);
@@ -318,7 +334,17 @@ function Account() {
                             <span>{intl.formatMessage({ id: "Orders" })}</span>
                           </a>
                         </li>
-
+                        <li className="nav-item">
+                          <a
+                            className={
+                              activeIndex === 6 ? "nav-link active" : "nav-link"
+                            }
+                            onClick={() => handleOnClick(6)}
+                          >
+                            <i className="fi-rs-yen mr-10"></i>
+                            <span>{intl.formatMessage({ id: "Wallet" })}</span>
+                          </a>
+                        </li>
                         <li className="nav-item">
                           <a
                             className={
@@ -597,6 +623,47 @@ function Account() {
                                 </span>
                               ))}
                             </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        className={
+                          activeIndex === 6
+                            ? "tab-pane fade active show"
+                            : "tab-pane fade "
+                        }
+                      >
+                        <div className="card">
+                          <div className="card-header">
+                            <h3 className="mb-0">
+                              {intl.formatMessage({ id: "Sartaj Reward Points" })}{" "}
+                            </h3>
+                          </div>
+                          <div className="card-body">
+                            <p>Balance : ¥ {walletBalance} </p>
+                            {/* <p>
+                              {intl.formatMessage({
+                                id: "From your account dashboard. you can easily check",
+                              })}
+                              &amp; {intl.formatMessage({ id: "view your" })}{" "}
+                              <a href="#">
+                                {intl.formatMessage({ id: "recent orders" })}
+                              </a>
+                              ,
+                              <br />
+                              {intl.formatMessage({ id: "manage your" })}{" "}
+                              <a href="#">
+                                {intl.formatMessage({
+                                  id: "shipping and billing addresses",
+                                })}
+                              </a>{" "}
+                              {intl.formatMessage({ id: "and" })}{" "}
+                              <a href="#">
+                                {intl.formatMessage({
+                                  id: "edit your password and account details.",
+                                })}
+                              </a>
+                            </p> */}
                           </div>
                         </div>
                       </div>

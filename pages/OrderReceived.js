@@ -272,6 +272,12 @@ const OrderReceived = ({ cartItems }) => {
                       <td class="text-right"> ¥{shippingData?.couponPrice}</td>
                     </tr>
                   ) : null}
+                   <tr>
+                    <td colspan="4" class="text-right">
+                      {intl.formatMessage({ id: "Redeemed Points" })}
+                    </td>
+                    <td class="text-right">- ¥{shippingData?.redeem_points}</td>
+                  </tr>
                   <tr>
                     <td colspan="4" class="text-right">
                       {intl.formatMessage({ id: "Total" })}

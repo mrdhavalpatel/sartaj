@@ -465,7 +465,7 @@ export default (state = [], action) => {
                 })
                 .then((res) => {
                   if (res?.data?.status == 200) {
-        toast(lan == "jp" ?"製品がカートに追加されました!":"Product added to Cart !");
+        // toast(lan == "jp" ?"製品がカートに追加されました!":"Product added to Cart !");
 
                     // toast("Product added to Cart !");
                   } else {
@@ -476,7 +476,7 @@ export default (state = [], action) => {
 //                  console.log("error", error?.code === "ERR_NETWORK");
                 });
             } else {
-        toast(lan == "jp" ?"製品がカートに追加されました!":"Product added to Cart !");
+        // toast(lan == "jp" ?"製品がカートに追加されました!":"Product added to Cart !");
 
               // toast("Product added to Cart !");
             }
