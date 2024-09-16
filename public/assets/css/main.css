@@ -15280,3 +15280,7 @@ a.text-muted.clearcarttext {
   visibility: visible;
   transition: 0.4s;
 }
+
+.deal_section .swiper {
+  padding: 0 10px;
+}
