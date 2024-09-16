@@ -54,7 +54,7 @@ function FeatchDeals({ products , cartItems }) {
           },
         }}
       >
-        {deals?.slice(0, 4).map((product, i) => (
+        {deals.map((product, i) => (
           <SwiperSlide key={i}>
             <Deals1 product={product} cartItems={cartItems} />
           </SwiperSlide>
