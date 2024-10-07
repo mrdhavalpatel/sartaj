@@ -7,6 +7,7 @@ import FetchTabSlider from "../components/ecommerce/fetchTabSlider";
 import Bottom from "../components/elements/Bottom";
 import IntroPopup from "../components/elements/IntroPopup";
 import CategorySlider2 from "../components/sliders/Category2";
+import Brand from "../components/sliders/Brand";
 import { useEffect, useState } from "react";
 import { ApiCall } from "../lib/other/other";
 import { useRouter } from "next/router";
@@ -141,6 +142,21 @@ function Index2() {
                   />
                 </div>
               </div> */}
+            </div>
+          </div>
+        </section>
+
+        <section className="popular-categories section-padding">
+          <div className="container">
+            <div className="section-title">
+              <div className="title">
+                <h3>{intl.formatMessage({ id: "Shop by Brands" })}</h3>
+              </div>
+            </div>
+            <div className="carausel-8-columns-cover position-relative">
+              <div className="carausel-8-columns" id="carausel-8-columns">
+                <Brand />
+              </div>
             </div>
           </div>
         </section>
