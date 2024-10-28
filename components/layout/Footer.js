@@ -225,7 +225,11 @@ const Footer = () => {
                 >
                   <div className="logo  mb-30">
                     <Link href="/" className="mb-15">
-                      <img src="/assets/imgs/theme/logo.svg" alt="logo" className="footer_logo" />
+                      <img
+                        src="/assets/imgs/theme/logo.svg"
+                        alt="logo"
+                        className="footer_logo"
+                      />
                     </Link>
                     <p className="font-lg text-heading">
                       {footerData?.business_description}
@@ -323,11 +327,13 @@ const Footer = () => {
                   {intl.formatMessage({ id: "Account" })}
                 </h4>
                 <ul className="footer-list  mb-sm-5 mb-md-0">
-                  {isLoggin ? <li>
-                    <a href="/my-account">
-                      {intl.formatMessage({ id: "My Profile" })}
-                    </a>
-                  </li> : null}
+                  {isLoggin ? (
+                    <li>
+                      <a href="/my-account">
+                        {intl.formatMessage({ id: "My Profile" })}
+                      </a>
+                    </li>
+                  ) : null}
                   {isLoggin ? (
                     <li>
                       <a
@@ -340,7 +346,6 @@ const Footer = () => {
                       >
                         {intl.formatMessage({ id: "Sign Out" })}
                       </a>
-
                     </li>
                   ) : (
                     <li>
@@ -356,7 +361,6 @@ const Footer = () => {
                       </a>
                     </li>
                   )}
-
 
                   {/* <li>
                     <a href="/sign-in">{intl.formatMessage({ id: "Sign In" })}</a>
@@ -482,14 +486,26 @@ const Footer = () => {
           <div className="row">
             <div className="col footer_menu">
               <Link href="/" className="active">
-                <img src="/assets/imgs/menu/home.svg" alt="Home" className="bottom_menu_icon" />
-                <span className="footer_menu_text">{intl.formatMessage({ id: "Home" })}</span>
+                <img
+                  src="/assets/imgs/menu/home.svg"
+                  alt="Home"
+                  className="bottom_menu_icon"
+                />
+                <span className="footer_menu_text">
+                  {intl.formatMessage({ id: "Home" })}
+                </span>
               </Link>
             </div>
             <div className="col footer_menu">
               <Link href={`/${intl.locale}/shop`}>
-                <img src="/assets/imgs/menu/shop.svg" alt="Shop" className="bottom_menu_icon" />
-                <span className="footer_menu_text">{intl.formatMessage({ id: "Shop" })}</span>
+                <img
+                  src="/assets/imgs/menu/shop.svg"
+                  alt="Shop"
+                  className="bottom_menu_icon"
+                />
+                <span className="footer_menu_text">
+                  {intl.formatMessage({ id: "Shop" })}
+                </span>
               </Link>
             </div>
             <div className="col footer_menu">
@@ -497,26 +513,43 @@ const Footer = () => {
                 href={`/${intl.locale}/shop-cart`}
                 className="mini-cart-icon"
               >
-                <img src="/assets/imgs/menu/cart.svg" alt="Cart" className="bottom_menu_icon" />
-                <span className="footer_menu_text">{intl.formatMessage({ id: "Cart" })}</span>
+                <img
+                  src="/assets/imgs/menu/cart.svg"
+                  alt="Cart"
+                  className="bottom_menu_icon"
+                />
+                <span className="footer_menu_text">
+                  {intl.formatMessage({ id: "Cart" })}
+                </span>
               </Link>
             </div>
             <div className="col footer_menu">
               <Link href={`/${intl.locale}/shop-wishlist`}>
-              <img src="/assets/imgs/menu/wishlist.svg" alt="Wishlist" className="bottom_menu_icon" />
-                <span className="footer_menu_text">{intl.formatMessage({ id: "Wishlist" })}</span>
+                <img
+                  src="/assets/imgs/menu/wishlist.svg"
+                  alt="Wishlist"
+                  className="bottom_menu_icon"
+                />
+                <span className="footer_menu_text">
+                  {intl.formatMessage({ id: "Wishlist" })}
+                </span>
               </Link>
             </div>
             <div className="col footer_menu">
               <Link href="/my-account">
-              <img src="/assets/imgs/menu/account.svg" alt="Account" className="bottom_menu_icon" />
-                <span className="footer_menu_text">{intl.formatMessage({ id: "Account" })}</span>
+                <img
+                  src="/assets/imgs/menu/account.svg"
+                  alt="Account"
+                  className="bottom_menu_icon"
+                />
+                <span className="footer_menu_text">
+                  {intl.formatMessage({ id: "Account" })}
+                </span>
               </Link>
             </div>
           </div>
         </div>
       </div>
-
     </>
   );
 };

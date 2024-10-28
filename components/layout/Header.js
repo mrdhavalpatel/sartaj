@@ -8,10 +8,12 @@ import { useAuth } from "../context/AuthContext";
 import { ApiCall } from "../../lib/other/other";
 import axios from "axios";
 import { API_BASE_URL } from "../../lib/api";
+import { Helmet } from "react-helmet";
 import { useLanguage } from "../context/LanguageContext";
 import { useIntl } from "react-intl";
 import { useRouter } from "next/router";
 import { clearCart } from "../../redux/action/cart";
+import MyComponent from "../../components/layout/languagehandlercomp";
 const Header = ({
   totalCartItems,
   totalCompareItems,
@@ -165,28 +167,49 @@ const Header = ({
     };
   }, []);
 
+  /** new by dv */
+ 
+
   return (
-    <header
-      className={
-        scroll
-          ? "header-area header-style-1 header-height-2 stick"
-          : "header-area header-style-1 header-height-2"
-      }
-    >
-      <div className="mobile-promotion">
-        <label htmlFor="languageDropdown" className="sr-only">
-          {intl.formatMessage({ id: "Select Language" })}
-        </label>
-        <select
-          id="languageDropdown"
-          onChange={(e) => handleLanguageSwitch(e.target.value)}
-          value={DLang}
-        >
-          <option value="eng">English</option>
-          <option value="jp">日本語</option>
-        </select>
-      </div>
-      {/* <div className="header-top header-top-ptb-1 d-none d-lg-block">
+    <>
+      {/* <Helmet>
+        <meta name="google" content="notranslate" />
+        <script
+          type="text/javascript"
+          src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+        ></script>
+        <script>
+          {`
+            function googleTranslateElementInit() {
+              new google.translate.TranslateElement(
+                { pageLanguage: 'en', includedLanguages: 'en,ja,ne', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
+                'google_translate_element'
+              );
+            }
+          `}
+        </script>
+      </Helmet> */}
+      <header
+        className={
+          scroll
+            ? "header-area header-style-1 header-height-2 stick"
+            : "header-area header-style-1 header-height-2"
+        }
+      >
+        <div className="mobile-promotion">
+          <label htmlFor="languageDropdown" className="sr-only">
+            {intl.formatMessage({ id: "Select Language" })}
+          </label>
+          <select
+            id="languageDropdown"
+            onChange={(e) => handleLanguageSwitch(e.target.value)}
+            value={DLang}
+          >
+            <option value="eng">English</option>
+            <option value="jp">日本語</option>
+          </select>
+        </div>
+        {/* <div className="header-top header-top-ptb-1 d-none d-lg-block">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-xl-6 col-lg-6">
@@ -257,51 +280,266 @@ const Header = ({
           </div>
         </div>
       </div> */}
-      <div className="header-middle header-middle-ptb-1 d-none d-lg-block">
-        <div className="container">
-          <div className="header-wrap">
-            <div className="logo logo-width-1">
-              <Link href="/">
-                <img src="/assets/imgs/theme/logo.svg" alt="logo" />
-              </Link>
-            </div>
-            <div className="header-right">
-              <div className="search-style-2">
-                <Search />
+        <div className="header-middle header-middle-ptb-1 d-none d-lg-block">
+          <div className="container">
+            <div className="header-wrap">
+              <div className="logo logo-width-1">
+                <Link href="/">
+                  <img src="/assets/imgs/theme/logo.svg" alt="logo" />
+                </Link>
               </div>
-              <div className="header-action-right">
-                <div className="header-action-2">
-                  <div className="header-action-icon-2">
-                    <Link href={`/${intl?.locale}/shop-compare`}>
-                      <img
-                        className="svgInject"
-                        alt="Evara"
-                        src="/assets/imgs/theme/icons/icon-compare.svg"
-                      />
-                      <span className="pro-count blue">
-                        {totalCompareItems}
-                      </span>
-                    </Link>
-                    <Link href={`/${intl?.locale}/shop-compare`}>
-                      <span className="lable ml-0">
-                        {intl.formatMessage({ id: "Compare" })}
-                      </span>
-                    </Link>
+              <div className="header-right">
+                <div className="search-style-2">
+                  <Search />
+                </div>
+                <div className="header-action-right">
+                  <div className="header-action-2">
+                    <div className="header-action-icon-2">
+                      <Link href={`/${intl?.locale}/shop-compare`}>
+                        <img
+                          className="svgInject"
+                          alt="Evara"
+                          src="/assets/imgs/theme/icons/icon-compare.svg"
+                        />
+                        <span className="pro-count blue">
+                          {totalCompareItems}
+                        </span>
+                      </Link>
+                      <Link href={`/${intl?.locale}/shop-compare`}>
+                        <span className="lable ml-0">
+                          {intl.formatMessage({ id: "Compare" })}
+                        </span>
+                      </Link>
+                    </div>
+                    <div className="header-action-icon-2">
+                      <Link href={`/${intl.locale}/shop-wishlist`}>
+                        <img
+                          className="svgInject"
+                          alt="Evara"
+                          src="/assets/imgs/theme/icons/icon-heart.svg"
+                        />
+                        <span className="pro-count blue">
+                          {totalWishlistItems}
+                        </span>
+                      </Link>
+                      <Link href={`/${intl.locale}/shop-wishlist`}>
+                        <span className="lable">
+                          {intl.formatMessage({ id: "Wishlist" })}
+                        </span>
+                      </Link>
+                    </div>
+                    <div className="header-action-icon-2">
+                      <Link
+                        href={`/${intl.locale}/shop-cart`}
+                        className="mini-cart-icon"
+                      >
+                        <img
+                          alt="Evara"
+                          src="/assets/imgs/theme/icons/icon-cart.svg"
+                        />
+                        <span className="pro-count blue">{totalCartItems}</span>
+                      </Link>
+                      <Link href={`/${intl.locale}/shop-cart`}>
+                        <span className="lable">
+                          {intl.formatMessage({ id: "Cart" })}
+                        </span>
+                      </Link>
+                    </div>
+
+                    <div className="header-action-icon-2">
+                      <Link href="/">
+                        <img
+                          className="svgInject"
+                          alt="Nest"
+                          src="/assets/imgs/theme/icons/icon-user.svg"
+                        />
+                      </Link>
+                      <Link href="/">
+                        <span className="lable ml-0">
+                          {intl.formatMessage({ id: "Account" })}
+                        </span>
+                      </Link>
+                      <div className="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
+                        <ul>
+                          <li>
+                            <Link href="/my-account">
+                              <i className="fi fi-rs-user mr-10"></i>
+                              {intl.formatMessage({ id: "My Account" })}
+                            </Link>
+                          </li>
+
+                          <li>
+                            <Link href={`/${intl.locale}/shop-wishlist`}>
+                              <i className="fi fi-rs-heart mr-10"></i>
+                              {intl.formatMessage({ id: "My Wishlist" })}
+                            </Link>
+                          </li>
+
+                          {isLoggin ? (
+                            <li>
+                              <Link
+                                href="/sign-in"
+                                onClick={() => {
+                                  localStorage.removeItem("token");
+                                  logout();
+                                  dispatch(clearCart());
+                                }}
+                              >
+                                <i className="fi fi-rs-sign-out mr-10"></i>
+                                {intl.formatMessage({ id: "Sign out" })}
+                              </Link>
+                            </li>
+                          ) : (
+                            <li>
+                              <Link href="/sign-in">
+                                <i className="fi fi-rs-sign-out mr-10"></i>
+                                {intl.formatMessage({ id: "Sign In" })}
+                              </Link>
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                    <div>
+                    {/* <MyComponent /> */}
+                      {/* <div id="google_translate_element"></div> */}
+                      
+                      <select
+                      id="languageDropdown"
+                      onChange={(e) => handleLanguageSwitch(e.target.value)}
+                      value={DLang}
+                    >
+                      <option value="eng">English</option>
+                      <option value="jp">日本語</option>
+                    </select>
+
+                    </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className={
+            scroll
+              ? "header-bottom header-bottom-bg-color sticky-bar stick"
+              : "header-bottom header-bottom-bg-color sticky-bar"
+          }
+        >
+          <div className="container">
+            <div className="header-wrap header-space-between position-relative">
+              <div className="logo logo-width-1 d-block d-lg-none">
+                <Link href="/">
+                  <img src="/assets/imgs/theme/logo.svg" alt="logo" />
+                </Link>
+              </div>
+              <div className="header-nav d-none d-lg-flex">
+                <div className="main-categori-wrap d-none d-lg-block">
+                  <a
+                    className="categories-button-active"
+                    onClick={handleToggle}
+                  >
+                    <span className="fi-rs-apps"></span>
+                    <span className="et">
+                      {intl.formatMessage({ id: "Browse" })}
+                    </span>{" "}
+                    {intl.formatMessage({ id: "All Categories" })}
+                    <i className="fi-rs-angle-down"></i>
+                  </a>
+
+                  <div
+                    ref={dropdownRef}
+                    className={
+                      isToggled
+                        ? "categories-dropdown-wrap categories-dropdown-active-large font-heading open"
+                        : "categories-dropdown-wrap categories-dropdown-active-large font-heading"
+                    }
+                  >
+                    <div className="d-flex categori-dropdown-inner">
+                      <CategoryProduct2 data={secondPart} />
+                      <CategoryProduct3 data={firstPart} />
+                    </div>
+                  </div>
+                </div>
+                <div className="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block  font-heading">
+                  <nav>
+                    <ul>
+                      <li>
+                        <Link href="/" className="active">
+                          {intl.formatMessage({ id: "Home" })}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/about-sartaj">
+                          {intl.formatMessage({ id: "About" })}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href={`/${intl.locale}/shop`}>
+                          {intl.formatMessage({ id: "Shop" })}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/contacts">
+                          {intl.formatMessage({ id: "Contact" })}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/delivery_Information">
+                          {intl.formatMessage({ id: "Delivery Information" })}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/terms_conditions">
+                          {intl.formatMessage({ id: "Terms" })} &amp;{" "}
+                          {intl.formatMessage({ id: "Conditions" })}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/faqs">
+                          {intl.formatMessage({ id: "FAQs" })}
+                        </Link>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+              <div className="hotline d-none d-lg-flex">
+                <img
+                  src="/assets/imgs/theme/icons/icon-headphone.svg"
+                  alt="hotline"
+                />
+
+                <p>
+                  <a href="tel:0727511975">
+                    <strong className="text-brand">072-751-1975</strong>
+                  </a>
+                  <span>{intl.formatMessage({ id: "Support Center" })}</span>
+                </p>
+              </div>
+
+              <div className="header-action-icon-2 d-block d-lg-none">
+                <div
+                  className="burger-icon burger-icon-white"
+                  onClick={toggleClick}
+                >
+                  <span className="burger-icon-top"></span>
+                  <span className="burger-icon-mid"></span>
+                  <span className="burger-icon-bottom"></span>
+                </div>
+              </div>
+
+              <div className="header-action-right d-none d-lg-none">
+                <div className="header-action-2">
                   <div className="header-action-icon-2">
                     <Link href={`/${intl.locale}/shop-wishlist`}>
                       <img
-                        className="svgInject"
                         alt="Evara"
                         src="/assets/imgs/theme/icons/icon-heart.svg"
                       />
-                      <span className="pro-count blue">
+                      <span className="pro-count white">
                         {totalWishlistItems}
-                      </span>
-                    </Link>
-                    <Link href={`/${intl.locale}/shop-wishlist`}>
-                      <span className="lable">
-                        {intl.formatMessage({ id: "Wishlist" })}
                       </span>
                     </Link>
                   </div>
@@ -314,17 +552,12 @@ const Header = ({
                         alt="Evara"
                         src="/assets/imgs/theme/icons/icon-cart.svg"
                       />
-                      <span className="pro-count blue">{totalCartItems}</span>
-                    </Link>
-                    <Link href={`/${intl.locale}/shop-cart`}>
-                      <span className="lable">
-                        {intl.formatMessage({ id: "Cart" })}
-                      </span>
+                      <span className="pro-count white">{totalCartItems}</span>
                     </Link>
                   </div>
 
                   <div className="header-action-icon-2">
-                    <Link href="/">
+                    <Link href="javascript:">
                       <img
                         className="svgInject"
                         alt="Nest"
@@ -377,234 +610,32 @@ const Header = ({
                       </ul>
                     </div>
                   </div>
-                  <div>
-                    <select
-                      id="languageDropdown"
-                      onChange={(e) => handleLanguageSwitch(e.target.value)}
-                      value={DLang}
-                    >
-                      <option value="eng">English</option>
-                      <option value="jp">日本語</option>
-                    </select>
-                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className={
-          scroll
-            ? "header-bottom header-bottom-bg-color sticky-bar stick"
-            : "header-bottom header-bottom-bg-color sticky-bar"
-        }
-      >
-        <div className="container">
-          <div className="header-wrap header-space-between position-relative">
-            <div className="logo logo-width-1 d-block d-lg-none">
-              <Link href="/">
-                <img src="/assets/imgs/theme/logo.svg" alt="logo" />
-              </Link>
-            </div>
-            <div className="header-nav d-none d-lg-flex">
-              <div className="main-categori-wrap d-none d-lg-block">
-                <a className="categories-button-active" onClick={handleToggle}>
-                  <span className="fi-rs-apps"></span>
-                  <span className="et">
-                    {intl.formatMessage({ id: "Browse" })}
-                  </span>{" "}
-                  {intl.formatMessage({ id: "All Categories" })}
-                  <i className="fi-rs-angle-down"></i>
-                </a>
 
-                <div
-                  ref={dropdownRef}
-                  className={
-                    isToggled
-                      ? "categories-dropdown-wrap categories-dropdown-active-large font-heading open"
-                      : "categories-dropdown-wrap categories-dropdown-active-large font-heading"
-                  }
+              <div className="header-action-right d-block d-lg-none header_action_right_lang">
+                <label htmlFor="languageDropdown" className="sr-only">
+                  {intl.formatMessage({ id: "Select Language" })}
+                </label>
+                <select
+                  id="languageDropdown"
+                  onChange={(e) => handleLanguageSwitch(e.target.value)}
+                  value={DLang}
                 >
-                  <div className="d-flex categori-dropdown-inner">
-                    <CategoryProduct2 data={secondPart} />
-                    <CategoryProduct3 data={firstPart} />
-                  </div>
-                </div>
-              </div>
-              <div className="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block  font-heading">
-                <nav>
-                  <ul>
-                    <li>
-                      <Link href="/" className="active">
-                        {intl.formatMessage({ id: "Home" })}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/about-sartaj">
-                        {intl.formatMessage({ id: "About" })}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href={`/${intl.locale}/shop`}>
-                        {intl.formatMessage({ id: "Shop" })}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/contacts">
-                        {intl.formatMessage({ id: "Contact" })}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/delivery_Information">
-                        {intl.formatMessage({ id: "Delivery Information" })}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/terms_conditions">
-                        {intl.formatMessage({ id: "Terms" })} &amp;{" "}
-                        {intl.formatMessage({ id: "Conditions" })}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/faqs">
-                        {intl.formatMessage({ id: "FAQs" })}
-                      </Link>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-            <div className="hotline d-none d-lg-flex">
-              <img
-                src="/assets/imgs/theme/icons/icon-headphone.svg"
-                alt="hotline"
-              />
-
-              <p>
-                <a href="tel:0727511975">
-                  <strong className="text-brand">072-751-1975</strong>
-                </a>
-                <span>{intl.formatMessage({ id: "Support Center" })}</span>
-              </p>
-            </div>
-
-            <div className="header-action-icon-2 d-block d-lg-none">
-              <div
-                className="burger-icon burger-icon-white"
-                onClick={toggleClick}
-              >
-                <span className="burger-icon-top"></span>
-                <span className="burger-icon-mid"></span>
-                <span className="burger-icon-bottom"></span>
+                  <option value="eng">English</option>
+                  <option value="jp">日本語</option>
+                </select>
               </div>
             </div>
 
-            <div className="header-action-right d-none d-lg-none">
-              <div className="header-action-2">
-                <div className="header-action-icon-2">
-                  <Link href={`/${intl.locale}/shop-wishlist`}>
-                    <img
-                      alt="Evara"
-                      src="/assets/imgs/theme/icons/icon-heart.svg"
-                    />
-                    <span className="pro-count white">
-                      {totalWishlistItems}
-                    </span>
-                  </Link>
-                </div>
-                <div className="header-action-icon-2">
-                  <Link
-                    href={`/${intl.locale}/shop-cart`}
-                    className="mini-cart-icon"
-                  >
-                    <img
-                      alt="Evara"
-                      src="/assets/imgs/theme/icons/icon-cart.svg"
-                    />
-                    <span className="pro-count white">{totalCartItems}</span>
-                  </Link>
-                </div>
-
-                <div className="header-action-icon-2">
-                  <Link href="javascript:">
-                    <img
-                      className="svgInject"
-                      alt="Nest"
-                      src="/assets/imgs/theme/icons/icon-user.svg"
-                    />
-                  </Link>
-                  <Link href="/">
-                    <span className="lable ml-0">
-                      {intl.formatMessage({ id: "Account" })}
-                    </span>
-                  </Link>
-                  <div className="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
-                    <ul>
-                      <li>
-                        <Link href="/my-account">
-                          <i className="fi fi-rs-user mr-10"></i>
-                          {intl.formatMessage({ id: "My Account" })}
-                        </Link>
-                      </li>
-
-                      <li>
-                        <Link href={`/${intl.locale}/shop-wishlist`}>
-                          <i className="fi fi-rs-heart mr-10"></i>
-                          {intl.formatMessage({ id: "My Wishlist" })}
-                        </Link>
-                      </li>
-
-                      {isLoggin ? (
-                        <li>
-                          <Link
-                            href="/sign-in"
-                            onClick={() => {
-                              localStorage.removeItem("token");
-                              logout();
-                              dispatch(clearCart());
-                            }}
-                          >
-                            <i className="fi fi-rs-sign-out mr-10"></i>
-                            {intl.formatMessage({ id: "Sign out" })}
-                          </Link>
-                        </li>
-                      ) : (
-                        <li>
-                          <Link href="/sign-in">
-                            <i className="fi fi-rs-sign-out mr-10"></i>
-                            {intl.formatMessage({ id: "Sign In" })}
-                          </Link>
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-                </div>
-              </div>
+            {/* search component test add */}
+            <div className="mobile-search search-style-3 mobile-header-border mt-10 searchhide">
+              <Search />
             </div>
-
-            <div className="header-action-right d-block d-lg-none header_action_right_lang">
-              <label htmlFor="languageDropdown" className="sr-only">
-                {intl.formatMessage({ id: "Select Language" })}
-              </label>
-              <select
-                id="languageDropdown"
-                onChange={(e) => handleLanguageSwitch(e.target.value)}
-                value={DLang}
-              >
-                <option value="eng">English</option>
-                <option value="jp">日本語</option>
-              </select>
-            </div>
-          </div>
-
-          {/* search component test add */}
-          <div className="mobile-search search-style-3 mobile-header-border mt-10 searchhide">
-            <Search />
           </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   );
 };
 

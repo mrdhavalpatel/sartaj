@@ -15290,3 +15290,7 @@ img.brand_logo_img {
   height: 120px;
   object-fit: contain;
 }
+
+button.add.notify-me-class {
+  background: #F08E1E !important;
+}

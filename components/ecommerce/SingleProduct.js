@@ -2,6 +2,8 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { toast } from "sonner";
+import { API_BASE_URL, api } from "../../lib/api";
+import axios from "axios";
 import {
   addToCart,
   increaseQuantity,
@@ -17,6 +19,7 @@ import storage from "../../util/localStorage";
 import { translatedItemDetails } from "../../util/util";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
+import { ApiCall } from "../../lib/other/other";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -31,22 +34,23 @@ const SingleProduct = ({
   decreaseQuantity,
   openQuickView,
   cartItems,
+  token,
 }) => {
   const intl = useIntl();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartDataUpdated, setCartDataUpdated] = useState(false);
+  const [userDetails, setUserDetails] = useState(null);
 
   useEffect(() => {
     let Token = storage.get("token");
-    const fetchData = () => {
+    const fetchData = async () => {
       if (Token) {
-        // getCartData(Token);
-        setIsLoggedIn(Token);
+        setIsLoggedIn(true);
+        await getUserDetails(Token);
       } else {
+        setIsLoggedIn(false);
         if (intl.locale !== "eng") {
-          // updateProductDetails();
         }
-        // setCartProducts(cartItems);
       }
     };
     const timeoutId = setTimeout(fetchData, 700);
@@ -60,6 +64,53 @@ const SingleProduct = ({
     };
     addToCart(product, intl);
     // toast("Product added to Cart !");
+  };
+  const [userid, setuserid] = useState();
+  const getUserDetails = async (token) => {
+    const response = await axios
+      .get(`${API_BASE_URL}customer/info`, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setuserid(response.data.id);
+        // console.log("dvdvdv", response.data.id);
+      })
+      .catch((error) => {
+        console.log("error fato", error);
+        toast.error("An error occurred while processing your request.");
+      });
+  };
+
+  const handleNotifyMe = async (product, userid) => {
+    try {
+      let Token = await storage.get("token");
+      // console.log("gathiya ni", product, Token);
+      const data = {
+        product_id: product,
+        user_id: userid,
+      };
+      const response = await axios.post(
+        `${API_BASE_URL}customer/notifyme`,
+        data,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Token}`,
+          },
+        }
+      );
+
+      // setuserid(response.data.id);
+      // console.log("dvdvdv ni not", response.data.id);
+    } catch (error) {
+      console.log("error fato ni not", error);
+      toast.error("An error occurred while processing your request.");
+    }
   };
 
   const handleCompare = (product) => {
@@ -342,17 +393,30 @@ const SingleProduct = ({
                 </div>
               ) : (
                 <button
-                  className="add"
+                  className={`add ${
+                    product?.out_of_stock_status !== "in stock"
+                      ? isLoggedIn
+                        ? "notify-me-class"
+                        : "out-of-stock-class"
+                      : "add-to-cart-class"
+                  }`}
                   style={{
                     border: "none",
-                    backgroundColor: `${
-                      product?.out_of_stock_status !== "in stock" ? "grey" : ""
-                    }`,
                   }}
-                  disabled={product?.out_of_stock_status !== "in stock"}
+                  disabled={
+                    product?.out_of_stock_status !== "in stock" && !isLoggedIn
+                  }
                   onClick={(e) => {
                     if (product?.out_of_stock_status === "in stock") {
                       handleCart(product);
+                    } else if (isLoggedIn) {
+                      // Trigger the notify-me feature for logged-in users
+                      toast.success(
+                        intl.formatMessage({
+                          id: "You will be notified when the product is back in stock",
+                        })
+                      );
+                      handleNotifyMe(product.id, userid);
                     } else {
                       toast.error(
                         intl.formatMessage({ id: "product is out of stock" })
@@ -360,9 +424,13 @@ const SingleProduct = ({
                     }
                   }}
                 >
-                  <i className="fi-rs-shopping-cart mr-5"></i>{" "}
+                  {product?.out_of_stock_status === "in stock" && (
+                    <i className="fi-rs-shopping-cart mr-5"></i>
+                  )}
                   {product?.out_of_stock_status !== "in stock"
-                    ? intl.formatMessage({ id: "Out of stock" })
+                    ? isLoggedIn
+                      ? intl.formatMessage({ id: "Notify me" })
+                      : intl.formatMessage({ id: "Out of stock" })
                     : intl.formatMessage({ id: "Add" })}
                 </button>
               )}
