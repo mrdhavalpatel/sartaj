@@ -47,7 +47,7 @@ const Cart = ({
   const [coupanRes, setCoupanRes] = useState("");
   const [balance, setbalance] = useState(0);
   const [elebal, setelebal] = useState(0);
-  const [redeem, setredeem] = useState(false);
+  const [redeem, setredeem] = useState(true);
   const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [cartItemsData, setCartItemsData] = useState([]);
@@ -1544,12 +1544,13 @@ const Cart = ({
                       >
                         <input
                           type="checkbox"
-                          disabled={
-                            (selectedOption !== "paypal" &&
-                              cartTotal?.befor_total <=
-                                cartTotal.minOrderAmount) ||
-                            balance == 0
-                          }
+                          disabled
+                          // disabled={
+                          //   (selectedOption !== "paypal" &&
+                          //     cartTotal?.befor_total <=
+                          //       cartTotal.minOrderAmount) ||
+                          //   balance == 0
+                          // }
                           style={{
                             height: 20,
                             width: 20,
