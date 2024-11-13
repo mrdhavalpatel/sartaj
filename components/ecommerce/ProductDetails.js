@@ -276,7 +276,11 @@ const ProductDetails = ({
                           }
                           onClick={(e) => {
                             if (product?.out_of_stock_status === "in stock") {
-                              handleCart(product);
+                              let p = {
+                                ...product,
+                                quantity: quantity || 1,
+                              };
+                              addToCart(p, intl);
                             } else if (isLoggedIn) {
                               // Trigger the notify-me feature for logged-in users
                               toast.success(
@@ -303,7 +307,7 @@ const ProductDetails = ({
                               : intl.formatMessage({ id: "Out of stock" })
                             : intl.formatMessage({ id: "Add" })}
                         </button>
-                        
+
                         {/* <button
                           disabled={product?.out_of_stock_status !== "in stock"}
                           onClick={(e) => {
@@ -341,7 +345,7 @@ const ProductDetails = ({
                         >
                           <i className="fi-rs-shuffle"></i>
                         </a>
-                      </div>
+                      </div>  
                     </div>
                     <ul className="product-meta font-xs color-grey mt-50">
                       <li className="mb-5">

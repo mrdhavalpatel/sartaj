@@ -25,6 +25,8 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { set } from "date-fns";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { faL } from "@fortawesome/free-solid-svg-icons";
+import Storage from "../util/localStorage";
+import { CLOSE_LOGIN_MODAL } from "../redux/constants/actionTypes";
 const Cart = ({
   openCart,
   cartItems,
@@ -35,6 +37,7 @@ const Cart = ({
   deleteFromCart,
   clearCart,
 }) => {
+  const regionIDParams = Storage.get('regionID');
   const [userDetails, setUserDetails] = useState([]);
   const [address, setAddress] = useState([]);
   const [coupenCode, setCoupenCode] = useState("");
@@ -42,10 +45,11 @@ const Cart = ({
   const [cartTotal, setCartTotal] = useState([]);
   const [coupanDetails, setCoupanDetails] = useState("");
   const [coupanRes, setCoupanRes] = useState("");
-  const [balance, setbalance] = useState(0)
-  const [elebal, setelebal] = useState(0)
-  const [redeem, setredeem] = useState(false)
+  const [balance, setbalance] = useState(0);
+  const [elebal, setelebal] = useState(0);
+  const [redeem, setredeem] = useState(false);
   const router = useRouter();
+  const [selectedIndex, setSelectedIndex] = useState(null);
   const [cartItemsData, setCartItemsData] = useState([]);
   const [timeSlot, setTimeSlot] = useState([]);
   const [selectedRadioId, setSelectedRadioId] = useState(timeSlot?.[0]?.id);
@@ -59,12 +63,13 @@ const Cart = ({
   const [selectedregion, setSelectedRegion] = useState(-1);
   const [citydata, setCityData] = useState([]);
   const [selectedCity, setSelectedCity] = useState(-1);
+  const [coupanlist, setcoupanlist] = useState([]);
   const [addressformOpen, setAddressFormOpen] = useState(false);
   const [showModaladdress, setShowModaladdress] = useState(false);
-  const [regionId1, setRegionId] = useState()
+  const [regionId1, setRegionId] = useState(regionIDParams);
 
   const intl = useIntl();
-  const regID = useRef()
+  const regID = useRef();
   const [showModalAddress1, setShowModalAddress1] = useState(false);
 
   // Toggle function to open and close the modal
@@ -72,31 +77,36 @@ const Cart = ({
     setShowModalAddress1((prevState) => !prevState);
   };
 
-  // const fetchWalletBalance = async (encodedToken) => {
-  //   try {
-  //     const response = await api.get(`customer/wallet-balance`, {
-  //       headers: {
-  //         "Access-Control-Allow-Origin": "*",
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${encodedToken}`,
-  //       },
-  //     });
-  //     console.log("response wallet==>", response.data)
-  //     // Update state or perform necessary actions based on response
-  //   } catch (error) {
-  //     console.error("API Error in wallet", error);
-  //   }
-  // }
-  // useEffect(() => {
-  //   let encodedToken = localStorage.getItem("token");
-  //   fetchWalletBalance(encodedToken)
-  // }, [])
+  const fetchCoupan = async (encodedToken) => {
+    try {
+      const response = await api.get(`coupon/list`, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${encodedToken}`,
+        },
+      });
+      console.log("response fetch coupan ==>", response.data);
+      setcoupanlist(response.data);
+    } catch (error) {
+      console.error("API Error in fetch coupan ", error);
+    }
+  };
+  useEffect(() => {
+    let encodedToken = localStorage.getItem("token");
+    fetchCoupan(encodedToken);
+  }, []);
   const handleAddressSelect = (addressItem) => {
     setSelectedAddressdisplay(addressItem); // Update the selected address display
     setSelectedAddressDropdown(addressItem.id); // Update the dropdown selection
     setShowModalAddress1(false); // Close the modal after selection
   };
 
+  const handleItemClick = async (item, index) => {
+    await setCoupenCode(item.code); // Assuming this is an async function
+    handleCoupencode(item.code);
+    setSelectedIndex(index); // Update the selected index
+  };
   // console.log("intlllllllllllllllll====", intl.locale);
   const handleRadioChange = (id) => {
     setSelectedRadioId(id);
@@ -127,7 +137,7 @@ const Cart = ({
   const calculateAmountToAdd = () => {
     return Math.round(
       cartTotal.minOrderAmount -
-      (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
+        (coupanRes ? coupanRes?.orderAmount : cartTotal?.total_amt || 0)
     );
   };
   //  ////  console.log(cartTotal);
@@ -200,21 +210,33 @@ const Cart = ({
 
     getCitydata(encodedToken);
   }, [selectedregion]);
-  const handleCoupencode = async () => {
+
+  //   useEffect(()=>{
+  // if(coupenCode.length >0){
+  //   handleCoupencode()
+  // }else{
+  //   removeCoupencode()
+  // }
+  //   },[redeem])
+  const handleCoupencode = async (item) => {
     let token = localStorage.getItem("token");
     try {
       let payload = {
-        code: coupenCode,
+        code: item ? item : coupenCode,
       };
 
       const response = await axios
-        .post(`${API_BASE_URL}coupon/apply`, payload, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        .post(
+          `${API_BASE_URL}coupon/apply?region_id=${regionId1}&&use_wallet=${redeem}&&is_remove=0`,
+          payload,
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
         .then((response) => {
           if (response?.status == 200) {
             setCoupanRes(response?.data);
@@ -223,15 +245,16 @@ const Cart = ({
               setCoupanDetails(
                 `${response?.data?.title} ${intl.formatMessage({
                   id: "coupon applied successfully",
-                })},${intl.formatMessage({ id: "maximum discount" })} ${response?.data?.max_discount
+                })},${intl.formatMessage({ id: "maximum discount" })} ${
+                  response?.data?.max_discount
                 }¥`
               );
             } else if (response.data.discount_type == "amount") {
               setCoupanDetails(
                 `${response?.data?.discount}¥ ` +
-                intl.formatMessage({
-                  id: "discount applied successfully",
-                })
+                  intl.formatMessage({
+                    id: "discount applied successfully",
+                  })
               );
             }
 
@@ -245,7 +268,61 @@ const Cart = ({
       // Log and handle the error
       // console.error("Error applying coupon:", error);
       setCoupanDetails("");
-      toast.error("Please enter valid coupan");
+      toast.error(
+        `Please enter valid coupon ${error.response.data.errors[0].message}`
+      );
+
+      // toast.error("Please enter valid coupan");
+    }
+  };
+
+  const removeCoupencode = async (item) => {
+    let token = localStorage.getItem("token");
+    try {
+      let payload = {
+        code: item ? item : coupenCode,
+      };
+
+      const response = await axios
+        .post(
+          `${API_BASE_URL}coupon/apply?region_id=${regionId1}&&use_wallet=${redeem}&&is_remove=1`,
+          payload,
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log("response remove coupon", response.data);
+          if (response?.status == 200) {
+            setCoupenCode("");
+            setSelectedIndex("");
+            setCoupanRes(response?.data);
+            setCoupenCodeDis(response?.data?.discount_price);
+            if (response.data.discount_type == "percent") {
+              setCoupanDetails("");
+            } else if (response.data.discount_type == "amount") {
+              setCoupanDetails("");
+            }
+
+            toast.error(
+              intl.formatMessage({ id: "coupon remove successfully" })
+            );
+            // getCartData(token);
+          }
+        });
+    } catch (error) {
+      // Log and handle the error
+      // console.error("Error applying coupon:", error);
+      setCoupanDetails("");
+      toast.error(
+        `Please enter valid coupon ${error.response.data.errors[0].message}`
+      );
+
+      // toast.error("Please enter valid coupan");
     }
   };
   //  ////  console.log("cart prodyct detail", cartItemsData);
@@ -276,8 +353,8 @@ const Cart = ({
                 (item?.quantity ? item?.quantity : 1) * item?.actual_price
                   ? item?.actual_price
                   : item?.product.actual_price
-                    ? item?.product.actual_price
-                    : 0,
+                  ? item?.product.actual_price
+                  : 0,
             },
             quantity: item.quantity,
           })),
@@ -307,50 +384,55 @@ const Cart = ({
       "address response in region id===============>",
       response?.data.billing_address[0]?.region_id
     );
-    setRegionId(response?.data.billing_address[0]?.region_id)
+  setRegionId(response?.data.billing_address[0]?.region_id);
     getCartData(response?.data.billing_address[0]?.region_id);
     setSelectedAddressdisplay(response?.data.billing_address[0]);
     setAddress(response?.data);
     // const region_id =()
   };
   const [loading, setloading] = useState(true);
-  const getCartData = (data) => {
-    setloading(true);
-    console.log("is region id pass in get cart", regionId1, data);
-    let encodedToken = localStorage.getItem("token");
-
-    let url = `${API_BASE_URL}customer/cart`;
-
-    if (data) {
-      url += `/${data}`;
-      if (redeem === true) {
-        url += `/true`; // Append "/true" if reedem is true
-      }
-      // for use wallet amount apply 
+  useEffect(() => {
+    if (regionId1) {
+      getCartData(regionId1);
     }
-    console.log("url in get cart", url);
-    const response = axios
-      .get(url, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${encodedToken}`,
-        },
-      })
-      .then((res) => {
-        setCartItemsData(res?.data?.cartProducts);
-        setCartTotal(res?.data);
-        setbalance(res?.data?.redeem_points)
-        setelebal(res?.data?.eligible_redeem_points)
-        // console.log("cart data", res.data);
-        setloading(false);
-      })
-      .catch((error) => {
-        setloading(false);
+  }, [regionId1]);
+  // const getCartData = (data) => {
+  //   setloading(true);
+  //   console.log("is region id pass in get cart", regionId1, data);
+  //   let encodedToken = localStorage.getItem("token");
 
-        //        ////        console.log("error", error?.code === "ERR_NETWORK");
-      });
-  };
+  //   let url = `${API_BASE_URL}customer/cart`;
+
+  //   if (data) {
+  //     url += `/${data}`;
+  //     if (redeem === true) {
+  //       url += `/true`; // Append "/true" if reedem is true
+  //     }
+  //     // for use wallet amount apply
+  //   }
+  //   console.log("url in get cart", url);
+  //   const response = axios
+  //     .get(url, {
+  //       headers: {
+  //         "Access-Control-Allow-Origin": "*",
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${encodedToken}`,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       setCartItemsData(res?.data?.cartProducts);
+  //       setCartTotal(res?.data);
+  //       setbalance(res?.data?.redeem_points)
+  //       setelebal(res?.data?.eligible_redeem_points)
+  //       // console.log("cart data", res.data);
+  //       setloading(false);
+  //     })
+  //     .catch((error) => {
+  //       setloading(false);
+
+  //       //        ////        console.log("error", error?.code === "ERR_NETWORK");
+  //     });
+  // };
   // const getCartDataforRedeem = () => {
   //   setloading(true);
 
@@ -364,7 +446,7 @@ const Cart = ({
   //     if (redeem === true) {
   //       url += `/true`; // Append "/true" if reedem is true
   //     }
-  //     // for use wallet amount apply 
+  //     // for use wallet amount apply
   //   }
   //   console.log("url in get cart", url);
   //   const response = axios
@@ -389,9 +471,49 @@ const Cart = ({
   //       //        ////        console.log("error", error?.code === "ERR_NETWORK");
   //     });
   // };
+  const getCartData = (data) => {
+    // Check if data is not available, exit function
+    console.log("data in get data", data);
+    if (!data) return;
+
+    setloading(true);
+    console.log("is region id pass in get cart", regionId1);
+
+    let encodedToken = localStorage.getItem("token");
+    let url = `${API_BASE_URL}customer/cart?region_id=${regionId1}&&use_wallet=${redeem}&&is_remove=0`;
+
+    // if (redeem === true) {
+    //   url += `/true`; // Append "/true" if redeem is true
+    // }
+
+    console.log("url in get cart", url);
+    axios
+      .get(url, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${encodedToken}`,
+        },
+      })
+      .then((res) => {
+        setCartItemsData(res?.data?.cartProducts);
+        setCartTotal(res?.data);
+        setbalance(res?.data?.redeem_points);
+        setelebal(res?.data?.eligible_redeem_points);
+        setloading(false);
+      })
+      .catch((error) => {
+        setloading(false);
+        console.log("Error in fetching cart data:", error);
+      });
+  };
+
   useEffect(() => {
-    getCartData(regionId1)
-  }, [redeem])
+    if(regionId1 !== undefined){
+      getCartData(regionId1);
+
+    }
+  }, [redeem]);
   const getTimeSlot = async () => {
     //timeSlot
     const res = await ApiCall("get", intl, "timeSlot");
@@ -411,7 +533,7 @@ const Cart = ({
           : selectedAddressData?.full_name,
       road:
         values?.billing_address2 != undefined ||
-          values?.billing_address2 != null
+        values?.billing_address2 != null
           ? values?.billing_address2
           : selectedAddressData?.billing_address2,
       house:
@@ -462,15 +584,35 @@ const Cart = ({
       });
   };
 
+  // useEffect(async() => {
+  //   let encodedToken = localStorage.getItem("token");
+  //   if (encodedToken) {
+  //     // getCartData();
+  //     getAddress(encodedToken);
+  //     getUserDetails(encodedToken);
+  //     getTimeSlot();
+  //     getRegionsdata(encodedToken);
+  //   }
+  // }, []);
   useEffect(() => {
-    let encodedToken = localStorage.getItem("token");
-    if (encodedToken) {
-      // getCartData();
-      getUserDetails(encodedToken);
-      getAddress(encodedToken);
-      getTimeSlot();
-      getRegionsdata(encodedToken);
-    }
+    const fetchData = async () => {
+      let encodedToken = localStorage.getItem("token");
+      if (encodedToken) {
+        try {
+          // Wait for getAddress to complete first
+          await getAddress(encodedToken);
+  
+          // Call other APIs after getAddress is complete
+          await getUserDetails(encodedToken);
+          await getTimeSlot();
+          await getRegionsdata(encodedToken);
+        } catch (error) {
+          console.error("Error fetching data", error);
+        }
+      }
+    };
+  
+    fetchData();
   }, []);
   const findElementById = async (id) => {
     const selectedData = await address?.billing_address?.map((element) => {
@@ -554,18 +696,18 @@ const Cart = ({
         onSubmit={(values, { setSubmitting }) => {
           handleAddressSubmit(values);
         }}
-      // onSubmit={(values, { setSubmitting, errors }) => {
-      //   handleAddressSubmit(values)
-      //     .then(() => {
-      //        //       console.log("Submission successful");
-      //       setSubmitting(false);
-      //     })
-      //     .catch((error) => {
-      //       console.error("Submission error:", error, errors);
-      //       // Handle the error here, set an error state, or display a message to the user
-      //       setSubmitting(false);
-      //     });
-      // }}
+        // onSubmit={(values, { setSubmitting, errors }) => {
+        //   handleAddressSubmit(values)
+        //     .then(() => {
+        //        //       console.log("Submission successful");
+        //       setSubmitting(false);
+        //     })
+        //     .catch((error) => {
+        //       console.error("Submission error:", error, errors);
+        //       // Handle the error here, set an error state, or display a message to the user
+        //       setSubmitting(false);
+        //     });
+        // }}
       >
         {({ setFieldValue, values, Radio, errors, touched, dirty }) => (
           <Form method="post">
@@ -657,18 +799,16 @@ const Cart = ({
                   className="Dropdownstate"
                   name="state"
                   onSelect={(selectedOption) => {
-                    // console.log("Selected option" , selectedOption)
                     setFieldValue("state", selectedOption);
                     setFieldValue("city", "");
-                    // setRegionId(selectedOption)
-                    setSelectedRegion(selectedOption); // This should be defined somewhere in your component
-                    getCartData(selectedOption); // This should be defined somewhere in your component
+                    setSelectedRegion(selectedOption);
+                    getCartData(selectedOption);
                   }}
                 >
                   <Dropdown.Toggle variant="success" id="dropdown-basic">
                     {values.state
                       ? religionData.find((option) => option.id == values.state)
-                        ?.name
+                          ?.name
                       : "Select State"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
@@ -719,7 +859,7 @@ const Cart = ({
                     <Dropdown.Toggle variant="success" id="city-dropdown">
                       {values.city
                         ? citydata.find((option) => option.id == values.city)
-                          ?.name
+                            ?.name
                         : "City Dropdown"}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
@@ -850,11 +990,11 @@ const Cart = ({
   }, []);
   const [selectedOption, setSelectedOption] = useState("cash_on_delivery");
   const handleChangeRadio = (event) => {
-    console.log("event", event.target.value)
+    console.log("event", event.target.value);
     setSelectedOption(event.target.value);
   };
   const placeOrder = async () => {
-    console.log("place order called")
+    console.log("place order called");
     setloading(true);
     try {
       let token = localStorage.getItem("token");
@@ -895,35 +1035,36 @@ const Cart = ({
             selectedOption == "paypal"
               ? router.push(response.data.payment_link)
               : router.push(
-                `/OrderReceived?order_id=${response?.data?.order_id}`
-              );
+                  `/OrderReceived?order_id=${response?.data?.order_id}`
+                );
           }
         })
         .then(() => {
           clearCart();
           setloading(false);
-        });}
-        catch (error) {
-          setloading(false);
-      
-          if (error.response && error.response.data && error.response.data.errors) {
-            const errorMessage = error.response.data.errors[0]?.message;
-      
-            // Check if the error message starts with "Stock for"
-            if (errorMessage.startsWith("Stock for")) {
-              toast.error(errorMessage); // Display the full dynamic stock error message
-            } else {
-              toast.error(errorMessage); // Display other errors as they are
-            }
-          } else {
-            console.log("Error while placing order:", error?.response?.data?.message);
-            toast.error(`An error occurred while placing the order`);
-            toast.error(`${error?.response?.data?.message}`);
+        });
+    } catch (error) {
+      setloading(false);
 
+      if (error.response && error.response.data && error.response.data.errors) {
+        const errorMessage = error.response.data.errors[0]?.message;
 
-          }
+        // Check if the error message starts with "Stock for"
+        if (errorMessage.startsWith("Stock for")) {
+          toast.error(errorMessage); // Display the full dynamic stock error message
+        } else {
+          toast.error(errorMessage); // Display other errors as they are
         }
-      };
+      } else {
+        console.log(
+          "Error while placing order:",
+          error?.response?.data?.message
+        );
+        toast.error(`An error occurred while placing the order`);
+        toast.error(`${error?.response?.data?.message}`);
+      }
+    }
+  };
   //   } catch (error) {
   //     if (error.response && error.response.data && error.response.data.errors) {
   //       const errorMessage = error.response.data.errors[0]?.message;
@@ -1030,19 +1171,21 @@ const Cart = ({
                                         <div
                                           className="product-rating"
                                           style={{
-                                            width: `${item?.product?.overall_rating
-                                              ? item?.product?.overall_rating
-                                              : 0
-                                              }%`,
+                                            width: `${
+                                              item?.product?.overall_rating
+                                                ? item?.product?.overall_rating
+                                                : 0
+                                            }%`,
                                           }}
                                         ></div>
                                       </div>
                                       <span className="font-small ml-5 text-muted">
                                         {`(
-                                    ${item?.product?.total_reviews
-                                            ? item?.product?.total_reviews
-                                            : 0
-                                          }
+                                    ${
+                                      item?.product?.total_reviews
+                                        ? item?.product?.total_reviews
+                                        : 0
+                                    }
                                     )`}
                                       </span>
                                     </div>
@@ -1059,11 +1202,11 @@ const Cart = ({
                                     {/* {(item.quantity ? item.quantity : 1) *
                                     item.price} */}
                                     {(item?.quantity ? item?.quantity : 1) *
-                                      item?.actual_price
+                                    item?.actual_price
                                       ? item?.actual_price
                                       : item?.product.actual_price
-                                        ? item?.product.actual_price
-                                        : 0}
+                                      ? item?.product.actual_price
+                                      : 0}
                                   </h4>
                                 </td>
                               </tr>
@@ -1145,10 +1288,13 @@ const Cart = ({
                                     // console.log("Selected address ID from map:", e); // Log the address ID
                                     // setAddressFormOpen(false)
                                     //  await   setRegionId(regionId)
-                                    setRegionId(addressItem.region_id)
-                                    setredeem(false) //reset reddem
+                                    setRegionId(addressItem.region_id);
+                                    setredeem(false); //reset reddem
                                     setSelectedAddressdisplay(addressItem);
-                                    console.log("addres display data", addressItem.region_id)
+                                    console.log(
+                                      "addres display data",
+                                      addressItem.region_id
+                                    );
                                     setSelectedAddressDropdown(addressItem.id); // Set the selected address ID
 
                                     // Find the selected option
@@ -1165,7 +1311,7 @@ const Cart = ({
                                         "Selected address region id:",
                                         regionId
                                       );
-                                      setRegionId(regionId)
+                                      setRegionId(regionId);
 
                                       getCartData(regionId);
                                     }
@@ -1178,30 +1324,36 @@ const Cart = ({
                                   htmlFor={`address${addressItem.id}`}
                                   className="form-check-label"
                                 >
-                                  {`${addressItem.full_name !== null
-                                    ? addressItem.full_name + ",\n"
-                                    : ""
-                                    } 
-                              ${addressItem.address !== null
-                                      ? addressItem.address + ",\n"
+                                  {`${
+                                    addressItem.full_name !== null
+                                      ? addressItem.full_name + ",\n"
                                       : ""
-                                    } 
-                              ${addressItem.road !== null
-                                      ? addressItem.road + ",\n"
-                                      : ""
-                                    } 
-                              ${addressItem.city_name !== null
-                                      ? addressItem.city_name + ",\n"
-                                      : ""
-                                    } 
-                              ${addressItem.state_name !== null
-                                      ? addressItem.state_name + ",\n"
-                                      : ""
-                                    } 
-                              ${addressItem.post_code !== null
-                                      ? addressItem.post_code
-                                      : ""
-                                    }`}
+                                  } 
+                              ${
+                                addressItem.address !== null
+                                  ? addressItem.address + ",\n"
+                                  : ""
+                              } 
+                              ${
+                                addressItem.road !== null
+                                  ? addressItem.road + ",\n"
+                                  : ""
+                              } 
+                              ${
+                                addressItem.city_name !== null
+                                  ? addressItem.city_name + ",\n"
+                                  : ""
+                              } 
+                              ${
+                                addressItem.state_name !== null
+                                  ? addressItem.state_name + ",\n"
+                                  : ""
+                              } 
+                              ${
+                                addressItem.post_code !== null
+                                  ? addressItem.post_code
+                                  : ""
+                              }`}
                                 </label>
                               </div>
                             ))}
@@ -1356,25 +1508,27 @@ const Cart = ({
                       )}
                     </div>
                   </div>
-                  {!loading && <div className="minOrderAmount_div">
-                    {(cartTotal?.befor_total <= cartTotal.minOrderAmount) ? (
-                      <h6 style={{ color: "red" }}>
-                        {intl.formatMessage({
-                          id: "Oops! Your cart is below ¥ 2500. Please add items worth",
-                        })}{" "}¥{" "}
-                        {calculateAmountToAdd()}
-                        {intl.formatMessage({
-                          id: " or more to place your order. Happy shopping!",
-                        })}
-                      </h6>
-                    ) : (
-                      <h6 style={{ color: "green" }}>
-                        {intl.formatMessage({
-                          id: "Congratulations! You are eligible to place an order",
-                        })}
-                      </h6>
-                    )}
-                  </div>}
+                  {!loading && (
+                    <div className="minOrderAmount_div">
+                      {cartTotal?.befor_total <= cartTotal.minOrderAmount ? (
+                        <h6 style={{ color: "red" }}>
+                          {intl.formatMessage({
+                            id: "Oops! Your cart is below ¥ 2500. Please add items worth",
+                          })}{" "}
+                          ¥ {calculateAmountToAdd()}
+                          {intl.formatMessage({
+                            id: " or more to place your order. Happy shopping!",
+                          })}
+                        </h6>
+                      ) : (
+                        <h6 style={{ color: "green" }}>
+                          {intl.formatMessage({
+                            id: "Congratulations! You are eligible to place an order",
+                          })}
+                        </h6>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <div className="border p-30 cart-totals mb-30 checkout_box payment_box">
@@ -1383,79 +1537,124 @@ const Cart = ({
                       <h6>{intl.formatMessage({ id: "Reward Points" })}</h6>
                     </div>
 
-                    {balance > 0 && <div style={{ flexDirection: "row" }} className="d-flex align-items-center">
-                      <input
-                        type="checkbox"
-                        disabled={selectedOption !== "paypal" && cartTotal?.befor_total <= cartTotal.minOrderAmount || balance == 0}
-                        style={{ height: 20, width: 20, marginRight: 10, color: "red" }}
-                        checked={redeem}  // Control checked state using `redeem` value
-                        onChange={() => setredeem(prev => !prev)}  // Toggle `redeem` value on change
-                      />
+                    {balance > 0 && (
+                      <div
+                        style={{ flexDirection: "row" }}
+                        className="d-flex align-items-center"
+                      >
+                        <input
+                          type="checkbox"
+                          disabled={
+                            (selectedOption !== "paypal" &&
+                              cartTotal?.befor_total <=
+                                cartTotal.minOrderAmount) ||
+                            balance == 0
+                          }
+                          style={{
+                            height: 20,
+                            width: 20,
+                            marginRight: 10,
+                            color: "red",
+                          }}
+                          checked={redeem} // Control checked state using `redeem` value
+                          onChange={() => setredeem((prev) => !prev)} // Toggle `redeem` value on change
+                        />
 
-                      <div style={{ flexDirection: "column" }}>
-                        <div>
-                          <span style={{ color: "grey", fontSize: 15 }}>Sartaj {intl.formatMessage({ id: "Points" })}</span>
-                          <span style={{
-                            color: "white", fontSize: 10, alignSelf: "flex-start", backgroundColor: "red", paddingTop: 2, paddingBottom: 2, paddingLeft: 5, paddingRight: 5, marginLeft: 5, borderRadius: 10
-                          }}>{intl.formatMessage({ id: "New" })}</span>
-
-                        </div>
-                        {console.log("payment mwthid", selectedOption)}
-                        {
-                          selectedOption !== "paypal" && (cartTotal?.befor_total <= cartTotal.minOrderAmount) ?
-                            <> <span style={{ fontSize: 15 }}>{intl.formatMessage({ id: `Your balance is` })}</span> <span> `¥ {balance}`</span></>
-
-                            :
+                        <div style={{ flexDirection: "column" }}>
+                          <div>
+                            <span style={{ color: "grey", fontSize: 15 }}>
+                              Sartaj {intl.formatMessage({ id: "Points" })}
+                            </span>
+                            <span
+                              style={{
+                                color: "white",
+                                fontSize: 10,
+                                alignSelf: "flex-start",
+                                backgroundColor: "red",
+                                paddingTop: 2,
+                                paddingBottom: 2,
+                                paddingLeft: 5,
+                                paddingRight: 5,
+                                marginLeft: 5,
+                                borderRadius: 10,
+                              }}
+                            >
+                              {intl.formatMessage({ id: "New" })}
+                            </span>
+                          </div>
+                          {console.log("payment mwthid", selectedOption)}
+                          {selectedOption !== "paypal" &&
+                          cartTotal?.befor_total <= cartTotal.minOrderAmount ? (
                             <>
-                              <span style={{ fontSize: 15 }}>{intl.formatMessage({ id: `You are eligible to use` })}</span><span> ¥ {elebal} </span>
-                              <span style={{ color: "grey" }}>{intl.formatMessage({ id: `of` })}</span><span style={{ color: "grey" }}> ¥ {balance}</span>
+                              {" "}
+                              <span style={{ fontSize: 15 }}>
+                                {intl.formatMessage({ id: `Your balance is` })}
+                              </span>{" "}
+                              <span> `¥ {balance}`</span>
                             </>
-
-                        }
+                          ) : (
+                            <>
+                              <span style={{ fontSize: 15 }}>
+                                {intl.formatMessage({
+                                  id: `You are eligible to use`,
+                                })}
+                              </span>
+                              <span> ¥ {elebal} </span>
+                              <span style={{ color: "grey" }}>
+                                {intl.formatMessage({ id: `of` })}
+                              </span>
+                              <span style={{ color: "grey" }}>
+                                {" "}
+                                ¥ {balance}
+                              </span>
+                            </>
+                          )}
+                        </div>
                       </div>
-                    </div>}
-
+                    )}
                   </div>
                   <div className="minOrderAmount_div">
-
-                    {!loading && balance > 0 && <div className="minOrderAmount_div">
-                      {selectedOption !== "paypal" && (cartTotal?.befor_total <= cartTotal.minOrderAmount) ? (
-                        <h6 style={{ color: "red" }}>
-                          {intl.formatMessage({
-                            id: "Oops! Your cart is below ¥ 2500. You are not eligible to use reward points",
-                          })}
-
-
-                        </h6>
-                      ) : (
-                        // <h6 style={{ color: "green" }}>
-                        //   {intl.formatMessage({
-                        //     id: `Congratulations! You are eligible to use ¥`+` ${elebal}` +`in reward points`,
-                        //   })}
-                        // </h6>
-                        <h6 style={{ color: "green" }}>
-                          {intl.formatMessage(
-                            {
-                              id: "Congratulations! You are eligible to use ¥ in reward points",
-                            },
-                            {
-                              amount: elebal, // Inject dynamic value
-                            }
-                          )}
-                        </h6>
-                      )}
-                    </div>}
-                    {balance == 0 && <h6 style={{ color: "red" }}>
-                      {intl.formatMessage({
-                        id: "Your wallet balance is currently ¥0. Earn reward points by shopping",
-                      })}
-                    </h6>}
+                    {!loading && balance > 0 && (
+                      <div className="minOrderAmount_div">
+                        {selectedOption !== "paypal" &&
+                        cartTotal?.befor_total <= cartTotal.minOrderAmount ? (
+                          <h6 style={{ color: "red" }}>
+                            {intl.formatMessage({
+                              id: "Oops! Your cart is below ¥ 2500. You are not eligible to use reward points",
+                            })}
+                          </h6>
+                        ) : (
+                          // <h6 style={{ color: "green" }}>
+                          //   {intl.formatMessage({
+                          //     id: `Congratulations! You are eligible to use ¥`+` ${elebal}` +`in reward points`,
+                          //   })}
+                          // </h6>
+                          <h6 style={{ color: "green" }}>
+                            {intl.formatMessage(
+                              {
+                                id: "Congratulations! You are eligible to use ¥ in reward points",
+                              },
+                              {
+                                amount: elebal, // Inject dynamic value
+                              }
+                            )}
+                          </h6>
+                        )}
+                      </div>
+                    )}
+                    {balance == 0 && (
+                      <h6 style={{ color: "red" }}>
+                        {intl.formatMessage({
+                          id: "Your wallet balance is currently ¥0. Earn reward points by shopping",
+                        })}
+                      </h6>
+                    )}
                   </div>
                 </div>
 
                 <div className="border p-30 cart-totals mb-30 checkout_box mobile_bottom_margin">
                   <div className="mb-20">
-                    {!redeem && <form method="post" className="apply-coupon">
+                    {/* <form method="post" className="apply-coupon">
                       <input
                         type="text"
                         onChange={(e) => {
@@ -1480,7 +1679,40 @@ const Cart = ({
                       >
                         {intl.formatMessage({ id: "Apply Coupon" })}
                       </button>
-                    </form>}
+                    </form> */}
+                    {/* {coupenCode && (
+                      <div
+                        onClick={() => {
+                          removeCoupencode(coupenCode);
+                        }}
+                      >
+                        <text style={{ color: "#ff0000" }}>Remove Coupon</text>
+                      </div>
+                    )} */}
+                    {/* <div style={{ marginTop: 15 }}>
+                      {coupanlist?.map((item, i) => (
+                        <div
+                          key={i}
+                          onClick={() => handleItemClick(item, i)}
+                          style={{
+                            cursor: "pointer",
+                            padding: "10px",
+                            border: "1px solid #ddd",
+                            borderRadius: "8px",
+                            marginBottom: "5px",
+                            display: "flex", // Display items in a row
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            backgroundColor:
+                              selectedIndex === i ? "#f0f8ff" : "white", // Change color based on selection
+                          }}
+                        >
+                          <h6>{item.title}</h6>
+                          {selectedIndex === i && <h6>🎉</h6>}
+                        </div>
+                      ))}
+                    </div> */}
 
                     <h6 style={{ color: "green", marginTop: "15px" }}>
                       {coupanDetails}
@@ -1621,7 +1853,6 @@ const Cart = ({
                           >
                             <strong>
                               {intl.formatMessage({ id: "Wallet" })}{" "}
-
                             </strong>
                           </td>
                           <td
@@ -1631,9 +1862,7 @@ const Cart = ({
                             }}
                             className="text-end"
                           >
-                            <span className="fw-600">
-                              - ¥{elebal}
-                            </span>
+                            <span className="fw-600">- ¥{elebal}</span>
                           </td>
                         </tr>
                       ) : null}
@@ -1683,11 +1912,11 @@ const Cart = ({
                           }}
                           className="text-end"
                         >
+                        
                           <span className="font-lg fw-900 text-brand">
-                            ¥
-                            {coupanRes
+                            ¥ {coupanRes
                               ? coupanRes?.orderAmount
-                              : cartTotal?.total_amt}
+                              : cartTotal?.total_amt }
                           </span>
                         </td>
                       </tr>

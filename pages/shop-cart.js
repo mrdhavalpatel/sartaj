@@ -16,13 +16,14 @@ import storage from "../util/localStorage";
 import { useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
-import { API_BASE_URL } from "../lib/api";
+import { api, API_BASE_URL } from "../lib/api";
 import { ErrorMessage, Field, Formik } from "formik";
 import { Form, Spinner } from "react-bootstrap";
 import * as Yup from "yup";
 import { auth } from "../lib/auth/auth";
 import { findProductIndexById, translatedItemDetails } from "../util/util";
 import { ApiCall } from "../lib/other/other";
+import { useLocation } from "react-router-dom";
 
 const Cart = ({
   cartItems,
@@ -32,11 +33,13 @@ const Cart = ({
   clearCart,
 }) => {
   const intl = useIntl();
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartDataUpdated, setCartDataUpdated] = useState(false);
   const [cartTotal, setCartTotal] = useState([]);
   const [cartProducts, setCartProducts] = useState([]);
   const [loading, setLoading] = useState(false)
+  const [regionId , setRegionId]=useState()
   const checkoutUrl =
     intl.locale === "eng" ? "/shop-checkout" : "/jp/shop-checkout";
   const proceedToCheckout = () => {
@@ -54,6 +57,35 @@ const Cart = ({
       </a>;
     }
   };
+  const getAddress = async (encodedToken) => {
+    const response = await api.get("customer/address/list", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${encodedToken}`,
+      },
+    });
+    console.log(
+      "address response in region id===============>",
+      response?.data.billing_address[0]?.region_id
+    );
+    storage.set('regionID', response?.data.billing_address[0]?.region_id);
+
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      let encodedToken = localStorage.getItem("token");
+      if (encodedToken) {
+        try {
+          await getAddress(encodedToken);
+        } catch (error) {
+          console.error("Error fetching data", error);
+        }
+      }
+    };
+  
+    fetchData();
+  }, []);
   const addCurrenItems = (token) => {
     let FCart = cartProducts.map((item) => ({
       product_id: item?.id,
@@ -78,7 +110,7 @@ const Cart = ({
   const getCartData = (token) => {
     setLoading(true)
     const response = axios
-      .get(`${API_BASE_URL}customer/cart/1`, {
+      .get(`${API_BASE_URL}customer/cart?region_id=1&&use_wallet=false&&is_remove=0`, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
