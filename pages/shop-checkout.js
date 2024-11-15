@@ -47,7 +47,7 @@ const Cart = ({
   const [coupanRes, setCoupanRes] = useState("");
   const [balance, setbalance] = useState(0);
   const [elebal, setelebal] = useState(0);
-  const [redeem, setredeem] = useState(true);
+  const [redeem, setredeem] = useState(false);
   const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [cartItemsData, setCartItemsData] = useState([]);
@@ -480,7 +480,7 @@ const Cart = ({
     console.log("is region id pass in get cart", regionId1);
 
     let encodedToken = localStorage.getItem("token");
-    let url = `${API_BASE_URL}customer/cart?region_id=${regionId1}&&use_wallet=${redeem}&&is_remove=0`;
+    let url = `${API_BASE_URL}customer/cart?region_id=${regionId1}&&use_wallet=${false}&&is_remove=0`;
 
     // if (redeem === true) {
     //   url += `/true`; // Append "/true" if redeem is true
@@ -496,6 +496,7 @@ const Cart = ({
         },
       })
       .then((res) => {
+        console.log("cart data we got:" , res?.data?.redeem_points)
         setCartItemsData(res?.data?.cartProducts);
         setCartTotal(res?.data);
         setbalance(res?.data?.redeem_points);
@@ -1008,8 +1009,11 @@ const Cart = ({
         order_type: "delivery",
         coupon_discount_amount: coupenCodeDis,
         cart: cartItemsData,
-        redeem_points: elebal,
-        isredeem: redeem ? true : false,
+        // redeem_points: elebal,
+        redeem_points: 0,
+
+        // isredeem: redeem ? true : false,
+        isredeem: false,
         time_slot_id: selectedRadioId,
         order_note: orderNotes,
         local: intl.locale,
@@ -1128,8 +1132,8 @@ const Cart = ({
                     </div>
                   ) : (
                     <div className="table-responsive order_table">
-                      {cartItemsData.length <= 0 && "No Products"}
-                      {cartItemsData.length > 0 ? (
+                      {cartItemsData?.length <= 0 && "No Products"}
+                      {cartItemsData?.length > 0 ? (
                         <table className="table no-border">
                           <thead>
                             <td colSpan={3}>
@@ -1531,7 +1535,7 @@ const Cart = ({
                   )}
                 </div>
 
-                <div className="border p-30 cart-totals mb-30 checkout_box payment_box">
+                {/* <div className="border p-30 cart-totals mb-30 checkout_box payment_box">
                   <div className="payment_method">
                     <div className="heading_s1 mb-3">
                       <h6>{intl.formatMessage({ id: "Reward Points" })}</h6>
@@ -1651,7 +1655,7 @@ const Cart = ({
                       </h6>
                     )}
                   </div>
-                </div>
+                </div> */}
 
                 <div className="border p-30 cart-totals mb-30 checkout_box mobile_bottom_margin">
                   <div className="mb-20">
