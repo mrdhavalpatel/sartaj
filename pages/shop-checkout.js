@@ -37,7 +37,7 @@ const Cart = ({
   deleteFromCart,
   clearCart,
 }) => {
-  const regionIDParams = Storage.get('regionID');
+  const regionIDParams = Storage.get('regionID')||1;
   const [userDetails, setUserDetails] = useState([]);
   const [address, setAddress] = useState([]);
   const [coupenCode, setCoupenCode] = useState("");
@@ -581,6 +581,11 @@ const Cart = ({
           toast.success("address updated successfully");
           getAddress(encodedToken);
           setShowModaladdress(false);
+console.log("address save response",response.data)
+          Storage.set('regionID',  values?.state != undefined || values?.state != null
+            ? values?.state
+            : selectedAddressData?.region_id);
+            window.location.reload();
         }
       });
   };
