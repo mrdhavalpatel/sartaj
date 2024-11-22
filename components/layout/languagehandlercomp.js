@@ -1,160 +1,159 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 import { useRouter } from "next/router";
 import { useLanguage } from "../context/LanguageContext";
 
-const MyComponent = ({ text }) => {
-  const intl = useIntl();
-  const [translatedText, setTranslatedText] = useState(text); // Native text initially
-  const [DLang, setDLang] = useState(intl.locale);
-  const { switchLanguage } = useLanguage();
-  const router = useRouter();
+const LanguageSwitcher = ({ text }) => {
+    const intl = useIntl();
+    const router = useRouter();
+    const { switchLanguage } = useLanguage();
+    const [translatedText, setTranslatedText] = useState(text);
+    const [currentLang, setCurrentLang] = useState(intl.locale);
+    const googleTranslateInitialized = useRef(false);
 
-  // Inject Google Translate Script for browser-based translations
-  useEffect(() => {
-    const addGoogleTranslateScript = () => {
-      const script = document.createElement("script");
-      script.src =
-        "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-      script.async = true;
-      document.body.appendChild(script);
+    const LOCAL_LANGUAGES = ["eng", "jp"];
+    const GOOGLE_TRANSLATE_LANGUAGES = ["ne", "hi", "bn"];
 
-      window.googleTranslateElementInit = function () {
-        new window.google.translate.TranslateElement(
-          {
-            pageLanguage: "en", // Default page language (English)
-            includedLanguages: "en,ja,ne", // Add other languages you need
-            layout:
-              window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false, // Prevent auto-translation on page load
-          },
-          "google_translate_element"
-        );
-      };
+    // Reset Google Translate when switching to local languages
+    const resetGoogleTranslate = () => {
+        const frame = document.querySelector('.goog-te-banner-frame');
+        if (frame) {
+            const reset = document.querySelector('.goog-te-banner-frame').contentWindow.document.querySelector('.goog-te-button button');
+            if (reset) {
+                reset.click();
+            }
+        }
     };
 
-    addGoogleTranslateScript();
-  }, []);
+    // Initialize Google Translate
+    useEffect(() => {
+        const initializeGoogleTranslate = () => {
+            if (!window.google || !window.google.translate || googleTranslateInitialized.current) {
+                return;
+            }
 
-//   const handleLanguageSwitch = (newLanguage) => {
-//     console.log("Changing language to:", newLanguage);
+            new window.google.translate.TranslateElement(
+                {
+                    pageLanguage: 'eng',
+                    includedLanguages: GOOGLE_TRANSLATE_LANGUAGES.join(','),
+                    layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+                    autoDisplay: false,
+                },
+                'google_translate_element'
+            );
+            googleTranslateInitialized.current = true;
+        };
 
-//     if (newLanguage === "eng" || newLanguage === "jp") {
-//       switchLanguage(newLanguage); // Updates language in context
-//       setDLang(newLanguage); // Set state for local language
-//       setTranslatedText(text); // Reset to original/native text
-//       updateUrlForNativeLanguages(newLanguage); // Update the URL
-//     } else {
-//       // For other languages, use Google Translate
-//       setDLang(newLanguage);
-
-//       // Check if Google Translate dropdown exists
-//       const googleTranslateDropdown = document.querySelector(".goog-te-combo");
-//       console.log("dfdf");
-//       console.log(googleTranslateDropdown);
-//       if (googleTranslateDropdown) {
-//         console.log(
-//           "Google Translate dropdown found. Changing language to:",
-//           newLanguage
-//         );
-//         googleTranslateDropdown.value = newLanguage;
-//         googleTranslateDropdown.dispatchEvent(new Event("change"));
-//       } else {
-//         setDLang(newLanguage);
-//         const googleTranslateDropdown = document.querySelector(".goog-te-combo");
-    
-//         if (googleTranslateDropdown) {
-//           googleTranslateDropdown.value = newLanguage;
-//           const changeEvent = new Event("change", { bubbles: true });
-//           googleTranslateDropdown.dispatchEvent(changeEvent);
-          
-//           // Trigger Google Translate manually
-//           if (window.google) {
-//             window.google.translate.TranslateElement.getInstance().setEnabled(true);
-//           }
-//         } else {
-//           console.error("Google Translate dropdown not found.");
-//         }
-//       }
-//     }
-//   };
-
-const handleLanguageSwitch = (newLanguage) => {
-    console.log("Attempting to change language to:", newLanguage);
-    setDLang(newLanguage);
-  
-    const googleTranslateDropdown = document.querySelector(".goog-te-combo");
-  
-    if (newLanguage === "eng" || newLanguage === "jp") {
-      // Handle native translations
-      switchLanguage(newLanguage);
-      setTranslatedText(text);
-      updateUrlForNativeLanguages(newLanguage);
-    } else {
-      // Wait for dropdown to be available
-      const checkDropdown = setInterval(() => {
-        const dropdown = document.querySelector(".goog-te-combo");
-        if (dropdown) {
-          clearInterval(checkDropdown);
-          console.log("Google Translate dropdown found. Changing language to:", newLanguage);
-          dropdown.value = newLanguage;
-          dropdown.dispatchEvent(new Event("change"));
-          console.log("Google Translate change event dispatched for:", newLanguage);
-        } else {
-          console.log("Waiting for Google Translate dropdown...");
+        // Add Google Translate Script
+        if (!document.querySelector('script[src*="translate.google.com"]')) {
+            const script = document.createElement("script");
+            script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+            script.async = true;
+            
+            window.googleTranslateElementInit = initializeGoogleTranslate;
+            
+            document.body.appendChild(script);
+        } else if (window.google && window.google.translate) {
+            initializeGoogleTranslate();
         }
-      }, 500);
-    }
-  };
-  
 
-  const updateUrlForNativeLanguages = (newLanguage) => {
-    const pathWithoutLanguage = router.pathname
-      .replace(/^\/(eng|jp)\//, "/")
-      .replace("/[...slug]", "");
-    var newUrl = `/${newLanguage}/${pathWithoutLanguage}`;
-    const currentToken = router.query.token || "";
-    const slug = router.query?.slug;
+        return () => {
+            // Cleanup function
+            delete window.googleTranslateElementInit;
+        };
+    }, []);
 
-    if (router.pathname.includes("reset-password")) {
-      window.location.replace(
-        `/${newLanguage}/reset-password?token=${currentToken}`
-      );
-    } else if (router.pathname.includes("orders")) {
-      window.location.replace(`/${newLanguage}/orders/${router?.query?.id}`);
-    } else if (router.pathname.includes("fail")) {
-      window.location.replace(
-        `/${newLanguage}/fail?order_id=${router?.query?.order_id}&name=${router?.query?.name}`
-      );
-    } else {
-      if (slug) newUrl += `/${slug}`;
-      window.location.replace(newUrl.replace(/\/\//g, "/"));
-    }
-  };
+    // Handle language switch
+    const handleLanguageSwitch = async (newLanguage) => {
+        console.log("Switching to language:", newLanguage);
+        
+        if (LOCAL_LANGUAGES.includes(newLanguage)) {
+            // If switching to a local language, first reset Google Translate
+            if (GOOGLE_TRANSLATE_LANGUAGES.includes(currentLang)) {
+                resetGoogleTranslate();
+            }
+            
+            setCurrentLang(newLanguage);
+            switchLanguage(newLanguage);
+            setTranslatedText(text);
+            updateUrlForNativeLanguages(newLanguage);
+        } else if (GOOGLE_TRANSLATE_LANGUAGES.includes(newLanguage)) {
+            // Wait for Google Translate to be fully initialized
+            await waitForGoogleTranslate();
+            setCurrentLang(newLanguage);
+            translateUsingGoogle(newLanguage);
+        }
+    };
 
-  return (
-    <>
-      <p>{translatedText}</p>
+    // Wait for Google Translate to be initialized
+    const waitForGoogleTranslate = () => {
+        return new Promise((resolve) => {
+            const checkForGoogle = setInterval(() => {
+                const dropdown = document.querySelector('.goog-te-combo');
+                if (dropdown) {
+                    clearInterval(checkForGoogle);
+                    resolve();
+                }
+            }, 100);
 
-      {/* Dropdown for language selection */}
-      <label htmlFor="languageDropdown">
-        {intl.formatMessage({ id: "Select Language" })}
-      </label>
-      <select
-        id="languageDropdown"
-        onChange={(e) => handleLanguageSwitch(e.target.value)}
-        value={DLang}
-      >
-        <option value="eng">English</option>
-        <option value="jp">日本語</option>
-        <option value="ne">नेपाली (Google Translate)</option>{" "}
-        {/* Nepali option */}
-      </select>
+            // Timeout after 5 seconds
+            setTimeout(() => {
+                clearInterval(checkForGoogle);
+                resolve();
+            }, 5000);
+        });
+    };
 
-      {/* Hidden Google Translate Element */}
-      <div id="google_translate_element" ></div>
-    </>
-  );
+    // Translate using Google Translate
+    const translateUsingGoogle = (language) => {
+        const dropdown = document.querySelector('.goog-te-combo');
+        if (dropdown) {
+            dropdown.value = language;
+            dropdown.dispatchEvent(new Event('change', { bubbles: true }));
+            console.log(`Triggered Google Translate for: ${language}`);
+        } else {
+            console.error("Google Translate dropdown not found");
+        }
+    };
+
+    // Update URL for native languages
+    const updateUrlForNativeLanguages = (newLanguage) => {
+        const path = router.pathname.replace(/^\/(eng|jp)\//, "/").replace("/[...slug]", "");
+        let newUrl = `/${newLanguage}${path}`;
+        const slug = router.query.slug;
+
+        if (slug) {
+            newUrl += `/${Array.isArray(slug) ? slug.join('/') : slug}`;
+        }
+        
+        window.location.replace(newUrl.replace(/\/+/g, "/"));
+    };
+
+    return (
+        <div className="language-switcher">
+            <div className="text-content">
+                {translatedText}
+            </div>
+
+            <div className="language-controls">
+                <label htmlFor="languageDropdown" className="language-label">
+                    {intl.formatMessage({ id: "Select Language" })}
+                </label>
+                <select
+                    id="languageDropdown"
+                    onChange={(e) => handleLanguageSwitch(e.target.value)}
+                    value={currentLang}
+                    className="language-select"
+                >
+                    <option value="eng">English</option>
+                    <option value="jp">日本語</option>
+                </select>
+
+                {/* Hidden Google Translate element */}
+                <div id="google_translate_element" style={{ display: 'none' }} />
+            </div>
+        </div>
+    );
 };
 
-export default MyComponent;
+export default LanguageSwitcher;

@@ -168,11 +168,10 @@ const Header = ({
   }, []);
 
   /** new by dv */
- 
 
   return (
     <>
-      {/* <Helmet>
+      <Helmet>
         <meta name="google" content="notranslate" />
         <script
           type="text/javascript"
@@ -182,13 +181,13 @@ const Header = ({
           {`
             function googleTranslateElementInit() {
               new google.translate.TranslateElement(
-                { pageLanguage: 'en', includedLanguages: 'en,ja,ne', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
+                { pageLanguage: 'en', includedLanguages: 'en,ne,bn,hi', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
                 'google_translate_element'
               );
             }
           `}
         </script>
-      </Helmet> */}
+      </Helmet>
       <header
         className={
           scroll
@@ -400,19 +399,17 @@ const Header = ({
                         </ul>
                       </div>
                     </div>
-                    <div>
-                    {/* <MyComponent /> */}
-                      {/* <div id="google_translate_element"></div> */}
-                      
+                    <div class="header-action-icon-2">
+                      {/* <MyComponent /> */}
                       <select
-                      id="languageDropdown"
-                      onChange={(e) => handleLanguageSwitch(e.target.value)}
-                      value={DLang}
-                    >
-                      <option value="eng">English</option>
-                      <option value="jp">日本語</option>
-                    </select>
-
+                        id="languageDropdown"
+                        onChange={(e) => handleLanguageSwitch(e.target.value)}
+                        value={DLang}
+                      >
+                        <option value="eng">English</option>
+                        <option value="jp">日本語</option>
+                      </select>
+                      <div id="google_translate_element"></div>
                     </div>
                   </div>
                 </div>

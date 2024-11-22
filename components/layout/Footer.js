@@ -137,7 +137,7 @@ const Footer = () => {
                     </Formik>
                   </div>
                   <img
-                    src="/assets/imgs/banner/banner-9.png"
+                    src="/assets/imgs/banner/banner-9.webp"
                     alt="newsletter"
                   />
                 </div>
