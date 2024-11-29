@@ -71,7 +71,7 @@ const Cart = ({
   const toggleAddressModal1 = () => {
     setShowModalAddress1((prevState) => !prevState);
   };
-
+//Love Chauhan
   // const fetchWalletBalance = async (encodedToken) => {
   //   try {
   //     const response = await api.get(`customer/wallet-balance`, {
@@ -92,9 +92,15 @@ const Cart = ({
   //   fetchWalletBalance(encodedToken)
   // }, [])
   const handleAddressSelect = (addressItem) => {
-    setSelectedAddressdisplay(addressItem); // Update the selected address display
-    setSelectedAddressDropdown(addressItem.id); // Update the dropdown selection
-    setShowModalAddress1(false); // Close the modal after selection
+    console.log("Selected address region_id:", addressItem.region_id); // Add this log
+    setSelectedAddressdisplay(addressItem);
+    setSelectedAddressDropdown(addressItem.id);
+    setShowModalAddress1(false);
+
+    // Ensure region_id is passed to getCartData
+    if (addressItem.region_id) {
+      getCartData(addressItem.region_id);
+    }
   };
 
   // console.log("intlllllllllllllllll====", intl.locale);
@@ -316,39 +322,38 @@ const Cart = ({
   const [loading, setloading] = useState(true);
   const getCartData = (data) => {
     setloading(true);
-    console.log("is region id pass in get cart", regionId1, data);
-    let encodedToken = localStorage.getItem("token");
+    console.log("region id in get cart", data); // Add this log
 
+    let encodedToken = localStorage.getItem("token");
     let url = `${API_BASE_URL}customer/cart`;
 
     if (data) {
       url += `/${data}`;
       if (redeem === true) {
-        url += `/true`; // Append "/true" if reedem is true
+        url += `/true`;
       }
-      // for use wallet amount apply
     }
-    console.log("url in get cart", url);
-    const response = axios
-        .get(url, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${encodedToken}`,
-          },
-        })
+
+    console.log("final url for cart", url); // Add this log
+
+    const response = axios.get(url, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${encodedToken}`,
+      },
+    })
         .then((res) => {
+          console.log("cart response data", res.data); // Add this log
           setCartItemsData(res?.data?.cartProducts);
           setCartTotal(res?.data);
-          setbalance(res?.data?.redeem_points)
-          setelebal(res?.data?.eligible_redeem_points)
-          // console.log("cart data", res.data);
+          setbalance(res?.data?.redeem_points);
+          setelebal(res?.data?.eligible_redeem_points);
           setloading(false);
         })
         .catch((error) => {
+          console.error("Error fetching cart data:", error);
           setloading(false);
-
-          //        ////        console.log("error", error?.code === "ERR_NETWORK");
         });
   };
   const getCartDataforRedeem = () => {
@@ -624,45 +629,44 @@ const Cart = ({
             </div> */}
                 <div className="form-group mb-20">
                   <div className="sort-by-dropdown-wrap custom-select mb-20">
-                    {/* <select
-                  as="select"
-                  className="selectedAddress"
-                  name="state"
-                  style={{ color: "black" }}
-                  value={values.state}
-                  onChange={(e) => {
-                    // setSelectedAddressDropdown(e.target.value);
-                    // findElementById(e.target.value);
-                    let encodedToken = localStorage.getItem("token");
-                    //                    console.log("selected region", e.target.value);
-                    const data = e.target.value;
-                    setFieldValue("state", data);
-                    setFieldValue("city", "");
-                    setSelectedRegion(e.target.value);
-                    getCartData(data);
-                  }}
-                >
-                  {religionData?.map((option) => (
-                    <option
-                      key={option.id}
-                      value={option.id}
-                      disabled={option.id === -1 ? true : false}
-                      selected={option.id == values.region_id}
+                    <select
+                        as="select"
+                        className="selectedAddress"
+                        name="state"
+                        style={{ color: "black" }}
+                        value={values.state}
+                        onChange={(e) => {
+                          setSelectedAddressDropdown(e.target.value);
+                          findElementById(e.target.value);
+                          let encodedToken = localStorage.getItem("token");
+                          const data = e.target.value;
+                          setFieldValue("state", data);
+                          setFieldValue("city", "");
+                          setSelectedRegion(e.target.value);
+                          getCartData(data);
+                        }}
                     >
-                      {option.name}
-                    </option>
-                  ))}
-                </select> */}
+                      {religionData?.map((option) => (
+                          <option
+                              key={option.id}
+                              value={option.id}
+                              disabled={option.id === -1 ? true : false}
+                              selected={option.id == values.region_id}
+                          >
+                            {option.name}
+                          </option>
+                      ))}
+                    </select>
                     <Dropdown
                         className="Dropdownstate"
                         name="state"
+                        // Replace this entire onSelect handler
                         onSelect={(selectedOption) => {
-                          // console.log("Selected option" , selectedOption)
                           setFieldValue("state", selectedOption);
                           setFieldValue("city", "");
                           // setRegionId(selectedOption)
-                          setSelectedRegion(selectedOption); // This should be defined somewhere in your component
-                          getCartData(selectedOption); // This should be defined somewhere in your component
+                          setSelectedRegion(selectedOption);
+                          getCartData(selectedOption);
                         }}
                     >
                       <Dropdown.Toggle variant="success" id="dropdown-basic">
