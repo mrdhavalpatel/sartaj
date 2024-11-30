@@ -207,10 +207,12 @@ const Cart = ({
     getCitydata(encodedToken);
   }, [selectedregion]);
   const handleCoupencode = async () => {
-    let token = localStorage.getItem("token");
     try {
+      let token = localStorage.getItem("token");
       let payload = {
         code: coupenCode,
+        current_region_id: regionId1,  // Changed from region_id to current_region_id
+        use_wallet: redeem
       };
 
       const response = await axios
@@ -228,30 +230,23 @@ const Cart = ({
               if (response.data.discount_type == "percent") {
                 setCoupanDetails(
                     `${response?.data?.title} ${intl.formatMessage({
-                      id: "coupon applied successfully",
-                    })},${intl.formatMessage({ id: "maximum discount" })} ${response?.data?.max_discount
-                    }¥`
+                      id: "coupon applied successfully"
+                    })},${intl.formatMessage({ id: "maximum discount" })} ${response?.data?.max_discount}¥`
                 );
-              } else if (response.data.discount_type == "amount") {
+              } else {
                 setCoupanDetails(
-                    `${response?.data?.discount}¥ ` +
-                    intl.formatMessage({
-                      id: "discount applied successfully",
-                    })
+                    `${response?.data?.discount}¥ ${intl.formatMessage({
+                      id: "discount applied successfully"
+                    })}`
                 );
               }
-
-              toast.success(
-                  intl.formatMessage({ id: "coupon applied successfully" })
-              );
-              // getCartData(token);
+              toast.success(intl.formatMessage({ id: "coupon applied successfully" }));
             }
           });
     } catch (error) {
-      // Log and handle the error
-      // console.error("Error applying coupon:", error);
+      console.error("Error applying coupon:", error);
       setCoupanDetails("");
-      toast.error("Please enter valid coupan");
+      toast.error("Please enter valid coupon");
     }
   };
   //  ////  console.log("cart prodyct detail", cartItemsData);
@@ -1459,7 +1454,7 @@ const Cart = ({
 
                   <div className="border p-30 cart-totals mb-30 checkout_box mobile_bottom_margin">
                     <div className="mb-20">
-                      {!redeem && <form method="post" className="apply-coupon">
+                      <form method="post" className="apply-coupon">
                         <input
                             type="text"
                             onChange={(e) => {
@@ -1472,26 +1467,21 @@ const Cart = ({
                         />
                         <button
                             className="btn  btn-md"
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                            }}
                             onClick={(e) => {
                               e.preventDefault();
                               handleCoupencode();
                             }}
                         >
-                          {intl.formatMessage({ id: "Apply Coupon" })}
+                          {intl.formatMessage({id: "Apply Coupon"})}
                         </button>
-                      </form>}
+                      </form>
 
-                      <h6 style={{ color: "green", marginTop: "15px" }}>
+                      <h6 style={{color: "green", marginTop: "15px"}}>
                         {coupanDetails}
                       </h6>
                     </div>
                     <div className="heading_s1 mb-3">
-                      <h6>{intl.formatMessage({ id: "Cart Totals" })}</h6>
+                      <h6>{intl.formatMessage({id: "Cart Totals"})}</h6>
                     </div>
                     {cartTotal.cartProducts?.length > 0 ? (
                         <table
